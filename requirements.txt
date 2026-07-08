@@ -1,0 +1,10 @@
+matplotlib
+numpy
+pandas
+seaborn
+psycopg2-binary
+sqlglot
+tqdm
+anthropic
+openai
+python-dotenv

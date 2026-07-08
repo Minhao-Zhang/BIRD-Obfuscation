@@ -1,0 +1,1829 @@
+{
+  "app_store": {
+    "join_keys": [
+      "app_store.playstore.App",
+      "app_store.user_reviews.App"
+    ],
+    "correlated_groups": []
+  },
+  "cars": {
+    "join_keys": [
+      "cars.country.origin",
+      "cars.data.ID",
+      "cars.price.ID",
+      "cars.production.ID",
+      "cars.production.country"
+    ],
+    "correlated_groups": [
+      [
+        "cars.data.ID",
+        "cars.production.ID"
+      ]
+    ]
+  },
+  "food_inspection_2": {
+    "join_keys": [
+      "food_inspection_2.employee.employee_id",
+      "food_inspection_2.establishment.license_no",
+      "food_inspection_2.inspection.employee_id",
+      "food_inspection_2.inspection.inspection_id",
+      "food_inspection_2.inspection.license_no",
+      "food_inspection_2.inspection_point.point_id",
+      "food_inspection_2.violation.inspection_id",
+      "food_inspection_2.violation.point_id"
+    ],
+    "correlated_groups": []
+  },
+  "law_episode": {
+    "join_keys": [
+      "law_episode.Award.episode_id",
+      "law_episode.Award.person_id",
+      "law_episode.Credit.episode_id",
+      "law_episode.Credit.person_id",
+      "law_episode.Episode.episode_id",
+      "law_episode.Keyword.episode_id",
+      "law_episode.Person.person_id",
+      "law_episode.Vote.episode_id"
+    ],
+    "correlated_groups": [
+      [
+        "law_episode.Vote.percent",
+        "law_episode.Vote.stars"
+      ],
+      [
+        "law_episode.Episode.episode_id",
+        "law_episode.Keyword.episode_id"
+      ]
+    ]
+  },
+  "works_cycles": {
+    "join_keys": [
+      "works_cycles.Address.AddressID",
+      "works_cycles.Address.StateProvinceID",
+      "works_cycles.AddressType.AddressTypeID",
+      "works_cycles.BillOfMaterials.ProductAssemblyID",
+      "works_cycles.BillOfMaterials.UnitMeasureCode",
+      "works_cycles.BusinessEntity.BusinessEntityID",
+      "works_cycles.BusinessEntityAddress.AddressID",
+      "works_cycles.BusinessEntityAddress.AddressTypeID",
+      "works_cycles.BusinessEntityAddress.BusinessEntityID",
+      "works_cycles.BusinessEntityContact.BusinessEntityID",
+      "works_cycles.BusinessEntityContact.ContactTypeID",
+      "works_cycles.ContactType.ContactTypeID",
+      "works_cycles.CountryRegion.CountryRegionCode",
+      "works_cycles.CountryRegionCurrency.CountryRegionCode",
+      "works_cycles.CountryRegionCurrency.CurrencyCode",
+      "works_cycles.CreditCard.CreditCardID",
+      "works_cycles.CreditCard.ModifiedDate",
+      "works_cycles.Culture.CultureID",
+      "works_cycles.Currency.CurrencyCode",
+      "works_cycles.Customer.PersonID",
+      "works_cycles.Customer.StoreID",
+      "works_cycles.Customer.TerritoryID",
+      "works_cycles.Department.BusinessEntityID",
+      "works_cycles.Department.DepartmentID",
+      "works_cycles.Document.Owner",
+      "works_cycles.EmailAddress.BusinessEntityID",
+      "works_cycles.Employee.BusinessEntityID",
+      "works_cycles.EmployeeDepartmentHistory.BusinessEntityID",
+      "works_cycles.EmployeeDepartmentHistory.DepartmentID",
+      "works_cycles.EmployeeDepartmentHistory.ModifiedDate",
+      "works_cycles.EmployeeDepartmentHistory.ShiftID",
+      "works_cycles.EmployeePayHistory.BusinessEntityID",
+      "works_cycles.JobCandidate.BusinessEntityID",
+      "works_cycles.Location.LocationID",
+      "works_cycles.Password.BusinessEntityID",
+      "works_cycles.Person.BusinessEntityID",
+      "works_cycles.Person.ModifiedDate",
+      "works_cycles.PersonCreditCard.BusinessEntityID",
+      "works_cycles.PersonCreditCard.CreditCardID",
+      "works_cycles.Product.ProductID",
+      "works_cycles.Product.ProductModelID",
+      "works_cycles.Product.ProductSubcategoryID",
+      "works_cycles.Product.SizeUnitMeasureCode",
+      "works_cycles.Product.WeightUnitMeasureCode",
+      "works_cycles.ProductCategory.ProductCategoryID",
+      "works_cycles.ProductCostHistory.ProductID",
+      "works_cycles.ProductInventory.LocationID",
+      "works_cycles.ProductInventory.ProductID",
+      "works_cycles.ProductListPriceHistory.ProductID",
+      "works_cycles.ProductModel.ProductModelID",
+      "works_cycles.ProductModelProductDescriptionCulture.CultureID",
+      "works_cycles.ProductPhoto.ProductPhotoID",
+      "works_cycles.ProductProductPhoto.ProductPhotoID",
+      "works_cycles.ProductReview.ProductID",
+      "works_cycles.ProductSubcategory.ProductCategoryID",
+      "works_cycles.ProductSubcategory.ProductSubcategoryID",
+      "works_cycles.ProductVendor.BusinessEntityID",
+      "works_cycles.ProductVendor.ProductID",
+      "works_cycles.PurchaseOrderDetail.ProductID",
+      "works_cycles.PurchaseOrderHeader.EmployeeID",
+      "works_cycles.PurchaseOrderHeader.ShipMethodID",
+      "works_cycles.PurchaseOrderHeader.VendorID",
+      "works_cycles.SalesOrderDetail.ProductID",
+      "works_cycles.SalesOrderDetail.SpecialOfferID",
+      "works_cycles.SalesOrderHeader.BillToAddressID",
+      "works_cycles.SalesOrderHeader.CreditCardID",
+      "works_cycles.SalesOrderHeader.DueDate",
+      "works_cycles.SalesOrderHeader.SalesPersonID",
+      "works_cycles.SalesOrderHeader.TerritoryID",
+      "works_cycles.SalesOrderHeaderSalesReason.SalesReasonID",
+      "works_cycles.SalesPerson.BusinessEntityID",
+      "works_cycles.SalesPerson.TerritoryID",
+      "works_cycles.SalesPersonQuotaHistory.BusinessEntityID",
+      "works_cycles.SalesReason.SalesReasonID",
+      "works_cycles.SalesTaxRate.StateProvinceID",
+      "works_cycles.SalesTerritory.CountryRegionCode",
+      "works_cycles.SalesTerritory.TerritoryID",
+      "works_cycles.ScrapReason.ScrapReasonID",
+      "works_cycles.Shift.ShiftID",
+      "works_cycles.ShipMethod.ShipMethodID",
+      "works_cycles.ShoppingCartItem.ProductID",
+      "works_cycles.SpecialOffer.SpecialOfferID",
+      "works_cycles.SpecialOfferProduct.ProductID",
+      "works_cycles.SpecialOfferProduct.SpecialOfferID",
+      "works_cycles.StateProvince.CountryRegionCode",
+      "works_cycles.StateProvince.StateProvinceID",
+      "works_cycles.Store.BusinessEntityID",
+      "works_cycles.Store.SalesPersonID",
+      "works_cycles.TransactionHistory.ProductID",
+      "works_cycles.TransactionHistoryArchive.ProductID",
+      "works_cycles.UnitMeasure.UnitMeasureCode",
+      "works_cycles.Vendor.BusinessEntityID",
+      "works_cycles.WorkOrder.ProductID",
+      "works_cycles.WorkOrder.ScrapReasonID",
+      "works_cycles.WorkOrderRouting.LocationID"
+    ],
+    "correlated_groups": [
+      [
+        "works_cycles.Employee.BusinessEntityID",
+        "works_cycles.EmployeePayHistory.BusinessEntityID"
+      ],
+      [
+        "works_cycles.ProductCostHistory.StandardCost",
+        "works_cycles.ProductListPriceHistory.ListPrice"
+      ],
+      [
+        "works_cycles.ProductVendor.LastReceiptCost",
+        "works_cycles.ProductVendor.StandardPrice"
+      ],
+      [
+        "works_cycles.Department.DepartmentID",
+        "works_cycles.EmployeePayHistory.BusinessEntityID"
+      ],
+      [
+        "works_cycles.Product.ListPrice",
+        "works_cycles.Product.StandardCost"
+      ],
+      [
+        "works_cycles.PurchaseOrderDetail.OrderQty",
+        "works_cycles.PurchaseOrderDetail.ReceivedQty"
+      ],
+      [
+        "works_cycles.EmployeeDepartmentHistory.EndDate",
+        "works_cycles.EmployeeDepartmentHistory.StartDate"
+      ],
+      [
+        "works_cycles.Product.ProductID",
+        "works_cycles.WorkOrder.ProductID"
+      ],
+      [
+        "works_cycles.SalesOrderDetail.OrderQty",
+        "works_cycles.SalesOrderDetail.UnitPrice"
+      ],
+      [
+        "works_cycles.Product.ProductID",
+        "works_cycles.ProductDescription.ProductDescriptionID"
+      ],
+      [
+        "works_cycles.SalesTerritory.SalesLastYear",
+        "works_cycles.SalesTerritory.SalesYTD"
+      ],
+      [
+        "works_cycles.Product.StandardCost",
+        "works_cycles.ProductCostHistory.StandardCost"
+      ]
+    ]
+  },
+  "beer_factory": {
+    "join_keys": [
+      "beer_factory.customers.CustomerID",
+      "beer_factory.geolocation.LocationID",
+      "beer_factory.location.LocationID",
+      "beer_factory.rootbeer.BrandID",
+      "beer_factory.rootbeer.LocationID",
+      "beer_factory.rootbeer.RootBeerID",
+      "beer_factory.rootbeerbrand.BrandID",
+      "beer_factory.rootbeerreview.BrandID",
+      "beer_factory.rootbeerreview.CustomerID",
+      "beer_factory.transaction.CustomerID",
+      "beer_factory.transaction.LocationID",
+      "beer_factory.transaction.RootBeerID"
+    ],
+    "correlated_groups": [
+      [
+        "beer_factory.customers.CustomerID",
+        "beer_factory.rootbeerreview.CustomerID"
+      ],
+      [
+        "beer_factory.customers.CustomerID",
+        "beer_factory.transaction.CustomerID"
+      ],
+      [
+        "beer_factory.geolocation.LocationID",
+        "beer_factory.location.LocationID"
+      ],
+      [
+        "beer_factory.geolocation.LocationID",
+        "beer_factory.rootbeer.LocationID"
+      ],
+      [
+        "beer_factory.geolocation.LocationID",
+        "beer_factory.transaction.LocationID"
+      ],
+      [
+        "beer_factory.location.LocationID",
+        "beer_factory.rootbeer.LocationID"
+      ],
+      [
+        "beer_factory.location.LocationID",
+        "beer_factory.transaction.LocationID"
+      ],
+      [
+        "beer_factory.rootbeer.BrandID",
+        "beer_factory.rootbeerbrand.BrandID"
+      ],
+      [
+        "beer_factory.rootbeer.RootBeerID",
+        "beer_factory.transaction.RootBeerID"
+      ],
+      [
+        "beer_factory.rootbeerbrand.BrandID",
+        "beer_factory.rootbeerreview.BrandID"
+      ],
+      [
+        "beer_factory.rootbeerbrand.CurrentRetailPrice",
+        "beer_factory.rootbeerbrand.WholesaleCost"
+      ],
+      [
+        "beer_factory.rootbeerreview.CustomerID",
+        "beer_factory.transaction.CustomerID"
+      ]
+    ]
+  },
+  "college_completion": {
+    "join_keys": [
+      "college_completion.institution_details.state",
+      "college_completion.institution_details.unitid",
+      "college_completion.institution_grads.unitid",
+      "college_completion.state_sector_details.state",
+      "college_completion.state_sector_details.stateid",
+      "college_completion.state_sector_grads.state",
+      "college_completion.state_sector_grads.stateid"
+    ],
+    "correlated_groups": [
+      [
+        "college_completion.institution_details.awards_per_natl_value",
+        "college_completion.institution_details.awards_per_value"
+      ],
+      [
+        "college_completion.institution_details.awards_per_state_value",
+        "college_completion.institution_details.awards_per_value"
+      ],
+      [
+        "college_completion.institution_details.awards_per_value",
+        "college_completion.state_sector_details.awards_per_natl_value"
+      ],
+      [
+        "college_completion.institution_details.state",
+        "college_completion.state_sector_details.state"
+      ],
+      [
+        "college_completion.institution_details.state",
+        "college_completion.state_sector_grads.state"
+      ],
+      [
+        "college_completion.institution_details.unitid",
+        "college_completion.institution_grads.unitid"
+      ],
+      [
+        "college_completion.state_sector_details.stateid",
+        "college_completion.state_sector_grads.stateid"
+      ]
+    ]
+  },
+  "movielens": {
+    "join_keys": [
+      "movielens.actors.actorid",
+      "movielens.directors.directorid",
+      "movielens.movies.movieid",
+      "movielens.movies2actors.actorid",
+      "movielens.movies2actors.movieid",
+      "movielens.movies2directors.directorid",
+      "movielens.movies2directors.movieid",
+      "movielens.u2base.movieid",
+      "movielens.u2base.userid",
+      "movielens.users.userid"
+    ],
+    "correlated_groups": [
+      [
+        "movielens.actors.actorid",
+        "movielens.movies2actors.actorid"
+      ],
+      [
+        "movielens.directors.avg_revenue",
+        "movielens.directors.d_quality"
+      ],
+      [
+        "movielens.directors.directorid",
+        "movielens.movies2directors.directorid"
+      ],
+      [
+        "movielens.movies.movieid",
+        "movielens.movies2actors.movieid"
+      ],
+      [
+        "movielens.movies.movieid",
+        "movielens.movies2directors.movieid"
+      ],
+      [
+        "movielens.movies.movieid",
+        "movielens.u2base.movieid"
+      ],
+      [
+        "movielens.movies2actors.movieid",
+        "movielens.movies2directors.movieid"
+      ],
+      [
+        "movielens.movies2directors.movieid",
+        "movielens.u2base.movieid"
+      ],
+      [
+        "movielens.u2base.userid",
+        "movielens.users.userid"
+      ]
+    ]
+  },
+  "public_review_platform": {
+    "join_keys": [
+      "public_review_platform.Attributes.attribute_id",
+      "public_review_platform.Business.business_id",
+      "public_review_platform.Business_Attributes.attribute_id",
+      "public_review_platform.Business_Attributes.business_id",
+      "public_review_platform.Business_Categories.business_id",
+      "public_review_platform.Business_Categories.category_id",
+      "public_review_platform.Business_Hours.business_id",
+      "public_review_platform.Business_Hours.day_id",
+      "public_review_platform.Categories.category_id",
+      "public_review_platform.Checkins.business_id",
+      "public_review_platform.Checkins.day_id",
+      "public_review_platform.Compliments.compliment_id",
+      "public_review_platform.Days.day_id",
+      "public_review_platform.Elite.user_id",
+      "public_review_platform.Elite.year_id",
+      "public_review_platform.Reviews.business_id",
+      "public_review_platform.Reviews.user_id",
+      "public_review_platform.Tips.business_id",
+      "public_review_platform.Tips.user_id",
+      "public_review_platform.Users.user_id",
+      "public_review_platform.Users.user_yelping_since_year",
+      "public_review_platform.Users_Compliments.compliment_id",
+      "public_review_platform.Users_Compliments.user_id",
+      "public_review_platform.Years.year_id"
+    ],
+    "correlated_groups": [
+      [
+        "public_review_platform.Attributes.attribute_id",
+        "public_review_platform.Business_Attributes.attribute_id"
+      ],
+      [
+        "public_review_platform.Business.business_id",
+        "public_review_platform.Business_Attributes.attribute_id"
+      ],
+      [
+        "public_review_platform.Business.business_id",
+        "public_review_platform.Business_Attributes.business_id"
+      ],
+      [
+        "public_review_platform.Business.business_id",
+        "public_review_platform.Business_Categories.business_id"
+      ],
+      [
+        "public_review_platform.Business.business_id",
+        "public_review_platform.Business_Hours.business_id"
+      ],
+      [
+        "public_review_platform.Business.business_id",
+        "public_review_platform.Checkins.business_id"
+      ],
+      [
+        "public_review_platform.Business.business_id",
+        "public_review_platform.Reviews.business_id"
+      ],
+      [
+        "public_review_platform.Business.business_id",
+        "public_review_platform.Tips.business_id"
+      ],
+      [
+        "public_review_platform.Business_Attributes.business_id",
+        "public_review_platform.Business_Categories.business_id"
+      ],
+      [
+        "public_review_platform.Business_Attributes.business_id",
+        "public_review_platform.Business_Hours.business_id"
+      ],
+      [
+        "public_review_platform.Business_Attributes.business_id",
+        "public_review_platform.Reviews.business_id"
+      ],
+      [
+        "public_review_platform.Business_Categories.business_id",
+        "public_review_platform.Business_Hours.business_id"
+      ],
+      [
+        "public_review_platform.Business_Categories.business_id",
+        "public_review_platform.Reviews.business_id"
+      ],
+      [
+        "public_review_platform.Business_Categories.business_id",
+        "public_review_platform.Tips.business_id"
+      ],
+      [
+        "public_review_platform.Business_Categories.category_id",
+        "public_review_platform.Categories.category_id"
+      ],
+      [
+        "public_review_platform.Business_Hours.day_id",
+        "public_review_platform.Days.day_id"
+      ],
+      [
+        "public_review_platform.Checkins.day_id",
+        "public_review_platform.Days.day_id"
+      ],
+      [
+        "public_review_platform.Compliments.compliment_id",
+        "public_review_platform.Users_Compliments.compliment_id"
+      ],
+      [
+        "public_review_platform.Elite.user_id",
+        "public_review_platform.Reviews.user_id"
+      ],
+      [
+        "public_review_platform.Elite.user_id",
+        "public_review_platform.Users.user_id"
+      ],
+      [
+        "public_review_platform.Elite.user_id",
+        "public_review_platform.Users_Compliments.user_id"
+      ],
+      [
+        "public_review_platform.Elite.year_id",
+        "public_review_platform.Users.user_yelping_since_year"
+      ],
+      [
+        "public_review_platform.Elite.year_id",
+        "public_review_platform.Years.year_id"
+      ],
+      [
+        "public_review_platform.Reviews.business_id",
+        "public_review_platform.Tips.business_id"
+      ],
+      [
+        "public_review_platform.Reviews.user_id",
+        "public_review_platform.Users.user_id"
+      ],
+      [
+        "public_review_platform.Reviews.user_id",
+        "public_review_platform.Users_Compliments.user_id"
+      ],
+      [
+        "public_review_platform.Tips.user_id",
+        "public_review_platform.Users.user_id"
+      ],
+      [
+        "public_review_platform.Users.user_id",
+        "public_review_platform.Users_Compliments.user_id"
+      ]
+    ]
+  },
+  "regional_sales": {
+    "join_keys": [
+      "regional_sales.Customers.CustomerID",
+      "regional_sales.Products.ProductID",
+      "regional_sales.Regions.StateCode",
+      "regional_sales.Sales Orders._CustomerID",
+      "regional_sales.Sales Orders._ProductID",
+      "regional_sales.Sales Orders._SalesTeamID",
+      "regional_sales.Sales Orders._StoreID",
+      "regional_sales.Sales Team.SalesTeamID",
+      "regional_sales.Store Locations.StateCode",
+      "regional_sales.Store Locations.StoreID"
+    ],
+    "correlated_groups": [
+      [
+        "regional_sales.Customers.CustomerID",
+        "regional_sales.Sales Orders._CustomerID"
+      ],
+      [
+        "regional_sales.Products.ProductID",
+        "regional_sales.Sales Orders._ProductID"
+      ],
+      [
+        "regional_sales.Regions.StateCode",
+        "regional_sales.Store Locations.StateCode"
+      ],
+      [
+        "regional_sales.Sales Orders._SalesTeamID",
+        "regional_sales.Sales Team.SalesTeamID"
+      ],
+      [
+        "regional_sales.Sales Orders._StoreID",
+        "regional_sales.Store Locations.StoreID"
+      ]
+    ]
+  },
+  "bike_share_1": {
+    "join_keys": [
+      "bike_share_1.station.id",
+      "bike_share_1.station.name",
+      "bike_share_1.status.station_id",
+      "bike_share_1.trip.end_station_name",
+      "bike_share_1.trip.start_station_id",
+      "bike_share_1.trip.start_station_name"
+    ],
+    "correlated_groups": [
+      [
+        "bike_share_1.station.dock_count",
+        "bike_share_1.status.bikes_available"
+      ],
+      [
+        "bike_share_1.station.id",
+        "bike_share_1.status.station_id"
+      ],
+      [
+        "bike_share_1.station.name",
+        "bike_share_1.trip.start_station_name"
+      ],
+      [
+        "bike_share_1.trip.end_station_name",
+        "bike_share_1.trip.start_station_name"
+      ]
+    ]
+  },
+  "food_inspection": {
+    "join_keys": [
+      "food_inspection.businesses.business_id",
+      "food_inspection.inspections.business_id",
+      "food_inspection.violations.business_id"
+    ],
+    "correlated_groups": []
+  },
+  "image_and_language": {
+    "join_keys": [
+      "image_and_language.ATT_CLASSES.ATT_CLASS_ID",
+      "image_and_language.IMG_OBJ.IMG_ID",
+      "image_and_language.IMG_OBJ.OBJ_CLASS_ID",
+      "image_and_language.IMG_OBJ.OBJ_SAMPLE_ID",
+      "image_and_language.IMG_OBJ_ATT.ATT_CLASS_ID",
+      "image_and_language.IMG_OBJ_ATT.IMG_ID",
+      "image_and_language.IMG_REL.IMG_ID",
+      "image_and_language.IMG_REL.OBJ1_SAMPLE_ID",
+      "image_and_language.IMG_REL.OBJ2_SAMPLE_ID",
+      "image_and_language.IMG_REL.PRED_CLASS_ID",
+      "image_and_language.OBJ_CLASSES.OBJ_CLASS_ID",
+      "image_and_language.PRED_CLASSES.PRED_CLASS_ID"
+    ],
+    "correlated_groups": [
+      [
+        "image_and_language.IMG_REL.OBJ1_SAMPLE_ID",
+        "image_and_language.IMG_REL.OBJ2_SAMPLE_ID"
+      ]
+    ]
+  },
+  "movie_3": {
+    "join_keys": [
+      "movie_3.actor.actor_id",
+      "movie_3.address.address_id",
+      "movie_3.address.city_id",
+      "movie_3.category.category_id",
+      "movie_3.city.city_id",
+      "movie_3.city.country_id",
+      "movie_3.country.country_id",
+      "movie_3.customer.address_id",
+      "movie_3.customer.customer_id",
+      "movie_3.customer.store_id",
+      "movie_3.film.film_id",
+      "movie_3.film.language_id",
+      "movie_3.film_actor.actor_id",
+      "movie_3.film_actor.film_id",
+      "movie_3.film_category.category_id",
+      "movie_3.film_category.film_id",
+      "movie_3.inventory.film_id",
+      "movie_3.inventory.inventory_id",
+      "movie_3.inventory.store_id",
+      "movie_3.language.language_id",
+      "movie_3.payment.customer_id",
+      "movie_3.payment.rental_id",
+      "movie_3.rental.customer_id",
+      "movie_3.rental.inventory_id",
+      "movie_3.rental.rental_id",
+      "movie_3.rental.staff_id",
+      "movie_3.staff.address_id",
+      "movie_3.staff.staff_id",
+      "movie_3.staff.store_id",
+      "movie_3.store.address_id",
+      "movie_3.store.manager_staff_id",
+      "movie_3.store.store_id"
+    ],
+    "correlated_groups": [
+      [
+        "movie_3.film.rental_duration",
+        "movie_3.film.rental_rate"
+      ],
+      [
+        "movie_3.rental.rental_date",
+        "movie_3.rental.return_date"
+      ]
+    ]
+  },
+  "movie_platform": {
+    "join_keys": [
+      "movie_platform.lists.list_id",
+      "movie_platform.lists.user_id",
+      "movie_platform.lists_users.list_id",
+      "movie_platform.lists_users.user_id",
+      "movie_platform.movies.movie_id",
+      "movie_platform.ratings.movie_id",
+      "movie_platform.ratings.user_id",
+      "movie_platform.ratings_users.user_id"
+    ],
+    "correlated_groups": [
+      [
+        "movie_platform.movies.movie_id",
+        "movie_platform.ratings.movie_id"
+      ]
+    ]
+  },
+  "cs_semester": {
+    "join_keys": [
+      "cs_semester.RA.prof_id",
+      "cs_semester.RA.student_id",
+      "cs_semester.course.course_id",
+      "cs_semester.prof.prof_id",
+      "cs_semester.registration.course_id",
+      "cs_semester.registration.student_id",
+      "cs_semester.student.student_id"
+    ],
+    "correlated_groups": [
+      [
+        "cs_semester.course.course_id",
+        "cs_semester.registration.course_id"
+      ],
+      [
+        "cs_semester.RA.student_id",
+        "cs_semester.registration.student_id"
+      ]
+    ]
+  },
+  "ice_hockey_draft": {
+    "join_keys": [
+      "ice_hockey_draft.PlayerInfo.ELITEID",
+      "ice_hockey_draft.PlayerInfo.height",
+      "ice_hockey_draft.PlayerInfo.weight",
+      "ice_hockey_draft.SeasonStatus.ELITEID",
+      "ice_hockey_draft.height_info.height_id",
+      "ice_hockey_draft.weight_info.weight_id"
+    ],
+    "correlated_groups": [
+      [
+        "ice_hockey_draft.height_info.height_id",
+        "ice_hockey_draft.PlayerInfo.height"
+      ],
+      [
+        "ice_hockey_draft.PlayerInfo.ELITEID",
+        "ice_hockey_draft.SeasonStatus.ELITEID"
+      ],
+      [
+        "ice_hockey_draft.PlayerInfo.weight",
+        "ice_hockey_draft.weight_info.weight_id"
+      ]
+    ]
+  },
+  "mondial_geo": {
+    "join_keys": [
+      "mondial_geo.borders.Country1",
+      "mondial_geo.borders.Country2",
+      "mondial_geo.city.Country",
+      "mondial_geo.city.Name",
+      "mondial_geo.city.Province",
+      "mondial_geo.continent.Name",
+      "mondial_geo.country.Capital",
+      "mondial_geo.country.Code",
+      "mondial_geo.country.Province",
+      "mondial_geo.desert.Name",
+      "mondial_geo.economy.Country",
+      "mondial_geo.encompasses.Continent",
+      "mondial_geo.encompasses.Country",
+      "mondial_geo.ethnicGroup.Country",
+      "mondial_geo.geo_desert.Country",
+      "mondial_geo.geo_desert.Desert",
+      "mondial_geo.geo_lake.Lake",
+      "mondial_geo.geo_lake.Province",
+      "mondial_geo.geo_mountain.Country",
+      "mondial_geo.geo_mountain.Mountain",
+      "mondial_geo.geo_mountain.Province",
+      "mondial_geo.geo_river.Country",
+      "mondial_geo.geo_river.River",
+      "mondial_geo.geo_source.Province",
+      "mondial_geo.isMember.Country",
+      "mondial_geo.isMember.Organization",
+      "mondial_geo.island.Name",
+      "mondial_geo.islandIn.Island",
+      "mondial_geo.islandIn.Sea",
+      "mondial_geo.lake.Name",
+      "mondial_geo.language.Country",
+      "mondial_geo.located.City",
+      "mondial_geo.located.Country",
+      "mondial_geo.located.Lake",
+      "mondial_geo.located.Province",
+      "mondial_geo.located.River",
+      "mondial_geo.located.Sea",
+      "mondial_geo.locatedOn.City",
+      "mondial_geo.locatedOn.Country",
+      "mondial_geo.locatedOn.Island",
+      "mondial_geo.mergesWith.Sea1",
+      "mondial_geo.mountain.Name",
+      "mondial_geo.mountainOnIsland.Island",
+      "mondial_geo.mountainOnIsland.Mountain",
+      "mondial_geo.organization.Abbreviation",
+      "mondial_geo.organization.City",
+      "mondial_geo.organization.Country",
+      "mondial_geo.politics.Country",
+      "mondial_geo.population.Country",
+      "mondial_geo.province.Country",
+      "mondial_geo.province.Name",
+      "mondial_geo.religion.Country",
+      "mondial_geo.river.Name",
+      "mondial_geo.river.Sea",
+      "mondial_geo.sea.Name"
+    ],
+    "correlated_groups": [
+      [
+        "mondial_geo.city.Name",
+        "mondial_geo.country.Capital"
+      ],
+      [
+        "mondial_geo.city.Name",
+        "mondial_geo.locatedOn.City"
+      ],
+      [
+        "mondial_geo.continent.Name",
+        "mondial_geo.encompasses.Continent"
+      ],
+      [
+        "mondial_geo.country.Area",
+        "mondial_geo.country.Population"
+      ],
+      [
+        "mondial_geo.country.Code",
+        "mondial_geo.encompasses.Country"
+      ],
+      [
+        "mondial_geo.country.Code",
+        "mondial_geo.politics.Country"
+      ],
+      [
+        "mondial_geo.country.Population",
+        "mondial_geo.ethnicGroup.Percentage"
+      ],
+      [
+        "mondial_geo.economy.Agriculture",
+        "mondial_geo.economy.GDP"
+      ],
+      [
+        "mondial_geo.economy.GDP",
+        "mondial_geo.economy.Industry"
+      ],
+      [
+        "mondial_geo.economy.GDP",
+        "mondial_geo.economy.Service"
+      ],
+      [
+        "mondial_geo.encompasses.Country",
+        "mondial_geo.politics.Country"
+      ],
+      [
+        "mondial_geo.ethnicGroup.Country",
+        "mondial_geo.ethnicGroup.Country"
+      ],
+      [
+        "mondial_geo.island.Name",
+        "mondial_geo.locatedOn.Island"
+      ]
+    ]
+  },
+  "retail_complains": {
+    "join_keys": [
+      "retail_complains.client.client_id",
+      "retail_complains.client.district_id",
+      "retail_complains.district.district_id",
+      "retail_complains.district.state_abbrev",
+      "retail_complains.events.Client_ID",
+      "retail_complains.reviews.district_id",
+      "retail_complains.state.StateCode"
+    ],
+    "correlated_groups": [
+      [
+        "retail_complains.district.district_id",
+        "retail_complains.reviews.district_id"
+      ]
+    ]
+  },
+  "retail_world": {
+    "join_keys": [
+      "retail_world.Categories.CategoryID",
+      "retail_world.Customers.CustomerID",
+      "retail_world.Employees.EmployeeID",
+      "retail_world.Orders.CustomerID",
+      "retail_world.Orders.EmployeeID",
+      "retail_world.Products.CategoryID",
+      "retail_world.Products.SupplierID",
+      "retail_world.Suppliers.SupplierID"
+    ],
+    "correlated_groups": []
+  },
+  "toxicology": {
+    "join_keys": [
+      "toxicology.atom.atom_id",
+      "toxicology.atom.molecule_id",
+      "toxicology.bond.bond_id",
+      "toxicology.bond.molecule_id",
+      "toxicology.connected.atom_id",
+      "toxicology.connected.atom_id2",
+      "toxicology.connected.bond_id",
+      "toxicology.molecule.molecule_id"
+    ],
+    "correlated_groups": [
+      [
+        "toxicology.atom.atom_id",
+        "toxicology.connected.atom_id"
+      ],
+      [
+        "toxicology.bond.molecule_id",
+        "toxicology.connected.atom_id"
+      ],
+      [
+        "toxicology.bond.molecule_id",
+        "toxicology.connected.atom_id2"
+      ]
+    ]
+  },
+  "california_schools": {
+    "join_keys": [
+      "california_schools.frpm.CDSCode",
+      "california_schools.satscores.cds",
+      "california_schools.schools.CDSCode"
+    ],
+    "correlated_groups": [
+      [
+        "california_schools.satscores.AvgScrMath",
+        "california_schools.satscores.AvgScrRead"
+      ]
+    ]
+  },
+  "debit_card_specializing": {
+    "join_keys": [
+      "debit_card_specializing.customers.CustomerID",
+      "debit_card_specializing.gasstations.GasStationID",
+      "debit_card_specializing.products.ProductID",
+      "debit_card_specializing.transactions_1k.CustomerID",
+      "debit_card_specializing.transactions_1k.GasStationID",
+      "debit_card_specializing.transactions_1k.ProductID",
+      "debit_card_specializing.yearmonth.CustomerID"
+    ],
+    "correlated_groups": []
+  },
+  "disney": {
+    "join_keys": [
+      "disney.characters.hero",
+      "disney.characters.movie_title",
+      "disney.characters.villian",
+      "disney.director.name",
+      "disney.movies_total_gross.movie_title",
+      "disney.voice-actors.character",
+      "disney.voice-actors.movie"
+    ],
+    "correlated_groups": []
+  },
+  "olympics": {
+    "join_keys": [
+      "olympics.city.id",
+      "olympics.competitor_event.competitor_id",
+      "olympics.competitor_event.event_id",
+      "olympics.competitor_event.medal_id",
+      "olympics.event.id",
+      "olympics.event.sport_id",
+      "olympics.games.id",
+      "olympics.games_city.city_id",
+      "olympics.games_city.games_id",
+      "olympics.games_competitor.games_id",
+      "olympics.games_competitor.id",
+      "olympics.games_competitor.person_id",
+      "olympics.medal.id",
+      "olympics.noc_region.id",
+      "olympics.person.id",
+      "olympics.person_region.person_id",
+      "olympics.person_region.region_id",
+      "olympics.sport.id"
+    ],
+    "correlated_groups": []
+  },
+  "soccer_2016": {
+    "join_keys": [
+      "soccer_2016.Ball_by_Ball.Match_Id",
+      "soccer_2016.Ball_by_Ball.Striker",
+      "soccer_2016.Batsman_Scored.Match_Id",
+      "soccer_2016.Batting_Style.Batting_Id",
+      "soccer_2016.Bowling_Style.Bowling_Id",
+      "soccer_2016.City.City_Id",
+      "soccer_2016.City.Country_id",
+      "soccer_2016.Country.Country_Id",
+      "soccer_2016.Extra_Runs.Extra_Type_Id",
+      "soccer_2016.Extra_Type.Extra_Id",
+      "soccer_2016.Match.Man_of_the_Match",
+      "soccer_2016.Match.Match_Id",
+      "soccer_2016.Match.Match_Winner",
+      "soccer_2016.Match.Outcome_type",
+      "soccer_2016.Match.Season_Id",
+      "soccer_2016.Match.Team_1",
+      "soccer_2016.Match.Team_2",
+      "soccer_2016.Match.Toss_Decide",
+      "soccer_2016.Match.Toss_Winner",
+      "soccer_2016.Match.Venue_Id",
+      "soccer_2016.Match.Win_Type",
+      "soccer_2016.Out_Type.Out_Id",
+      "soccer_2016.Outcome.Outcome_Id",
+      "soccer_2016.Player.Batting_hand",
+      "soccer_2016.Player.Bowling_skill",
+      "soccer_2016.Player.Country_Name",
+      "soccer_2016.Player.Player_Id",
+      "soccer_2016.Player_Match.Match_Id",
+      "soccer_2016.Player_Match.Player_Id",
+      "soccer_2016.Player_Match.Role_Id",
+      "soccer_2016.Player_Match.Team_Id",
+      "soccer_2016.Rolee.Role_Id",
+      "soccer_2016.Season.Man_of_the_Series",
+      "soccer_2016.Season.Orange_Cap",
+      "soccer_2016.Season.Season_Id",
+      "soccer_2016.Team.Team_Id",
+      "soccer_2016.Toss_Decision.Toss_Id",
+      "soccer_2016.Umpire.Umpire_Country",
+      "soccer_2016.Venue.City_Id",
+      "soccer_2016.Venue.Venue_Id",
+      "soccer_2016.Wicket_Taken.Kind_Out",
+      "soccer_2016.Win_By.Win_Id"
+    ],
+    "correlated_groups": []
+  },
+  "university": {
+    "join_keys": [
+      "university.country.id",
+      "university.ranking_criteria.id",
+      "university.ranking_criteria.ranking_system_id",
+      "university.ranking_system.id",
+      "university.university.country_id",
+      "university.university.id",
+      "university.university_ranking_year.ranking_criteria_id",
+      "university.university_ranking_year.university_id",
+      "university.university_year.university_id"
+    ],
+    "correlated_groups": [
+      [
+        "university.university_year.num_students",
+        "university.university_year.pct_female_students"
+      ],
+      [
+        "university.university_year.num_students",
+        "university.university_year.pct_international_students"
+      ]
+    ]
+  },
+  "address": {
+    "join_keys": [
+      "address.CBSA.CBSA",
+      "address.alias.zip_code",
+      "address.area_code.zip_code",
+      "address.avoid.zip_code",
+      "address.congress.abbreviation",
+      "address.congress.cognress_rep_id",
+      "address.country.state",
+      "address.country.zip_code",
+      "address.state.abbreviation",
+      "address.zip_congress.district",
+      "address.zip_congress.zip_code",
+      "address.zip_data.CBSA",
+      "address.zip_data.state",
+      "address.zip_data.zip_code"
+    ],
+    "correlated_groups": [
+      [
+        "address.zip_data.population_2010",
+        "address.zip_data.population_2020"
+      ]
+    ]
+  },
+  "airline": {
+    "join_keys": [
+      "airline.Air Carriers.Code",
+      "airline.Airlines.DEST",
+      "airline.Airlines.OP_CARRIER_AIRLINE_ID",
+      "airline.Airlines.ORIGIN",
+      "airline.Airports.Code"
+    ],
+    "correlated_groups": [
+      [
+        "airline.Airlines.ACTUAL_ELAPSED_TIME",
+        "airline.Airlines.CRS_ELAPSED_TIME"
+      ]
+    ]
+  },
+  "authors": {
+    "join_keys": [
+      "authors.Author.Id",
+      "authors.Conference.Id",
+      "authors.Journal.Id",
+      "authors.Paper.ConferenceId",
+      "authors.Paper.Id",
+      "authors.Paper.JournalId",
+      "authors.PaperAuthor.AuthorId",
+      "authors.PaperAuthor.PaperId"
+    ],
+    "correlated_groups": []
+  },
+  "retails": {
+    "join_keys": [
+      "retails.customer.c_custkey",
+      "retails.customer.c_nationkey",
+      "retails.lineitem.l_orderkey",
+      "retails.lineitem.l_partkey",
+      "retails.lineitem.l_suppkey",
+      "retails.nation.n_nationkey",
+      "retails.nation.n_regionkey",
+      "retails.orders.o_custkey",
+      "retails.orders.o_orderkey",
+      "retails.part.p_partkey",
+      "retails.partsupp.ps_partkey",
+      "retails.partsupp.ps_suppkey",
+      "retails.region.r_regionkey",
+      "retails.supplier.s_nationkey",
+      "retails.supplier.s_suppkey"
+    ],
+    "correlated_groups": []
+  },
+  "sales_in_weather": {
+    "join_keys": [
+      "sales_in_weather.relation.station_nbr",
+      "sales_in_weather.relation.store_nbr",
+      "sales_in_weather.sales_in_weather.date",
+      "sales_in_weather.sales_in_weather.store_nbr",
+      "sales_in_weather.weather.date",
+      "sales_in_weather.weather.station_nbr"
+    ],
+    "correlated_groups": [
+      [
+        "sales_in_weather.weather.tmax",
+        "sales_in_weather.weather.tmin"
+      ]
+    ]
+  },
+  "superstore": {
+    "join_keys": [
+      "superstore.central_superstore.Customer ID",
+      "superstore.central_superstore.Product ID",
+      "superstore.east_superstore.Customer ID",
+      "superstore.east_superstore.Product ID",
+      "superstore.people.Customer ID",
+      "superstore.product.Product ID",
+      "superstore.south_superstore.Customer ID",
+      "superstore.south_superstore.Product ID",
+      "superstore.west_superstore.Customer ID",
+      "superstore.west_superstore.Product ID"
+    ],
+    "correlated_groups": [
+      [
+        "superstore.east_superstore.Profit",
+        "superstore.east_superstore.Quantity"
+      ]
+    ]
+  },
+  "formula_1": {
+    "join_keys": [
+      "formula_1.circuits.circuitId",
+      "formula_1.constructorResults.constructorId",
+      "formula_1.constructorStandings.constructorId",
+      "formula_1.constructors.constructorId",
+      "formula_1.driverStandings.driverId",
+      "formula_1.driverStandings.raceId",
+      "formula_1.drivers.driverId",
+      "formula_1.lapTimes.driverId",
+      "formula_1.lapTimes.raceId",
+      "formula_1.pitStops.driverId",
+      "formula_1.pitStops.raceId",
+      "formula_1.qualifying.driverId",
+      "formula_1.qualifying.raceId",
+      "formula_1.races.circuitId",
+      "formula_1.races.raceId",
+      "formula_1.races.year",
+      "formula_1.results.constructorId",
+      "formula_1.results.driverId",
+      "formula_1.results.raceId",
+      "formula_1.results.statusId",
+      "formula_1.seasons.year",
+      "formula_1.status.statusId"
+    ],
+    "correlated_groups": []
+  },
+  "language_corpus": {
+    "join_keys": [
+      "language_corpus.biwords.lid",
+      "language_corpus.biwords.w1st",
+      "language_corpus.biwords.w2nd",
+      "language_corpus.langs.lid",
+      "language_corpus.langs_words.lid",
+      "language_corpus.langs_words.wid",
+      "language_corpus.pages.lid",
+      "language_corpus.pages.pid",
+      "language_corpus.pages_words.pid",
+      "language_corpus.pages_words.wid",
+      "language_corpus.words.wid"
+    ],
+    "correlated_groups": []
+  },
+  "movies_4": {
+    "join_keys": [
+      "movies_4.department.department_id",
+      "movies_4.gender.gender_id",
+      "movies_4.genre.genre_id",
+      "movies_4.keyword.keyword_id",
+      "movies_4.language.language_id",
+      "movies_4.language_role.role_id",
+      "movies_4.movie.movie_id",
+      "movies_4.movie_cast.gender_id",
+      "movies_4.movie_cast.movie_id",
+      "movies_4.movie_cast.person_id",
+      "movies_4.movie_company.company_id",
+      "movies_4.movie_company.movie_id",
+      "movies_4.movie_crew.department_id",
+      "movies_4.movie_crew.movie_id",
+      "movies_4.movie_crew.person_id",
+      "movies_4.movie_genres.genre_id",
+      "movies_4.movie_genres.movie_id",
+      "movies_4.movie_keywords.keyword_id",
+      "movies_4.movie_keywords.movie_id",
+      "movies_4.movie_languages.language_id",
+      "movies_4.movie_languages.language_role_id",
+      "movies_4.movie_languages.movie_id",
+      "movies_4.person.person_id",
+      "movies_4.production_company.company_id",
+      "movies_4.production_country.movie_id"
+    ],
+    "correlated_groups": []
+  },
+  "simpson_episodes": {
+    "join_keys": [
+      "simpson_episodes.Award.award_id",
+      "simpson_episodes.Award.episode_id",
+      "simpson_episodes.Award.person",
+      "simpson_episodes.Character_Award.award_id",
+      "simpson_episodes.Credit.episode_id",
+      "simpson_episodes.Credit.person",
+      "simpson_episodes.Episode.episode_id",
+      "simpson_episodes.Keyword.episode_id",
+      "simpson_episodes.Person.name",
+      "simpson_episodes.Vote.episode_id"
+    ],
+    "correlated_groups": [
+      [
+        "simpson_episodes.Vote.stars",
+        "simpson_episodes.Vote.votes"
+      ]
+    ]
+  },
+  "software_company": {
+    "join_keys": [
+      "software_company.Customers.GEOID",
+      "software_company.Customers.ID",
+      "software_company.Demog.GEOID",
+      "software_company.Mailings1_2.REFID",
+      "software_company.mailings3.REFID"
+    ],
+    "correlated_groups": []
+  },
+  "world": {
+    "join_keys": [
+      "world.City.CountryCode",
+      "world.Country.Code",
+      "world.CountryLanguage.CountryCode"
+    ],
+    "correlated_groups": [
+      [
+        "world.Country.GNP",
+        "world.Country.GNPOld"
+      ]
+    ]
+  },
+  "car_retails": {
+    "join_keys": [
+      "car_retails.customers.customerNumber",
+      "car_retails.customers.salesRepEmployeeNumber",
+      "car_retails.employees.employeeNumber",
+      "car_retails.employees.officeCode",
+      "car_retails.employees.reportsTo",
+      "car_retails.offices.officeCode",
+      "car_retails.orderdetails.productCode",
+      "car_retails.orders.customerNumber",
+      "car_retails.payments.customerNumber",
+      "car_retails.productlines.productLine",
+      "car_retails.products.productCode",
+      "car_retails.products.productLine"
+    ],
+    "correlated_groups": [
+      [
+        "car_retails.orderdetails.priceEach",
+        "car_retails.orderdetails.quantityOrdered"
+      ],
+      [
+        "car_retails.products.MSRP",
+        "car_retails.products.buyPrice"
+      ]
+    ]
+  },
+  "computer_student": {
+    "join_keys": [
+      "computer_student.advisedBy.p_id",
+      "computer_student.advisedBy.p_id_dummy",
+      "computer_student.course.course_id",
+      "computer_student.person.p_id",
+      "computer_student.taughtBy.course_id",
+      "computer_student.taughtBy.p_id"
+    ],
+    "correlated_groups": []
+  },
+  "financial": {
+    "join_keys": [
+      "financial.account.account_id",
+      "financial.account.district_id",
+      "financial.card.disp_id",
+      "financial.client.client_id",
+      "financial.client.district_id",
+      "financial.disp.account_id",
+      "financial.disp.client_id",
+      "financial.disp.disp_id",
+      "financial.district.district_id",
+      "financial.loan.account_id",
+      "financial.order.account_id",
+      "financial.trans.account_id"
+    ],
+    "correlated_groups": []
+  },
+  "hockey": {
+    "join_keys": [
+      "hockey.AwardsCoaches.coachID",
+      "hockey.AwardsCoaches.lgID",
+      "hockey.AwardsMisc.ID",
+      "hockey.AwardsPlayers.playerID",
+      "hockey.Coaches.coachID",
+      "hockey.Coaches.lgID",
+      "hockey.Coaches.tmID",
+      "hockey.Coaches.year",
+      "hockey.Goalies.lgID",
+      "hockey.Goalies.playerID",
+      "hockey.Goalies.tmID",
+      "hockey.Goalies.year",
+      "hockey.HOF.hofID",
+      "hockey.Master.coachID",
+      "hockey.Master.hofID",
+      "hockey.Master.playerID",
+      "hockey.Scoring.playerID",
+      "hockey.Scoring.tmID",
+      "hockey.Scoring.year",
+      "hockey.SeriesPost.year",
+      "hockey.TeamVsTeam.oppID",
+      "hockey.TeamVsTeam.tmID",
+      "hockey.TeamVsTeam.year",
+      "hockey.Teams.lgID",
+      "hockey.Teams.tmID",
+      "hockey.Teams.year",
+      "hockey.TeamsHalf.tmID",
+      "hockey.TeamsHalf.year",
+      "hockey.TeamsSC.tmID",
+      "hockey.TeamsSC.year"
+    ],
+    "correlated_groups": [
+      [
+        "hockey.Coaches.l",
+        "hockey.Coaches.w"
+      ],
+      [
+        "hockey.Goalies.L",
+        "hockey.Goalies.W"
+      ],
+      [
+        "hockey.Teams.L",
+        "hockey.Teams.W"
+      ],
+      [
+        "hockey.TeamsSC.G",
+        "hockey.TeamsSC.W"
+      ],
+      [
+        "hockey.TeamsSC.L",
+        "hockey.TeamsSC.W"
+      ]
+    ]
+  },
+  "legislator": {
+    "join_keys": [
+      "legislator.current-terms.bioguide",
+      "legislator.current.bioguide_id",
+      "legislator.historical-terms.bioguide",
+      "legislator.historical.bioguide_id",
+      "legislator.social-media.bioguide"
+    ],
+    "correlated_groups": []
+  },
+  "thrombosis_prediction": {
+    "join_keys": [
+      "thrombosis_prediction.Examination.Examination Date",
+      "thrombosis_prediction.Examination.ID",
+      "thrombosis_prediction.Laboratory.ID",
+      "thrombosis_prediction.Patient.First Date",
+      "thrombosis_prediction.Patient.ID"
+    ],
+    "correlated_groups": []
+  },
+  "codebase_community": {
+    "join_keys": [
+      "codebase_community.badges.UserId",
+      "codebase_community.comments.Id",
+      "codebase_community.comments.PostId",
+      "codebase_community.comments.UserId",
+      "codebase_community.postHistory.PostId",
+      "codebase_community.postHistory.UserId",
+      "codebase_community.postLinks.PostId",
+      "codebase_community.postLinks.RelatedPostId",
+      "codebase_community.posts.Id",
+      "codebase_community.posts.LastEditorUserId",
+      "codebase_community.posts.OwnerUserId",
+      "codebase_community.tags.ExcerptPostId",
+      "codebase_community.users.Id",
+      "codebase_community.users.Reputation",
+      "codebase_community.votes.PostId",
+      "codebase_community.votes.UserId",
+      "unknown.T3.max_reputation"
+    ],
+    "correlated_groups": [
+      [
+        "codebase_community.badges.UserId",
+        "codebase_community.comments.UserId"
+      ]
+    ]
+  },
+  "shipping": {
+    "join_keys": [
+      "shipping.city.city_id",
+      "shipping.customer.cust_id",
+      "shipping.driver.driver_id",
+      "shipping.shipment.city_id",
+      "shipping.shipment.cust_id",
+      "shipping.shipment.driver_id",
+      "shipping.shipment.truck_id",
+      "shipping.truck.truck_id"
+    ],
+    "correlated_groups": []
+  },
+  "music_platform_2": {
+    "join_keys": [
+      "music_platform_2.categories.podcast_id",
+      "music_platform_2.podcasts.podcast_id",
+      "music_platform_2.reviews.podcast_id"
+    ],
+    "correlated_groups": []
+  },
+  "european_football_2": {
+    "join_keys": [
+      "european_football_2.Country.id",
+      "european_football_2.League.country_id",
+      "european_football_2.League.id",
+      "european_football_2.Match.away_player_1",
+      "european_football_2.Match.away_player_5",
+      "european_football_2.Match.away_player_9",
+      "european_football_2.Match.away_team_api_id",
+      "european_football_2.Match.away_team_goal",
+      "european_football_2.Match.country_id",
+      "european_football_2.Match.home_player_1",
+      "european_football_2.Match.home_player_8",
+      "european_football_2.Match.home_team_api_id",
+      "european_football_2.Match.home_team_goal",
+      "european_football_2.Match.league_id",
+      "european_football_2.Player.id",
+      "european_football_2.Player.player_api_id",
+      "european_football_2.Player.player_fifa_api_id",
+      "european_football_2.Player_Attributes.id",
+      "european_football_2.Player_Attributes.player_api_id",
+      "european_football_2.Player_Attributes.player_fifa_api_id",
+      "european_football_2.Team.team_api_id",
+      "european_football_2.Team_Attributes.team_api_id",
+      "unknown.mx.league_id",
+      "unknown.t2.player_api_id"
+    ],
+    "correlated_groups": [
+      [
+        "european_football_2.Match.away_team_goal",
+        "european_football_2.Match.home_team_goal"
+      ],
+      [
+        "european_football_2.Team_Attributes.team_api_id",
+        "european_football_2.Team.team_api_id"
+      ]
+    ]
+  },
+  "talkingdata": {
+    "join_keys": [
+      "talkingdata.app_all.app_id",
+      "talkingdata.app_events.app_id",
+      "talkingdata.app_events.event_id",
+      "talkingdata.app_events_relevant.event_id",
+      "talkingdata.app_labels.app_id",
+      "talkingdata.app_labels.label_id",
+      "talkingdata.events.device_id",
+      "talkingdata.events.event_id",
+      "talkingdata.events_relevant.device_id",
+      "talkingdata.events_relevant.event_id",
+      "talkingdata.gender_age.device_id",
+      "talkingdata.label_categories.label_id",
+      "talkingdata.phone_brand_device_model2.device_id"
+    ],
+    "correlated_groups": []
+  },
+  "world_development_indicators": {
+    "join_keys": [
+      "world_development_indicators.Country.CountryCode",
+      "world_development_indicators.CountryNotes.Countrycode",
+      "world_development_indicators.CountryNotes.Seriescode",
+      "world_development_indicators.Footnotes.Countrycode",
+      "world_development_indicators.Footnotes.Seriescode",
+      "world_development_indicators.Indicators.CountryCode",
+      "world_development_indicators.Indicators.IndicatorName",
+      "world_development_indicators.Series.IndicatorName",
+      "world_development_indicators.Series.SeriesCode",
+      "world_development_indicators.SeriesNotes.Seriescode"
+    ],
+    "correlated_groups": [
+      [
+        "world_development_indicators.Country.CountryCode",
+        "world_development_indicators.Indicators.CountryCode"
+      ],
+      [
+        "world_development_indicators.Indicators.IndicatorName",
+        "world_development_indicators.Series.IndicatorName"
+      ]
+    ]
+  },
+  "book_publishing_company": {
+    "join_keys": [
+      "book_publishing_company.authors.au_id",
+      "book_publishing_company.employee.job_id",
+      "book_publishing_company.employee.pub_id",
+      "book_publishing_company.jobs.job_id",
+      "book_publishing_company.pub_info.pub_id",
+      "book_publishing_company.publishers.pub_id",
+      "book_publishing_company.roysched.title_id",
+      "book_publishing_company.sales.stor_id",
+      "book_publishing_company.sales.title_id",
+      "book_publishing_company.stores.stor_id",
+      "book_publishing_company.titleauthor.au_id",
+      "book_publishing_company.titleauthor.title_id",
+      "book_publishing_company.titles.pub_id",
+      "book_publishing_company.titles.title_id"
+    ],
+    "correlated_groups": [
+      [
+        "book_publishing_company.employee.job_lvl",
+        "book_publishing_company.jobs.max_lvl"
+      ]
+    ]
+  },
+  "codebase_comments": {
+    "join_keys": [
+      "codebase_comments.Method.SolutionId",
+      "codebase_comments.Repo.Id",
+      "codebase_comments.Solution.Id",
+      "codebase_comments.Solution.RepoId"
+    ],
+    "correlated_groups": [
+      [
+        "codebase_comments.Repo.Forks",
+        "codebase_comments.Repo.Stars"
+      ],
+      [
+        "codebase_comments.Repo.Forks",
+        "codebase_comments.Repo.Watchers"
+      ]
+    ]
+  },
+  "menu": {
+    "join_keys": [
+      "menu.Dish.id",
+      "menu.Menu.id",
+      "menu.MenuItem.dish_id",
+      "menu.MenuItem.menu_page_id",
+      "menu.MenuPage.id",
+      "menu.MenuPage.menu_id"
+    ],
+    "correlated_groups": [
+      [
+        "menu.Dish.first_appeared",
+        "menu.Dish.last_appeared"
+      ],
+      [
+        "menu.MenuPage.full_height",
+        "menu.MenuPage.full_width"
+      ]
+    ]
+  },
+  "student_club": {
+    "join_keys": [
+      "student_club.attendance.link_to_event",
+      "student_club.attendance.link_to_member",
+      "student_club.budget.budget_id",
+      "student_club.budget.link_to_event",
+      "student_club.event.event_id",
+      "student_club.expense.link_to_budget",
+      "student_club.expense.link_to_member",
+      "student_club.income.link_to_member",
+      "student_club.major.major_id",
+      "student_club.member.link_to_major",
+      "student_club.member.member_id",
+      "student_club.member.zip",
+      "student_club.zip_code.zip_code"
+    ],
+    "correlated_groups": []
+  },
+  "student_loan": {
+    "join_keys": [
+      "student_loan.disabled.name",
+      "student_loan.enlist.name",
+      "student_loan.enrolled.name",
+      "student_loan.filed_for_bankrupcy.name",
+      "student_loan.longest_absense_from_school.name",
+      "student_loan.male.name",
+      "student_loan.no_payment_due.name",
+      "student_loan.person.name",
+      "student_loan.unemployed.name"
+    ],
+    "correlated_groups": [
+      [
+        "student_loan.disabled.name",
+        "student_loan.male.name"
+      ],
+      [
+        "student_loan.longest_absense_from_school.name",
+        "student_loan.male.name"
+      ]
+    ]
+  },
+  "synthea": {
+    "join_keys": [
+      "synthea.all_prevalences.ITEM",
+      "synthea.allergies.PATIENT",
+      "synthea.careplans.PATIENT",
+      "synthea.claims.PATIENT",
+      "synthea.conditions.DESCRIPTION",
+      "synthea.conditions.PATIENT",
+      "synthea.encounters.PATIENT",
+      "synthea.immunizations.PATIENT",
+      "synthea.medications.PATIENT",
+      "synthea.observations.PATIENT",
+      "synthea.patients.patient",
+      "synthea.procedures.PATIENT"
+    ],
+    "correlated_groups": []
+  },
+  "chicago_crime": {
+    "join_keys": [
+      "chicago_crime.Community_Area.community_area_no",
+      "chicago_crime.Crime.community_area_no",
+      "chicago_crime.Crime.district_no",
+      "chicago_crime.Crime.fbi_code_no",
+      "chicago_crime.Crime.iucr_no",
+      "chicago_crime.Crime.ward_no",
+      "chicago_crime.District.district_no",
+      "chicago_crime.FBI_Code.fbi_code_no",
+      "chicago_crime.IUCR.iucr_no",
+      "chicago_crime.Neighborhood.community_area_no",
+      "chicago_crime.Ward.ward_no"
+    ],
+    "correlated_groups": []
+  },
+  "professional_basketball": {
+    "join_keys": [
+      "professional_basketball.awards_coaches.coachID",
+      "professional_basketball.awards_coaches.year",
+      "professional_basketball.awards_players.playerID",
+      "professional_basketball.coaches.coachID",
+      "professional_basketball.coaches.tmID",
+      "professional_basketball.draft.playerID",
+      "professional_basketball.draft.tmID",
+      "professional_basketball.player_allstar.playerID",
+      "professional_basketball.players.playerID",
+      "professional_basketball.players_teams.playerID",
+      "professional_basketball.players_teams.tmID",
+      "professional_basketball.series_post.tmIDLoser",
+      "professional_basketball.series_post.tmIDWinner",
+      "professional_basketball.teams.tmID",
+      "professional_basketball.teams.year"
+    ],
+    "correlated_groups": [
+      [
+        "professional_basketball.coaches.lost",
+        "professional_basketball.coaches.won"
+      ],
+      [
+        "professional_basketball.player_allstar.d_rebounds",
+        "professional_basketball.player_allstar.o_rebounds"
+      ],
+      [
+        "professional_basketball.teams.lost",
+        "professional_basketball.teams.won"
+      ]
+    ]
+  },
+  "restaurant": {
+    "join_keys": [
+      "restaurant.generalinfo.city",
+      "restaurant.generalinfo.id_restaurant",
+      "restaurant.geographic.city",
+      "restaurant.location.city",
+      "restaurant.location.id_restaurant"
+    ],
+    "correlated_groups": []
+  },
+  "shakespeare": {
+    "join_keys": [
+      "shakespeare.chapters.id",
+      "shakespeare.chapters.work_id",
+      "shakespeare.characters.id",
+      "shakespeare.paragraphs.chapter_id",
+      "shakespeare.paragraphs.character_id",
+      "shakespeare.works.id"
+    ],
+    "correlated_groups": []
+  },
+  "social_media": {
+    "join_keys": [
+      "social_media.location.LocationID",
+      "social_media.twitter.LocationID",
+      "social_media.twitter.UserID",
+      "social_media.user.UserID"
+    ],
+    "correlated_groups": []
+  },
+  "video_games": {
+    "join_keys": [
+      "video_games.game.genre_id",
+      "video_games.game.id",
+      "video_games.game_platform.game_publisher_id",
+      "video_games.game_platform.id",
+      "video_games.game_platform.platform_id",
+      "video_games.game_publisher.game_id",
+      "video_games.game_publisher.id",
+      "video_games.game_publisher.publisher_id",
+      "video_games.genre.id",
+      "video_games.platform.id",
+      "video_games.publisher.id",
+      "video_games.region.id",
+      "video_games.region_sales.game_platform_id",
+      "video_games.region_sales.region_id"
+    ],
+    "correlated_groups": []
+  },
+  "books": {
+    "join_keys": [
+      "books.address.address_id",
+      "books.address.country_id",
+      "books.address_status.status_id",
+      "books.author.author_id",
+      "books.book.book_id",
+      "books.book.language_id",
+      "books.book.publisher_id",
+      "books.book_author.author_id",
+      "books.book_author.book_id",
+      "books.book_language.language_id",
+      "books.country.country_id",
+      "books.cust_order.customer_id",
+      "books.cust_order.dest_address_id",
+      "books.cust_order.order_id",
+      "books.cust_order.shipping_method_id",
+      "books.customer.customer_id",
+      "books.customer_address.address_id",
+      "books.customer_address.customer_id",
+      "books.customer_address.status_id",
+      "books.order_history.order_id",
+      "books.order_history.status_id",
+      "books.order_line.book_id",
+      "books.order_line.order_id",
+      "books.order_status.status_id",
+      "books.publisher.publisher_id",
+      "books.shipping_method.method_id"
+    ],
+    "correlated_groups": []
+  },
+  "card_games": {
+    "join_keys": [
+      "card_games.cards.setCode",
+      "card_games.cards.uuid",
+      "card_games.foreign_data.uuid",
+      "card_games.legalities.uuid",
+      "card_games.rulings.uuid",
+      "card_games.set_translations.id",
+      "card_games.set_translations.setCode",
+      "card_games.sets.code",
+      "card_games.sets.id"
+    ],
+    "correlated_groups": []
+  },
+  "cookbook": {
+    "join_keys": [
+      "cookbook.Ingredient.ingredient_id",
+      "cookbook.Nutrition.recipe_id",
+      "cookbook.Quantity.ingredient_id",
+      "cookbook.Quantity.recipe_id",
+      "cookbook.Recipe.recipe_id"
+    ],
+    "correlated_groups": [
+      [
+        "cookbook.Nutrition.sat_fat",
+        "cookbook.Nutrition.total_fat"
+      ],
+      [
+        "cookbook.Recipe.cook_min",
+        "cookbook.Recipe.prep_min"
+      ]
+    ]
+  },
+  "donor": {
+    "join_keys": [
+      "donor.donations.projectid",
+      "donor.essays.projectid",
+      "donor.projects.projectid",
+      "donor.resources.projectid"
+    ],
+    "correlated_groups": [
+      [
+        "donor.projects.total_price_excluding_optional_support",
+        "donor.projects.total_price_including_optional_support"
+      ]
+    ]
+  },
+  "sales": {
+    "join_keys": [
+      "sales.Customers.CustomerID",
+      "sales.Employees.EmployeeID",
+      "sales.Products.ProductID",
+      "sales.Sales.CustomerID",
+      "sales.Sales.ProductID",
+      "sales.Sales.SalesPersonID"
+    ],
+    "correlated_groups": [
+      [
+        "sales.Products.Price",
+        "sales.Sales.Quantity"
+      ]
+    ]
+  },
+  "superhero": {
+    "join_keys": [
+      "superhero.alignment.id",
+      "superhero.attribute.id",
+      "superhero.colour.id",
+      "superhero.gender.id",
+      "superhero.hero_attribute.attribute_id",
+      "superhero.hero_attribute.hero_id",
+      "superhero.hero_power.hero_id",
+      "superhero.hero_power.power_id",
+      "superhero.publisher.id",
+      "superhero.race.id",
+      "superhero.superhero.alignment_id",
+      "superhero.superhero.eye_colour_id",
+      "superhero.superhero.gender_id",
+      "superhero.superhero.hair_colour_id",
+      "superhero.superhero.id",
+      "superhero.superhero.publisher_id",
+      "superhero.superhero.race_id",
+      "superhero.superhero.skin_colour_id",
+      "superhero.superpower.id"
+    ],
+    "correlated_groups": []
+  }
+}

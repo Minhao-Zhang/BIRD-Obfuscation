@@ -1,0 +1,8342 @@
+[
+  {
+    "db": "address",
+    "source_table": "avoid",
+    "columns": [
+      {
+        "source_column": "zip_code",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "bad_alias",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "address",
+    "source_table": "zip_congress",
+    "columns": [
+      {
+        "source_column": "zip_code",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "district",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      }
+    ]
+  },
+  {
+    "db": "airline",
+    "source_table": "Airports",
+    "columns": [
+      {
+        "source_column": "Code",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "Description",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "airline",
+    "source_table": "Air Carriers",
+    "columns": [
+      {
+        "source_column": "Code",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "Description",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "app_store",
+    "source_table": "playstore",
+    "columns": [
+      {
+        "source_column": "App",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "Category",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "Rating",
+        "source_type": "real",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "Reviews",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "Size",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "Installs",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "Type",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "Price",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "Content Rating",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "Genres",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "authors",
+    "source_table": "Journal",
+    "columns": [
+      {
+        "source_column": "Id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "ShortName",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "FullName",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "HomePage",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "authors",
+    "source_table": "Conference",
+    "columns": [
+      {
+        "source_column": "Id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "ShortName",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "FullName",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "HomePage",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "beer_factory",
+    "source_table": "rootbeerreview",
+    "columns": [
+      {
+        "source_column": "CustomerID",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "BrandID",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "StarRating",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "ReviewDate",
+        "source_type": "date",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "Review",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "beer_factory",
+    "source_table": "location",
+    "columns": [
+      {
+        "source_column": "LocationID",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "LocationName",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "StreetAddress",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "City",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "State",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "ZipCode",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "bike_share_1",
+    "source_table": "weather",
+    "columns": [
+      {
+        "source_column": "date",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "max_temperature_f",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "mean_temperature_f",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "min_temperature_f",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "max_dew_point_f",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "mean_dew_point_f",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "min_dew_point_f",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "max_humidity",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "mean_humidity",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "min_humidity",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "max_sea_level_pressure_inches",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "mean_sea_level_pressure_inches",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "min_sea_level_pressure_inches",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "max_visibility_miles",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "mean_visibility_miles",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "min_visibility_miles",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "max_wind_Speed_mph",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "mean_wind_speed_mph",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "max_gust_speed_mph",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "precipitation_inches",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "cloud_cover",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "events",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "wind_dir_degrees",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "zip_code",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "bike_share_1",
+    "source_table": "station",
+    "columns": [
+      {
+        "source_column": "id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "name",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "lat",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "long",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "dock_count",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "city",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "installation_date",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "book_publishing_company",
+    "source_table": "stores",
+    "columns": [
+      {
+        "source_column": "stor_id",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "stor_name",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "stor_address",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "city",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "state",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "zip",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "book_publishing_company",
+    "source_table": "sales",
+    "columns": [
+      {
+        "source_column": "stor_id",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "ord_num",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "ord_date",
+        "source_type": "timestamp with time zone",
+        "operator": "sparse_date_offset",
+        "is_key": false
+      },
+      {
+        "source_column": "qty",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "payterms",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "title_id",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      }
+    ]
+  },
+  {
+    "db": "book_publishing_company",
+    "source_table": "titleauthor",
+    "columns": [
+      {
+        "source_column": "au_id",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "title_id",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "au_ord",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "royaltyper",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "books",
+    "source_table": "country",
+    "columns": [
+      {
+        "source_column": "country_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "country_name",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "books",
+    "source_table": "author",
+    "columns": [
+      {
+        "source_column": "author_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "author_name",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "books",
+    "source_table": "order_line",
+    "columns": [
+      {
+        "source_column": "line_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "order_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "book_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "price",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "books",
+    "source_table": "customer",
+    "columns": [
+      {
+        "source_column": "customer_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "first_name",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "last_name",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "email",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "california_schools",
+    "source_table": "satscores",
+    "columns": [
+      {
+        "source_column": "cds",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "rtype",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "sname",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "dname",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "cname",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "enroll12",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "NumTstTakr",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "AvgScrRead",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "AvgScrMath",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "AvgScrWrite",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "NumGE1500",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "california_schools",
+    "source_table": "schools",
+    "columns": [
+      {
+        "source_column": "CDSCode",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "NCESDist",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "NCESSchool",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "StatusType",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "County",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "District",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "School",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "Street",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "StreetAbr",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "City",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "Zip",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "State",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "MailStreet",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "MailStrAbr",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "MailCity",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "MailZip",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "MailState",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "Phone",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "Ext",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "Website",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "OpenDate",
+        "source_type": "date",
+        "operator": "sparse_date_offset",
+        "is_key": false
+      },
+      {
+        "source_column": "ClosedDate",
+        "source_type": "date",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "Charter",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "CharterNum",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "FundingType",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "DOC",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "DOCType",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "SOC",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "SOCType",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "EdOpsCode",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "EdOpsName",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "EILCode",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "EILName",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "GSoffered",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "GSserved",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "Virtual",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "Magnet",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "Latitude",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "Longitude",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "AdmFName1",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "AdmLName1",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "AdmEmail1",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "AdmFName2",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "AdmLName2",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "AdmEmail2",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "AdmFName3",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "AdmLName3",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "AdmEmail3",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "LastUpdate",
+        "source_type": "date",
+        "operator": "sparse_date_offset",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "car_retails",
+    "source_table": "payments",
+    "columns": [
+      {
+        "source_column": "customerNumber",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "checkNumber",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "paymentDate",
+        "source_type": "date",
+        "operator": "sparse_date_offset",
+        "is_key": false
+      },
+      {
+        "source_column": "amount",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "car_retails",
+    "source_table": "products",
+    "columns": [
+      {
+        "source_column": "productCode",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "productName",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "productLine",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "productScale",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "productVendor",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "productDescription",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "quantityInStock",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "buyPrice",
+        "source_type": "real",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "MSRP",
+        "source_type": "real",
+        "operator": "sparse_perturb",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "card_games",
+    "source_table": "sets",
+    "columns": [
+      {
+        "source_column": "id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "baseSetSize",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "block",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "booster",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "code",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "isFoilOnly",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "isForeignOnly",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "isNonFoilOnly",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "isOnlineOnly",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "isPartialPreview",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "keyruneCode",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "mcmId",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "mcmIdExtras",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "mcmName",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "mtgoCode",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "name",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "parentCode",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "releaseDate",
+        "source_type": "date",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "tcgplayerGroupId",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "totalSetSize",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "type",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "card_games",
+    "source_table": "set_translations",
+    "columns": [
+      {
+        "source_column": "id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "language",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "setCode",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "translation",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "cars",
+    "source_table": "price",
+    "columns": [
+      {
+        "source_column": "ID",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "price",
+        "source_type": "real",
+        "operator": "permute",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "cars",
+    "source_table": "production",
+    "columns": [
+      {
+        "source_column": "ID",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "model_year",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "country",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      }
+    ]
+  },
+  {
+    "db": "chicago_crime",
+    "source_table": "Community_Area",
+    "columns": [
+      {
+        "source_column": "community_area_no",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "community_area_name",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "side",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "population",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "chicago_crime",
+    "source_table": "Neighborhood",
+    "columns": [
+      {
+        "source_column": "neighborhood_name",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "community_area_no",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      }
+    ]
+  },
+  {
+    "db": "codebase_community",
+    "source_table": "tags",
+    "columns": [
+      {
+        "source_column": "Id",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "TagName",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "Count",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "ExcerptPostId",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "WikiPostId",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "codebase_community",
+    "source_table": "users",
+    "columns": [
+      {
+        "source_column": "Id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "Reputation",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "CreationDate",
+        "source_type": "timestamp with time zone",
+        "operator": "sparse_date_offset",
+        "is_key": false
+      },
+      {
+        "source_column": "DisplayName",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "LastAccessDate",
+        "source_type": "timestamp with time zone",
+        "operator": "sparse_date_offset",
+        "is_key": false
+      },
+      {
+        "source_column": "WebsiteUrl",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "Location",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "AboutMe",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "Views",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "UpVotes",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "DownVotes",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "AccountId",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "Age",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "ProfileImageUrl",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "college_completion",
+    "source_table": "state_sector_details",
+    "columns": [
+      {
+        "source_column": "stateid",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "state",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "state_post",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "level",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "control",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "schools_count",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "counted_pct",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "awards_per_state_value",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "awards_per_natl_value",
+        "source_type": "real",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "exp_award_state_value",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "exp_award_natl_value",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "state_appr_value",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "state_appr_rank",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "grad_rate_rank",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "awards_per_rank",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "college_completion",
+    "source_table": "institution_details",
+    "columns": [
+      {
+        "source_column": "unitid",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "chronname",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "city",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "state",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "level",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "control",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "basic",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "hbcu",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "flagship",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "long_x",
+        "source_type": "real",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "lat_y",
+        "source_type": "real",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "site",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "student_count",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "awards_per_value",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "awards_per_state_value",
+        "source_type": "real",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "awards_per_natl_value",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "exp_award_value",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "exp_award_state_value",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "exp_award_natl_value",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "exp_award_percentile",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "ft_pct",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "fte_value",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "fte_percentile",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "med_sat_value",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "med_sat_percentile",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "aid_value",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "aid_percentile",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "endow_value",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "endow_percentile",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "grad_100_value",
+        "source_type": "real",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "grad_100_percentile",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "grad_150_value",
+        "source_type": "real",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "grad_150_percentile",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "pell_value",
+        "source_type": "real",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "pell_percentile",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "retain_value",
+        "source_type": "real",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "retain_percentile",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "ft_fac_value",
+        "source_type": "real",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "ft_fac_percentile",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "vsa_year",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "vsa_grad_after4_first",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "vsa_grad_elsewhere_after4_first",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "vsa_enroll_after4_first",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "vsa_enroll_elsewhere_after4_first",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "vsa_grad_after6_first",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "vsa_grad_elsewhere_after6_first",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "vsa_enroll_after6_first",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "vsa_enroll_elsewhere_after6_first",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "vsa_grad_after4_transfer",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "vsa_grad_elsewhere_after4_transfer",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "vsa_enroll_after4_transfer",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "vsa_enroll_elsewhere_after4_transfer",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "vsa_grad_after6_transfer",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "vsa_grad_elsewhere_after6_transfer",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "vsa_enroll_after6_transfer",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "vsa_enroll_elsewhere_after6_transfer",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "similar",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "state_sector_ct",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "carnegie_ct",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "counted_pct",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "nicknames",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "cohort_size",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "computer_student",
+    "source_table": "taughtBy",
+    "columns": [
+      {
+        "source_column": "course_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "p_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      }
+    ]
+  },
+  {
+    "db": "computer_student",
+    "source_table": "course",
+    "columns": [
+      {
+        "source_column": "course_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "courseLevel",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "cookbook",
+    "source_table": "Nutrition",
+    "columns": [
+      {
+        "source_column": "recipe_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "protein",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "carbo",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "alcohol",
+        "source_type": "real",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "total_fat",
+        "source_type": "real",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "sat_fat",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "cholestrl",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "sodium",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "iron",
+        "source_type": "real",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "vitamin_c",
+        "source_type": "real",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "vitamin_a",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "fiber",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "pcnt_cal_carb",
+        "source_type": "real",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "pcnt_cal_fat",
+        "source_type": "real",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "pcnt_cal_prot",
+        "source_type": "real",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "calories",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "cookbook",
+    "source_table": "Quantity",
+    "columns": [
+      {
+        "source_column": "quantity_id",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "recipe_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "ingredient_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "max_qty",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "min_qty",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "unit",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "preparation",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "optional",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "cs_semester",
+    "source_table": "RA",
+    "columns": [
+      {
+        "source_column": "student_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "capability",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "prof_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "salary",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "cs_semester",
+    "source_table": "student",
+    "columns": [
+      {
+        "source_column": "student_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "f_name",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "l_name",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "phone_number",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "email",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "intelligence",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "gpa",
+        "source_type": "real",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "type",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "debit_card_specializing",
+    "source_table": "transactions_1k",
+    "columns": [
+      {
+        "source_column": "TransactionID",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "Date",
+        "source_type": "date",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "Time",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "CustomerID",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "CardID",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "GasStationID",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "ProductID",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "Amount",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "Price",
+        "source_type": "real",
+        "operator": "sparse_perturb",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "debit_card_specializing",
+    "source_table": "gasstations",
+    "columns": [
+      {
+        "source_column": "GasStationID",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "ChainID",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "Country",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "Segment",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "disney",
+    "source_table": "movies_total_gross",
+    "columns": [
+      {
+        "source_column": "movie_title",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "release_date",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "genre",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "MPAA_rating",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "total_gross",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "inflation_adjusted_gross",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "disney",
+    "source_table": "voice-actors",
+    "columns": [
+      {
+        "source_column": "character",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "voice-actor",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "movie",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      }
+    ]
+  },
+  {
+    "db": "european_football_2",
+    "source_table": "Player",
+    "columns": [
+      {
+        "source_column": "id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "player_api_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "player_name",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "player_fifa_api_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "birthday",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "height",
+        "source_type": "real",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "weight",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "european_football_2",
+    "source_table": "Country",
+    "columns": [
+      {
+        "source_column": "id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "name",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "financial",
+    "source_table": "district",
+    "columns": [
+      {
+        "source_column": "district_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "A2",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "A3",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "A4",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "A5",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "A6",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "A7",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "A8",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "A9",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "A10",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "A11",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "A12",
+        "source_type": "real",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "A13",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "A14",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "A15",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "A16",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "financial",
+    "source_table": "disp",
+    "columns": [
+      {
+        "source_column": "disp_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "client_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "account_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "type",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "food_inspection",
+    "source_table": "businesses",
+    "columns": [
+      {
+        "source_column": "business_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "name",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "address",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "city",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "postal_code",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "latitude",
+        "source_type": "real",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "longitude",
+        "source_type": "real",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "phone_number",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "tax_code",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "business_certificate",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "application_date",
+        "source_type": "date",
+        "operator": "sparse_date_offset",
+        "is_key": false
+      },
+      {
+        "source_column": "owner_name",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "owner_address",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "owner_city",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "owner_state",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "owner_zip",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "food_inspection",
+    "source_table": "violations",
+    "columns": [
+      {
+        "source_column": "business_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "date",
+        "source_type": "date",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "violation_type_id",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "risk_category",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "description",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "food_inspection_2",
+    "source_table": "employee",
+    "columns": [
+      {
+        "source_column": "employee_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "first_name",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "last_name",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "address",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "city",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "state",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "zip",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "phone",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "title",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "salary",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "supervisor",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "food_inspection_2",
+    "source_table": "inspection_point",
+    "columns": [
+      {
+        "source_column": "point_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "Description",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "category",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "code",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "fine",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "point_level",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "formula_1",
+    "source_table": "seasons",
+    "columns": [
+      {
+        "source_column": "year",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "url",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "formula_1",
+    "source_table": "races",
+    "columns": [
+      {
+        "source_column": "raceId",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "year",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "round",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "circuitId",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "name",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "date",
+        "source_type": "date",
+        "operator": "sparse_date_offset",
+        "is_key": false
+      },
+      {
+        "source_column": "time",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "url",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "formula_1",
+    "source_table": "status",
+    "columns": [
+      {
+        "source_column": "statusId",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "status",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "formula_1",
+    "source_table": "driverStandings",
+    "columns": [
+      {
+        "source_column": "driverStandingsId",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "raceId",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "driverId",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "points",
+        "source_type": "real",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "position",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "positionText",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "wins",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "hockey",
+    "source_table": "ScoringSup",
+    "columns": [
+      {
+        "source_column": "playerID",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "year",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "PPA",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "SHA",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "hockey",
+    "source_table": "TeamSplits",
+    "columns": [
+      {
+        "source_column": "year",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "lgID",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "tmID",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "hW",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "hL",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "hT",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "hOTL",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "rW",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "rL",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "rT",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "rOTL",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "SepW",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "SepL",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "SepT",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "SepOL",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "OctW",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "OctL",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "OctT",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "OctOL",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "NovW",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "NovL",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "NovT",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "NovOL",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "DecW",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "DecL",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "DecT",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "DecOL",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "JanW",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "JanL",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "JanT",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "JanOL",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "FebW",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "FebL",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "FebT",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "FebOL",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "MarW",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "MarL",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "MarT",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "MarOL",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "AprW",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "AprL",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "AprT",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "AprOL",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "hockey",
+    "source_table": "TeamsHalf",
+    "columns": [
+      {
+        "source_column": "year",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "lgID",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "tmID",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "half",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "rank",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "G",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "W",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "L",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "T",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "GF",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "GA",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "hockey",
+    "source_table": "Scoring",
+    "columns": [
+      {
+        "source_column": "playerID",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "year",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "stint",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "tmID",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "lgID",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "pos",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "GP",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "G",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "A",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "Pts",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "PIM",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "+/-",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "PPG",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "PPA",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "SHG",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "SHA",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "GWG",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "GTG",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "SOG",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "PostGP",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "PostG",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "PostA",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "PostPts",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "PostPIM",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "Post+/-",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "PostPPG",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "PostPPA",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "PostSHG",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "PostSHA",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "PostGWG",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "PostSOG",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "hockey",
+    "source_table": "TeamsSC",
+    "columns": [
+      {
+        "source_column": "year",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "lgID",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "tmID",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "G",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "W",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "L",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "T",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "GF",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "GA",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "PIM",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "hockey",
+    "source_table": "AwardsPlayers",
+    "columns": [
+      {
+        "source_column": "playerID",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "award",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "year",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "lgID",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "note",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "pos",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "hockey",
+    "source_table": "Master",
+    "columns": [
+      {
+        "source_column": "playerID",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "coachID",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "hofID",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "firstName",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "lastName",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "nameNote",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "nameGiven",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "nameNick",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "height",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "weight",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "shootCatch",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "legendsID",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "ihdbID",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "hrefID",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "firstNHL",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "lastNHL",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "firstWHA",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "lastWHA",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "pos",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "birthYear",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "birthMon",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "birthDay",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "birthCountry",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "birthState",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "birthCity",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "deathYear",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "deathMon",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "deathDay",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "deathCountry",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "deathState",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "deathCity",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "ice_hockey_draft",
+    "source_table": "PlayerInfo",
+    "columns": [
+      {
+        "source_column": "ELITEID",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "PlayerName",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "birthdate",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "birthyear",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "birthmonth",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "birthday",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "birthplace",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "nation",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "height",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "weight",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "position_info",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "shoots",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "draftyear",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "draftround",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "overall",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "overallby",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "CSS_rank",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "sum_7yr_GP",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "sum_7yr_TOI",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "GP_greater_than_0",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "ice_hockey_draft",
+    "source_table": "weight_info",
+    "columns": [
+      {
+        "source_column": "weight_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "weight_in_kg",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "weight_in_lbs",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "image_and_language",
+    "source_table": "PRED_CLASSES",
+    "columns": [
+      {
+        "source_column": "PRED_CLASS_ID",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "PRED_CLASS",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "image_and_language",
+    "source_table": "ATT_CLASSES",
+    "columns": [
+      {
+        "source_column": "ATT_CLASS_ID",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "ATT_CLASS",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "language_corpus",
+    "source_table": "langs",
+    "columns": [
+      {
+        "source_column": "lid",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "lang",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "locale",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "pages",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "words",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "law_episode",
+    "source_table": "Episode",
+    "columns": [
+      {
+        "source_column": "episode_id",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "series",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "season",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "episode",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "number_in_series",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "title",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "summary",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "air_date",
+        "source_type": "date",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "episode_image",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "rating",
+        "source_type": "real",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "votes",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "law_episode",
+    "source_table": "Person",
+    "columns": [
+      {
+        "source_column": "person_id",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "name",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "birthdate",
+        "source_type": "date",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "birth_name",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "birth_place",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "birth_region",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "birth_country",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "height_meters",
+        "source_type": "real",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "nickname",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "legislator",
+    "source_table": "historical-terms",
+    "columns": [
+      {
+        "source_column": "address",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "bioguide",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "chamber",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "class",
+        "source_type": "real",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "contact_form",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "district",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "end",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "fax",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "last",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "middle",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "name",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "office",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "party",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "party_affiliations",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "phone",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "relation",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "rss_url",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "start",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "state",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "state_rank",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "title",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "type",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "url",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "legislator",
+    "source_table": "current",
+    "columns": [
+      {
+        "source_column": "ballotpedia_id",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "bioguide_id",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "birthday_bio",
+        "source_type": "date",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "cspan_id",
+        "source_type": "real",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "fec_id",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "first_name",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "gender_bio",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "google_entity_id_id",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "govtrack_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "house_history_id",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "icpsr_id",
+        "source_type": "real",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "last_name",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "lis_id",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "maplight_id",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "middle_name",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "nickname_name",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "official_full_name",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "opensecrets_id",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "religion_bio",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "suffix_name",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "thomas_id",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "votesmart_id",
+        "source_type": "real",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "wikidata_id",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "wikipedia_id",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "menu",
+    "source_table": "Menu",
+    "columns": [
+      {
+        "source_column": "id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "name",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "sponsor",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "event",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "venue",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "place",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "physical_description",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "occasion",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "notes",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "call_number",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "keywords",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "language",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "date",
+        "source_type": "date",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "location",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "location_type",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "currency",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "currency_symbol",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "status",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "page_count",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "dish_count",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "mondial_geo",
+    "source_table": "lake",
+    "columns": [
+      {
+        "source_column": "Name",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "Area",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "Depth",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "Altitude",
+        "source_type": "real",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "Type",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "River",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "Longitude",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "Latitude",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "mondial_geo",
+    "source_table": "religion",
+    "columns": [
+      {
+        "source_column": "Country",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "Name",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "Percentage",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "mondial_geo",
+    "source_table": "isMember",
+    "columns": [
+      {
+        "source_column": "Country",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "Organization",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "Type",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "mondial_geo",
+    "source_table": "country",
+    "columns": [
+      {
+        "source_column": "Name",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "Code",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "Capital",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "Province",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "Area",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "Population",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "mondial_geo",
+    "source_table": "province",
+    "columns": [
+      {
+        "source_column": "Name",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "Country",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "Population",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "Area",
+        "source_type": "real",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "Capital",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "CapProv",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "mondial_geo",
+    "source_table": "politics",
+    "columns": [
+      {
+        "source_column": "Country",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "Independence",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "Dependent",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "Government",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "mondial_geo",
+    "source_table": "city",
+    "columns": [
+      {
+        "source_column": "Name",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "Country",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "Province",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "Population",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "Longitude",
+        "source_type": "real",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "Latitude",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "mondial_geo",
+    "source_table": "geo_estuary",
+    "columns": [
+      {
+        "source_column": "River",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "Country",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "Province",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "movie_3",
+    "source_table": "actor",
+    "columns": [
+      {
+        "source_column": "actor_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "first_name",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "last_name",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "last_update",
+        "source_type": "timestamp with time zone",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "movie_3",
+    "source_table": "film",
+    "columns": [
+      {
+        "source_column": "film_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "title",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "description",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "release_year",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "language_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "original_language_id",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "rental_duration",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "rental_rate",
+        "source_type": "real",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "length",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "replacement_cost",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "rating",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "special_features",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "last_update",
+        "source_type": "timestamp with time zone",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "movie_3",
+    "source_table": "country",
+    "columns": [
+      {
+        "source_column": "country_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "country",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "last_update",
+        "source_type": "timestamp with time zone",
+        "operator": "sparse_date_offset",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "movie_3",
+    "source_table": "rental",
+    "columns": [
+      {
+        "source_column": "rental_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "rental_date",
+        "source_type": "timestamp with time zone",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "inventory_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "customer_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "return_date",
+        "source_type": "timestamp with time zone",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "staff_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "last_update",
+        "source_type": "timestamp with time zone",
+        "operator": "sparse_date_offset",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "movie_3",
+    "source_table": "customer",
+    "columns": [
+      {
+        "source_column": "customer_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "store_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "first_name",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "last_name",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "email",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "address_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "active",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "create_date",
+        "source_type": "timestamp with time zone",
+        "operator": "sparse_date_offset",
+        "is_key": false
+      },
+      {
+        "source_column": "last_update",
+        "source_type": "timestamp with time zone",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "movielens",
+    "source_table": "directors",
+    "columns": [
+      {
+        "source_column": "directorid",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "d_quality",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "avg_revenue",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "movielens",
+    "source_table": "movies2directors",
+    "columns": [
+      {
+        "source_column": "movieid",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "directorid",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "genre",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "movies_4",
+    "source_table": "genre",
+    "columns": [
+      {
+        "source_column": "genre_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "genre_name",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "movies_4",
+    "source_table": "movie_company",
+    "columns": [
+      {
+        "source_column": "movie_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "company_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      }
+    ]
+  },
+  {
+    "db": "movies_4",
+    "source_table": "movie_keywords",
+    "columns": [
+      {
+        "source_column": "movie_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "keyword_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      }
+    ]
+  },
+  {
+    "db": "movies_4",
+    "source_table": "movie_languages",
+    "columns": [
+      {
+        "source_column": "movie_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "language_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "language_role_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      }
+    ]
+  },
+  {
+    "db": "music_platform_2",
+    "source_table": "runs",
+    "columns": [
+      {
+        "source_column": "run_at",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "max_rowid",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "reviews_added",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "olympics",
+    "source_table": "sport",
+    "columns": [
+      {
+        "source_column": "id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "sport_name",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "olympics",
+    "source_table": "medal",
+    "columns": [
+      {
+        "source_column": "id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "medal_name",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "professional_basketball",
+    "source_table": "draft",
+    "columns": [
+      {
+        "source_column": "id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "draftYear",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "draftRound",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "draftSelection",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "draftOverall",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "tmID",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "firstName",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "lastName",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "suffixName",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "playerID",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "draftFrom",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "lgID",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "professional_basketball",
+    "source_table": "players_teams",
+    "columns": [
+      {
+        "source_column": "id",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "playerID",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "year",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "stint",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "tmID",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "lgID",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "GP",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "GS",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "minutes",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "points",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "oRebounds",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "dRebounds",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "rebounds",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "assists",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "steals",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "blocks",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "turnovers",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "PF",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "fgAttempted",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "fgMade",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "ftAttempted",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "ftMade",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "threeAttempted",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "threeMade",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "PostGP",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "PostGS",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "PostMinutes",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "PostPoints",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "PostoRebounds",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "PostdRebounds",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "PostRebounds",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "PostAssists",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "PostSteals",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "PostBlocks",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "PostTurnovers",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "PostPF",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "PostfgAttempted",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "PostfgMade",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "PostftAttempted",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "PostftMade",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "PostthreeAttempted",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "PostthreeMade",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "note",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "professional_basketball",
+    "source_table": "series_post",
+    "columns": [
+      {
+        "source_column": "id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "year",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "round",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "series",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "tmIDWinner",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "lgIDWinner",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "tmIDLoser",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "lgIDLoser",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "W",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "L",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "public_review_platform",
+    "source_table": "Attributes",
+    "columns": [
+      {
+        "source_column": "attribute_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "attribute_name",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "public_review_platform",
+    "source_table": "Compliments",
+    "columns": [
+      {
+        "source_column": "compliment_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "compliment_type",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "public_review_platform",
+    "source_table": "Business_Hours",
+    "columns": [
+      {
+        "source_column": "business_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "day_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "opening_time",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "closing_time",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "regional_sales",
+    "source_table": "Regions",
+    "columns": [
+      {
+        "source_column": "StateCode",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "State",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "Region",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "regional_sales",
+    "source_table": "Sales Team",
+    "columns": [
+      {
+        "source_column": "SalesTeamID",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "Sales Team",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "Region",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "restaurant",
+    "source_table": "location",
+    "columns": [
+      {
+        "source_column": "id_restaurant",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "street_num",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "street_name",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "city",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      }
+    ]
+  },
+  {
+    "db": "restaurant",
+    "source_table": "generalinfo",
+    "columns": [
+      {
+        "source_column": "id_restaurant",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "label",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "food_type",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "city",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "review",
+        "source_type": "real",
+        "operator": "permute",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "retail_complains",
+    "source_table": "state",
+    "columns": [
+      {
+        "source_column": "StateCode",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "State",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "Region",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "retail_complains",
+    "source_table": "reviews",
+    "columns": [
+      {
+        "source_column": "Date",
+        "source_type": "date",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "Stars",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "Reviews",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "Product",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "district_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      }
+    ]
+  },
+  {
+    "db": "retail_world",
+    "source_table": "Employees",
+    "columns": [
+      {
+        "source_column": "EmployeeID",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "LastName",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "FirstName",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "BirthDate",
+        "source_type": "date",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "Photo",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "Notes",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "retail_world",
+    "source_table": "Categories",
+    "columns": [
+      {
+        "source_column": "CategoryID",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "CategoryName",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "Description",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "retails",
+    "source_table": "region",
+    "columns": [
+      {
+        "source_column": "r_regionkey",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "r_name",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "r_comment",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "retails",
+    "source_table": "nation",
+    "columns": [
+      {
+        "source_column": "n_nationkey",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "n_name",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "n_regionkey",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "n_comment",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "sales",
+    "source_table": "Customers",
+    "columns": [
+      {
+        "source_column": "CustomerID",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "FirstName",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "MiddleInitial",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "LastName",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "sales",
+    "source_table": "Products",
+    "columns": [
+      {
+        "source_column": "ProductID",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "Name",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "Price",
+        "source_type": "real",
+        "operator": "sparse_perturb",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "sales_in_weather",
+    "source_table": "relation",
+    "columns": [
+      {
+        "source_column": "store_nbr",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "station_nbr",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      }
+    ]
+  },
+  {
+    "db": "sales_in_weather",
+    "source_table": "weather",
+    "columns": [
+      {
+        "source_column": "station_nbr",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "date",
+        "source_type": "date",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "tmax",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "tmin",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "tavg",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "depart",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "dewpoint",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "wetbulb",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "heat",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "cool",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "sunrise",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "sunset",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "codesum",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "snowfall",
+        "source_type": "real",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "preciptotal",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "stnpressure",
+        "source_type": "real",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "sealevel",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "resultspeed",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "resultdir",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "avgspeed",
+        "source_type": "real",
+        "operator": "permute",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "shakespeare",
+    "source_table": "chapters",
+    "columns": [
+      {
+        "source_column": "id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "Act",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "Scene",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "Description",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "work_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      }
+    ]
+  },
+  {
+    "db": "shakespeare",
+    "source_table": "paragraphs",
+    "columns": [
+      {
+        "source_column": "id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "ParagraphNum",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "PlainText",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "character_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "chapter_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      }
+    ]
+  },
+  {
+    "db": "shipping",
+    "source_table": "truck",
+    "columns": [
+      {
+        "source_column": "truck_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "make",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "model_year",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "shipping",
+    "source_table": "driver",
+    "columns": [
+      {
+        "source_column": "driver_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "first_name",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "last_name",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "address",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "city",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "state",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "zip_code",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "phone",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "simpson_episodes",
+    "source_table": "Keyword",
+    "columns": [
+      {
+        "source_column": "episode_id",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "keyword",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "simpson_episodes",
+    "source_table": "Vote",
+    "columns": [
+      {
+        "source_column": "episode_id",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "stars",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "votes",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "percent",
+        "source_type": "real",
+        "operator": "sparse_perturb",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "soccer_2016",
+    "source_table": "Team",
+    "columns": [
+      {
+        "source_column": "Team_Id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "Team_Name",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "soccer_2016",
+    "source_table": "Country",
+    "columns": [
+      {
+        "source_column": "Country_Id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "Country_Name",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "soccer_2016",
+    "source_table": "Toss_Decision",
+    "columns": [
+      {
+        "source_column": "Toss_Id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "Toss_Name",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "soccer_2016",
+    "source_table": "Match",
+    "columns": [
+      {
+        "source_column": "Match_Id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "Team_1",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "Team_2",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "Match_Date",
+        "source_type": "date",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "Season_Id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "Venue_Id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "Toss_Winner",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "Toss_Decide",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "Win_Type",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "Win_Margin",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "Outcome_type",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "Match_Winner",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "Man_of_the_Match",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      }
+    ]
+  },
+  {
+    "db": "soccer_2016",
+    "source_table": "Bowling_Style",
+    "columns": [
+      {
+        "source_column": "Bowling_Id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "Bowling_skill",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "soccer_2016",
+    "source_table": "Player",
+    "columns": [
+      {
+        "source_column": "Player_Id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "Player_Name",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "DOB",
+        "source_type": "date",
+        "operator": "sparse_date_offset",
+        "is_key": false
+      },
+      {
+        "source_column": "Batting_hand",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "Bowling_skill",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "Country_Name",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      }
+    ]
+  },
+  {
+    "db": "social_media",
+    "source_table": "location",
+    "columns": [
+      {
+        "source_column": "LocationID",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "Country",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "State",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "StateCode",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "City",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "software_company",
+    "source_table": "Demog",
+    "columns": [
+      {
+        "source_column": "GEOID",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "INHABITANTS_K",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "INCOME_K",
+        "source_type": "real",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "A_VAR1",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "A_VAR2",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "A_VAR3",
+        "source_type": "real",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "A_VAR4",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "A_VAR5",
+        "source_type": "real",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "A_VAR6",
+        "source_type": "real",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "A_VAR7",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "A_VAR8",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "A_VAR9",
+        "source_type": "real",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "A_VAR10",
+        "source_type": "real",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "A_VAR11",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "A_VAR12",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "A_VAR13",
+        "source_type": "real",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "A_VAR14",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "A_VAR15",
+        "source_type": "real",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "A_VAR16",
+        "source_type": "real",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "A_VAR17",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "A_VAR18",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "student_club",
+    "source_table": "event",
+    "columns": [
+      {
+        "source_column": "event_id",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "event_name",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "event_date",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "type",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "notes",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "location",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "status",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "student_club",
+    "source_table": "major",
+    "columns": [
+      {
+        "source_column": "major_id",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "major_name",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "department",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "college",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "student_loan",
+    "source_table": "bool",
+    "columns": [
+      {
+        "source_column": "name",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "student_loan",
+    "source_table": "male",
+    "columns": [
+      {
+        "source_column": "name",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      }
+    ]
+  },
+  {
+    "db": "student_loan",
+    "source_table": "person",
+    "columns": [
+      {
+        "source_column": "name",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      }
+    ]
+  },
+  {
+    "db": "superhero",
+    "source_table": "hero_attribute",
+    "columns": [
+      {
+        "source_column": "hero_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "attribute_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "attribute_value",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "superhero",
+    "source_table": "hero_power",
+    "columns": [
+      {
+        "source_column": "hero_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "power_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      }
+    ]
+  },
+  {
+    "db": "superhero",
+    "source_table": "attribute",
+    "columns": [
+      {
+        "source_column": "id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "attribute_name",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "superstore",
+    "source_table": "east_superstore",
+    "columns": [
+      {
+        "source_column": "Row ID",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "Order ID",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "Order Date",
+        "source_type": "date",
+        "operator": "sparse_date_offset",
+        "is_key": false
+      },
+      {
+        "source_column": "Ship Date",
+        "source_type": "date",
+        "operator": "sparse_date_offset",
+        "is_key": false
+      },
+      {
+        "source_column": "Ship Mode",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "Customer ID",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "Region",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "Product ID",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "Sales",
+        "source_type": "real",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "Quantity",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "Discount",
+        "source_type": "real",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "Profit",
+        "source_type": "real",
+        "operator": "permute",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "superstore",
+    "source_table": "product",
+    "columns": [
+      {
+        "source_column": "Product ID",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "Product Name",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "Category",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "Sub-Category",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "Region",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "synthea",
+    "source_table": "allergies",
+    "columns": [
+      {
+        "source_column": "START",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "STOP",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "PATIENT",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "ENCOUNTER",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "CODE",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "DESCRIPTION",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "synthea",
+    "source_table": "careplans",
+    "columns": [
+      {
+        "source_column": "ID",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "START",
+        "source_type": "date",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "STOP",
+        "source_type": "date",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "PATIENT",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "ENCOUNTER",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "CODE",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "DESCRIPTION",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "REASONCODE",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "REASONDESCRIPTION",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "synthea",
+    "source_table": "medications",
+    "columns": [
+      {
+        "source_column": "START",
+        "source_type": "date",
+        "operator": "sparse_date_offset",
+        "is_key": false
+      },
+      {
+        "source_column": "STOP",
+        "source_type": "date",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "PATIENT",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "ENCOUNTER",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "CODE",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "DESCRIPTION",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "REASONCODE",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "REASONDESCRIPTION",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "talkingdata",
+    "source_table": "label_categories",
+    "columns": [
+      {
+        "source_column": "label_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "category",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "talkingdata",
+    "source_table": "sample_submission",
+    "columns": [
+      {
+        "source_column": "device_id",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "F23-",
+        "source_type": "real",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "F24-26",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "F27-28",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "F29-32",
+        "source_type": "real",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "F33-42",
+        "source_type": "real",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "F43+",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "M22-",
+        "source_type": "real",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "M23-26",
+        "source_type": "real",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "M27-28",
+        "source_type": "real",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "M29-31",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "M32-38",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "M39+",
+        "source_type": "real",
+        "operator": "sparse_perturb",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "thrombosis_prediction",
+    "source_table": "Patient",
+    "columns": [
+      {
+        "source_column": "ID",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "SEX",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "Birthday",
+        "source_type": "date",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "Description",
+        "source_type": "date",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "First Date",
+        "source_type": "date",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "Admission",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "Diagnosis",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "thrombosis_prediction",
+    "source_table": "Examination",
+    "columns": [
+      {
+        "source_column": "ID",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "Examination Date",
+        "source_type": "date",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "aCL IgG",
+        "source_type": "real",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "aCL IgM",
+        "source_type": "real",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "ANA",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "ANA Pattern",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "aCL IgA",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "Diagnosis",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "KCT",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "RVVT",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "LAC",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "Symptoms",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "Thrombosis",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "toxicology",
+    "source_table": "molecule",
+    "columns": [
+      {
+        "source_column": "molecule_id",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "label",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "toxicology",
+    "source_table": "bond",
+    "columns": [
+      {
+        "source_column": "bond_id",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "molecule_id",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "bond_type",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "university",
+    "source_table": "ranking_system",
+    "columns": [
+      {
+        "source_column": "id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "system_name",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "university",
+    "source_table": "university_ranking_year",
+    "columns": [
+      {
+        "source_column": "university_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "ranking_criteria_id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "year",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "score",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "video_games",
+    "source_table": "region",
+    "columns": [
+      {
+        "source_column": "id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "region_name",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "video_games",
+    "source_table": "platform",
+    "columns": [
+      {
+        "source_column": "id",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "platform_name",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "works_cycles",
+    "source_table": "ScrapReason",
+    "columns": [
+      {
+        "source_column": "ScrapReasonID",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "Name",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "ModifiedDate",
+        "source_type": "timestamp with time zone",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "works_cycles",
+    "source_table": "Store",
+    "columns": [
+      {
+        "source_column": "BusinessEntityID",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "Name",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "SalesPersonID",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "Demographics",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "rowguid",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "ModifiedDate",
+        "source_type": "timestamp with time zone",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "works_cycles",
+    "source_table": "Person",
+    "columns": [
+      {
+        "source_column": "BusinessEntityID",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "PersonType",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "NameStyle",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "Title",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "FirstName",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "MiddleName",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "LastName",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "Suffix",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "EmailPromotion",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "AdditionalContactInfo",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "Demographics",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "rowguid",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "ModifiedDate",
+        "source_type": "timestamp with time zone",
+        "operator": "permute",
+        "is_key": true
+      }
+    ]
+  },
+  {
+    "db": "works_cycles",
+    "source_table": "PurchaseOrderDetail",
+    "columns": [
+      {
+        "source_column": "PurchaseOrderID",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "PurchaseOrderDetailID",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "DueDate",
+        "source_type": "timestamp with time zone",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "OrderQty",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "ProductID",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "UnitPrice",
+        "source_type": "real",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "LineTotal",
+        "source_type": "real",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "ReceivedQty",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "RejectedQty",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "StockedQty",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "ModifiedDate",
+        "source_type": "timestamp with time zone",
+        "operator": "sparse_date_offset",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "works_cycles",
+    "source_table": "SalesTaxRate",
+    "columns": [
+      {
+        "source_column": "SalesTaxRateID",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "StateProvinceID",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "TaxType",
+        "source_type": "bigint",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "TaxRate",
+        "source_type": "real",
+        "operator": "sparse_perturb",
+        "is_key": false
+      },
+      {
+        "source_column": "Name",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "rowguid",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "ModifiedDate",
+        "source_type": "timestamp with time zone",
+        "operator": "sparse_date_offset",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "works_cycles",
+    "source_table": "ProductDocument",
+    "columns": [
+      {
+        "source_column": "ProductID",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "DocumentNode",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "ModifiedDate",
+        "source_type": "timestamp with time zone",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "works_cycles",
+    "source_table": "ProductPhoto",
+    "columns": [
+      {
+        "source_column": "ProductPhotoID",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "ThumbNailPhoto",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "ThumbnailPhotoFileName",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "LargePhoto",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "LargePhotoFileName",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "ModifiedDate",
+        "source_type": "timestamp with time zone",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "works_cycles",
+    "source_table": "ProductDescription",
+    "columns": [
+      {
+        "source_column": "ProductDescriptionID",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "Description",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "rowguid",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "ModifiedDate",
+        "source_type": "timestamp with time zone",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "world",
+    "source_table": "CountryLanguage",
+    "columns": [
+      {
+        "source_column": "CountryCode",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "Language",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "IsOfficial",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "Percentage",
+        "source_type": "real",
+        "operator": "permute",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "world",
+    "source_table": "Country",
+    "columns": [
+      {
+        "source_column": "Code",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "Name",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "Continent",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "Region",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "SurfaceArea",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "IndepYear",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "Population",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "LifeExpectancy",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "GNP",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "GNPOld",
+        "source_type": "real",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "LocalName",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "GovernmentForm",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "HeadOfState",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "Capital",
+        "source_type": "bigint",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "Code2",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "world_development_indicators",
+    "source_table": "Series",
+    "columns": [
+      {
+        "source_column": "SeriesCode",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "Topic",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "IndicatorName",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "ShortDefinition",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "LongDefinition",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "UnitOfMeasure",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "Periodicity",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "BasePeriod",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "OtherNotes",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "AggregationMethod",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "LimitationsAndExceptions",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "NotesFromOriginalSource",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "GeneralComments",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": false
+      },
+      {
+        "source_column": "Source",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "StatisticalConceptAndMethodology",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "DevelopmentRelevance",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "RelatedSourceLinks",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "OtherWebLinks",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "RelatedIndicators",
+        "source_type": "bigint",
+        "operator": null,
+        "is_key": false
+      },
+      {
+        "source_column": "LicenseType",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      }
+    ]
+  },
+  {
+    "db": "world_development_indicators",
+    "source_table": "SeriesNotes",
+    "columns": [
+      {
+        "source_column": "Seriescode",
+        "source_type": "text",
+        "operator": "permute",
+        "is_key": true
+      },
+      {
+        "source_column": "Year",
+        "source_type": "text",
+        "operator": "sparse_cat_remap",
+        "is_key": false
+      },
+      {
+        "source_column": "Description",
+        "source_type": "text",
+        "operator": null,
+        "is_key": false
+      }
+    ]
+  }
+]

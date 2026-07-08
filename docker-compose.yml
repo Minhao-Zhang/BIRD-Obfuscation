@@ -1,0 +1,151 @@
+services:
+  pg_base:
+    image: postgres:18
+    environment:
+      POSTGRES_USER: bird
+      POSTGRES_PASSWORD: bird
+      POSTGRES_DB: bird
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_base_data:/var/lib/postgresql
+    shm_size: '256mb'
+    # Bulk-load tuning — data is always reloadable from SQLite, no durability needed
+    command: >
+      postgres
+        -c fsync=off
+        -c synchronous_commit=off
+        -c full_page_writes=off
+        -c wal_level=minimal
+        -c archive_mode=off
+        -c max_wal_senders=0
+        -c max_wal_size=4GB
+        -c checkpoint_timeout=1h
+        -c wal_buffers=64MB
+        -c shared_buffers=512MB
+        -c work_mem=64MB
+        -c maintenance_work_mem=512MB
+        -c autovacuum=off
+        -c max_parallel_workers_per_gather=0
+        -c max_parallel_workers=0
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bird"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  pg_rename:
+    image: postgres:18
+    environment:
+      POSTGRES_USER: bird
+      POSTGRES_PASSWORD: bird
+      POSTGRES_DB: bird
+    ports:
+      - "5433:5432"
+    volumes:
+      - pg_rename_data:/var/lib/postgresql
+    shm_size: '256mb'
+    command: >
+      postgres
+        -c fsync=off
+        -c synchronous_commit=off
+        -c full_page_writes=off
+        -c wal_level=minimal
+        -c archive_mode=off
+        -c max_wal_senders=0
+        -c max_wal_size=4GB
+        -c checkpoint_timeout=1h
+        -c wal_buffers=64MB
+        -c shared_buffers=512MB
+        -c work_mem=64MB
+        -c maintenance_work_mem=512MB
+        -c autovacuum=off
+        -c max_parallel_workers_per_gather=0
+        -c max_parallel_workers=0
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bird"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # Decoy-augmented clones for the obfuscation-extension ablation (see
+  # docs/reference/extension-implementation-plan.md §3). Gated behind the
+  # "decoy" profile so the default `docker compose up -d` (core pipeline) is
+  # unchanged — start these with `docker compose --profile decoy up -d`.
+  # Their volumes are populated by cloning pg_base/pg_rename and then
+  # injecting decoys via step 08; they start empty until then.
+  pg_decoy:
+    image: postgres:18
+    profiles: ["decoy"]
+    environment:
+      POSTGRES_USER: bird
+      POSTGRES_PASSWORD: bird
+      POSTGRES_DB: bird
+    ports:
+      - "5434:5432"
+    volumes:
+      - pg_decoy_data:/var/lib/postgresql
+    shm_size: '256mb'
+    command: >
+      postgres
+        -c fsync=off
+        -c synchronous_commit=off
+        -c full_page_writes=off
+        -c wal_level=minimal
+        -c archive_mode=off
+        -c max_wal_senders=0
+        -c max_wal_size=4GB
+        -c checkpoint_timeout=1h
+        -c wal_buffers=64MB
+        -c shared_buffers=512MB
+        -c work_mem=64MB
+        -c maintenance_work_mem=512MB
+        -c autovacuum=off
+        -c max_parallel_workers_per_gather=0
+        -c max_parallel_workers=0
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bird"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  pg_rename_decoy:
+    image: postgres:18
+    profiles: ["decoy"]
+    environment:
+      POSTGRES_USER: bird
+      POSTGRES_PASSWORD: bird
+      POSTGRES_DB: bird
+    ports:
+      - "5435:5432"
+    volumes:
+      - pg_rename_decoy_data:/var/lib/postgresql
+    shm_size: '256mb'
+    command: >
+      postgres
+        -c fsync=off
+        -c synchronous_commit=off
+        -c full_page_writes=off
+        -c wal_level=minimal
+        -c archive_mode=off
+        -c max_wal_senders=0
+        -c max_wal_size=4GB
+        -c checkpoint_timeout=1h
+        -c wal_buffers=64MB
+        -c shared_buffers=512MB
+        -c work_mem=64MB
+        -c maintenance_work_mem=512MB
+        -c autovacuum=off
+        -c max_parallel_workers_per_gather=0
+        -c max_parallel_workers=0
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bird"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  pg_base_data:
+  pg_rename_data:
+  pg_decoy_data:
+  pg_rename_decoy_data:

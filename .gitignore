@@ -1,0 +1,65 @@
+data/*
+!data/README.md
+
+# Generated dataset files (large, reproducible from pipeline)
+artifacts/*.jsonl
+artifacts/db_language_map.json
+artifacts/sqlite_identifier_audit.jsonl
+artifacts/translation_quality_flags.jsonl
+# decoy_map.json is LLM-generated but seeded/regeneratable (step 08 --regenerate).
+# Ignored for now like the other artifacts; could be tracked (as schema_rename_map.json
+# is) if we want reproducibility without re-running the cheap model.
+artifacts/decoy_map.json
+# workdir/ is entirely transient step-5/7/8 repair-queue + run-log scratch — never tracked
+# (jsonl queues, *.log run logs, fix_batches). Nothing here is a deliverable.
+workdir/
+# downstream evaluation output (eval_contamination.py / eval_ablation.py / probe_schema_recall.py)
+# — reproducible, API-cost-heavy to regenerate. jsonl results, *.log, progress *.md. Kept local only.
+eval/
+
+# PostgreSQL dumps downloaded from Hugging Face (~12 GB; see docs/reference/using-the-dataset.md)
+bird_obf_dumps/
+*.dump
+
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.ipynb_checkpoints/
+*.log
+
+# Virtual environment (uv-managed). uv writes .venv/.gitignore, but ignore it
+# here too so the repo never depends on that self-ignore or a per-user global.
+.venv/
+venv/
+
+# Stray database files (raw BIRD lives under data/, already ignored above)
+*.sqlite
+*.sqlite3
+
+# Claude Code — ignore personal / machine-local state. Shared config
+# (.claude/settings.json, agents/, skills/) stays trackable if you choose to commit it.
+.claude/settings.local.json
+.claude/scheduled_tasks.json
+.claude/scheduled_tasks.lock
+.claude/agent-registry.json
+.claude/assistant-daemon-state.json
+.claude/first-run
+.claude/agent-memory-local/
+.claude/routines/.state/
+.claude/worktrees/
+.claude/checkpoints/
+.claude/mailbox/
+
+# OS / editor cruft (Windows + macOS)
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
