@@ -44,8 +44,8 @@ data/
 ```
 
 Each database folder contains:
-- `<db_name>.sqlite` — the SQLite database file
-- `database_description/` — CSV files (one per table) with column descriptions
+- `<db_name>.sqlite`: the SQLite database file
+- `database_description/`: CSV files (one per table) with column descriptions
 
 ## File Formats
 

@@ -1,13 +1,13 @@
-# Extension implementation plan — decoy injection, question paraphrase, ablation
+# Extension implementation plan: decoy injection, question paraphrase, ablation
 
 **Audience:** an engineer implementing the extended obfuscation layers for the first time. This is the **build spec**. The *design and rationale* live in [../methodology/obfuscation-extensions.md](../methodology/obfuscation-extensions.md) and [../methodology/evaluation.md §9](../methodology/evaluation.md); the *ablation numbers* to reproduce are in evaluation.md §8/§9. Read those first, then follow this doc top to bottom.
 
-> **⚠️ Partially superseded (2026-07-04) — read this first.** The **decoy** parts of this
-> plan (§0 decoy parameters and §5 "Step 08 — `08_inject_decoys.py`") describe *empty /
+> **⚠️ Partially superseded (2026-07-04). Read this first.** The **decoy** parts of this
+> plan (§0 decoy parameters and §5 "Step 08: `08_inject_decoys.py`") describe *empty /
 > structural* decoy tables + columns. That approach was reworked into **corrupted decoy
 > traps** (`pipeline/10_inject_traps.py`, step 10): decoys are now *populated* with subtly
-> **corrupted copies of real data** — additive "evil-twin" columns and corrupted clone
-> tables — because empty decoys unmask themselves under an interactive execute-and-observe
+> **corrupted copies of real data** (additive "evil-twin" columns and corrupted clone
+> tables) because empty decoys unmask themselves under an interactive execute-and-observe
 > agent. Anywhere below that says decoys "stay empty" / are "invisible in stripped DDL" /
 > that R1==R2 holds "because decoys are unreferenced/empty" is **superseded**; the current
 > guarantee is that traps are **strictly additive** (real rows/columns/tables byte-identical).
@@ -28,17 +28,17 @@
 
 ## 0. Methodology coverage check
 
-The methodology is **fully documented at the design level**. Everything below is *implementation* detail, not new methodology. These are the **open parameters** (defaults given — safe to proceed with them):
+The methodology is **fully documented at the design level**. Everything below is *implementation* detail, not new methodology. These are the **open parameters** (defaults given, safe to proceed with them):
 
 | Parameter | Default | Where it bites |
 | --- | --- | --- |
 | Cheap model for generation | `gpt-5-mini` (fallback `gpt-4o-mini`) | steps 08, 09 |
-| Decoy tables per DB | +30–50% of real table count, min 2, cap 15 | step 08 |
-| Decoy columns per real table | 1–3 confusable columns | step 08 |
+| Decoy tables per DB | +30-50% of real table count, min 2, cap 15 | step 08 |
+| Decoy columns per real table | 1-3 confusable columns | step 08 |
 | Populate decoy tables with rows? | ~~**No** (empty; invisible in stripped DDL)~~ **SUPERSEDED → Yes**, with corrupted data (step 10 traps) | step 08 → 10 |
 | Paraphrase scope | **test set only** (all the ablation needs); train optional for downstream | step 09 |
 | Decoy generation for the two instances | generate **per-variant** (English on `pg_decoy`, target-lang on `pg_rename_decoy`) | step 08 |
-| Optional cosine drift sanity check | off (use OpenAI `text-embedding-3-small` if enabled — no new dependency) | step 09 |
+| Optional cosine drift sanity check | off (use OpenAI `text-embedding-3-small` if enabled, no new dependency) | step 09 |
 
 ---
 
@@ -66,7 +66,7 @@ The methodology is **fully documented at the design level**. Everything below is
 
 ## 2. Refactor first (do this before writing 08/09)
 
-`normalise_result` / `exec_pg` / the DSN constants are currently copy-pasted across `07_rename_sql_and_validate.py`, `eval_contamination.py`, and `_transpile_helpers.py` (with a "keep these in sync" comment — a smell). Steps 08/09/ablation all need them, so consolidate **once**:
+`normalise_result` / `exec_pg` / the DSN constants are currently copy-pasted across `07_rename_sql_and_validate.py`, `eval_contamination.py`, and `_transpile_helpers.py` (with a "keep these in sync" comment, a smell). Steps 08/09/ablation all need them, so consolidate **once**:
 
 ### 2a. `pipeline/_db.py` (new)
 Move (don't re-invent) the canonical versions here:
@@ -83,7 +83,7 @@ def normalise_result(rows) -> list: ...      # verbatim from 07_rename_sql_and_v
 def exec_pg(conn, sql): ...                   # fetchmany(MAX_RESULT_ROWS+1) + cap, autocommit-safe
 def new_connection(dsn, autocommit=True):     # SET statement_timeout (plain SET, not SET LOCAL)
 ```
-Then update `07_rename_sql_and_validate.py` and `eval_contamination.py` to `from _db import ...`. **Do not change behaviour** — `normalise_result` must stay byte-for-byte identical (grading semantics depend on it). Run the existing pipeline once after the refactor to confirm nothing moved. Respect the AGENTS.md invariants (127.0.0.1 not localhost; plain `SET` under autocommit; `fetchmany` not `fetchall`).
+Then update `07_rename_sql_and_validate.py` and `eval_contamination.py` to `from _db import ...`. **Do not change behaviour**: `normalise_result` must stay byte-for-byte identical (grading semantics depend on it). Run the existing pipeline once after the refactor to confirm nothing moved. Respect the AGENTS.md invariants (127.0.0.1 not localhost; plain `SET` under autocommit; `fetchmany` not `fetchall`).
 
 ### 2b. `pipeline/_eval_helpers.py` (new)
 Extract from `eval_contamination.py` the pieces `eval_ablation.py` will reuse: `get_schema_ddl`, `build_prompt`, `extract_sql`, `usage_dict`, `SYSTEM_INSTRUCTIONS`, `load_done_keys`/`append_result`, and the `run_one` core. Leave `eval_contamination.py` as a thin contamination-eval entrypoint importing them. This mirrors the existing `_transpile_helpers.py` / `_pg_helpers.py` convention.
@@ -103,11 +103,11 @@ Extract from `eval_contamination.py` the pieces `eval_ablation.py` will reuse: `
 | **`pg_decoy`** | **5434** | `pg_decoy_data` | original | English | clone of `pg_base` + step 08 |
 | **`pg_rename_decoy`** | **5435** | `pg_rename_decoy_data` | renamed | target-lang | clone of `pg_rename` + step 08 |
 
-### 3b. `docker-compose.yml` additions — **DONE**
+### 3b. `docker-compose.yml` additions: **DONE**
 `pg_decoy` (5434) and `pg_rename_decoy` (5435) are in `docker-compose.yml`, each a copy of its clean counterpart (same WAL-tuning `command`/`healthcheck`) plus `profiles: ["decoy"]`. The profile keeps the core-pipeline bring-up unchanged: `docker compose up -d` still starts only the two clean instances; the decoy pair starts only with `--profile decoy`. Verify: `docker compose config --services` → 2, `docker compose --profile decoy config --services` → 4.
 
 ### 3c. Build the decoy instances by cloning (run once, before step 08)
-Same read-only clone pattern as step 6 (the `:ro` source mount is the safety guarantee — see [pipeline-invariants.md](pipeline-invariants.md)). The decoy targets must be **stopped** while their volume is cloned (a running Postgres holds the volume open); the profile means they aren't auto-started, but stop them explicitly to be safe:
+Same read-only clone pattern as step 6 (the `:ro` source mount is the safety guarantee, see [pipeline-invariants.md](pipeline-invariants.md)). The decoy targets must be **stopped** while their volume is cloned (a running Postgres holds the volume open); the profile means they aren't auto-started, but stop them explicitly to be safe:
 ```bash
 docker compose up -d pg_base pg_rename                 # ensure sources exist
 docker compose --profile decoy stop pg_decoy pg_rename_decoy  # ensure targets are down
@@ -170,14 +170,14 @@ One record per `(question_id, arm)`, resumable, same shape as `eval/contaminatio
 
 ---
 
-## 5. Step 08 — `08_inject_decoys.py`
+## 5. Step 08: `08_inject_decoys.py`
 
 > **Superseded for the decoy payload (see top banner).** Step 08 as described here injects
 > *empty* decoy tables/columns. It still runs to produce `decoy_map.json` and
 > `gold_star_expanded.jsonl`, but the decoys are now *populated with corrupted data* by
 > **step 10** (`10_inject_traps.py`); see [corrupted-decoys-design.md](corrupted-decoys-design.md).
 > "decoy tables **empty**" and "expected: **zero** … because decoys are unreferenced" below
-> reflect the old design — R1==R2 now holds because the traps are strictly additive.
+> reflect the old design. R1==R2 now holds because the traps are strictly additive.
 
 **Purpose:** generate decoys, inject them into the two `*_decoy` instances, expand the handful of `SELECT *` gold queries, and prove nothing broke (R1==R2 against the decoy instances).
 
@@ -186,21 +186,21 @@ One record per `(question_id, arm)`, resumable, same shape as `eval/contaminatio
 **Outputs:** `artifacts/decoy_map.json`, `artifacts/gold_star_expanded.jsonl`, decoy tables/columns present in both `*_decoy` instances.
 
 **Algorithm:**
-1. **Generate `decoy_map.json`** (skip if it already exists — regeneration is opt-in via `--regenerate`). For each DB and each variant (`original`, `obfuscated`):
+1. **Generate `decoy_map.json`** (skip if it already exists, regeneration is opt-in via `--regenerate`). For each DB and each variant (`original`, `obfuscated`):
    - Read the real schema of that variant from the corresponding clean instance's `information_schema` (original ← `pg_base`, obfuscated ← `pg_rename`).
-   - Seed `random.Random(zlib.crc32(f"{SEED}:{db_id}:{variant}".encode()))` (per-DB-independent, reproducible — mirrors `01_split.py`).
+   - Seed `random.Random(zlib.crc32(f"{SEED}:{db_id}:{variant}".encode()))` (per-DB-independent, reproducible, mirrors `01_split.py`).
    - Prompt the cheap model (see template below) for N decoy tables + confusable columns in the DB's language. Enforce: no name collides with a real table/column **or with the `db_id` itself** (the `superhero`/`sales_in_weather`/`university` qualifier trap); names ≤ 63 bytes (Postgres identifier limit); `snake_case`.
 2. **Compute `gold_star_expanded.jsonl`.** Parse each gold with sqlglot; for the ~5 queries with a real-table star projection (top-level or subquery), expand `*`/`t.*` to the explicit real-column list using the clean instance's `information_schema` (do this **before** injecting decoys, so the expansion sees only real columns). Emit `sql_base_expanded` and `sql_rename_expanded`.
-3. **Inject** (idempotent — check existence first): into `pg_decoy` apply the `original` variant, into `pg_rename_decoy` the `obfuscated` variant. Emit `CREATE TABLE "db_id"."decoy"( ... )` and `ALTER TABLE "db_id"."real" ADD COLUMN "decoy" <type>`, **all identifiers quoted**, **no FK constraints**, decoy tables **empty**.
-4. **Re-validate R1==R2** (the acceptance gate). For every question, execute the clean gold on the clean instance (R1) and the gold on the decoy instance (R2), asserting `normalise_result` equality — using the **expanded** SQL for the star questions. Reuse step 7's comparison (now in `_db.py`). Two passes: original-identifier gold vs `pg_decoy`; obfuscated gold vs `pg_rename_decoy`. Any mismatch → `workdir/decoy_failures.jsonl` (expected: **zero**, given decoys are unreferenced and stars are expanded).
+3. **Inject** (idempotent, check existence first): into `pg_decoy` apply the `original` variant, into `pg_rename_decoy` the `obfuscated` variant. Emit `CREATE TABLE "db_id"."decoy"( ... )` and `ALTER TABLE "db_id"."real" ADD COLUMN "decoy" <type>`, **all identifiers quoted**, **no FK constraints**, decoy tables **empty**.
+4. **Re-validate R1==R2** (the acceptance gate). For every question, execute the clean gold on the clean instance (R1) and the gold on the decoy instance (R2), asserting `normalise_result` equality, using the **expanded** SQL for the star questions. Reuse step 7's comparison (now in `_db.py`). Two passes: original-identifier gold vs `pg_decoy`; obfuscated gold vs `pg_rename_decoy`. Any mismatch → `workdir/decoy_failures.jsonl` (expected: **zero**, given decoys are unreferenced and stars are expanded).
 
 **Prompt template (decoy generation):**
 ```
 You are extending a {language} database schema with plausible but FAKE distractor
 objects for a schema-linking robustness test. Given the real schema below, produce:
 - {n_tables} decoy TABLE(s): plausible for this domain, {language} snake_case names,
-  each with 2–5 columns (name + Postgres type).
-- For {k} of the real tables, 1–3 decoy COLUMN(s) that are CONFUSABLE near-synonyms
+  each with 2-5 columns (name + Postgres type).
+- For {k} of the real tables, 1-3 decoy COLUMN(s) that are CONFUSABLE near-synonyms
   or siblings of an existing real column (e.g. real "release_year" -> "release_year_est").
 Rules: never reuse a real table/column name or the database id "{db_id}"; snake_case;
 each name <= 60 chars. Output JSON only: {schema of decoy_map entry}.
@@ -221,7 +221,7 @@ Real schema:
 
 ---
 
-## 6. Step 09 — `09_paraphrase_questions.py`
+## 6. Step 09: `09_paraphrase_questions.py`
 
 **Purpose:** produce one paraphrase per question, conditioned on the gold SQL + schema so intent is anchored.
 
@@ -242,7 +242,7 @@ Real schema:
 
 ---
 
-## 7. Ablation eval — `eval_ablation.py`
+## 7. Ablation eval: `eval_ablation.py`
 
 **Purpose:** run the 5 arms from [evaluation.md §9](../methodology/evaluation.md) and report paired deltas with CIs.
 
@@ -256,7 +256,7 @@ Real schema:
 | `paraphrase` | `PG_BASE_DSN` | `sql_base` | `question_paraphrase` |
 | `all` | `PG_RENAME_DECOY_DSN` | `sql_rename` → `sql_rename_expanded` if expanded | `question_paraphrase` |
 
-**Implementation:** extend `CONDITION_SPEC` / `DSN_FOR_SCHEMA` (already the right shape in `eval_contamination.py`) with the four new instances and five arms. All arms **no-hint** (evidence not shown) — the primary signal per §4.2. The model still sees decoy columns via `get_schema_ddl` reading the decoy instance's `information_schema` (no special-casing needed — decoys are real catalog objects there). Grade the model's SQL by exact `normalise_result` equality against the arm's gold, executed on the arm's instance.
+**Implementation:** extend `CONDITION_SPEC` / `DSN_FOR_SCHEMA` (already the right shape in `eval_contamination.py`) with the four new instances and five arms. All arms **no-hint** (evidence not shown), the primary signal per §4.2. The model still sees decoy columns via `get_schema_ddl` reading the decoy instance's `information_schema` (no special-casing needed: decoys are real catalog objects there). Grade the model's SQL by exact `normalise_result` equality against the arm's gold, executed on the arm's instance.
 
 **Gold-expansion join:** load `gold_star_expanded.jsonl` into a dict; for `decoy`/`all`, if `question_id` is present, use the expanded gold. This guarantees decoy columns never leak into any arm's gold answer.
 
@@ -271,7 +271,7 @@ Real schema:
 
 ## 8. End-to-end run order + checklist
 
-> **⚠️ Resource safety:** on a local Docker Desktop / WSL setup, never run all four PostgreSQL instances under heavy query load at once — it can OOM the WSL VM, and with `fsync=off` an OOM crash can corrupt the volumes. Bring up only the instances a step needs (a clone touches 2), run the ablation **one arm at a time** (each arm queries exactly one instance — `docker compose stop` the others between arms), keep eval `--concurrency` ≤ 3, and never overlap step-08's validate pass with the ablation. Capping the WSL VM's memory in `.wslconfig` is the backstop, not a licence to run everything hot; on a well-provisioned server this limit does not apply.
+> **⚠️ Resource safety:** on a local Docker Desktop / WSL setup, never run all four PostgreSQL instances under heavy query load at once. It can OOM the WSL VM, and with `fsync=off` an OOM crash can corrupt the volumes. Bring up only the instances a step needs (a clone touches 2), run the ablation **one arm at a time** (each arm queries exactly one instance: `docker compose stop` the others between arms), keep eval `--concurrency` ≤ 3, and never overlap step-08's validate pass with the ablation. Capping the WSL VM's memory in `.wslconfig` is the backstop, not a licence to run everything hot; on a well-provisioned server this limit does not apply.
 
 ```bash
 # 0. refactor (§2) and confirm the existing pipeline still passes
@@ -314,7 +314,7 @@ uv run python pipeline/eval_ablation.py --summarize
 - **`db_id`-named tables** (`superhero`, `sales_in_weather`, `university`): decoy names must not equal the `db_id`, and injection must not touch the schema qualifier. See the sqlglot invariant.
 - **Quote every identifier** in emitted DDL and expanded SQL; never assume lowercase.
 - **`SELECT *` expansion must run before injection** (it must see only real columns).
-- **Decoy tables must stay empty** unless `--populate` — a non-empty count is only a giveaway if a downstream agent can run queries; the eval only shows stripped DDL.
+- **Decoy tables must stay empty** unless `--populate`. A non-empty count is only a giveaway if a downstream agent can run queries; the eval only shows stripped DDL.
 - **Re-cloning resets decoys**: if you ever re-clone a `*_decoy` volume from its clean source, you must re-run step 08 (the manifest makes this deterministic).
-- **`normalise_result` must not change** during the §2a refactor — grading equivalence with the existing R1==R2 and contamination runs depends on it.
-- **Keep `pg_base`/`pg_rename` clean** — decoys go only into the `*_decoy` instances.
+- **`normalise_result` must not change** during the §2a refactor: grading equivalence with the existing R1==R2 and contamination runs depends on it.
+- **Keep `pg_base`/`pg_rename` clean**: decoys go only into the `*_decoy` instances.

@@ -26,17 +26,17 @@ the human-readable index.
 ## The four database instances
 
 The benchmark is served from four PostgreSQL 18 instances (Docker, `decoy` compose
-profile for the last two). **Never run more than 2 hot at once locally** (OOM — see
+profile for the last two). **Never run more than 2 hot at once locally** (OOM, see
 [AGENTS.md](../AGENTS.md)); on a provisioned server that limit is lifted.
 
 | instance | port | identifiers | decoys/traps | obfuscation dims |
 | --- | --- | --- | --- | --- |
-| `pg_base` | 5432 | original English | none | — (control) |
+| `pg_base` | 5432 | original English | none | - (control) |
 | `pg_rename` | 5433 | renamed (target language) | none | rename |
 | `pg_decoy` | 5434 | original English | corrupted traps | decoy |
 | `pg_rename_decoy` | 5435 | renamed | corrupted traps | rename + decoy |
 
-Real data is byte-identical across all four (traps are strictly additive) — only
+Real data is byte-identical across all four (traps are strictly additive). Only
 identifiers and the presence of decoy columns/tables differ.
 
 ---
@@ -44,8 +44,8 @@ identifiers and the presence of decoy columns/tables differ.
 ## Files
 
 ### Gold question / SQL dataset (the benchmark itself)
-- **`train_final.jsonl`** (8,134) — validated train split.
-- **`test_final.jsonl`** (2,030) — validated test split; **the eval runs on this**.
+- **`train_final.jsonl`** (8,134): validated train split.
+- **`test_final.jsonl`** (2,030): validated test split; **the eval runs on this**.
 
   Fields (both): `question_id`, `db_id`, `question`, `evidence`, `evidence_rename`,
   `difficulty`, `sql_sqlite` (original BIRD gold), `sql_base` (gold transpiled for
@@ -53,23 +53,23 @@ identifiers and the presence of decoy columns/tables differ.
   R1==R2 verified: `sql_base` on `pg_base` and `sql_rename` on `pg_rename` return
   equal results.
 
-### Dimension 1 — identifier rename
-- **`schema_rename_map.json`** — per-db `{english_identifier: renamed_identifier}` for
+### Dimension 1: identifier rename
+- **`schema_rename_map.json`**: per-db `{english_identifier: renamed_identifier}` for
   tables and columns. Ground truth for the rename dimension; also the key to resolving
   any English name in the manifests to its renamed form.
-- **`db_language_map.json`** — per-db target language of the rename
+- **`db_language_map.json`**: per-db target language of the rename
   (english / french / german / spanish / pinyin / …).
 
-### Dimension 2 — decoys / traps (additive; on the `*_decoy` instances)
-- **`trap_manifest.json`** — evil-twin decoy **columns** (a corrupted copy of a real
+### Dimension 2: decoys / traps (additive; on the `*_decoy` instances)
+- **`trap_manifest.json`**: evil-twin decoy **columns** (a corrupted copy of a real
   column under a synonym name). Per entry: `db, table, source_column, source_type,
   operator, is_key, in_correlated_group, salt, names:{base, rename}`. The decoy column
   added to `<db>.<table>` is `names.<variant>`.
-- **`trap_table_manifest.json`** — corrupted decoy clone **tables**. Per entry:
+- **`trap_table_manifest.json`**: corrupted decoy clone **tables**. Per entry:
   `db, source_table, columns:[{source_column, source_type, operator, is_key}],
   names:{base:{table, columns}, rename:{table, columns}}`. `operator: null` = copied
   exact (uncorrupted). R1==R2-safe by construction (gold never references a decoy table).
-- **`decoy_map.json`** — step-08 **structural** (empty) decoy tables/columns.
+- **`decoy_map.json`**: step-08 **structural** (empty) decoy tables/columns.
   *Superseded* for interactive execute-and-observe agents by the corrupted traps above
   (empty decoys unmask themselves); retained for provenance.
 
@@ -78,18 +78,18 @@ identifiers and the presence of decoy columns/tables differ.
   corrupt the same rows the same way. Design + operators:
   [docs/reference/corrupted-decoys-design.md](../docs/reference/corrupted-decoys-design.md).
 
-### Dimension 3 — question paraphrase
-- **`question_paraphrases.jsonl`** — one SQL-preserving paraphrase per **test** question
+### Dimension 3: question paraphrase
+- **`question_paraphrases.jsonl`**: one SQL-preserving paraphrase per **test** question
   (`question_id -> question_paraphrase`, 2,030 rows).
 
 ### Eval support
-- **`gold_star_expanded.jsonl`** — `SELECT *`-expanded gold for the ~5 star queries
+- **`gold_star_expanded.jsonl`**: `SELECT *`-expanded gold for the ~5 star queries
   (`sql_base_expanded` / `sql_rename_expanded`) so decoy columns can never leak into a
   gold answer.
-- **`order_sensitive_qids.json`** — qids to **exclude from strict EX scoring**:
+- **`order_sensitive_qids.json`**: qids to **exclude from strict EX scoring**:
   `order_sensitive` (153: gold has a `LIMIT` without a total order or a float aggregate,
   so the heap-reorder from trap UPDATEs yields a different-but-valid result on the decoy
-  instances) + `exec_failed` (21: pre-existing degenerate BIRD gold — >200k rows / 60s
+  instances) + `exec_failed` (21: pre-existing degenerate BIRD gold, >200k rows / 60s
   timeout). Real data is verified intact; these are comparison artifacts, not corruption.
 
 ---
@@ -121,6 +121,6 @@ The eval scripts (`eval_ablation.py`, `eval_contamination.py`, `probe_schema_rec
 resolve each input via `_eval_helpers.dataset_path(name)`: **prefer `artifacts/<name>`
 if present, else fall back to `eval_dataset/<name>`.** So a full local checkout uses the
 working copies in `artifacts/`, while a fresh clone that only has this checked-in folder
-(no `artifacts/`) runs against the snapshot automatically — no flags, no edits. If you
+(no `artifacts/`) runs against the snapshot automatically: no flags, no edits. If you
 keep `artifacts/` populated, re-run `build_eval_dataset.py` after a rebuild to refresh
 this snapshot. Downstream consumers should consume **this** folder.

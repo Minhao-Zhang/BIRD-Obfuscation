@@ -11,21 +11,21 @@ should be read and reported.
 14 of 69 databases are assigned the `english` "language", so their rename map is a
 complete no-op: for those DBs `pg_rename` is identical to `pg_base` and
 `sql_rename == sql_base`. Weighted by questions this is ~23% of the corpus
-(≈2,326 / 10,164 rows). This is **deliberate** — English is the **noise-floor
+(≈2,326 / 10,164 rows). This is **deliberate**. English is the **noise-floor
 control** for the rename dimension (an un-renamed arm should show ≈0 rename delta).
 
 Implications for reporting:
 
-- **Report the rename effect per-language, with English as the null — never as a
+- **Report the rename effect per-language, with English as the null, never as a
   single pooled delta.** A pooled "rename effect" is structurally diluted by ~23%
   of guaranteed-null rows and would understate the real per-language effect.
 - These DBs still receive **full decoy-trap and paraphrase** treatment, so they are
-  **not** unobfuscated overall — only the *rename axis* is a no-op for them. "23%
+  **not** unobfuscated overall. Only the *rename axis* is a no-op for them. "23%
   is byte-for-byte public BIRD" is true only of `pg_rename`, not of `pg_decoy` /
   `pg_rename_decoy` or the paraphrase arm.
 - If a use case needs *every* row to probe identifier recall, synonym-rename the
   English DBs (English→English synonyms). Not currently done, because it would
-  remove the clean noise-floor control — a deliberate trade-off.
+  remove the clean noise-floor control, a deliberate trade-off.
 
 ## 2. Result comparison is type-lenient (BIRD-style)
 
@@ -37,7 +37,7 @@ however, **over-credit absolute EX** (a model's `"1"` matches gold `1`).
 
 Mitigation (implemented): the eval now reports a **strict EX alongside the lenient
 one** (`normalise_result_strict`: no cross-type collapse, numeric equality preserved,
-case-sensitive, CHAR padding still stripped) as a conservative floor — quote the
+case-sensitive, CHAR padding still stripped) as a conservative floor. Quote the
 strict column for absolute-accuracy claims. NaN/inf are now canonicalized in
 `normalise_result` too, so it agrees with the step-5 comparator and a returned NaN no
 longer causes a spurious `R1!=R2`.
@@ -46,7 +46,7 @@ longer causes a spurious `R1!=R2`.
 
 A gold is admitted to the deliverable by executing it under a `statement_timeout`
 (now **300 s**) and a **200,000-row** fetch cap, against an intentionally index-free
-schema. The row cap is deterministic; the timeout is not, at the boundary — a gold
+schema. The row cap is deterministic; the timeout is not, at the boundary. A gold
 that finishes just under vs. just over could flip run-to-run. In practice this touches
 only a handful of **degenerate** golds (missing-join cross-products, e.g. one 19.4M-row
 gold), recorded as `exec_failed` in `artifacts/order_sensitive_qids.json`. The 300 s
@@ -62,7 +62,7 @@ A **same-scope** collision (two identifiers → one name within a table, or two 
 one name) would fail the `ALTER`.
 
 Mitigation (implemented): step 6 now **exits non-zero and lists any failed DB**, so a
-silently-dropped database is impossible — the tell is loud, and the fix is to resolve
+silently-dropped database is impossible. The tell is loud, and the fix is to resolve
 the collision in the map and re-run. Automatic collision resolution (suffixing) is not
 done.
 
@@ -71,19 +71,19 @@ done.
 ~11.5% of golds contain a `VALUES` clause, but only **~0.5%** are genuinely table-free
 (constants baked in, where `R0==R1` / `R1==R2` are trivially self-satisfied); the rest
 use `VALUES` legitimately (in-lists / derived tables alongside real tables). So a
-"~12% circular validation" reading would be an overstatement — the truly-constant set
+"~12% circular validation" reading would be an overstatement. The truly-constant set
 is ~0.5%. A few of those constant golds are very large literal dumps (up to ~4.4M
 characters): faithful transpilations, but not natural SQL and poor as "known-true SQL"
-for a memory-learning downstream agent — treat them as edge cases.
+for a memory-learning downstream agent. Treat them as edge cases.
 
 ## 6. Smaller caveats
 
 - The rename short-circuit skips any SQL containing no quoted rename-map key. It is
   safe **only** because every identifier is quoted upstream (a documented invariant);
   it fails open (silent no-op) if an unquoted identifier ever reaches it.
-- Evidence-hint renaming is sequential regex substitution over NL text (not gold SQL) —
+- Evidence-hint renaming is sequential regex substitution over NL text (not gold SQL):
   low stakes; a later short key could in principle match inside an inserted translation.
-- Even non-English DBs retain ~3–15% of original identifiers via identity mappings
+- Even non-English DBs retain ~3-15% of original identifiers via identity mappings
   (numbers, already-native words, untranslatable tokens).
 
 ## Precision notes on the integrity guarantees
@@ -96,7 +96,7 @@ for a memory-learning downstream agent — treat them as edge cases.
 - **"Real data byte-identical" means real column *values* are unmodified** (per-column
   multiset identical). Physical row *order* and table *arity* are **not** identical on
   the decoy instances: phase-1 `ADD COLUMN` + `UPDATE` rewrites the heap (reordering
-  physical rows — the reason for the 153 order-sensitive exclusions on
+  physical rows, the reason for the 153 order-sensitive exclusions on
   `LIMIT`-without-total-order / float-aggregate golds), and added decoy columns widen
   `SELECT *`.
 

@@ -1,4 +1,4 @@
-# EDA Report — BIRD Benchmark Dataset
+# EDA Report: BIRD Benchmark Dataset
 
 ---
 
@@ -93,7 +93,7 @@ No strong correlation between schema size and question count per database.
 
 42 table names appear in more than one train database.
 Top collisions: `country` (10 DBs), `person` (7 DBs), `city` (6 DBs), `customers` (6 DBs).
-The dev set has zero collisions — all 75 table names are unique across its 11 databases.
+The dev set has zero collisions. All 75 table names are unique across its 11 databases.
 
 ---
 

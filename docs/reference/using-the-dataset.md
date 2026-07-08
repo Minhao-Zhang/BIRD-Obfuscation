@@ -2,11 +2,11 @@
 
 The benchmark ships in **two parts**, and you need both:
 
-1. **The databases** — four PostgreSQL dumps hosted on Hugging Face:
+1. **The databases**. Four PostgreSQL dumps hosted on Hugging Face:
    [`minhaozhang/BIRD_Obfuscation`](https://huggingface.co/datasets/minhaozhang/BIRD_Obfuscation)
    (repo type: **dataset**). Each dump is one instance = all 69 obfuscated BIRD
    databases for that arm. These hold the schemas + data the model queries.
-2. **The gold + mappings** — questions, gold SQL, the rename map, and the trap
+2. **The gold + mappings**. Questions, gold SQL, the rename map, and the trap
    manifests: the git-tracked [`eval_dataset/`](../../eval_dataset/) folder in this
    repo (see [eval_dataset/README.md](../../eval_dataset/README.md)). These hold the
    gold answers and the obfuscation ground truth.
@@ -34,7 +34,7 @@ dataset page in case they change.
 > [Hugging Face access token](https://huggingface.co/settings/tokens), or export
 > `HF_TOKEN=hf_...` in your environment.
 
-### Option A — Hugging Face CLI (recommended)
+### Option A: Hugging Face CLI (recommended)
 
 ```bash
 pip install -U "huggingface_hub[cli]"
@@ -48,7 +48,7 @@ Older `huggingface_hub` uses the legacy command:
 huggingface-cli download minhaozhang/BIRD_Obfuscation --repo-type dataset --local-dir bird_obf_dumps
 ```
 
-### Option B — Python
+### Option B: Python
 
 ```python
 from huggingface_hub import snapshot_download
@@ -58,7 +58,7 @@ snapshot_download(
 )
 ```
 
-### Option C — git + LFS (large files are stored via LFS on the Hub)
+### Option C: git + LFS (large files are stored via LFS on the Hub)
 
 ```bash
 git lfs install
@@ -77,7 +77,7 @@ sha256sum -c SHA256SUMS.txt          # Linux/macOS
 
 ## 2. Restore into PostgreSQL
 
-These are **logical** custom-format dumps — restore with `pg_restore` into
+These are **logical** custom-format dumps. Restore with `pg_restore` into
 **PostgreSQL ≥ 18**. `--no-owner` drops the dependency on the original `bird` role
 (restore as any superuser); `-j 4` restores in parallel. Each dump restores the whole
 `bird` database (69 schemas + `public`); the dumps carry no indexes/PKs/FKs (loaded
@@ -103,7 +103,7 @@ docker compose exec pg_rename_decoy  pg_restore -U bird -d bird --no-owner -j 4 
 ```
 
 > **OOM note (local only):** on a laptop/desktop, do **not** run all four instances
-> under load at once — bring up and restore two at a time (`pg_base`+`pg_decoy`, then
+> under load at once. Bring up and restore two at a time (`pg_base`+`pg_decoy`, then
 > `pg_rename`+`pg_rename_decoy`), stopping the others in between. See the warning in
 > [AGENTS.md](../../AGENTS.md). On a well-provisioned server this limit does not apply.
 
@@ -117,7 +117,7 @@ pg_restore -d bird_base --no-owner --no-privileges -j 4 pg_base.dump
 
 ---
 
-## 3. Use it — run the local eval
+## 3. Use it: run the local eval
 
 With the instances restored and this repo checked out (so `eval_dataset/` is present),
 run the five-arm ablation:
@@ -129,7 +129,7 @@ uv run python pipeline/eval_ablation.py --summarize                     # EX / d
 ```
 
 The eval resolves its gold/mapping inputs from `artifacts/` if present, else falls
-back to `eval_dataset/` — so a fresh clone (no `artifacts/`) runs against the tracked
+back to `eval_dataset/`, so a fresh clone (no `artifacts/`) runs against the tracked
 snapshot with no extra steps. The arm → (instance, gold field, question) mapping and
 per-file details are in [eval_dataset/README.md](../../eval_dataset/README.md).
 

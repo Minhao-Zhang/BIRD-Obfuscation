@@ -1,6 +1,6 @@
 # BIRD Data Obfuscation
 
-> A contamination-resistant rebuild of the [BIRD](https://bird-bench.github.io/) Text-to-SQL benchmark — plus the eval that measures how much benchmark scores depend on memorised schema identifiers.
+> A contamination-resistant rebuild of the [BIRD](https://bird-bench.github.io/) Text-to-SQL benchmark, plus the eval that measures how much benchmark scores depend on memorised schema identifiers.
 
 ![status](https://img.shields.io/badge/status-work_in_progress-yellow)
 ![python](https://img.shields.io/badge/python-uv-blue)
@@ -11,13 +11,13 @@
 Public benchmarks like BIRD ship their questions, gold SQL, and schema names in the open,
 so a frontier model may score partly from *having seen the benchmark* rather than from
 reasoning over the schema in front of it. This project rebuilds BIRD into a version that
-keeps the SQL task intact but strips away the memorisable surface — renamed identifiers,
-adversarial decoy data, paraphrased questions — and runs a controlled evaluation to measure
+keeps the SQL task intact but strips away the memorisable surface (renamed identifiers,
+adversarial decoy data, paraphrased questions), then runs a controlled evaluation to measure
 how much accuracy that surface was actually buying.
 
 > [!NOTE]
-> **🚧 Work in progress.** The dataset is **built, validated, and published**; the
-> **effectiveness numbers are being re-run on a stronger model** and are intentionally
+> **🚧 Work in progress.** The dataset is built, validated, and published. The
+> effectiveness numbers are being re-run on a stronger model and are intentionally
 > not reported yet. See [Project status](#project-status) for exactly what is done vs. pending.
 
 ---
@@ -26,9 +26,9 @@ how much accuracy that surface was actually buying.
 
 | | |
 | --- | --- |
-| **Problem** | Frontier models may inflate Text-to-SQL scores via memorised BIRD identifiers, questions, and SQL — not schema reasoning. |
+| **Problem** | Frontier models may inflate Text-to-SQL scores from memorised BIRD identifiers, questions, and SQL rather than from schema reasoning. |
 | **Deliverable** | 69-database multilingual PostgreSQL Text-to-SQL corpus (10,164 execution-validated question/SQL pairs) in four obfuscation variants, published on Hugging Face. |
-| **Eval** | A paired contamination-delta study + 5-arm ablation isolating each obfuscation dimension, with McNemar tests and bootstrap CIs. |
+| **Eval** | A paired contamination-delta study plus a 5-arm ablation that isolates each obfuscation dimension, with McNemar tests and bootstrap CIs. |
 | **Status** | Data pipeline complete; evaluation implemented and **re-running on a stronger model** (numbers pending). |
 
 ---
@@ -37,63 +37,63 @@ how much accuracy that surface was actually buying.
 
 A model evaluated on the public BIRD corpus can benefit from having encountered its schema
 identifiers (`movie_release_year`, `user_subscriber`), question phrasings, or SQL fragments
-during training — so a headline score conflates two very different things: **schema reasoning**
+during training. A headline score then conflates two very different things: **schema reasoning**
 and **benchmark recall**. This project attacks the recall channel while preserving a
 semantically equivalent SQL task, then measures the gap.
 
 The design targets three independent contamination surfaces:
 
-- **Schema identifiers** — table/column names renamed into one of five languages (English,
+- **Schema identifiers.** Table and column names renamed into one of five languages (English,
   French, German, Spanish, Mandarin Pinyin).
-- **Schema probing** — *corrupted decoy traps*: additive "evil-twin" columns and cloned tables
-  holding subtly corrupted copies of real data under plausible synonym names, designed to
+- **Schema probing.** *Corrupted decoy traps*: additive "evil-twin" columns and cloned tables
+  that hold subtly corrupted copies of real data under plausible synonym names, meant to
   mislead an agent that explores the schema by *executing* queries.
-- **Question phrasing** — SQL-preserving paraphrases of each natural-language question.
+- **Question phrasing.** SQL-preserving paraphrases of each natural-language question.
 
-Each surface is a separate, independently-toggleable dimension so the eval can attribute the
-accuracy drop to a *mechanism*, not a single blurred "obfuscation" knob.
+Each surface is a separate, independently-toggleable dimension, so the eval can attribute the
+accuracy drop to a *mechanism* rather than to a single blurred "obfuscation" knob.
 
 ## What this produces
 
-- **A validated multilingual Postgres Text-to-SQL corpus.** 69 databases, **10,164 of 10,541**
+- **A validated multilingual Postgres Text-to-SQL corpus.** 69 databases; **10,164 of 10,541**
   candidate questions pass end-to-end execution validation (8,134 train / 2,030 test, every
   database represented in both). See [docs/methodology/dataset.md §7](docs/methodology/dataset.md).
 - **Obfuscated gold SQL and evidence hints**, rewritten to the renamed identifiers.
-- **Four PostgreSQL instances** covering the obfuscation combinations — `pg_base` (original),
-  `pg_rename` (renamed), `pg_decoy` (traps), `pg_rename_decoy` (renamed + traps) — published as
-  compressed dumps on [Hugging Face](https://huggingface.co/datasets/minhaozhang/BIRD_Obfuscation).
-- **Corrupted decoy traps** — 1,486 evil-twin columns + 162 cloned tables of corrupted data
-  ([design + risk register](docs/reference/corrupted-decoys-design.md)).
-- **A two-oracle integrity guarantee** — obfuscated SQL stays execution-equivalent to validated
-  original SQL (R0==R1 against SQLite ground truth, R1==R2 across instances), preserved because
-  every trap is strictly *additive* (real rows/columns/tables are never modified).
-- **The evaluation harness** — a four-condition contamination-delta study and a five-arm
+- **Four PostgreSQL instances** covering the obfuscation combinations: `pg_base` (original),
+  `pg_rename` (renamed), `pg_decoy` (traps), and `pg_rename_decoy` (renamed plus traps),
+  published as compressed dumps on [Hugging Face](https://huggingface.co/datasets/minhaozhang/BIRD_Obfuscation).
+- **Corrupted decoy traps**: 1,486 evil-twin columns plus 162 cloned tables of corrupted data
+  ([design and risk register](docs/reference/corrupted-decoys-design.md)).
+- **A two-oracle integrity guarantee.** Obfuscated SQL stays execution-equivalent to the
+  validated original SQL (R0==R1 against SQLite ground truth, R1==R2 across instances). This
+  holds because every trap is strictly *additive*: real rows, columns, and tables are never modified.
+- **The evaluation harness**: a four-condition contamination-delta study and a five-arm
   ablation (`base` / `rename` / `decoy` / `paraphrase` / `all`).
 
 ## Evaluation design
 
 The evaluation asks one question: **how much of a model's BIRD accuracy survives when the
-memorisable surface is removed?** It is built to answer that credibly rather than just produce
-a number:
+memorisable surface is removed?** It is built to answer that credibly rather than to just
+produce a number:
 
 - **Paired conditions.** Every arm runs the same test set through the same model in the same run;
-  deltas are per-question paired against `base` and read with **McNemar tests + bootstrap CIs**,
+  deltas are per-question paired against `base` and read with **McNemar tests and bootstrap CIs**,
   not point estimates.
 - **An empirical null, not zero.** 14 databases keep an identity (English→English) rename, so
-  their rename delta is guaranteed ≈0 by construction — they serve as the **noise-floor control**.
-  The rename effect is therefore reported *per-language*, never as a single pooled number diluted
-  by the control ([limitations §1](docs/reference/limitations.md)).
+  their rename delta is guaranteed ≈0 by construction. They serve as the **noise-floor control**,
+  and the rename effect is reported *per-language* rather than as a single pooled number that the
+  control would dilute ([limitations §1](docs/reference/limitations.md)).
 - **Strict *and* lenient scoring.** EX is reported under a BIRD-style type-lenient comparator
-  *and* a strict one (no cross-type collapse, case-sensitive); the leniency cancels in the deltas,
+  *and* a strict one (no cross-type collapse, case-sensitive). The leniency cancels in the deltas,
   and the strict column is quoted for any absolute-accuracy claim ([limitations §2](docs/reference/limitations.md)).
 - **Ablation by mechanism.** `rename−base` probes identifier recall; `decoy−base` probes
   robustness to schema-probing traps; `paraphrase−base` probes question-form recall; `all−base`
-  the combined effect. Design: [evaluation.md §9](docs/methodology/evaluation.md).
+  measures the combined effect. Design: [evaluation.md §9](docs/methodology/evaluation.md).
 
-### Results — pending
+### Results (pending)
 
-> Results are **not reported yet.** Earlier numbers were discarded to re-run the full evaluation
-> on a stronger model for results that hold up; nothing is quoted in the interim.
+> Results are **not reported yet.** Earlier numbers were discarded so the full evaluation could
+> be re-run on a stronger model for results that hold up; nothing is quoted in the interim.
 
 | Metric | Status |
 | --- | --- |
@@ -101,19 +101,19 @@ a number:
 | Contamination delta (four conditions) | ⏳ re-running on a stronger model |
 | Five-arm ablation (per-mechanism deltas + CIs) | ⏳ pending the same run |
 
-Setup for the run is documented and reproducible — see [evaluation.md §8–§9](docs/methodology/evaluation.md).
+Setup for the run is documented and reproducible; see [evaluation.md §8-9](docs/methodology/evaluation.md).
 
 ## Project status
 
-**The asset is finished and published; the measurement is the part in flight.**
+**The dataset is finished and published. The measurement is the part still in progress.**
 
 | Component | State |
 | --- | --- |
-| Core pipeline (steps 0–7): split → rename map → load → transpile → rename → validate | ✅ complete & validated |
+| Core pipeline (steps 0-7): split → rename map → load → transpile → rename → validate | ✅ complete & validated |
 | Extended obfuscation (decoy traps, paraphrases) | ✅ built & applied |
-| Four PostgreSQL instances + git-tracked eval artifacts | ✅ published (HF + [`eval_dataset/`](eval_dataset/)) |
-| Contamination-delta eval harness | ✅ implemented — ⏳ **re-running (numbers pending)** |
-| Five-arm ablation harness | ✅ implemented — ⏳ **run pending** |
+| Four PostgreSQL instances + git-tracked eval artifacts | ✅ published (HF and [`eval_dataset/`](eval_dataset/)) |
+| Contamination-delta eval harness | ✅ implemented; ⏳ **re-running (numbers pending)** |
+| Five-arm ablation harness | ✅ implemented; ⏳ **run pending** |
 | Interactive execute-and-observe agent that exercises the traps | ⛔ out of scope (separate downstream repo) |
 
 Full history, decisions, and what's next: [PROGRESS.md](PROGRESS.md).
@@ -121,9 +121,9 @@ Full history, decisions, and what's next: [PROGRESS.md](PROGRESS.md).
 ### Scope boundaries
 
 - This repo **prepares and validates** the dataset; it does **not** evaluate a downstream agent
-  or schema routing — the correct database is supplied upfront in all conditions.
-- It does **not modify real data** — clean instances are untouched and decoy instances only *add*
-  corrupted columns/tables, so R1==R2 holds.
+  or schema routing. The correct database is supplied upfront in all conditions.
+- It does **not modify real data**. Clean instances are untouched, and decoy instances only *add*
+  corrupted columns and tables, so R1==R2 holds.
 - It does **not** claim to remove every contamination path (memorised literals or high-level SQL
   templates remain); it targets the identifier, schema-probing, and question-phrasing surfaces.
 
@@ -131,15 +131,15 @@ Full history, decisions, and what's next: [PROGRESS.md](PROGRESS.md).
 
 For anyone reviewing this as an engineering sample, the transferable pieces are:
 
-- **Eval design under contamination** — controlled conditions, an empirical null, per-mechanism
+- **Eval design under contamination.** Controlled conditions, an empirical null, per-mechanism
   ablation, and paired significance testing instead of raw leaderboard numbers.
-- **Adversarial data design** — decoy traps engineered specifically against execute-and-observe
+- **Adversarial data design.** Decoy traps built specifically against execute-and-observe
   agents while provably preserving the ground-truth task ([design doc](docs/reference/corrupted-decoys-design.md)).
-- **Correct data infrastructure** — SQLite→PostgreSQL migration with an execution-equivalence
-  guarantee and a documented set of hard-won [pipeline invariants](docs/reference/pipeline-invariants.md)
+- **Correct data infrastructure.** A SQLite-to-PostgreSQL migration with an execution-equivalence
+  guarantee and a documented set of [pipeline invariants](docs/reference/pipeline-invariants.md)
   (pgloader DDL bugs, an AST-mutation infinite loop, unbounded result sets, connection-latency traps).
-- **Honest scoping** — a standalone [limitations doc](docs/reference/limitations.md) written before
-  publishing any effectiveness claim.
+- **Honest scoping.** A standalone [limitations doc](docs/reference/limitations.md) written before
+  any effectiveness claim is published.
 
 ## How it works
 
@@ -157,41 +157,41 @@ reads the previous step's output; operational detail and invariants live in [AGE
 | 5 | Transpile gold SQL to Postgres + validate R0==R1 | `workdir/*_transpiled.jsonl` |
 | 6 | Clone `pg_base` volume, rename identifiers in place | `pg_rename` (5433) |
 | 7 | Rename SQL + validate R1==R2 → **deliverable** | `artifacts/{train,test}_final.jsonl` |
-| 8–9 | Structural decoys (superseded) + question paraphrases | `artifacts/question_paraphrases.jsonl` |
+| 8-9 | Structural decoys (superseded) + question paraphrases | `artifacts/question_paraphrases.jsonl` |
 | 10 | Inject corrupted decoy traps | `pg_decoy` (5434), `pg_rename_decoy` (5435) |
 
 Run with `uv run python pipeline/<script>.py` from the repo root, after `docker compose up -d`.
-Two evaluation entrypoints — `pipeline/eval_contamination.py` and `pipeline/eval_ablation.py` — sit
+Two evaluation entrypoints, `pipeline/eval_contamination.py` and `pipeline/eval_ablation.py`, sit
 downstream of the numbered steps.
 
 ### Repository layout
 
 | Path | What's in it |
 | --- | --- |
-| [`pipeline/`](pipeline/) | The numbered pipeline (`00`–`10`), the eval harnesses (`eval_contamination.py`, `eval_ablation.py`, `probe_schema_recall.py`), and shared helpers (`_db.py`, `_traps.py`, `_corruption.py`, …) |
+| [`pipeline/`](pipeline/) | The numbered pipeline (`00`-`10`), the eval harnesses (`eval_contamination.py`, `eval_ablation.py`, `probe_schema_recall.py`), and shared helpers (`_db.py`, `_traps.py`, `_corruption.py`, …) |
 | [`eval_dataset/`](eval_dataset/) | Git-tracked deliverable: validated gold question/SQL pairs, rename map, trap manifests, paraphrases |
 | [`artifacts/`](artifacts/) | Pipeline working outputs (git-tracked subset: rename map, retained DBs, trap plans/manifests) |
 | [`docs/methodology/`](docs/methodology/) | Why each design decision was made (dataset, obfuscation, evaluation) |
 | [`docs/reference/`](docs/reference/) | Operational detail: pipeline invariants, decoy-trap design, limitations, dataset usage |
-| [`data/`](data/README.md) | Raw BIRD source (not tracked — download instructions in `data/README.md`) |
+| [`data/`](data/README.md) | Raw BIRD source (not tracked; download instructions in `data/README.md`) |
 
 ## Get the dataset
 
 The deliverable ships in two homes:
 
-- **Databases** — four PostgreSQL dumps (base / rename / decoy / rename+decoy) on Hugging Face:
+- **Databases.** Four PostgreSQL dumps (base / rename / decoy / rename+decoy) on Hugging Face:
   [minhaozhang/BIRD_Obfuscation](https://huggingface.co/datasets/minhaozhang/BIRD_Obfuscation) (too large for git).
-- **Gold SQL + rename map + trap manifests** — git-tracked in [`eval_dataset/`](eval_dataset/).
+- **Gold SQL, rename map, and trap manifests.** Git-tracked in [`eval_dataset/`](eval_dataset/).
 
 ```bash
-# 1. get the database dumps (≈12 GB, four PostgreSQL instances)
+# 1. get the database dumps (~12 GB, four PostgreSQL instances)
 hf download minhaozhang/BIRD_Obfuscation --repo-type dataset --local-dir bird_obf_dumps
 
 # 2. bring up the empty instances and restore each dump into its match
 docker compose --profile decoy up -d
 docker compose cp   bird_obf_dumps/pg_base.dump pg_base:/tmp/pg_base.dump
 docker compose exec pg_base pg_restore -U bird -d bird --no-owner -j 4 /tmp/pg_base.dump
-#   ...repeat for pg_rename / pg_decoy / pg_rename_decoy (two at a time on a laptop — see OOM note)
+#   ...repeat for pg_rename / pg_decoy / pg_rename_decoy (two at a time on a laptop; see OOM note)
 
 # 3. run one ablation arm (gold + mappings resolve from the checked-in eval_dataset/)
 uv run python pipeline/eval_ablation.py --arms base --model <model>
@@ -210,7 +210,7 @@ regeneration; Postgres DSNs are env-configurable (`PG_*_DSN`) to target remote P
 | [docs/methodology/obfuscation-extensions.md](docs/methodology/obfuscation-extensions.md) | Decoy traps + paraphrase dimensions and the ablation |
 | [docs/methodology/evaluation.md](docs/methodology/evaluation.md) | Integrity check, contamination delta, ablation (§9) |
 | [docs/reference/corrupted-decoys-design.md](docs/reference/corrupted-decoys-design.md) | Decoy-trap design, risk register, as-built parameters |
-| [docs/reference/limitations.md](docs/reference/limitations.md) | Known limitations & scope caveats — read before citing any number |
+| [docs/reference/limitations.md](docs/reference/limitations.md) | Known limitations and scope caveats; read before citing any number |
 | [docs/reference/using-the-dataset.md](docs/reference/using-the-dataset.md) | Download, restore, and run the eval |
 | [docs/reference/pipeline-invariants.md](docs/reference/pipeline-invariants.md) | Rules to preserve when editing the pipeline, with rationale |
 | [docs/eda-report.md](docs/eda-report.md) | Exploratory analysis of the BIRD corpus |
@@ -224,8 +224,8 @@ regeneration; Postgres DSNs are env-configurable (`PG_*_DSN`) to target remote P
 - **Split**: random 80/20 holdout within each database, seeded; no difficulty stratification
   (BIRD train questions carry no difficulty labels).
 
-The `data/` directory holds the raw BIRD dataset (not in version control) —
-see [data/README.md](data/README.md) for download instructions.
+The `data/` directory holds the raw BIRD dataset (not in version control). See
+[data/README.md](data/README.md) for download instructions.
 
 ## Python
 

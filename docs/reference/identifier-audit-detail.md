@@ -1,12 +1,12 @@
-# SQLite identifier audit — full detail
+# SQLite identifier audit: full detail
 
-Extracted from `artifacts/sqlite_identifier_audit.jsonl` (gitignored —
+Extracted from `artifacts/sqlite_identifier_audit.jsonl` (gitignored,
 mechanically reproducible by running `pipeline/00_audit_sqlite_identifiers.py`).
 That file has one JSON object per retained DB with every risky identifier
 listed individually; this file pulls out the categorized, complete lists that
 `audit-findings.md` only summarizes with counts and a handful of
 illustrative examples. See `audit-findings.md` for the narrative (why the
-audit exists, what it resolved, per-DB counts) — this file is the raw
+audit exists, what it resolved, per-DB counts). This file is the raw
 enumeration to consult when you need to know exactly which identifier, in
 which table, in which DB, not just how many.
 
@@ -19,7 +19,7 @@ Of the 2,351 total risky identifiers found across 69 retained DBs:
 | Hyphenated table names (subset of punctuation, listed separately since they aren't valid unquoted SQL identifiers *at all*, not just non-lowercase) | 4 |
 | Case-only (PascalCase/camelCase/UPPERCASE, no space or punctuation) | 2,216 |
 
-The case-only 2,216 aren't enumerated here — see `audit-findings.md`'s
+The case-only 2,216 aren't enumerated here. See `audit-findings.md`'s
 per-database table for those counts; the identifiers themselves are exactly
 what `PRAGMA table_info()` already reports, nothing to add. The categories
 below are the ones worth having on hand verbatim, since spaces/punctuation
@@ -141,7 +141,7 @@ thrombosis_prediction.Patient.First Date  ->  "First Date"
 
 ## Punctuation, non-space (29)
 
-Includes the two `disney.voice-actors` entries — the table name itself is
+Includes the two `disney.voice-actors` entries. The table name itself is
 hyphenated (also listed in the hyphenated-tables section below since that's
 the more severe case) and its `voice-actor` column happens to be hyphenated
 too, independently.
@@ -180,7 +180,7 @@ thrombosis_prediction.Laboratory.DNA-II  ->  "DNA-II"
 
 ## Hyphenated table names (4)
 
-Not valid unquoted SQL identifiers *at all*, independent of casing — a
+Not valid unquoted SQL identifiers *at all*, independent of casing: a
 hyphen inside an unquoted identifier is parsed as a subtraction operator, so
 these can only ever work quoted. Confirmed (2026-07-01, live pgloader run)
 that `quote identifiers` + `create no indexes` handles these correctly; no
