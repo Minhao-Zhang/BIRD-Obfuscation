@@ -1,3 +1,5 @@
+**English** · [中文](corrupted-decoys-design-zh.md)
+
 # Corrupted-decoy design: risk register & decisions
 
 **Status:** IMPLEMENTED (both phases injected into `pg_decoy`/`pg_rename_decoy`).

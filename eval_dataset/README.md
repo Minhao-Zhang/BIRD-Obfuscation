@@ -1,3 +1,5 @@
+**English** · [中文](README-zh.md)
+
 # Final evaluation dataset
 
 The frozen, **git-tracked** deliverable for the BIRD text-to-SQL **obfuscation

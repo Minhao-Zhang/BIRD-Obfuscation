@@ -1,3 +1,5 @@
+**English** · [中文](obfuscation-zh.md)
+
 # Methodology: dataset obfuscation
 
 ## 1. Motivation

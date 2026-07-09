@@ -1,3 +1,5 @@
+**English** · [中文](limitations-zh.md)
+
 # Known limitations & scope caveats
 
 Honest limitations of this dataset both as a text-to-SQL **asset** and as a

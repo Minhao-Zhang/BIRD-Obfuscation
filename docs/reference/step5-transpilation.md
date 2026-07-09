@@ -1,3 +1,5 @@
+**English** · [中文](step5-transpilation-zh.md)
+
 # Step 5: Transpilation artifacts and R0==R1 validation
 
 Operational reference for `05_transpile_sql.py`, `05b_apply_sql_fixes.py`, and the JSONL files under `workdir/`. Methodology context lives in [obfuscation.md §5](../methodology/obfuscation.md) and [evaluation.md §Stage 1](../methodology/evaluation.md).

@@ -1,3 +1,5 @@
+**English** · [中文](extension-implementation-plan-zh.md)
+
 # Extension implementation plan: decoy injection, question paraphrase, ablation
 
 **Audience:** an engineer implementing the extended obfuscation layers for the first time. This is the **build spec**. The *design and rationale* live in [../methodology/obfuscation-extensions.md](../methodology/obfuscation-extensions.md) and [../methodology/evaluation.md §9](../methodology/evaluation.md); the *ablation numbers* to reproduce are in evaluation.md §8/§9. Read those first, then follow this doc top to bottom.

@@ -1,5 +1,6 @@
 data/*
 !data/README.md
+!data/README-zh.md
 
 # Generated dataset files (large, reproducible from pipeline)
 artifacts/*.jsonl

@@ -1,3 +1,5 @@
+**English** · [中文](README-zh.md)
+
 # BIRD Data Obfuscation
 
 > A contamination-resistant rebuild of the [BIRD](https://bird-bench.github.io/) Text-to-SQL benchmark, plus the eval that measures how much benchmark scores depend on memorised schema identifiers.

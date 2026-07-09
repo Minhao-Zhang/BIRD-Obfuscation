@@ -1,3 +1,5 @@
+**English** · [中文](pipeline-invariants-zh.md)
+
 # Pipeline invariants: detailed rationale
 
 `AGENTS.md` lists these invariants tersely as rules to preserve when editing the pipeline. This file is the **forensic record**: why each rule exists, and the empirical evidence behind it. Every one was confirmed against a live PostgreSQL and the real worst-case databases, not assumed from documentation. Read the relevant section before changing the code the rule protects.

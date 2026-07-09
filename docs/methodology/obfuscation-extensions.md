@@ -1,3 +1,5 @@
+**English** · [中文](obfuscation-extensions-zh.md)
+
 # Methodology: extended obfuscation dimensions (decoy schema + question paraphrase)
 
 The core validated pipeline (steps 0-7; see [obfuscation.md](obfuscation.md), [dataset.md](dataset.md), [evaluation.md](evaluation.md)) obfuscates **only schema identifiers** (the **rename** dimension) and leaves questions and database content untouched. This document specifies two **additional, independently-toggleable** obfuscation dimensions and an ablation to measure each. **Status: implemented and applied.** Pipeline steps 08-10 and the ablation harness `pipeline/eval_ablation.py` all exist and have been run. The decoy dimension was **reworked** from the empty/structural design first sketched here into **corrupted "evil-twin" traps** (step 10); §2 below reflects the as-built design, with full detail in [../reference/corrupted-decoys-design.md](../reference/corrupted-decoys-design.md). See [../../PROGRESS.md](../../PROGRESS.md) for status.

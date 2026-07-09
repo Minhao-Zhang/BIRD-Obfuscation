@@ -1,12 +1,11 @@
-**English** · [中文](README-zh.md)
+[English](README.md) · **中文**
 
-# Data Directory
+# 数据目录
 
-This folder contains the BIRD (Benchmark for Information Retrieval from Databases) benchmark dataset.
-It is excluded from version control via `.gitignore`. Download the data from the
-[BIRD benchmark website](https://bird-bench.github.io/) and place it here following the structure below.
+本文件夹包含 BIRD(Benchmark for Information Retrieval from Databases)基准数据集,已在 `.gitignore` 中排除,不纳入版本控制。请从
+[BIRD 基准网站](https://bird-bench.github.io/) 下载数据,按下面的结构放到这里。
 
-## Directory Structure
+## 目录结构
 
 ```
 data/
@@ -45,14 +44,14 @@ data/
         └── ...                # 73 databases total; each follows the same pattern
 ```
 
-Each database folder contains:
-- `<db_name>.sqlite`: the SQLite database file
-- `database_description/`: CSV files (one per table) with column descriptions
+每个数据库文件夹包含:
+- `<db_name>.sqlite`:SQLite 数据库文件
+- `database_description/`:CSV 文件(每张表一个),含各列说明
 
-## File Formats
+## 文件格式
 
 ### `dev.json` / `train.json`
-A JSON array of question objects:
+由问题对象组成的 JSON 数组:
 ```json
 {
   "question_id": 0,
@@ -63,22 +62,22 @@ A JSON array of question objects:
   "difficulty": "simple"
 }
 ```
-`difficulty` is one of `simple`, `moderate`, or `challenging`.
+`difficulty` 取值为 `simple`、`moderate` 或 `challenging`。
 
 ### `dev.sql` / `train_gold.sql`
-One gold SQL query per line, tab-separated from its database id:
+每行一条标准 SQL 查询,与所属数据库 id 用制表符分隔:
 ```
 SELECT ... FROM ...    california_schools
 ```
 
 ### `dev_tables.json` / `train_tables.json`
-A JSON array of schema objects, one per database, containing `db_id`,
-`table_names_original`, `table_names` (human-readable), `column_names_original`,
-`column_names`, `column_types`, `primary_keys`, and `foreign_keys`.
+由 schema 对象组成的 JSON 数组,每个数据库对应一个对象,包含 `db_id`、
+`table_names_original`、`table_names`(人类可读)、`column_names_original`、
+`column_names`、`column_types`、`primary_keys` 和 `foreign_keys`。
 
-## Database Counts
+## 数据库数量
 
-| Split | Databases | Questions |
+| 划分  | 数据库 | 问题数 |
 |-------|-----------|-----------|
 | Dev   | 11        | 1,534     |
 | Train | 73        | 9,428     |

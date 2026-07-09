@@ -1,3 +1,5 @@
+**English** · [中文](AGENTS-zh.md)
+
 # BIRDBench
 
 This repo transforms the [BIRD benchmark](https://bird-bench.github.io/) dataset into an **obfuscated Text-to-SQL dataset** for measuring how much benchmark accuracy depends on memorised schema identifiers, and for stress-testing execute-and-observe SQL agents over a multi-database schema lake.

@@ -1,36 +1,29 @@
-**English** · [中文](identifier-audit-detail-zh.md)
+[English](identifier-audit-detail.md) · **中文**
 
-# SQLite identifier audit: full detail
+# SQLite 标识符审计:完整明细
 
-Extracted from `artifacts/sqlite_identifier_audit.jsonl` (gitignored,
-mechanically reproducible by running `pipeline/00_audit_sqlite_identifiers.py`).
-That file has one JSON object per retained DB with every risky identifier
-listed individually; this file pulls out the categorized, complete lists that
-`audit-findings.md` only summarizes with counts and a handful of
-illustrative examples. See `audit-findings.md` for the narrative (why the
-audit exists, what it resolved, per-DB counts). This file is the raw
-enumeration to consult when you need to know exactly which identifier, in
-which table, in which DB, not just how many.
+提取自 `artifacts/sqlite_identifier_audit.jsonl`(已被 gitignore,可通过运行
+`pipeline/00_audit_sqlite_identifiers.py` 重新生成)。该文件为每个保留的数据库
+生成一个 JSON 对象,并逐条列出所有存在风险的标识符;本文件则把 `audit-findings.md` 里只用计数和少量示例带过的内容,按类别完整列成清单。有关叙述性说明(审计存在的原因、它解决了什么问题、各数据库的计数),
+请参见 `audit-findings.md`。当你需要确切知道是哪个标识符、位于哪张表、属于哪个
+数据库,而不只是知道有多少个时,本文件就是可供查阅的原始枚举清单。
 
-Of the 2,351 total risky identifiers found across 69 retained DBs:
+在 69 个保留数据库中共发现 2,351 个存在风险的标识符,其中:
 
-| Category | Count |
+| 类别 | 数量 |
 | --- | --- |
-| Embedded spaces | 106 |
-| Punctuation (non-space) | 29 |
-| Hyphenated table names (subset of punctuation, listed separately since they aren't valid unquoted SQL identifiers *at all*, not just non-lowercase) | 4 |
-| Case-only (PascalCase/camelCase/UPPERCASE, no space or punctuation) | 2,216 |
+| 含内嵌空格 | 106 |
+| 标点符号(非空格) | 29 |
+| 带连字符的表名(属于标点符号的子集,因其*根本*就不是合法的未加引号 SQL 标识符,而不只是非小写形式,故单独列出) | 4 |
+| 仅大小写问题(PascalCase/camelCase/UPPERCASE,无空格或标点) | 2,216 |
 
-The case-only 2,216 aren't enumerated here. See `audit-findings.md`'s
-per-database table for those counts; the identifiers themselves are exactly
-what `PRAGMA table_info()` already reports, nothing to add. The categories
-below are the ones worth having on hand verbatim, since spaces/punctuation
-are what actually break naive unquoted SQL (not just casing).
+仅大小写问题的这 2,216 个不在此处逐条列出。相关计数请参见 `audit-findings.md`
+中的各数据库表格;这些标识符本身就是 `PRAGMA table_info()` 已经报告的内容,
+无需额外补充。下面这些类别才值得原样保存备查,因为真正会破坏不加引号的朴素 SQL 的,是空格和标点,而不只是大小写。
 
-## Embedded spaces (106)
+## 含内嵌空格(106)
 
-Format: `db.table[.column] -> "identifier"` (table-name entries have no
-`.column` segment).
+格式:`db.table[.column] -> "identifier"`(表名条目没有 `.column` 部分)。
 
 ```text
 airline.Air Carriers  ->  "Air Carriers"
@@ -141,12 +134,10 @@ thrombosis_prediction.Examination.aCL IgA  ->  "aCL IgA"
 thrombosis_prediction.Patient.First Date  ->  "First Date"
 ```
 
-## Punctuation, non-space (29)
+## 标点符号,非空格(29)
 
-Includes the two `disney.voice-actors` entries. The table name itself is
-hyphenated (also listed in the hyphenated-tables section below since that's
-the more severe case) and its `voice-actor` column happens to be hyphenated
-too, independently.
+包含两条 `disney.voice-actors` 条目。表名本身带连字符(它也出现在下方的“带连字符
+的表名”小节中,因为那是更严重的情况),而它下面的 `voice-actor` 列碰巧自己也带连字符。
 
 ```text
 disney.voice-actors  ->  "voice-actors"
@@ -180,15 +171,14 @@ thrombosis_prediction.Laboratory.U-PRO  ->  "U-PRO"
 thrombosis_prediction.Laboratory.DNA-II  ->  "DNA-II"
 ```
 
-## Hyphenated table names (4)
+## 带连字符的表名(4)
 
-Not valid unquoted SQL identifiers *at all*, independent of casing: a
-hyphen inside an unquoted identifier is parsed as a subtraction operator, so
-these can only ever work quoted. Confirmed (2026-07-01, live pgloader run)
-that `quote identifiers` + `create no indexes` handles these correctly; no
-special per-DB override was ultimately needed for either `legislator` or
-`disney` despite `audit-findings.md`'s "suggested fixes" §3 originally
-flagging this as an open risk requiring verification.
+无论大小写如何,它们*根本*就不是合法的未加引号 SQL 标识符:未加引号标识符中的
+连字符会被解析为减法运算符,所以只有加了引号才能用。已确认
+(2026-07-01,实际运行 pgloader)`quote identifiers` + `create no indexes` 能正确
+处理它们;尽管 `audit-findings.md` 的“建议修复”(suggested fixes)第 3 节最初把
+这一点标记为需要验证的未决风险,但 `legislator` 和 `disney` 最终都无需任何针对
+特定数据库的特殊覆盖设置。
 
 ```text
 disney."voice-actors"

@@ -1,3 +1,5 @@
+**English** · [中文](PROGRESS-zh.md)
+
 # Progress Log
 
 Project history and status. `AGENTS.md` stays instructional (how to run/extend the pipeline); this file records **what was done, when, and why**: the narrative `AGENTS.md` deliberately omits. Methodology detail lives under [docs/methodology/](docs/methodology/); this file points at it rather than duplicating it.

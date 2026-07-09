@@ -1,3 +1,5 @@
+**English** · [中文](eda-report-zh.md)
+
 # EDA Report: BIRD Benchmark Dataset
 
 ---
