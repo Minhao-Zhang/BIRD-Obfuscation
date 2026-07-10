@@ -11,12 +11,10 @@ Five arms, each = (PostgreSQL instance, gold SQL field, question source):
   paraphrase  pg_base          (5432)  sql_base                         question_paraphrase
   all         pg_rename_decoy  (5435)  sql_rename (SELECT*-expanded)    question_paraphrase
 
-For each (question, arm): build a no-hint prompt (db_id + stripped DDL of that
-arm's instance + question text), ask the model for one SQL query, execute it once
-against that arm's instance, and grade by exact normalise_result equality against
-the arm's own gold (SELECT*-expanded where applicable, so decoy columns can never
-leak into the gold answer). The model sees decoy columns automatically because
-get_schema_ddl reads the decoy instance's information_schema — no special-casing.
+The default is split-machine offline evaluation: prepare frozen prompts from an
+arm's PostgreSQL instance, generate SQL on an API-only machine, then return the
+generations for DB-side grading. ``--local`` retains the legacy same-machine
+path. SELECT*-expanded gold is used where applicable.
 
 This is downstream evaluation, a sibling of eval_contamination.py (the contamination run), not a
 core pipeline step. It depends on artifacts produced later in the extension:
@@ -37,10 +35,9 @@ Writes:
   eval/ablation_results.jsonl  — one record per (question_id, arm), resumable
 
 Run:
-  Copy .env.example to .env and set OPENAI_API_KEY, then:
-  uv run python pipeline/eval_ablation.py --model gpt-5.5 --limit 20
-  uv run python pipeline/eval_ablation.py --model gpt-5.5            # full test set, 5 arms
-  uv run python pipeline/eval_ablation.py --arms base,rename         # subset of arms
+  uv run python pipeline/eval_ablation.py --arms base --prepare-only
+  uv run python pipeline/eval_ablation.py --split train --arms base --prepare-only
+  uv run python pipeline/eval_ablation.py --local --arms base --model gpt-5.5
   uv run python pipeline/eval_ablation.py --summarize                # EX/deltas/McNemar/CIs
 """
 
@@ -52,6 +49,8 @@ import json
 import math
 import os
 import random
+import subprocess
+import sys
 import time
 from pathlib import Path
 
@@ -75,6 +74,12 @@ from _eval_helpers import (
     metadata_matches,
     utc_now_iso,
     usage_dict,
+)
+from _offline_eval import (
+    GENERATIONS_NAME,
+    default_bundle_dir,
+    eval_metadata_from_manifest,
+    load_manifest,
 )
 
 # load_dotenv and the OpenAI SDK are imported lazily in the run path so that
@@ -574,15 +579,86 @@ def main():
                         help=f"comma-separated subset of {ARMS}")
     parser.add_argument("--summarize", action="store_true",
                         help="print EX/deltas/McNemar/CIs from existing results and exit")
+    parser.add_argument("--local", action="store_true",
+                        help="legacy single-machine API+PostgreSQL run")
+    parser.add_argument("--split", choices=["test", "train"], default="test")
+    parser.add_argument("--bundle-dir", type=Path, default=None)
+    parser.add_argument("--generations", type=Path, default=None,
+                        help="returned API-machine generations JSONL")
+    parser.add_argument("--prepare-only", action="store_true")
+    parser.add_argument("--overwrite-bundle", action="store_true")
     args = parser.parse_args()
 
+    arms = parse_arms(args.arms)
+    bundle_dir = args.bundle_dir or default_bundle_dir("ablation", args.split)
+    if args.bundle_dir is None and arms != ARMS:
+        bundle_dir = Path(f"{bundle_dir}-{'-'.join(arms)}")
     if args.summarize:
+        if not args.local and (bundle_dir / "manifest.json").exists():
+            summarize(eval_metadata_from_manifest(
+                load_manifest(bundle_dir),
+                model=args.model,
+                effort=args.effort,
+            ))
+        else:
+            summarize(run_metadata(args.model, args.effort))
+        return
+
+    if args.local:
+        if args.split != "test":
+            raise SystemExit("--local only supports --split test; use the default offline workflow for train.")
+        asyncio.run(run_eval(args.model, args.effort, args.limit, args.concurrency, arms))
         summarize(run_metadata(args.model, args.effort))
         return
 
-    arms = parse_arms(args.arms)
-    asyncio.run(run_eval(args.model, args.effort, args.limit, args.concurrency, arms))
-    summarize(run_metadata(args.model, args.effort))
+    manifest_path = bundle_dir / "manifest.json"
+    if manifest_path.exists() and not args.overwrite_bundle:
+        existing = load_manifest(bundle_dir)
+        if existing.get("arms") != arms or existing.get("split", "test") != args.split:
+            raise SystemExit(
+                f"Existing bundle {bundle_dir} has arms={existing.get('arms')} "
+                f"split={existing.get('split', 'test')}; pass --overwrite-bundle "
+                "or choose another --bundle-dir."
+            )
+        print(f"Reusing existing offline bundle: {bundle_dir}")
+    else:
+        command = [
+            sys.executable,
+            str(Path(__file__).with_name("prepare_offline_eval.py")),
+            "--eval", "ablation",
+            "--split", args.split,
+            "--arms", ",".join(arms),
+            "--output-dir", str(bundle_dir),
+        ]
+        if args.limit is not None:
+            command.extend(["--limit", str(args.limit)])
+        if args.overwrite_bundle:
+            command.append("--overwrite")
+        subprocess.run(command, check=True)
+
+    generations = args.generations or bundle_dir / GENERATIONS_NAME
+    if args.prepare_only or not generations.exists():
+        print("\nOffline bundle is ready. On the API machine run:")
+        print(
+            f"  uv run python pipeline/run_offline_generations.py "
+            f"--bundle-dir \"{bundle_dir}\" --model {args.model} --effort {args.effort}"
+        )
+        print("Copy generations.jsonl back, then rerun this command with --generations <path>.")
+        return
+
+    subprocess.run([
+        sys.executable,
+        str(Path(__file__).with_name("grade_offline_eval.py")),
+        "--bundle-dir", str(bundle_dir),
+        "--generations", str(generations),
+        "--model", args.model,
+        "--effort", args.effort,
+    ], check=True)
+    summarize(eval_metadata_from_manifest(
+        load_manifest(bundle_dir),
+        model=args.model,
+        effort=args.effort,
+    ))
 
 
 if __name__ == "__main__":

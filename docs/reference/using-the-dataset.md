@@ -119,15 +119,23 @@ pg_restore -d bird_base --no-owner --no-privileges -j 4 pg_base.dump
 
 ---
 
-## 3. Use it: run the local eval
+## 3. Run the offline eval
 
-With the instances restored and this repo checked out (so `eval_dataset/` is present),
-run the five-arm ablation:
+Offline split-machine evaluation is the default. The PostgreSQL machine prepares
+the frozen prompts and later grades returned SQL; the API machine only receives
+the public prompt bundle.
 
 ```bash
-uv run python pipeline/eval_ablation.py --arms base   --model <model>   # one arm at a time (local OOM safety)
-uv run python pipeline/eval_ablation.py --arms decoy  --model <model>
-uv run python pipeline/eval_ablation.py --summarize                     # EX / deltas / McNemar / CIs
+# 1. PostgreSQL machine: prepare one arm at a time (local OOM safety)
+uv run python pipeline/eval_ablation.py --arms base --prepare-only
+
+# 2. API machine: requests.jsonl + manifest.json only
+uv run python pipeline/run_offline_generations.py \
+  --bundle-dir eval/offline/ablation-base --model <model>
+
+# 3. PostgreSQL machine: copy generations.jsonl back, grade, summarize
+uv run python pipeline/eval_ablation.py --arms base \
+  --generations eval/offline/ablation-base/generations.jsonl --model <model>
 ```
 
 The eval resolves its gold/mapping inputs from `artifacts/` if present, else falls
@@ -137,8 +145,41 @@ per-file details are in [eval_dataset/README.md](../../eval_dataset/README.md).
 
 Each arm queries exactly one instance (`base`/`paraphrase` → `pg_base`, `rename` →
 `pg_rename`, `decoy` → `pg_decoy`, `all` → `pg_rename_decoy`), so run arms whose
-instances are up. Copy `.env.example` to `.env` and set `OPENAI_API_KEY` for the model
-calls.
+instances are up. Only the API machine needs `OPENAI_API_KEY`.
+
+The equivalent explicit preparation commands are:
+
+```bash
+uv run python pipeline/prepare_offline_eval.py --eval contamination
+uv run python pipeline/prepare_offline_eval.py --eval ablation --arms rename
+uv run python pipeline/prepare_offline_eval.py --eval contamination --split train
+uv run python pipeline/prepare_offline_eval.py --eval ablation --split train --arms base,rename
+```
+
+The exporter reads stripped DDL from the selected live instance and writes under
+`eval/offline/<eval>/`:
+
+- `requests.jsonl` and `manifest.json`: copy these to the API machine.
+- `grading_manifest.private.jsonl`: keep this on the PostgreSQL machine because it
+  contains gold SQL and local database routing.
+- `README.txt`: the generation-result JSONL contract and handoff instructions.
+
+Each public request contains the exact system instructions and rendered prompt,
+plus a deterministic `request_sha256`. Process requests in file order to retain
+the existing per-database prompt-cache locality. The API runner returns
+`request_id`, `request_sha256`, and `generated_sql`; the grader rejects mismatched
+or modified requests. Use `--conditions`, `--arms`, `--split`, and `--limit` to
+export subsets; an existing bundle is not replaced unless `--overwrite` is
+supplied.
+
+Train contamination and the `base`/`rename`/`decoy` ablation arms are immediately
+available. Train `paraphrase`/`all` first require:
+
+```bash
+uv run python pipeline/09_paraphrase_questions.py --include-train
+```
+
+The former same-machine behavior remains available explicitly with `--local`.
 
 ---
 

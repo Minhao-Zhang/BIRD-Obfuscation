@@ -164,7 +164,9 @@ reads the previous step's output; operational detail and invariants live in [AGE
 
 Run with `uv run python pipeline/<script>.py` from the repo root, after `docker compose up -d`.
 Two evaluation entrypoints, `pipeline/eval_contamination.py` and `pipeline/eval_ablation.py`, sit
-downstream of the numbered steps.
+downstream of the numbered steps. They default to an offline prepare → API-only
+generation → database grading workflow; pass `--local` only for the legacy
+same-machine run.
 
 ### Repository layout
 
@@ -195,8 +197,8 @@ docker compose cp   bird_obf_dumps/pg_base.dump pg_base:/tmp/pg_base.dump
 docker compose exec pg_base pg_restore -U bird -d bird --no-owner -j 4 /tmp/pg_base.dump
 #   ...repeat for pg_rename / pg_decoy / pg_rename_decoy (two at a time on a laptop; see OOM note)
 
-# 3. run one ablation arm (gold + mappings resolve from the checked-in eval_dataset/)
-uv run python pipeline/eval_ablation.py --arms base --model <model>
+# 3. prepare one arm's public API bundle and private grading manifest
+uv run python pipeline/eval_ablation.py --arms base --prepare-only
 ```
 
 Full download, restore, and local-eval instructions: [docs/reference/using-the-dataset.md](docs/reference/using-the-dataset.md).

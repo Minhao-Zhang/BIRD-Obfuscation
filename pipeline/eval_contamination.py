@@ -11,11 +11,10 @@ This is downstream evaluation, not part of the core obfuscation pipeline
 (see docs/methodology/evaluation.md §2 "Scope Boundary") — not numbered as
 a pipeline step on purpose.
 
-For each (question, condition): build a one-shot prompt (db_id + stripped
-DDL for that condition's schema + question + evidence if applicable), ask
-the model for one SQL query, execute it once against that condition's
-PostgreSQL instance, and compare the result to the condition's own gold
-SQL executed fresh. One chance — no retry-on-error, no feedback loop.
+The default is split-machine offline evaluation: prepare frozen prompts from
+PostgreSQL, generate SQL on an API-only machine, then return generations for
+DB-side grading. ``--local`` retains the legacy same-machine path. In either
+mode each condition gets one model query and one execution, with no feedback.
 
 Reads:
   artifacts/test_final.jsonl
@@ -26,9 +25,9 @@ Writes:
   eval/contamination_results.jsonl  — one record per (question_id, condition), resumable
 
 Run:
-  Copy .env.example to .env and set OPENAI_API_KEY, then:
-  uv run python pipeline/eval_contamination.py --model gpt-5.5 --limit 20
-  uv run python pipeline/eval_contamination.py --model gpt-5.5           # full test set
+  uv run python pipeline/eval_contamination.py --prepare-only
+  uv run python pipeline/eval_contamination.py --split train --prepare-only
+  uv run python pipeline/eval_contamination.py --local --model gpt-5.5   # legacy
   uv run python pipeline/eval_contamination.py --summarize                # print EX/deltas
 """
 
@@ -38,12 +37,12 @@ import argparse
 import asyncio
 import json
 import os
+import subprocess
+import sys
 import time
 from pathlib import Path
 
-import openai
 from dotenv import load_dotenv
-from openai import AsyncOpenAI
 
 from _db import (
     PG_BASE_DSN,
@@ -63,6 +62,12 @@ from _eval_helpers import (
     metadata_matches,
     utc_now_iso,
     usage_dict,
+)
+from _offline_eval import (
+    GENERATIONS_NAME,
+    default_bundle_dir,
+    eval_metadata_from_manifest,
+    load_manifest,
 )
 
 load_dotenv()
@@ -98,6 +103,8 @@ def load_test_questions(limit: int | None) -> list[dict]:
 
 
 async def run_one(client, sem, model, effort, eval_metadata, question, condition, ddl_cache, conn_pool, lock):
+    import openai
+
     spec = CONDITION_SPEC[condition]
     db_id = question["db_id"]
     schema = spec["schema"]
@@ -187,6 +194,8 @@ def run_metadata(model: str, effort: str) -> dict:
 
 
 async def run_eval(model: str, effort: str, limit: int | None, concurrency: int) -> None:
+    from openai import AsyncOpenAI
+
     EVAL_DIR.mkdir(exist_ok=True)
     questions = load_test_questions(limit)
     eval_metadata = run_metadata(model, effort)
@@ -347,17 +356,88 @@ def main():
     parser.add_argument("--limit", type=int, default=None, help="Limit number of test questions (for dry runs)")
     parser.add_argument("--concurrency", type=int, default=4)
     parser.add_argument("--summarize", action="store_true", help="Print EX/deltas from existing results and exit")
+    parser.add_argument("--local", action="store_true",
+                        help="legacy single-machine API+PostgreSQL run")
+    parser.add_argument("--split", choices=["test", "train"], default="test")
+    parser.add_argument("--bundle-dir", type=Path, default=None)
+    parser.add_argument("--generations", type=Path, default=None,
+                        help="returned API-machine generations JSONL")
+    parser.add_argument("--prepare-only", action="store_true")
+    parser.add_argument("--overwrite-bundle", action="store_true")
     args = parser.parse_args()
 
+    bundle_dir = args.bundle_dir or default_bundle_dir("contamination", args.split)
     if args.summarize:
+        if not args.local and (bundle_dir / "manifest.json").exists():
+            summarize(eval_metadata_from_manifest(
+                load_manifest(bundle_dir),
+                model=args.model,
+                effort=args.effort,
+            ))
+        else:
+            summarize(run_metadata(args.model, args.effort))
+        return
+
+    if args.local:
+        if args.split != "test":
+            raise SystemExit("--local only supports --split test; use the default offline workflow for train.")
+        if not os.environ.get("OPENAI_API_KEY"):
+            raise SystemExit("OPENAI_API_KEY not set. Copy .env.example to .env and fill it in.")
+        asyncio.run(run_eval(args.model, args.effort, args.limit, args.concurrency))
         summarize(run_metadata(args.model, args.effort))
         return
 
-    if not os.environ.get("OPENAI_API_KEY"):
-        raise SystemExit("OPENAI_API_KEY not set. Copy .env.example to .env and fill it in.")
+    manifest_path = bundle_dir / "manifest.json"
+    if manifest_path.exists() and not args.overwrite_bundle:
+        existing = load_manifest(bundle_dir)
+        if (
+            existing.get("conditions") != CONDITIONS
+            or existing.get("split", "test") != args.split
+        ):
+            raise SystemExit(
+                f"Existing bundle {bundle_dir} has "
+                f"conditions={existing.get('conditions')} "
+                f"split={existing.get('split', 'test')}; pass "
+                "--overwrite-bundle or choose another --bundle-dir."
+            )
+        print(f"Reusing existing offline bundle: {bundle_dir}")
+    else:
+        command = [
+            sys.executable,
+            str(Path(__file__).with_name("prepare_offline_eval.py")),
+            "--eval", "contamination",
+            "--split", args.split,
+            "--output-dir", str(bundle_dir),
+        ]
+        if args.limit is not None:
+            command.extend(["--limit", str(args.limit)])
+        if args.overwrite_bundle:
+            command.append("--overwrite")
+        subprocess.run(command, check=True)
 
-    asyncio.run(run_eval(args.model, args.effort, args.limit, args.concurrency))
-    summarize(run_metadata(args.model, args.effort))
+    generations = args.generations or bundle_dir / GENERATIONS_NAME
+    if args.prepare_only or not generations.exists():
+        print("\nOffline bundle is ready. On the API machine run:")
+        print(
+            f"  uv run python pipeline/run_offline_generations.py "
+            f"--bundle-dir \"{bundle_dir}\" --model {args.model} --effort {args.effort}"
+        )
+        print("Copy generations.jsonl back, then rerun this command with --generations <path>.")
+        return
+
+    subprocess.run([
+        sys.executable,
+        str(Path(__file__).with_name("grade_offline_eval.py")),
+        "--bundle-dir", str(bundle_dir),
+        "--generations", str(generations),
+        "--model", args.model,
+        "--effort", args.effort,
+    ], check=True)
+    summarize(eval_metadata_from_manifest(
+        load_manifest(bundle_dir),
+        model=args.model,
+        effort=args.effort,
+    ))
 
 
 if __name__ == "__main__":

@@ -110,13 +110,20 @@ The 5-arm no-hint ablation (see [pipeline/eval_ablation.py](../pipeline/eval_abl
 
 ---
 
-## Running the local eval
+## Running the offline eval
 
 ```bash
-# one arm at a time keeps <=2 instances hot (local OOM safety)
-uv run python pipeline/eval_ablation.py --arms base   --model gpt-5.4-mini
-uv run python pipeline/eval_ablation.py --arms decoy  --model gpt-5.4-mini
-uv run python pipeline/eval_ablation.py --summarize          # EX / deltas / McNemar / CIs
+# PostgreSQL machine: one arm at a time keeps <=2 instances hot
+uv run python pipeline/eval_ablation.py --arms base --prepare-only
+
+# API machine
+uv run python pipeline/run_offline_generations.py \
+  --bundle-dir eval/offline/ablation-base --model gpt-5.4-mini
+
+# PostgreSQL machine, after copying generations.jsonl back
+uv run python pipeline/eval_ablation.py --arms base \
+  --generations eval/offline/ablation-base/generations.jsonl \
+  --model gpt-5.4-mini
 ```
 
 The eval scripts (`eval_ablation.py`, `eval_contamination.py`, `probe_schema_recall.py`)

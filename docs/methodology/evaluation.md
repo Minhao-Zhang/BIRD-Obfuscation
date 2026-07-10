@@ -130,12 +130,14 @@ The per-language breakdown estimates whether Pinyin produces a larger contaminat
 > in the interim; this section will be populated once that run completes.
 
 **Setup for the run:** `pipeline/eval_contamination.py`, one-shot (no retry-on-error, no
-feedback loop), over the full test set (2,030 questions × 4 conditions). Raw per-call
-records are written to `eval/contamination_results.jsonl` (gitignored, reproducible via
-the script). Each row includes an `eval_metadata` block with the model, reasoning effort,
-prompt version, git commit, and input artifact hashes; resumability only reuses rows whose
-metadata matches the current invocation. Metrics and the per-language / collision
-breakdowns are defined in §7.
+feedback loop), over the full test set (2,030 questions × 4 conditions). Evaluation uses
+the default offline workflow: prompts and private gold are frozen on the PostgreSQL
+machine, model generations run on an API-only machine, and returned SQL is graded on the
+original PostgreSQL snapshot. Raw graded records are written to
+`eval/contamination_results.jsonl`. Each row includes an `eval_metadata` block with the
+model, reasoning effort, prompt version, git commit, and input artifact hashes;
+resumability only reuses rows whose metadata matches the current invocation. Metrics and
+the per-language / collision breakdowns are defined in §7.
 
 ---
 
