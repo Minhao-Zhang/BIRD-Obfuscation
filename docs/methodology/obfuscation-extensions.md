@@ -120,6 +120,6 @@ Built in dependency order: decoy first (it is the part that touches the R1==R2 c
 | 08 | `08_inject_decoys.py` | generate `decoy_map.json` (cheap LLM) → clone volumes into `pg_*_decoy` → inject *structural* decoys → expand `SELECT *` in affected gold → re-run R1==R2. **Superseded for the decoy payload by step 10.** |
 | 09 | `09_paraphrase_questions.py` | generate `question_paraphrase` (cheap LLM), one per test question |
 | 10 | `10_inject_traps.py` | **corrupted decoy traps**: evil-twin columns + corrupted clone tables (additive), injected into both `*_decoy` instances; emits `trap_manifest.json` + `trap_table_manifest.json`. See [../reference/corrupted-decoys-design.md](../reference/corrupted-decoys-design.md). |
-| n/a | `pipeline/eval_ablation.py` | standalone 5-arm ablation harness (base/rename/decoy/paraphrase/all); writes `eval/ablation_results.jsonl` |
+| n/a | `pipeline/eval_ablation.py` | standalone 5-arm ablation harness (base/rename/decoy/paraphrase/all); defaults to offline prepare/generate/grade; writes `eval/ablation_results.jsonl` |
 
 See [evaluation.md §9](evaluation.md) for the ablation design that consumes these outputs, and [../reference/extension-implementation-plan.md](../reference/extension-implementation-plan.md) for the original step-by-step build spec (note: its decoy sections predate the step-10 corrupted-trap rework; see the banner there).

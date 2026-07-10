@@ -73,8 +73,9 @@ python eval_dataset/build_eval_dataset.py
   [docs/reference/corrupted-decoys-design.md](../docs/reference/corrupted-decoys-design-zh.md)。
 
 ### 维度 3:问题改写
-- **`question_paraphrases.jsonl`**:为每个**测试**问题提供一条保持 SQL 不变的改写
-  (`question_id -> question_paraphrase`,2,030 行)。
+- **`question_paraphrases.jsonl`**:每个问题的 SQL 保持不变的改写
+  (`question_id -> question_paraphrase`)。`eval_dataset/` 快照含 2,030 条测试改写;
+  训练改写(再加 8,134 条)在 `artifacts/question_paraphrases.jsonl`,需步骤 09 加 `--include-train`。
 
 ### 评测支持
 - **`gold_star_expanded.jsonl`**:为约 5 条 star 查询提供的 `SELECT *` 展开版 gold
@@ -100,13 +101,20 @@ python eval_dataset/build_eval_dataset.py
 
 ---
 
-## 运行本地评测
+## 运行离线评测
 
 ```bash
-# one arm at a time keeps <=2 instances hot (local OOM safety)
-uv run python pipeline/eval_ablation.py --arms base   --model gpt-5.4-mini
-uv run python pipeline/eval_ablation.py --arms decoy  --model gpt-5.4-mini
-uv run python pipeline/eval_ablation.py --summarize          # EX / deltas / McNemar / CIs
+# PostgreSQL 机器:一次一臂,最多热两个实例
+uv run python pipeline/eval_ablation.py --arms base --prepare-only
+
+# API 机器
+uv run python pipeline/run_offline_generations.py \
+  --bundle-dir eval/offline/ablation-base --model gpt-5.4-mini
+
+# PostgreSQL 机器,拷回 generations.jsonl 后
+uv run python pipeline/eval_ablation.py --arms base \
+  --generations eval/offline/ablation-base/generations.jsonl \
+  --model gpt-5.4-mini
 ```
 
 评测脚本(`eval_ablation.py`、`eval_contamination.py`、`probe_schema_recall.py`)通过

@@ -143,7 +143,7 @@ the per-language / collision breakdowns are defined in §7.
 
 ## 9. Ablation study: extended obfuscation layers
 
-The contamination run (§8) measured only the **rename** dimension (identifier rename). This ablation measures the **independent contribution of each obfuscation dimension** to execution-accuracy drop, adding the two dimensions specified in [obfuscation-extensions.md](obfuscation-extensions.md). The harness (`pipeline/eval_ablation.py`) is **implemented**; the full run is **pending** (see [../../PROGRESS.md](../../PROGRESS.md)) and will be executed together with the §8 re-run on the stronger model. No interim numbers are reported.
+The contamination run (§8) measured only the **rename** dimension (identifier rename). This ablation measures the **independent contribution of each obfuscation dimension** to execution-accuracy drop, adding the two dimensions specified in [obfuscation-extensions.md](obfuscation-extensions.md). The harness (`pipeline/eval_ablation.py`) is **implemented** and uses the same default offline workflow as §8; the full run is **pending** (see [../../PROGRESS.md](../../PROGRESS.md)) and will be executed together with the §8 re-run on the stronger model. No interim numbers are reported.
 
 ### 9.1 Arms
 

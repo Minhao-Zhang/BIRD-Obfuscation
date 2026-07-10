@@ -66,7 +66,7 @@ uv run python pipeline/06_build_pg_rename.py
 
 步骤 7(`07_rename_sql_and_validate.py`)应用 rename map 并检查 R1==R2(`pg_base` 上的 `sql_base` 与 `pg_rename` 上的 `sql_rename` 结果相等),把匹配的写入 `artifacts/{train,test}_final.jsonl`(即最终交付物),把失败的写入 `workdir/rename_failures.jsonl`。可通过 `question_id` 断点续跑;用 `wc -l artifacts/*_final.jsonl workdir/rename_failures.jsonl` 查看进度。已验证的数量:[docs/methodology/dataset.md §7](docs/methodology/dataset-zh.md)。
 
-`pipeline/eval_contamination.py` 是下游的四条件混淆有效性评测,不属于带编号的 pipeline 步骤(编号范围到步骤 7 为止)。把 `.env.example` 复制为 `.env` 并设置 `OPENAI_API_KEY`;可按 `(question_id, condition)` 断点续跑,`--limit N` 用于试运行,`--summarize` 在不发起新的 API 调用的情况下打印 EX 和各项差值。详情:[docs/methodology/evaluation.md §4](docs/methodology/evaluation-zh.md)。
+`pipeline/eval_contamination.py` 是下游的四条件混淆有效性评测,不属于带编号的 pipeline 步骤(编号范围到步骤 7 为止)。默认走离线分机流程:在 PostgreSQL 机器准备公开请求包,在 API 机器运行 `run_offline_generations.py`,再把生成结果拿回 DB 机器打分。`--split {test,train}` 选择数据集;`--local` 显式启用旧的同机路径。详情:[docs/methodology/evaluation.md §4](docs/methodology/evaluation-zh.md)和 [docs/reference/using-the-dataset.md §3](docs/reference/using-the-dataset-zh.md)。
 
 ## 扩展混淆(decoy + paraphrase)
 
@@ -79,7 +79,7 @@ uv run python pipeline/06_build_pg_rename.py
 - `08_inject_decoys.py`:生成 `artifacts/decoy_map.json`(廉价 LLM,带随机种子),向两个 `*_decoy` 实例注入 decoy 表 + 易混淆的列,展开少数几个 `SELECT *` 的 gold 查询(`artifacts/gold_star_expanded.jsonl`),并重新校验 R1==R2(验收关卡 → `workdir/decoy_failures.jsonl`,预期为 0)。`--phase {generate,inject,validate,all}`、`--regenerate`、`--validate-only`。
 - `09_paraphrase_questions.py`:为每个问题生成一条以 SQL 为条件的 paraphrase → `artifacts/question_paraphrases.jsonl`(可断点续跑;`--model` 在运行时选择,`--concurrency`)。
 - `10_inject_traps.py`:面向交互式"执行并观察"型 agent 范式的被破坏 decoy **陷阱(traps)**(空的/NULL 的 decoy 会自行暴露、毫无代价)。在 `*_decoy` 实例上严格采用**追加式(additive)**的被破坏副本,因此真实的列/表保持逐字节一致,R1==R2 依然成立。阶段 1 = 邪恶双胞胎列(`--phase rowcounts,plan,name,inject`,≤500k 行的表);阶段 2 = 被破坏的克隆表(`--phase plan-tables,name-tables,inject-tables`,≤50k 行的源表,由于 gold 从不引用 decoy 表,所以对 R1==R2 没有影响)。基于哈希种子的确定性破坏,使用**与变体无关(variant-independent)**的 salt(对连接键做置换 → 保持引用完整性(RI);其余情况做稀疏扰动/类别重映射/日期偏移/置空);每个变体由 LLM 命名(`--model`、`--effort`)。产出 `artifacts/trap_manifest.json` + `artifacts/trap_table_manifest.json`。用 `--variants base|rename` **一次只注入一个变体**(OOM);`--regenerate` 会先删除再重建。设计 + 风险登记表:[docs/reference/corrupted-decoys-design.md](docs/reference/corrupted-decoys-design-zh.md)。
-- `pipeline/eval_ablation.py`:5 个实验臂的无提示(no-hint)消融实验(base/rename/decoy/paraphrase/all);需要步骤 08 的产出 + 步骤 09 的 paraphrase;`--summarize` 会打印 EX/差值/置信区间(CI)。设计:[docs/methodology/evaluation.md §9](docs/methodology/evaluation-zh.md)。
+- `pipeline/eval_ablation.py`:5 臂无提示消融(base/rename/decoy/paraphrase/all),默认与污染评测相同的离线准备/生成/打分流程;依赖步骤 08 产出 + 步骤 09 改写。训练 `paraphrase`/`all` 臂还需步骤 09 加 `--include-train`。`--summarize` 打印 EX/差值/置信区间。设计:[docs/methodology/evaluation.md §9](docs/methodology/evaluation-zh.md)。
 
 ## 需要保持的不变量
 

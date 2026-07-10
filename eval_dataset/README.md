@@ -81,8 +81,10 @@ identifiers and the presence of decoy columns/tables differ.
   [docs/reference/corrupted-decoys-design.md](../docs/reference/corrupted-decoys-design.md).
 
 ### Dimension 3: question paraphrase
-- **`question_paraphrases.jsonl`**: one SQL-preserving paraphrase per **test** question
-  (`question_id -> question_paraphrase`, 2,030 rows).
+- **`question_paraphrases.jsonl`**: one SQL-preserving paraphrase per question
+  (`question_id -> question_paraphrase`). The `eval_dataset/` snapshot has 2,030 test rows;
+  train paraphrases (8,134 more) live in `artifacts/question_paraphrases.jsonl` after
+  step 09 with `--include-train`.
 
 ### Eval support
 - **`gold_star_expanded.jsonl`**: `SELECT *`-expanded gold for the ~5 star queries

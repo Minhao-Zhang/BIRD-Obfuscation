@@ -246,7 +246,17 @@ Real schema:
 
 ## 7. Ablation eval: `eval_ablation.py`
 
-**Purpose:** run the 5 arms from [evaluation.md §9](../methodology/evaluation.md) and report paired deltas with CIs.
+**Purpose:** run the 5 arms from [evaluation.md §9](../methodology/evaluation.md) and report paired deltas with CIs. The default is the **offline** prepare → API generate → DB grade workflow; `--local` keeps the legacy same-machine path.
+
+**Offline scripts (split machine):**
+
+| Script | Machine | Role |
+| --- | --- | --- |
+| `prepare_offline_eval.py` | PostgreSQL | export `requests.jsonl` + private `grading_manifest.private.jsonl` |
+| `run_offline_generations.py` | API | call the model from frozen prompts |
+| `grade_offline_eval.py` | PostgreSQL | execute gold + generated SQL, write `eval/*_results.jsonl` |
+
+Portable public bundles for the API machine: `eval/offline-public-bundles.zip` (git-tracked). Use `--split {test,train}` for train bundles; train `paraphrase`/`all` need `09_paraphrase_questions.py --include-train` (10,164 rows as of 2026-07-10).
 
 **Arms → (instance, gold field, question source):**
 
@@ -276,8 +286,8 @@ Real schema:
 > **⚠️ Resource safety:** on a local Docker Desktop / WSL setup, never run all four PostgreSQL instances under heavy query load at once. It can OOM the WSL VM, and with `fsync=off` an OOM crash can corrupt the volumes. Bring up only the instances a step needs (a clone touches 2), run the ablation **one arm at a time** (each arm queries exactly one instance: `docker compose stop` the others between arms), keep eval `--concurrency` ≤ 3, and never overlap step-08's validate pass with the ablation. Capping the WSL VM's memory in `.wslconfig` is the backstop, not a licence to run everything hot; on a well-provisioned server this limit does not apply.
 
 ```bash
-# 0. refactor (§2) and confirm the existing pipeline still passes
-uv run python pipeline/eval_contamination.py --summarize     # sanity: unchanged contamination-eval numbers
+# 0. sanity (optional)
+uv run python pipeline/eval_contamination.py --summarize
 
 # 1. DB: add compose services (§3b), then clone (§3c)
 docker compose up -d
@@ -288,14 +298,16 @@ uv run python pipeline/08_inject_decoys.py --limit 20   # dry run
 uv run python pipeline/08_inject_decoys.py              # full: generate + inject + validate
 #   GATE: workdir/decoy_failures.jsonl is empty
 
-# 3. paraphrase
+# 3. paraphrase (test + train for offline train arms)
 uv run python pipeline/09_paraphrase_questions.py --limit 20
-uv run python pipeline/09_paraphrase_questions.py
-#   GATE: 2,030 unique question_ids in artifacts/question_paraphrases.jsonl
+uv run python pipeline/09_paraphrase_questions.py --include-train
+#   GATE: 10,164 unique question_ids in artifacts/question_paraphrases.jsonl
 
-# 4. ablation
-uv run python pipeline/eval_ablation.py --model gpt-5.5 --limit 20   # dry run
-uv run python pipeline/eval_ablation.py --model gpt-5.5             # full 5 arms
+# 4. offline ablation (one arm at a time)
+uv run python pipeline/eval_ablation.py --arms base --prepare-only
+# API machine: run_offline_generations.py --bundle-dir eval/offline/ablation-base
+uv run python pipeline/eval_ablation.py --arms base \
+  --generations eval/offline/ablation-base/generations.jsonl
 uv run python pipeline/eval_ablation.py --summarize
 ```
 

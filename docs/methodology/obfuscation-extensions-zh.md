@@ -120,6 +120,6 @@ Gold-SQL 字段采用一致的命名方案:`sql_sqlite`(原始 SQLite)、`sql_ba
 | 08 | `08_inject_decoys.py` | 生成 `decoy_map.json`(廉价 LLM)→ 把卷克隆为 `pg_*_decoy` → 注入*结构化*诱饵 → 在受影响的 gold 中展开 `SELECT *` → 重新运行 R1==R2。**就诱饵负载而言已被步骤 10 取代。** |
 | 09 | `09_paraphrase_questions.py` | 生成 `question_paraphrase`(廉价 LLM),每个测试问题一条 |
 | 10 | `10_inject_traps.py` | **被污染的诱饵陷阱**:邪恶双胞胎列 + 被污染的克隆表(增量),注入到两个 `*_decoy` 实例中;产出 `trap_manifest.json` + `trap_table_manifest.json`。参见 [../reference/corrupted-decoys-design.md](../reference/corrupted-decoys-design-zh.md)。 |
-| n/a | `pipeline/eval_ablation.py` | 独立的 5 分支消融实验框架(base/rename/decoy/paraphrase/all);写入 `eval/ablation_results.jsonl` |
+| n/a | `pipeline/eval_ablation.py` | 独立的 5 臂消融框架(base/rename/decoy/paraphrase/all);默认离线准备/生成/打分;写入 `eval/ablation_results.jsonl` |
 
 消费这些输出的消融实验设计参见 [evaluation.md §9](evaluation-zh.md),最初的逐步构建规范参见 [../reference/extension-implementation-plan.md](../reference/extension-implementation-plan-zh.md)(注意:其中的诱饵章节早于步骤 10 的被污染陷阱重做;参见那里的横幅提示)。

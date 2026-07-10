@@ -161,8 +161,8 @@
 | 10 | 注入损坏诱饵陷阱 | `pg_decoy` (5434), `pg_rename_decoy` (5435) |
 
 在仓库根目录下,先执行 `docker compose up -d`,再用 `uv run python pipeline/<script>.py` 运行。
-两个评测入口 `pipeline/eval_contamination.py` 和 `pipeline/eval_ablation.py`,位于这些
-编号步骤的下游。
+两个评测入口 `pipeline/eval_contamination.py` 和 `pipeline/eval_ablation.py` 位于编号步骤下游,
+默认走离线准备 → 纯 API 生成 → DB 打分;只有需要旧的同机路径时才加 `--local`。
 
 ### 仓库结构
 

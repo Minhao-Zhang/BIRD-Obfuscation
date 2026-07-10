@@ -8,6 +8,13 @@ Dates are absolute.
 
 ---
 
+## Status snapshot: 2026-07-10
+
+- **Offline split-machine eval is the default.** `eval_contamination.py` and `eval_ablation.py` now prepare frozen prompts on the PostgreSQL machine, run model calls on an API-only machine (`run_offline_generations.py`), and grade returned SQL on the PostgreSQL machine (`grade_offline_eval.py`). `--local` keeps the legacy same-machine path. `--split {test,train}` selects the dataset.
+- **Train paraphrases complete.** `09_paraphrase_questions.py --include-train` finished; `artifacts/question_paraphrases.jsonl` now has 10,164 rows (2,030 test + 8,134 train).
+- **Portable public bundles committed.** `eval/offline-public-bundles.zip` (~11 MiB) ships all test/train public `requests.jsonl` + `manifest.json` files for the API machine. Private `grading_manifest.private.jsonl` files stay on the DB machine and are regenerated locally via `prepare_offline_eval.py`.
+- **Next:** run API generation from the zip (or local `eval/offline/` bundles), copy `generations.jsonl` back, then grade and summarize.
+
 ## Status snapshot: 2026-07-05
 
 - **Core pipeline (steps 0-7): complete and validated.** 10,164 / 10,541 candidate questions pass end-to-end validation (8,134 train / 2,030 test; all 69 databases represented in both). See [docs/methodology/dataset.md §7](docs/methodology/dataset.md).
@@ -56,7 +63,7 @@ Implementing per [docs/reference/extension-implementation-plan.md](docs/referenc
 
 ## Next (planned, in order)
 
-1. **Run the five-arm ablation** (`eval_ablation.py`) once the evaluation model is chosen. Result rows now stamp eval metadata (model, effort, prompt version, git commit, and input artifact hashes), and resume only reuses rows with matching metadata. Report paired deltas + bootstrap CIs; exclude `order_sensitive_qids.json` from strict scoring.
+1. **Run offline evaluation end-to-end** on the chosen model: API generation from `eval/offline-public-bundles.zip` (or per-arm bundles under `eval/offline/`), then DB-side grading via `eval_contamination.py` / `eval_ablation.py --generations ...`. Result rows stamp eval metadata (model, effort, prompt version, git commit, and input artifact hashes); resume only reuses rows with matching metadata. Report paired deltas + bootstrap CIs; exclude `order_sensitive_qids.json` from strict scoring.
 2. **(Optional) AWS deployment**: the config is now portable (env DSNs, dumps on Hugging Face, tracked `eval_dataset/`). Recommended shape: single EC2 running the repo's docker-compose instances restored from the HF dumps, OpenAI key from Secrets Manager, results to S3.
 3. **(Downstream, separate repo)** the interactive agent harness + the decoy-consistent-answer / trap-rate metric that actually exercises the traps.
 

@@ -8,6 +8,13 @@
 
 ---
 
+## 状态快照:2026-07-10
+
+- **离线分机评测已是默认路径。** `eval_contamination.py` 和 `eval_ablation.py` 在 PostgreSQL 机器上冻结 prompt 并准备公开请求包,在纯 API 机器上调用模型(`run_offline_generations.py`),再在 PostgreSQL 机器上执行返回的 SQL 并打分(`grade_offline_eval.py`)。`--local` 保留旧的同机路径;`--split {test,train}` 选择数据集。
+- **训练集改写已完成。** `09_paraphrase_questions.py --include-train` 已跑完;`artifacts/question_paraphrases.jsonl` 现有 10,164 行(2,030 测试 + 8,134 训练)。
+- **可移植公开包已入库。** `eval/offline-public-bundles.zip`(约 11 MiB)包含全部测试/训练公开包(`requests.jsonl` + `manifest.json`),供 API 机器使用。私有的 `grading_manifest.private.jsonl` 留在 DB 机器,本地通过 `prepare_offline_eval.py` 重新生成。
+- **下一步:** 从 zip(或本地 `eval/offline/` 包)跑 API 生成,把 `generations.jsonl` 拷回 DB 机器,再打分并汇总。
+
 ## 状态快照:2026-07-05
 
 - **核心流水线(步骤 0-7):已完成并通过验证。** 10,541 个候选问题中有 10,164 个通过了端到端验证(8,134 个训练 / 2,030 个测试;训练、测试两边都覆盖了全部 69 个数据库)。见 [docs/methodology/dataset.md §7](docs/methodology/dataset-zh.md)。
@@ -56,7 +63,7 @@
 
 ## 下一步(计划,按顺序)
 
-1. **运行五臂消融实验**(`eval_ablation.py`),在确定评测模型之后进行。结果行现在会打上评测元数据(模型、推理力度、prompt 版本、git commit,以及输入 artifact 的哈希),断点续跑只会复用元数据匹配的行。报告成对差值 + bootstrap 置信区间;严格打分时排除 `order_sensitive_qids.json`。
+1. **端到端跑完离线评测:** 从 `eval/offline-public-bundles.zip`(或 `eval/offline/` 各臂包)在 API 机器生成,再在 DB 机器用 `eval_contamination.py` / `eval_ablation.py --generations ...` 打分。结果行会写入 eval 元数据(模型、推理强度、prompt 版本、git commit、输入产物哈希);续跑只复用元数据匹配的行。报告配对差值 + bootstrap 置信区间;严格评分排除 `order_sensitive_qids.json`。
 2. **(可选)AWS 部署**:配置现已可移植(环境变量 DSN、Hugging Face 上的 dump、被跟踪的 `eval_dataset/`)。推荐形态:单台 EC2,运行仓库中由 HF dump 恢复的 docker-compose 实例,OpenAI key 来自 Secrets Manager,结果写入 S3。
 3. **(下游,独立仓库)** 交互式 agent harness + 真正触发陷阱的"诱饵一致性回答" / 陷阱命中率指标。
 

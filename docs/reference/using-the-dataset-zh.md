@@ -114,22 +114,65 @@ pg_restore -d bird_base --no-owner --no-privileges -j 4 pg_base.dump
 
 ---
 
-## 3. 使用:运行本地评测
+## 3. 运行离线评测
 
-实例恢复好、本仓库也检出后(`eval_dataset/` 随之就位),运行五组消融实验:
+离线分机评测是默认路径。PostgreSQL 机器冻结 prompt 并稍后打分;API 机器只收到公开请求包。
 
 ```bash
-uv run python pipeline/eval_ablation.py --arms base   --model <model>   # one arm at a time (local OOM safety)
-uv run python pipeline/eval_ablation.py --arms decoy  --model <model>
-uv run python pipeline/eval_ablation.py --summarize                     # EX / deltas / McNemar / CIs
+# 1. PostgreSQL 机器:一次一臂(本地 OOM 安全)
+uv run python pipeline/eval_ablation.py --arms base --prepare-only
+
+# 2. API 机器:仅 requests.jsonl + manifest.json
+uv run python pipeline/run_offline_generations.py \
+  --bundle-dir eval/offline/ablation-base --model <model>
+
+# 3. PostgreSQL 机器:拷回 generations.jsonl,打分,汇总
+uv run python pipeline/eval_ablation.py --arms base \
+  --generations eval/offline/ablation-base/generations.jsonl --model <model>
 ```
 
-评测会优先从 `artifacts/`(若存在)解析标准答案/映射输入,否则回退到
-`eval_dataset/`,因此全新克隆的仓库(没有 `artifacts/`)不用额外步骤,就能基于受跟踪的快照运行。实验组 → (实例、标准答案字段、问题) 的映射以及各文件的详细说明见
-[eval_dataset/README.md](../../eval_dataset/README-zh.md)。
+评测会优先从 `artifacts/`(若存在)解析 gold/映射输入,否则回退到 `eval_dataset/`,
+因此全新克隆(没有 `artifacts/`)无需额外步骤即可针对受跟踪快照运行。臂 → (实例、gold 字段、问题) 映射及各文件说明见 [eval_dataset/README.md](../../eval_dataset/README-zh.md)。
 
-每组实验只查询一个实例(`base`/`paraphrase` → `pg_base`,`rename` →
-`pg_rename`,`decoy` → `pg_decoy`,`all` → `pg_rename_decoy`),因此只运行实例已启动的实验组。把 `.env.example` 复制为 `.env`,并设置 `OPENAI_API_KEY` 供模型调用。
+每臂只查询一个实例(`base`/`paraphrase` → `pg_base`,`rename` → `pg_rename`,`decoy` → `pg_decoy`,`all` → `pg_rename_decoy`),因此只运行实例已启动的臂。只有 API 机器需要 `OPENAI_API_KEY`。
+
+等价的显式准备命令:
+
+```bash
+uv run python pipeline/prepare_offline_eval.py --eval contamination
+uv run python pipeline/prepare_offline_eval.py --eval ablation --arms rename
+uv run python pipeline/prepare_offline_eval.py --eval contamination --split train
+uv run python pipeline/prepare_offline_eval.py --eval ablation --split train --arms base,rename
+```
+
+导出器从所选在线实例读取精简 DDL,写入 `eval/offline/<eval>/`:
+
+- `requests.jsonl` 和 `manifest.json`: 拷到 API 机器。
+- `grading_manifest.private.jsonl`: 留在 PostgreSQL 机器(含 gold SQL 和本地库路由)。
+- `README.txt`: 生成结果 JSONL 约定和交接说明。
+
+每个公开请求包含完整的 system 指令和渲染后的 prompt,以及确定性的 `request_sha256`。按文件顺序处理请求,以保留现有的按库 prompt-cache 局部性。API 运行器返回 `request_id`、`request_sha256`、`generated_sql`;打分器会拒绝不匹配或被改动的请求。用 `--conditions`、`--arms`、`--split`、`--limit` 导出子集;已有包除非加 `--overwrite` 否则不覆盖。
+
+训练污染评测和 `base`/`rename`/`decoy` 消融臂立即可用。训练 `paraphrase`/`all` 需先:
+
+```bash
+uv run python pipeline/09_paraphrase_questions.py --include-train
+```
+
+旧的同机行为仍可用,显式加 `--local`。
+
+### 可移植公开包(API 机器无需数据库)
+
+仓库还提供 `eval/offline-public-bundles.zip`(约 11 MiB),内含全部测试/训练公开包(`requests.jsonl` + `manifest.json` + `README.txt`),**不含**私有打分清单。
+
+```bash
+# API 机器(git clone 后)
+Expand-Archive eval/offline-public-bundles.zip -DestinationPath eval
+uv run python pipeline/run_offline_generations.py \
+  --bundle-dir eval/offline/contamination --model <model>
+```
+
+把各 `generations.jsonl` 拷回 PostgreSQL 机器打分。
 
 ---
 

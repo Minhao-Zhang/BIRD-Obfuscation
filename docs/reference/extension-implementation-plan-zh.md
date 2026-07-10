@@ -244,7 +244,17 @@ Real schema:
 
 ## 7. 消融评测:`eval_ablation.py`
 
-**目的:** 运行 [evaluation.md §9](../methodology/evaluation-zh.md) 中的 5 个组,并报告带置信区间的配对差值。
+**目的:** 运行 [evaluation.md §9](../methodology/evaluation-zh.md) 中的 5 个组,并报告带置信区间的配对差值。默认走**离线**准备 → API 生成 → DB 打分;`--local` 保留旧的同机路径。
+
+**离线脚本(分机):**
+
+| 脚本 | 机器 | 作用 |
+| --- | --- | --- |
+| `prepare_offline_eval.py` | PostgreSQL | 导出 `requests.jsonl` + 私有 `grading_manifest.private.jsonl` |
+| `run_offline_generations.py` | API | 从冻结 prompt 调用模型 |
+| `grade_offline_eval.py` | PostgreSQL | 执行 gold + 生成 SQL,写入 `eval/*_results.jsonl` |
+
+API 机器可移植公开包:`eval/offline-public-bundles.zip`(git 跟踪)。用 `--split {test,train}` 准备训练包;训练 `paraphrase`/`all` 需 `09_paraphrase_questions.py --include-train`(截至 2026-07-10 共 10,164 行)。
 
 **各组 → (实例、标准答案字段、问题来源):**
 
@@ -274,26 +284,28 @@ Real schema:
 > **⚠️ 资源安全:** 在本地 Docker Desktop / WSL 环境下,绝不要让四个 PostgreSQL 实例同时承受大量查询负载。这可能让 WSL 虚拟机 OOM,而在 `fsync=off` 下,一次 OOM 崩溃可能损坏数据卷。只启动某一步骤需要的实例(一次克隆涉及 2 个),运行消融实验时**一次一组**(每组恰好查询一个实例:组与组之间对其余实例执行 `docker compose stop`),把评测的 `--concurrency` 保持 ≤ 3,并且绝不要让步骤 08 的校验趟与消融实验重叠。在 `.wslconfig` 中限制 WSL 虚拟机的内存是兜底手段,并不意味着你就可以把所有实例都跑满负荷;在配置充足的服务器上这条限制不适用。
 
 ```bash
-# 0. refactor (§2) and confirm the existing pipeline still passes
-uv run python pipeline/eval_contamination.py --summarize     # sanity: unchanged contamination-eval numbers
+# 0. 健全性检查(可选)
+uv run python pipeline/eval_contamination.py --summarize
 
-# 1. DB: add compose services (§3b), then clone (§3c)
+# 1. DB: 添加 compose 服务(§3b),再克隆(§3c)
 docker compose up -d
-# ...clone commands from §3c...
+# ...§3c 中的克隆命令...
 
 # 2. decoys
-uv run python pipeline/08_inject_decoys.py --limit 20   # dry run
-uv run python pipeline/08_inject_decoys.py              # full: generate + inject + validate
-#   GATE: workdir/decoy_failures.jsonl is empty
+uv run python pipeline/08_inject_decoys.py --limit 20   # 试跑
+uv run python pipeline/08_inject_decoys.py              # 全量: generate + inject + validate
+#   关卡: workdir/decoy_failures.jsonl 为空
 
-# 3. paraphrase
+# 3. paraphrase(测试 + 训练,供离线训练臂)
 uv run python pipeline/09_paraphrase_questions.py --limit 20
-uv run python pipeline/09_paraphrase_questions.py
-#   GATE: 2,030 unique question_ids in artifacts/question_paraphrases.jsonl
+uv run python pipeline/09_paraphrase_questions.py --include-train
+#   关卡: artifacts/question_paraphrases.jsonl 含 10,164 个唯一 question_id
 
-# 4. ablation
-uv run python pipeline/eval_ablation.py --model gpt-5.5 --limit 20   # dry run
-uv run python pipeline/eval_ablation.py --model gpt-5.5             # full 5 arms
+# 4. 离线消融(一次一臂)
+uv run python pipeline/eval_ablation.py --arms base --prepare-only
+# API 机器: run_offline_generations.py --bundle-dir eval/offline/ablation-base
+uv run python pipeline/eval_ablation.py --arms base \
+  --generations eval/offline/ablation-base/generations.jsonl
 uv run python pipeline/eval_ablation.py --summarize
 ```
 

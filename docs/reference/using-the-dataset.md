@@ -181,6 +181,21 @@ uv run python pipeline/09_paraphrase_questions.py --include-train
 
 The former same-machine behavior remains available explicitly with `--local`.
 
+### Portable public bundles (no database on the API machine)
+
+The repo also ships `eval/offline-public-bundles.zip` (~11 MiB), containing every test and
+train public bundle (`requests.jsonl` + `manifest.json` + `README.txt`). It does **not**
+include private grading manifests.
+
+```bash
+# API machine (after git clone)
+Expand-Archive eval/offline-public-bundles.zip -DestinationPath eval
+uv run python pipeline/run_offline_generations.py \
+  --bundle-dir eval/offline/contamination --model <model>
+```
+
+Copy each `generations.jsonl` back to the PostgreSQL machine for grading.
+
 ---
 
 ## Which file is which (summary)
