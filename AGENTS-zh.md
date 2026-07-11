@@ -17,7 +17,7 @@
 `data/` 目录存放 BIRD 数据集(不纳入版本控制)。下载说明、目录结构和文件格式见 [data/README.md](data/README-zh.md)。
 
 - **Dev split**:11 个 SQLite 数据库,1,534 个问题
-- **Train split**:73 个 SQLite 数据库,9,428 个问题
+- **Train split**:69 个 SQLite 数据库,9,428 个问题
 - 每个问题都包含一个自然语言问题、可选的 evidence 提示、gold SQL,以及一个难度标签(`simple` / `moderate` / `challenging`)
 
 ## 运行 pipeline
@@ -66,11 +66,11 @@ uv run python pipeline/06_build_pg_rename.py
 
 步骤 7(`07_rename_sql_and_validate.py`)应用 rename map 并检查 R1==R2(`pg_base` 上的 `sql_base` 与 `pg_rename` 上的 `sql_rename` 结果相等),把匹配的写入 `artifacts/{train,test}_final.jsonl`(即最终交付物),把失败的写入 `workdir/rename_failures.jsonl`。可通过 `question_id` 断点续跑;用 `wc -l artifacts/*_final.jsonl workdir/rename_failures.jsonl` 查看进度。已验证的数量:[docs/methodology/dataset.md §7](docs/methodology/dataset-zh.md)。
 
-`pipeline/eval_contamination.py` 是下游的四条件混淆有效性评测,不属于带编号的 pipeline 步骤(编号范围到步骤 7 为止)。默认走离线分机流程:在 PostgreSQL 机器准备公开请求包,在 API 机器运行 `run_offline_generations.py`,再把生成结果拿回 DB 机器打分。`--split {test,train}` 选择数据集;`--local` 显式启用旧的同机路径。详情:[docs/methodology/evaluation.md §4](docs/methodology/evaluation-zh.md)和 [docs/reference/using-the-dataset.md §3](docs/reference/using-the-dataset-zh.md)。
+`pipeline/eval_contamination.py` 是下游的四条件混淆有效性评测,不属于带编号的 pipeline 步骤(编号范围到步骤 7 为止)。默认走离线分机流程:在 PostgreSQL 机器准备公开请求包,在 API 机器运行 `run_offline_generations.py`,再把生成结果拿回 DB 机器打分。`--split {test,train}` 选择数据集;`--local` 显式启用旧的同机路径。详情:[docs/methodology/evaluation.md §4](docs/methodology/evaluation-zh.md)(条件)与 §8.5(离线流程),以及 [docs/reference/using-the-dataset.md §3](docs/reference/using-the-dataset-zh.md)。
 
 ## 扩展混淆(decoy + paraphrase)
 
-可选的 decoy/paraphrase 维度步骤及其消融实验(ablation):设计见 [docs/methodology/obfuscation-extensions.md](docs/methodology/obfuscation-extensions-zh.md),完整的构建规范见 [docs/reference/extension-implementation-plan.md](docs/reference/extension-implementation-plan-zh.md)。
+可选的 decoy/paraphrase 维度步骤及其消融实验(ablation):设计见 [docs/methodology/obfuscation.md §7-§11](docs/methodology/obfuscation-zh.md),完整的构建规范见 [docs/reference/extension-implementation-plan.md](docs/reference/extension-implementation-plan-zh.md)。
 
 另有两个 PostgreSQL 实例存放增加了 decoy 的克隆,受 `decoy` 这个 compose profile 控制(默认的 `docker compose up -d` 不受影响):`pg_decoy`(5434)、`pg_rename_decoy`(5435)。构建方式是先克隆干净的 volume,再注入:克隆命令见 [extension-implementation-plan.md §3c](docs/reference/extension-implementation-plan-zh.md)。
 

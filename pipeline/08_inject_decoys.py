@@ -2,8 +2,8 @@
 Step 8: Inject decoy tables/columns into the two *_decoy PostgreSQL instances
 so schema-linking is harder, WITHOUT changing any gold-query result.
 
-Layer 3 of the extended obfuscation (docs/methodology/obfuscation-extensions.md
-§2; build spec in docs/reference/extension-implementation-plan.md §5). Golden
+Layer 3 of the extended obfuscation (docs/methodology/obfuscation.md
+§8; build spec in docs/reference/extension-implementation-plan.md §5). Golden
 rule: never touch pg_base / pg_rename or the existing *_final.jsonl —
 all writes go to the decoy clones and to new artifacts.
 

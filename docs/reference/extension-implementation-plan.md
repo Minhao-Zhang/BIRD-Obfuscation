@@ -2,7 +2,7 @@
 
 # Extension implementation plan: decoy injection, question paraphrase, ablation
 
-**Audience:** an engineer implementing the extended obfuscation layers for the first time. This is the **build spec**. The *design and rationale* live in [../methodology/obfuscation-extensions.md](../methodology/obfuscation-extensions.md) and [../methodology/evaluation.md §9](../methodology/evaluation.md); the *ablation numbers* to reproduce are in evaluation.md §8/§9. Read those first, then follow this doc top to bottom.
+**Audience:** an engineer implementing the extended obfuscation layers for the first time. This is the **build spec**. The *design and rationale* live in [../methodology/obfuscation.md §7-§11](../methodology/obfuscation.md) and [../methodology/evaluation.md §9](../methodology/evaluation.md); the *ablation numbers* to reproduce are in evaluation.md §8/§9. Read those first, then follow this doc top to bottom.
 
 > **⚠️ Partially superseded (2026-07-04). Read this first.** The **decoy** parts of this
 > plan (§0 decoy parameters and §5 "Step 08: `08_inject_decoys.py`") describe *empty /
@@ -155,7 +155,7 @@ Canonical, regeneratable, seeded. One entry per DB, **per variant** so each inst
 `mimics` records which real column a confusable decoy shadows (for later analysis; not used at inject time).
 
 ### `artifacts/gold_star_expanded.jsonl`
-Only the ~5 questions whose gold has a real-table `SELECT *` (see the measurement in obfuscation-extensions.md §2). Produced by step 08:
+Only the ~5 questions whose gold has a real-table `SELECT *` (see the measurement in obfuscation.md §8). Produced by step 08:
 ```json
 {"question_id": "train_8505", "sql_base_expanded": "SELECT \"col1\", ... FROM ...",
  "sql_rename_expanded": "SELECT \"...\", ... FROM ..."}

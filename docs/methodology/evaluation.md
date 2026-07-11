@@ -140,6 +140,10 @@ The per-language breakdown estimates whether Pinyin produces a larger contaminat
 One-shot generation (no retry-on-error, no feedback loop), graded once against the frozen
 PostgreSQL snapshots. All 8,120 generations graded; none skipped.
 
+> **Units.** EX is a fraction in [0, 1] (0.5163 = 51.63% of questions correct). A delta is the
+> difference of two EX values, expressed in **percentage points (pp)**: +0.0478 means 4.8 pp, not
+> 0.048%. The same convention holds in §9.4.
+
 #### 8.1 Execution accuracy by condition
 
 | Condition | Lenient EX | Strict EX |
@@ -220,7 +224,7 @@ McNemar p-values on the paired deltas are not yet computed (planned; see
 
 ## 9. Ablation study: extended obfuscation layers
 
-The contamination run (§8) measured only the **rename** dimension (identifier rename). This ablation measures the **independent contribution of each obfuscation dimension** to execution-accuracy drop, adding the two dimensions specified in [obfuscation-extensions.md](obfuscation-extensions.md). The harness (`pipeline/eval_ablation.py`) uses the same default offline workflow as §8. First results (run `claude opus 4.8 high`) are in §9.4.
+The contamination run (§8) measured only the **rename** dimension (identifier rename). This ablation measures the **independent contribution of each obfuscation dimension** to execution-accuracy drop, adding the two dimensions specified in [obfuscation.md §7-§11](obfuscation.md). The harness (`pipeline/eval_ablation.py`) uses the same default offline workflow as §8. First results (run `claude opus 4.8 high`) are in §9.4.
 
 ### 9.1 Arms
 

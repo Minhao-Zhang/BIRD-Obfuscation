@@ -120,12 +120,12 @@ uv run python pipeline/eval_ablation.py --arms base --prepare-only
 
 # API machine
 uv run python pipeline/run_offline_generations.py \
-  --bundle-dir eval/offline/ablation-base --model gpt-5.4-mini
+  --bundle-dir eval/offline/ablation-base --model "Claude-Opus-4.8" --effort high
 
 # PostgreSQL machine, after copying generations.jsonl back
 uv run python pipeline/eval_ablation.py --arms base \
   --generations eval/offline/ablation-base/generations.jsonl \
-  --model gpt-5.4-mini
+  --model "Claude-Opus-4.8" --effort high
 ```
 
 The eval scripts (`eval_ablation.py`, `eval_contamination.py`, `probe_schema_recall.py`)

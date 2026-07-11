@@ -4,7 +4,7 @@
 
 > A contamination-resistant rebuild of the [BIRD](https://bird-bench.github.io/) Text-to-SQL benchmark, plus the eval that measures how much benchmark scores depend on memorised schema identifiers.
 
-![status](https://img.shields.io/badge/status-work_in_progress-yellow)
+![status](https://img.shields.io/badge/status-active-brightgreen)
 ![python](https://img.shields.io/badge/python-uv-blue)
 ![postgres](https://img.shields.io/badge/PostgreSQL-18-336791)
 [![dataset](https://img.shields.io/badge/🤗%20dataset-BIRD__Obfuscation-orange)](https://huggingface.co/datasets/minhaozhang/BIRD_Obfuscation)
@@ -16,12 +16,6 @@ reasoning over the schema in front of it. This project rebuilds BIRD into a vers
 keeps the SQL task intact but strips away the memorisable surface (renamed identifiers,
 adversarial decoy data, paraphrased questions), then runs a controlled evaluation to measure
 how much accuracy that surface was actually buying.
-
-> [!NOTE]
-> **🚧 Work in progress.** The dataset is built, validated, and published, and the first
-> evaluation run is in: Claude Opus 4.8 (high effort) on the test split. Wider model
-> coverage and the train split are still pending. See [Results](#results--claude-opus-48-high-test-split)
-> and [Project status](#project-status).
 
 ---
 
@@ -95,17 +89,39 @@ produce a number:
 
 ### Results — Claude Opus 4.8 (high), test split
 
-First run, 2,030 test questions, one-shot. Deltas below are lenient EX; full tables, strict EX,
-per-language breakdown, and significance live in [evaluation.md §8](docs/methodology/evaluation.md)
-(contamination) and [§9.4](docs/methodology/evaluation.md) (ablation).
+First run: 2,030 test questions, one-shot. **EX** is execution accuracy (percent of questions
+answered correctly); **Δ is in percentage points (pp)** — e.g. 51.6% → 46.9% is a 4.8 pp drop.
+Numbers below are lenient EX; full tables (strict EX, per-language, bootstrap CIs) are in
+[evaluation.md §8](docs/methodology/evaluation.md) (contamination) and
+[§9.4](docs/methodology/evaluation.md) (ablation).
 
-| Signal | Δ vs base | Reading |
+**Contamination — what does renaming schema identifiers cost?** (four conditions)
+
+| Schema | No hint | With hint |
 | --- | --- | --- |
-| Rename identifiers, no hint (contamination) | **+0.048** | small but real identifier-recall effect; english control +0.004, pinyin +0.105 |
-| Rename (ablation) | −0.041 (p<0.001) | replicates the contamination signal |
-| Decoy traps | −0.022 (p=0.001) | model mostly resists the confusable decoys |
-| Paraphrase | **+0.035** (p<0.001) | *positive*: SQL-preserving paraphrases tidy the phrasing rather than expose question-form recall |
-| All combined | −0.058 (p<0.001) | largest drop; pinyin lowest |
+| Original (base) | 51.6% | 58.8% |
+| Renamed | 46.9% | 57.0% |
+| **Δ (rename cost)** | **4.8 pp** | 1.8 pp |
+
+**Ablation — each obfuscation mechanism isolated** (no hint, vs the `base` arm at 51.1% EX)
+
+| Arm | EX | Δ vs base |
+| --- | --- | --- |
+| base | 51.1% | — |
+| rename | 47.0% | −4.1 pp (p<0.001) |
+| decoy | 48.9% | −2.2 pp (p=0.001) |
+| paraphrase | 54.6% | **+3.5 pp** (p<0.001) |
+| all | 45.3% | −5.8 pp (p<0.001) |
+
+- **Rename** removes a small but real identifier-recall advantage (4.8 pp no-hint), and the
+  ablation replicates it (−4.1 pp). It is near-zero on the English control (identity rename)
+  and largest on Pinyin (+10.5 pp no-hint), so the effect scales with distance from English.
+- **Decoy traps** cost only 2.2 pp — the model mostly grounds in the real columns/tables and
+  resists the confusable decoys (whose gold still resolves correctly, verified 40/40 per arm).
+- **Paraphrase is positive (+3.5 pp)** — an honest negative result for the question-form-recall
+  hypothesis: the SQL-preserving paraphrases tidy up ambiguous phrasing rather than expose
+  memorised wording.
+- **All combined** is the largest drop (−5.8 pp), lowest on Pinyin.
 
 Pipeline integrity (R0==R1, R1==R2) over 10,164 questions holds. Per-question (question, gold SQL,
 generated SQL, correctness) records for this run are in [`exports/`](exports/). Wider model coverage
@@ -113,7 +129,7 @@ and the train split are pending.
 
 ## Project status
 
-**The dataset is finished and published. The measurement is the part still in progress.**
+**The dataset is finished and published; the first evaluation run (Claude Opus 4.8, high, test split) is graded and reported. Remaining measurement work is the train split and wider model coverage.**
 
 | Component | State |
 | --- | --- |
@@ -217,8 +233,7 @@ regeneration; Postgres DSNs are env-configurable (`PG_*_DSN`) to target remote P
 | Doc | What it covers |
 | --- | --- |
 | [docs/methodology/dataset.md](docs/methodology/dataset.md) | Schema-lake construction, inclusion criteria, train/test split |
-| [docs/methodology/obfuscation.md](docs/methodology/obfuscation.md) | Obfuscation design, decisions, physical realisation |
-| [docs/methodology/obfuscation-extensions.md](docs/methodology/obfuscation-extensions.md) | Decoy traps + paraphrase dimensions and the ablation |
+| [docs/methodology/obfuscation.md](docs/methodology/obfuscation.md) | Obfuscation design, decisions, physical realisation; decoy-trap + paraphrase dimensions (§7-§11) |
 | [docs/methodology/evaluation.md](docs/methodology/evaluation.md) | Integrity check, contamination delta, ablation (§9) |
 | [docs/reference/corrupted-decoys-design.md](docs/reference/corrupted-decoys-design.md) | Decoy-trap design, risk register, as-built parameters |
 | [docs/reference/limitations.md](docs/reference/limitations.md) | Known limitations and scope caveats; read before citing any number |

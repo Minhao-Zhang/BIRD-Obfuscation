@@ -245,4 +245,4 @@ gold 的结果。
 
 相关文档:[extension-implementation-plan.md](extension-implementation-plan-zh.md)、
 [pipeline-invariants.md](pipeline-invariants-zh.md)、
-[../methodology/obfuscation-extensions.md](../methodology/obfuscation-extensions-zh.md)。
+[../methodology/obfuscation.md §8](../methodology/obfuscation-zh.md)。

@@ -3,8 +3,8 @@ Step 9: Paraphrase each question (Layer 4 of the extended obfuscation).
 
 Produces exactly ONE natural-language paraphrase per question, conditioned on
 the gold SQL + obfuscated schema DDL so the paraphrase stays anchored to the
-question's intent (SQL2NL-style; see docs/methodology/obfuscation-extensions.md
-§3 and docs/reference/extension-implementation-plan.md §6). Layer 4 attacks
+question's intent (SQL2NL-style; see docs/methodology/obfuscation.md
+§9 and docs/reference/extension-implementation-plan.md §6). Layer 4 attacks
 question-form recall: the model can no longer lean on a memorised BIRD
 question -> SQL template.
 
@@ -36,7 +36,7 @@ Writes:
                                           are skipped).
 
 The gold SQL (sql_rename) is unchanged, so R1==R2 is untouched by
-paraphrase (obfuscation-extensions.md §3). This output feeds the paraphrase / `all`
+paraphrase (obfuscation.md §9). This output feeds the paraphrase / `all`
 arms of eval_ablation.py, which join it back on question_id.
 
 Run:

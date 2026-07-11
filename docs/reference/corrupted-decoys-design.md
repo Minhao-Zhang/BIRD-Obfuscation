@@ -269,4 +269,4 @@ in place of `source_table`) and runs it on the decoy instance.
 
 Related: [extension-implementation-plan.md](extension-implementation-plan.md),
 [pipeline-invariants.md](pipeline-invariants.md),
-[../methodology/obfuscation-extensions.md](../methodology/obfuscation-extensions.md).
+[../methodology/obfuscation.md §8](../methodology/obfuscation.md).

@@ -10,14 +10,14 @@ The standard BIRD benchmark is public, including its questions, gold SQL, and sc
 
 The downstream task mirrors an agentic Text-to-SQL setting where an agent builds memory from known true SQL and stripped schema metadata, then answers held-out natural-language questions against the obfuscated schema lake. This repository prepares and validates that dataset; it does not itself evaluate schema routing. In the evaluations described here, the correct database is supplied upfront.
 
-For the full methodology and rationale behind each design decision, see [docs/methodology/](docs/methodology/) (obfuscation, dataset, evaluation, and obfuscation-extensions). This file is **operational guidance only**: how to run and extend the pipeline, and invariants to preserve when touching it. Project history, status, and decisions live in [PROGRESS.md](PROGRESS.md); detailed empirical rationale for the invariants below lives in [docs/reference/pipeline-invariants.md](docs/reference/pipeline-invariants.md).
+For the full methodology and rationale behind each design decision, see [docs/methodology/](docs/methodology/) (obfuscation, dataset, and evaluation). This file is **operational guidance only**: how to run and extend the pipeline, and invariants to preserve when touching it. Project history, status, and decisions live in [PROGRESS.md](PROGRESS.md); detailed empirical rationale for the invariants below lives in [docs/reference/pipeline-invariants.md](docs/reference/pipeline-invariants.md).
 
 ## Data
 
 The `data/` directory holds the BIRD dataset (not in version control). See [data/README.md](data/README.md) for download instructions, directory structure, and file formats.
 
 - **Dev split**: 11 SQLite databases, 1,534 questions
-- **Train split**: 73 SQLite databases, 9,428 questions
+- **Train split**: 69 SQLite databases, 9,428 questions
 - Each question has a natural-language question, optional evidence hint, gold SQL, and a difficulty label (`simple` / `moderate` / `challenging`)
 
 ## Running the pipeline
@@ -66,11 +66,11 @@ The `:ro` source mount is what makes the clone safe. Volume names are the Compos
 
 Step 7 (`07_rename_sql_and_validate.py`) applies the rename map and checks R1==R2 (`sql_base` on `pg_base` vs `sql_rename` on `pg_rename`, equal results), writing matches to `artifacts/{train,test}_final.jsonl` (the deliverable) and failures to `workdir/rename_failures.jsonl`. Resumable via `question_id`; progress with `wc -l artifacts/*_final.jsonl workdir/rename_failures.jsonl`. Validated counts: [docs/methodology/dataset.md §7](docs/methodology/dataset.md).
 
-`pipeline/eval_contamination.py` is downstream four-condition obfuscation-effectiveness evaluation, not a numbered pipeline step (scope stops at step 7). Its default is the split-machine offline workflow: prepare public requests on the PostgreSQL machine, run `run_offline_generations.py` on the API machine, then return generations for DB-side grading. `--split {test,train}` selects the dataset; `--local` explicitly enables the legacy same-machine path. Detail: [docs/methodology/evaluation.md §4](docs/methodology/evaluation.md) and [docs/reference/using-the-dataset.md §3](docs/reference/using-the-dataset.md).
+`pipeline/eval_contamination.py` is downstream four-condition obfuscation-effectiveness evaluation, not a numbered pipeline step (scope stops at step 7). Its default is the split-machine offline workflow: prepare public requests on the PostgreSQL machine, run `run_offline_generations.py` on the API machine, then return generations for DB-side grading. `--split {test,train}` selects the dataset; `--local` explicitly enables the legacy same-machine path. Detail: [docs/methodology/evaluation.md §4](docs/methodology/evaluation.md) (conditions) and §8.5 (offline workflow), plus [docs/reference/using-the-dataset.md §3](docs/reference/using-the-dataset.md).
 
 ## Extended obfuscation (decoy + paraphrase)
 
-Optional decoy/paraphrase dimension steps and their ablation: design in [docs/methodology/obfuscation-extensions.md](docs/methodology/obfuscation-extensions.md), full build spec in [docs/reference/extension-implementation-plan.md](docs/reference/extension-implementation-plan.md).
+Optional decoy/paraphrase dimension steps and their ablation: design in [docs/methodology/obfuscation.md §7-§11](docs/methodology/obfuscation.md), full build spec in [docs/reference/extension-implementation-plan.md](docs/reference/extension-implementation-plan.md).
 
 Two extra PostgreSQL instances hold decoy-augmented clones, gated behind the `decoy` compose profile (default `docker compose up -d` is unchanged): `pg_decoy` (5434), `pg_rename_decoy` (5435). Build them by cloning the clean volumes, then injecting: clone commands in [extension-implementation-plan.md §3c](docs/reference/extension-implementation-plan.md).
 

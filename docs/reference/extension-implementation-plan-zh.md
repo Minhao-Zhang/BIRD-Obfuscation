@@ -2,7 +2,7 @@
 
 # 扩展实现方案:诱饵注入、问题改写、消融实验
 
-**读者对象:** 首次实现扩展混淆层的工程师。这是**构建规范**。*设计与理由*见 [../methodology/obfuscation-extensions.md](../methodology/obfuscation-extensions-zh.md) 与 [../methodology/evaluation.md §9](../methodology/evaluation-zh.md);需要复现的*消融数据*在 evaluation.md §8/§9。请先读那些文档,再从头到尾跟着本文操作。
+**读者对象:** 首次实现扩展混淆层的工程师。这是**构建规范**。*设计与理由*见 [../methodology/obfuscation.md §7-§11](../methodology/obfuscation-zh.md) 与 [../methodology/evaluation.md §9](../methodology/evaluation-zh.md);需要复现的*消融数据*在 evaluation.md §8/§9。请先读那些文档,再从头到尾跟着本文操作。
 
 > **⚠️ 部分内容已被取代(2026-07-04)。请先读这一段。** 本方案中关于**诱饵**的部分
 > (§0 的诱饵参数,以及 §5 的 "步骤 08:`08_inject_decoys.py`")描述的是*空的 /
@@ -153,7 +153,7 @@ docker compose --profile decoy up -d pg_decoy pg_rename_decoy
 `mimics` 记录某个易混淆的诱饵列映射的是哪个真实列(供后续分析;注入时不使用)。
 
 ### `artifacts/gold_star_expanded.jsonl`
-只包含标准答案中带有真实表 `SELECT *` 的那约 5 个问题(测量方法见 obfuscation-extensions.md §2)。由步骤 08 产生:
+只包含标准答案中带有真实表 `SELECT *` 的那约 5 个问题(测量方法见 obfuscation.md §8)。由步骤 08 产生:
 ```json
 {"question_id": "train_8505", "sql_base_expanded": "SELECT \"col1\", ... FROM ...",
  "sql_rename_expanded": "SELECT \"...\", ... FROM ..."}

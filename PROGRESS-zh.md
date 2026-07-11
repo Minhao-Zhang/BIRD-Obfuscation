@@ -40,7 +40,7 @@
   - **诱饵 schema 注入**:干扰表 + 易混淆列(攻击 schema linking)。
   - **问题改写**:使用廉价模型、以 SQL 为条件生成(攻击对问题表述的记忆)。
 - **`SELECT *` 测量**(子 agent,2026-07-03):在 gold 查询中,只有 **3 / 10,164** 个在顶层含有真实表的星号(全部来自 `mondial_geo`),任意层级则有 5 个;已排除 1,169 个 VALUES 物化的查询;67/69 个数据库不含星号。→ 诱饵列导致 `SELECT *` 出错的情况可以忽略;对受影响的 gold 做星号展开即可解决。
-- **先整理文档再写代码**(本轮):撰写了 `obfuscation-extensions.md`,新增 `evaluation.md §9`(消融设计),从 `obfuscation.md` 建立交叉链接,并创建了本日志。
+- **先整理文档再写代码**(本轮):撰写了 `obfuscation-extensions.md`(后并入 `obfuscation.md` §7-§11),新增 `evaluation.md §9`(消融设计),从 `obfuscation.md` 建立交叉链接,并创建了本日志。
 
 ---
 
@@ -65,7 +65,7 @@
 
 ## 下一步(计划,按顺序)
 
-1. **端到端跑完离线评测。** 污染评测/test **已完成**(`claude opus 4.8 high`,§8)。剩余:污染评测/train,以及五臂消融(需拉起 decoy 实例);随后在配对差值上计算 bootstrap 置信区间 + McNemar,严格评分排除 `order_sensitive_qids.json`。仍走同一离线流程:从 `eval/offline-public-bundles.zip`(或 `eval/offline/` 各臂包)在 API 机器生成,再在 DB 机器用 `grade_offline_eval.py` / `eval_contamination.py --summarize` / `eval_ablation.py` 打分。
+1. **端到端跑完离线评测。** test 划分在 `claude opus 4.8 high` 上**已完成**:四条件污染运行(§8)与五臂消融(附 bootstrap 置信区间 + McNemar,§9.4)均已打分并报告。剩余:两个评测的 **train 划分**(仍走同一离线流程:从 `eval/offline-public-bundles.zip`(或 `eval/offline/` 各臂包)在 API 机器生成,再在 DB 机器用 `grade_offline_eval.py` / `eval_contamination.py --summarize` / `eval_ablation.py` 打分;严格评分排除 `order_sensitive_qids.json`)。
 2. **(可选)AWS 部署**:配置现已可移植(环境变量 DSN、Hugging Face 上的 dump、被跟踪的 `eval_dataset/`)。推荐形态:单台 EC2,运行仓库中由 HF dump 恢复的 docker-compose 实例,OpenAI key 来自 Secrets Manager,结果写入 S3。
 3. **(下游,独立仓库)** 交互式 agent harness + 真正触发陷阱的"诱饵一致性回答" / 陷阱命中率指标。
 

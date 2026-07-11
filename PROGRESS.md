@@ -32,7 +32,7 @@ Dates are absolute.
 ### Core pipeline (through 2026-07-02)
 - Steps 0-7 implemented: split → language assignment → rename map (Bedrock) → load `pg_base` (pgloader) → transpile + R0==R1 → clone/rename `pg_rename` → rename SQL + R1==R2. Deliverable: `artifacts/{train,test}_final.jsonl`.
 - Two-oracle integrity: R0==R1 (SQLite ground truth vs transpiled PG) and R1==R2 (original PG vs obfuscated PG). ~12% of validated rows use VALUES-materialization (see [docs/reference/step5-transpilation.md](docs/reference/step5-transpilation.md)).
-- Four-condition obfuscation-effectiveness eval implemented via `pipeline/eval_contamination.py`; setup in [evaluation.md §8](docs/methodology/evaluation.md) (results being re-run on a stronger model, not reported until complete).
+- Four-condition obfuscation-effectiveness eval implemented via `pipeline/eval_contamination.py`; setup and results (run `claude opus 4.8 high`) in [evaluation.md §8](docs/methodology/evaluation.md).
 
 ### Direction-setting (2026-07-03)
 - **Literature review** (SPENCE arXiv 2604.17771; SQL2NL arXiv 2509.04657; Termite/ATD arXiv 2402.08100; ConStat; Min-K%/Time Travel surveys). Key takeaway: the **question/syntactic axis** is the sensitive contamination signal, not the identifier axis; BIRD is only weakly contaminated at the identifier axis (τ ≈ −0.35, CI spans zero), a prior-literature signal, independent of our own (pending) measurement. Framing conclusion: the dataset's durable value is as a **validated multilingual Postgres Text-to-SQL asset + robustness testbed**, with contamination as a secondary (honest, negative-ish) result.
@@ -40,7 +40,7 @@ Dates are absolute.
   - **decoy schema injection**: distractor tables + confusable columns (attacks schema linking).
   - **question paraphrase**: cheap-model, SQL-conditioned (attacks question-form recall).
 - **`SELECT *` measurement** (subagent, 2026-07-03): only **3 / 10,164** gold queries have a top-level real-table star (all `mondial_geo`), 5 at any level; 1,169 VALUES-materialized excluded; 67/69 DBs star-free. → `SELECT *` breakage under decoy columns is negligible; resolved by star-expansion of the affected gold.
-- **Docs organized before code** (this pass): wrote `obfuscation-extensions.md`, added `evaluation.md §9` (ablation design), cross-linked from `obfuscation.md`, created this log.
+- **Docs organized before code** (this pass): wrote `obfuscation-extensions.md` (later merged into `obfuscation.md` §7-§11), added `evaluation.md §9` (ablation design), cross-linked from `obfuscation.md`, created this log.
 
 ---
 
@@ -65,7 +65,7 @@ Implementing per [docs/reference/extension-implementation-plan.md](docs/referenc
 
 ## Next (planned, in order)
 
-1. **Run offline evaluation end-to-end** on the chosen model. **Done for contamination/test** (`claude opus 4.8 high`, §8). Remaining: contamination/train, and the 5-arm ablation (needs the decoy instances up); then bootstrap CIs + McNemar on the paired deltas, excluding `order_sensitive_qids.json` from strict scoring. Same offline path: API generation from `eval/offline-public-bundles.zip` (or per-arm bundles under `eval/offline/`), then DB-side grading via `grade_offline_eval.py` / `eval_contamination.py --summarize` / `eval_ablation.py`.
+1. **Run offline evaluation end-to-end** on the chosen model. **Done for the test split** on `claude opus 4.8 high`: both the four-condition contamination run (§8) and the 5-arm ablation with bootstrap CIs + McNemar (§9.4) are graded and reported. Remaining: the **train split** for both evals (same offline path: API generation from `eval/offline-public-bundles.zip` or per-arm bundles under `eval/offline/`, then DB-side grading via `grade_offline_eval.py` / `eval_contamination.py --summarize` / `eval_ablation.py`; exclude `order_sensitive_qids.json` from strict scoring).
 2. **(Optional) AWS deployment**: the config is now portable (env DSNs, dumps on Hugging Face, tracked `eval_dataset/`). Recommended shape: single EC2 running the repo's docker-compose instances restored from the HF dumps, OpenAI key from Secrets Manager, results to S3.
 3. **(Downstream, separate repo)** the interactive agent harness + the decoy-consistent-answer / trap-rate metric that actually exercises the traps.
 

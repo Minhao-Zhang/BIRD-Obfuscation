@@ -4,7 +4,7 @@
 
 > 对 [BIRD](https://bird-bench.github.io/) Text-to-SQL 基准的抗污染重建,外加一项评测,衡量基准分数在多大程度上依赖被记住的 schema 标识符。
 
-![status](https://img.shields.io/badge/status-work_in_progress-yellow)
+![status](https://img.shields.io/badge/status-active-brightgreen)
 ![python](https://img.shields.io/badge/python-uv-blue)
 ![postgres](https://img.shields.io/badge/PostgreSQL-18-336791)
 [![dataset](https://img.shields.io/badge/🤗%20dataset-BIRD__Obfuscation-orange)](https://huggingface.co/datasets/minhaozhang/BIRD_Obfuscation)
@@ -15,11 +15,6 @@
 对眼前 schema 的推理。本项目把 BIRD 重建成这样一个版本:保留 SQL 任务本身,
 但剥离可记忆的表层信息(重命名标识符、对抗性诱饵数据、改写后的题目),
 再做一次受控评测,衡量这层表层信息到底贡献了多少准确率。
-
-> [!NOTE]
-> **🚧 进行中。** 数据集已构建、验证并发布完成,首次评测运行也已完成:Claude Opus 4.8
-> (high 强度),test 划分。更多模型覆盖与 train 划分仍待进行。见[结果](#结果claude-opus-48hightest-划分)
-> 与[项目状态](#项目状态)。
 
 ---
 
@@ -93,21 +88,36 @@
 
 ### 结果——Claude Opus 4.8(high),test 划分
 
-首次运行,2,030 个测试问题,一次性(one-shot)。下表差值为宽松 EX;完整表格、严格 EX、按语言拆分与显著性见 [evaluation.md §8](docs/methodology/evaluation-zh.md)(污染)与 [§9.4](docs/methodology/evaluation-zh.md)(消融)。
+首次运行:2,030 个测试问题,一次性(one-shot)。**EX** 是执行准确率(答对题目的百分比);**差值(Δ)以百分点(pp)计**——例如 51.6% → 46.9% 是下降 4.8 个百分点。下表为宽松 EX;完整表格(严格 EX、按语言拆分、bootstrap 置信区间)见 [evaluation.md §8](docs/methodology/evaluation-zh.md)(污染)与 [§9.4](docs/methodology/evaluation-zh.md)(消融)。
 
-| 信号 | 相对 base 的差值 | 读法 |
+**污染——重命名 schema 标识符的代价是多少?**(四种条件)
+
+| Schema | 无提示 | 有提示 |
 | --- | --- | --- |
-| 重命名标识符,无提示(污染) | **+0.048** | 小但真实的标识符记忆效应;english 对照 +0.004,pinyin +0.105 |
-| 重命名(消融) | −0.041(p<0.001) | 复现了污染信号 |
-| 诱饵陷阱 | −0.022(p=0.001) | 模型大体能抵御易混淆的诱饵 |
-| 改写 | **+0.035**(p<0.001) | *为正*:保持 SQL 的改写理顺了措辞,而非暴露问题措辞记忆 |
-| 全部叠加 | −0.058(p<0.001) | 下降最大;pinyin 最低 |
+| 原始(base) | 51.6% | 58.8% |
+| 重命名 | 46.9% | 57.0% |
+| **Δ(重命名代价)** | **4.8 pp** | 1.8 pp |
+
+**消融——每个混淆机制单独看**(无提示,相对 EX 为 51.1% 的 `base` 臂)
+
+| 臂 | EX | 相对 base 的 Δ |
+| --- | --- | --- |
+| base | 51.1% | — |
+| rename | 47.0% | −4.1 pp(p<0.001) |
+| decoy | 48.9% | −2.2 pp(p=0.001) |
+| paraphrase | 54.6% | **+3.5 pp**(p<0.001) |
+| all | 45.3% | −5.8 pp(p<0.001) |
+
+- **重命名**去掉了一小块但真实的标识符记忆优势(无提示 4.8 pp),消融也复现了这一点(−4.1 pp)。它在英文对照(恒等重命名)上接近零,在拼音上最大(无提示 +10.5 pp),即效应随着离英文越远而增大。
+- **诱饵陷阱**只花掉 2.2 pp——模型大体落在真实的列/表上,抵御了易混淆的诱饵(其 gold 仍能正确求解,每臂验证 40/40)。
+- **改写为正(+3.5 pp)**——这是「问题措辞记忆」假设的一个诚实负面结果:保持 SQL 的改写理顺了含糊措辞,而非暴露被记住的措辞。
+- **全部叠加**下降最大(−5.8 pp),拼音最低。
 
 覆盖 10,164 个题目的流水线完整性(R0==R1、R1==R2)成立。本次运行的逐条(问题、gold SQL、生成 SQL、正确性)记录见 [`exports/`](exports/)。更多模型覆盖与 train 划分待进行。
 
 ## 项目状态
 
-**数据集已完成并发布。测量部分仍在进行中。**
+**数据集已完成并发布;首次评测运行(Claude Opus 4.8,high,test 划分)已打分并报告。剩余的测量工作是 train 划分与更多模型覆盖。**
 
 | 组件 | 状态 |
 | --- | --- |
@@ -209,8 +219,7 @@ uv run python pipeline/eval_ablation.py --arms base --model <model>
 | 文档 | 涵盖内容 |
 | --- | --- |
 | [docs/methodology/dataset.md](docs/methodology/dataset-zh.md) | schema 湖的构建、纳入标准、训练/测试切分 |
-| [docs/methodology/obfuscation.md](docs/methodology/obfuscation-zh.md) | 混淆设计、决策、物理实现 |
-| [docs/methodology/obfuscation-extensions.md](docs/methodology/obfuscation-extensions-zh.md) | 诱饵陷阱 + 改写维度以及消融实验 |
+| [docs/methodology/obfuscation.md](docs/methodology/obfuscation-zh.md) | 混淆设计、决策、物理实现;诱饵陷阱 + 改写维度(§7-§11) |
 | [docs/methodology/evaluation.md](docs/methodology/evaluation-zh.md) | 完整性检查、污染增量、消融(§9) |
 | [docs/reference/corrupted-decoys-design.md](docs/reference/corrupted-decoys-design-zh.md) | 诱饵陷阱设计、风险登记册、竣工参数 |
 | [docs/reference/limitations.md](docs/reference/limitations-zh.md) | 已知局限性和范围注意事项;引用任何数字前请先阅读 |

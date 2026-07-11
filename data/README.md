@@ -42,7 +42,7 @@ data/
         ├── address/
         ├── airline/
         ├── app_store/
-        └── ...                # 73 databases total; each follows the same pattern
+        └── ...                # 69 databases total; each follows the same pattern
 ```
 
 Each database folder contains:
@@ -81,4 +81,4 @@ A JSON array of schema objects, one per database, containing `db_id`,
 | Split | Databases | Questions |
 |-------|-----------|-----------|
 | Dev   | 11        | 1,534     |
-| Train | 73        | 9,428     |
+| Train | 69        | 9,428     |

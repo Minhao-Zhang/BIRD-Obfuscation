@@ -41,7 +41,7 @@ data/
         ├── address/
         ├── airline/
         ├── app_store/
-        └── ...                # 73 databases total; each follows the same pattern
+        └── ...                # 69 databases total; each follows the same pattern
 ```
 
 每个数据库文件夹包含:
@@ -80,4 +80,4 @@ SELECT ... FROM ...    california_schools
 | 划分  | 数据库 | 问题数 |
 |-------|-----------|-----------|
 | Dev   | 11        | 1,534     |
-| Train | 73        | 9,428     |
+| Train | 69        | 9,428     |
