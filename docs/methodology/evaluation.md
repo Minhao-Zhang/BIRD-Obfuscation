@@ -141,7 +141,7 @@ One-shot generation (no retry-on-error, no feedback loop), graded once against t
 PostgreSQL snapshots. All 8,120 generations graded; none skipped.
 
 > **Units.** EX is a fraction in [0, 1] (0.5163 = 51.63% of questions correct). A delta is the
-> difference of two EX values, expressed in **percentage points (pp)**: +0.0478 means 4.8 pp, not
+> difference between two EX values, written as a percentage of the test set: +0.0478 = 4.8% (4.8 more questions correct per 100), not
 > 0.048%. The same convention holds in §9.4.
 
 #### 8.1 Execution accuracy by condition
@@ -298,22 +298,22 @@ pinyin 392, spanish 438):
 
 **Reading (each mechanism separately, per §9.3):**
 
-- **rename −4.1 pp** (McNemar p < 0.001). Consistent with the §8 contamination no-hint
-  delta (+4.8 pp) measured on the same model: the small identifier-recall effect
+- **rename −4.1%** (McNemar p < 0.001). Consistent with the §8 contamination no-hint
+  delta (+4.8%) measured on the same model: the small identifier-recall effect
   replicates. The English control is flat (0.497 → 0.495, its noise floor), and the delta
   grows away from English, largest for pinyin (0.520 → 0.429).
-- **decoy −2.2 pp** (p = 0.001). Corrupted decoy traps cost about two points: the model
+- **decoy −2.2%** (p = 0.001). Corrupted decoy traps cost about two points: the model
   mostly grounds in the real columns and tables but sometimes grabs a confusable decoy.
   Gold still resolves correctly on the decoy instance (verified above), so this is added
   difficulty, not a broken task.
-- **paraphrase +3.5 pp** (p < 0.001): **positive**, an honest negative result for the
+- **paraphrase +3.5%** (p < 0.001): **positive**, an honest negative result for the
   question-form-recall hypothesis on this model. The cheap-model, SQL-conditioned
   paraphrases slightly *help* rather than hurt, most likely because they clean up ambiguous
   BIRD phrasing (116 questions went right→wrong but 187 went wrong→right). So paraphrasing
   as implemented does not expose memorised question wording here; if anything the original
   phrasing was marginally harder. Caveat: this also means the paraphrase dimension is not a
   clean obfuscation lever on this data: it changes difficulty in the easier direction.
-- **all −5.8 pp** (p < 0.001), the largest drop. rename and decoy compound while
+- **all −5.8%** (p < 0.001), the largest drop. rename and decoy compound while
   paraphrase's positive contribution partly offsets them; the net is still clearly
   negative, and pinyin-all is lowest overall (0.378). Per §9.3 this is not a clean
   interaction term.

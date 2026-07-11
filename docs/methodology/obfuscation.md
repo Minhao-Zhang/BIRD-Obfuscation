@@ -213,7 +213,7 @@ Sections 1-6 cover the core validated pipeline (steps 0-7), which obfuscates **o
 Two independent lines of prior work indicate identifier renaming (the **rename** dimension) is the *weakest* contamination lever, and that BIRD is only weakly contaminated at that axis to begin with:
 
 - **SPENCE** (*A Syntactic Probe for Detecting Contamination in NL2SQL Benchmarks*, arXiv 2604.17771): paraphrasing the **question** exposes memorisation far more than the schema axis. BIRD shows weak rank-sensitivity (Kendall's τ ≈ −0.35, CI spanning zero) versus Spider/SParC/CoSQL (τ ≈ −0.7 to −0.9). The **question form**, not the identifier, is the sensitive axis.
-- **SQL2NL** (*Evaluating NL2SQL via SQL2NL*, arXiv 2509.04657, same authors): schema-aligned question paraphrase drops execution accuracy 10-20pp on Spider, a large and real effect on the question axis that standard benchmarks hide.
+- **SQL2NL** (*Evaluating NL2SQL via SQL2NL*, arXiv 2509.04657, same authors): schema-aligned question paraphrase drops execution accuracy 10-20% on Spider, a large and real effect on the question axis that standard benchmarks hide.
 
 The two new dimensions each attack a **different mechanism**; they are not three strengths of one thing:
 

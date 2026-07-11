@@ -90,7 +90,7 @@ produce a number:
 ### Results — Claude Opus 4.8 (high), test split
 
 First run: 2,030 test questions, one-shot. **EX** is execution accuracy (percent of questions
-answered correctly); **Δ is in percentage points (pp)** — e.g. 51.6% → 46.9% is a 4.8 pp drop.
+answered correctly); **Δ is the difference between two EX values** — e.g. 51.6% → 46.9% is a 4.8% drop.
 Numbers below are lenient EX; full tables (strict EX, per-language, bootstrap CIs) are in
 [evaluation.md §8](docs/methodology/evaluation.md) (contamination) and
 [§9.4](docs/methodology/evaluation.md) (ablation).
@@ -101,27 +101,27 @@ Numbers below are lenient EX; full tables (strict EX, per-language, bootstrap CI
 | --- | --- | --- |
 | Original (base) | 51.6% | 58.8% |
 | Renamed | 46.9% | 57.0% |
-| **Δ (rename cost)** | **4.8 pp** | 1.8 pp |
+| **Δ (rename cost)** | **4.8%** | 1.8% |
 
 **Ablation — each obfuscation mechanism isolated** (no hint, vs the `base` arm at 51.1% EX)
 
 | Arm | EX | Δ vs base |
 | --- | --- | --- |
 | base | 51.1% | — |
-| rename | 47.0% | −4.1 pp (p<0.001) |
-| decoy | 48.9% | −2.2 pp (p=0.001) |
-| paraphrase | 54.6% | **+3.5 pp** (p<0.001) |
-| all | 45.3% | −5.8 pp (p<0.001) |
+| rename | 47.0% | −4.1% (p<0.001) |
+| decoy | 48.9% | −2.2% (p=0.001) |
+| paraphrase | 54.6% | **+3.5%** (p<0.001) |
+| all | 45.3% | −5.8% (p<0.001) |
 
-- **Rename** removes a small but real identifier-recall advantage (4.8 pp no-hint), and the
-  ablation replicates it (−4.1 pp). It is near-zero on the English control (identity rename)
-  and largest on Pinyin (+10.5 pp no-hint), so the effect scales with distance from English.
-- **Decoy traps** cost only 2.2 pp — the model mostly grounds in the real columns/tables and
+- **Rename** removes a small but real identifier-recall advantage (4.8% no-hint), and the
+  ablation replicates it (−4.1%). It is near-zero on the English control (identity rename)
+  and largest on Pinyin (+10.5% no-hint), so the effect scales with distance from English.
+- **Decoy traps** cost only 2.2% — the model mostly grounds in the real columns/tables and
   resists the confusable decoys (whose gold still resolves correctly, verified 40/40 per arm).
-- **Paraphrase is positive (+3.5 pp)** — an honest negative result for the question-form-recall
+- **Paraphrase is positive (+3.5%)** — an honest negative result for the question-form-recall
   hypothesis: the SQL-preserving paraphrases tidy up ambiguous phrasing rather than expose
   memorised wording.
-- **All combined** is the largest drop (−5.8 pp), lowest on Pinyin.
+- **All combined** is the largest drop (−5.8%), lowest on Pinyin.
 
 Pipeline integrity (R0==R1, R1==R2) over 10,164 questions holds. Per-question (question, gold SQL,
 generated SQL, correctness) records for this run are in [`exports/`](exports/). Wider model coverage

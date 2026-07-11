@@ -212,7 +212,7 @@ eval_dataset/                   # git-tracked FINAL deliverable (snapshot of art
 两条独立的既有研究表明,标识符重命名(即 **rename** 维度)是*最弱*的污染杠杆,而且 BIRD 在该维度上本身也只受到轻微污染:
 
 - **SPENCE**(*A Syntactic Probe for Detecting Contamination in NL2SQL Benchmarks*, arXiv 2604.17771):改写**问题**远比 schema 维度更能暴露记忆。BIRD 表现出较弱的排名敏感性(Kendall's τ ≈ −0.35,置信区间跨越零),而 Spider/SParC/CoSQL 则为(τ ≈ −0.7 至 −0.9)。敏感的维度是**问题形式**,而非标识符。
-- **SQL2NL**(*Evaluating NL2SQL via SQL2NL*, arXiv 2509.04657,同一批作者):与 schema 对齐的问题改写使 Spider 上的执行准确率下降 10-20pp,这是问题维度上一个巨大而真实的效应,只是被标准基准掩盖了。
+- **SQL2NL**(*Evaluating NL2SQL via SQL2NL*, arXiv 2509.04657,同一批作者):与 schema 对齐的问题改写使 Spider 上的执行准确率下降 10-20%,这是问题维度上一个巨大而真实的效应,只是被标准基准掩盖了。
 
 这两个新维度各自攻击一种**不同的机制**;它们不是同一件事的三种强度:
 
