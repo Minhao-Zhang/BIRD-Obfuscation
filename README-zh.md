@@ -1,6 +1,6 @@
 [English](README.md) · **中文**
 
-# BIRD 数据混淆
+# BIRD 混淆
 
 > 对 [BIRD](https://bird-bench.github.io/) Text-to-SQL 基准的抗污染重建,外加一项评测,衡量基准分数在多大程度上依赖被记住的 schema 标识符。
 
