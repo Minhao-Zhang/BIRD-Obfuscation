@@ -18,9 +18,10 @@ adversarial decoy data, paraphrased questions), then runs a controlled evaluatio
 how much accuracy that surface was actually buying.
 
 > [!NOTE]
-> **🚧 Work in progress.** The dataset is built, validated, and published. The
-> effectiveness numbers are being re-run on a stronger model and are intentionally
-> not reported yet. See [Project status](#project-status) for exactly what is done vs. pending.
+> **🚧 Work in progress.** The dataset is built, validated, and published, and the first
+> evaluation run is in: Claude Opus 4.8 (high effort) on the test split. Wider model
+> coverage and the train split are still pending. See [Results](#results--claude-opus-48-high-test-split)
+> and [Project status](#project-status).
 
 ---
 
@@ -31,7 +32,7 @@ how much accuracy that surface was actually buying.
 | **Problem** | Frontier models may inflate Text-to-SQL scores from memorised BIRD identifiers, questions, and SQL rather than from schema reasoning. |
 | **Deliverable** | 69-database multilingual PostgreSQL Text-to-SQL corpus (10,164 execution-validated question/SQL pairs) in four obfuscation variants, published on Hugging Face. |
 | **Eval** | A paired contamination-delta study plus a 5-arm ablation that isolates each obfuscation dimension, with McNemar tests and bootstrap CIs. |
-| **Status** | Data pipeline complete; evaluation implemented and **re-running on a stronger model** (numbers pending). |
+| **Status** | Data pipeline complete; first eval run in (Claude Opus 4.8 high, test split); wider model coverage pending. |
 
 ---
 
@@ -92,18 +93,23 @@ produce a number:
   robustness to schema-probing traps, and `paraphrase−base` isolates question-form recall.
   `all−base` then measures the combined effect. Design: [evaluation.md §9](docs/methodology/evaluation.md).
 
-### Results (pending)
+### Results — Claude Opus 4.8 (high), test split
 
-> Results are **not reported yet.** Earlier numbers were discarded so the full evaluation could
-> be re-run on a stronger model for results that hold up; nothing is quoted in the interim.
+First run, 2,030 test questions, one-shot. Deltas below are lenient EX; full tables, strict EX,
+per-language breakdown, and significance live in [evaluation.md §8](docs/methodology/evaluation.md)
+(contamination) and [§9.4](docs/methodology/evaluation.md) (ablation).
 
-| Metric | Status |
-| --- | --- |
-| Pipeline integrity (R0==R1, R1==R2) over 10,164 questions | ✅ done |
-| Contamination delta (four conditions) | ⏳ re-running on a stronger model |
-| Five-arm ablation (per-mechanism deltas + CIs) | ⏳ pending the same run |
+| Signal | Δ vs base | Reading |
+| --- | --- | --- |
+| Rename identifiers, no hint (contamination) | **+0.048** | small but real identifier-recall effect; english control +0.004, pinyin +0.105 |
+| Rename (ablation) | −0.041 (p<0.001) | replicates the contamination signal |
+| Decoy traps | −0.022 (p=0.001) | model mostly resists the confusable decoys |
+| Paraphrase | **+0.035** (p<0.001) | *positive*: SQL-preserving paraphrases tidy the phrasing rather than expose question-form recall |
+| All combined | −0.058 (p<0.001) | largest drop; pinyin lowest |
 
-Setup for the run is documented and reproducible; see [evaluation.md §8-9](docs/methodology/evaluation.md).
+Pipeline integrity (R0==R1, R1==R2) over 10,164 questions holds. Per-question (question, gold SQL,
+generated SQL, correctness) records for this run are in [`exports/`](exports/). Wider model coverage
+and the train split are pending.
 
 ## Project status
 
@@ -114,8 +120,8 @@ Setup for the run is documented and reproducible; see [evaluation.md §8-9](docs
 | Core pipeline (steps 0-7): split → rename map → load → transpile → rename → validate | ✅ complete & validated |
 | Extended obfuscation (decoy traps, paraphrases) | ✅ built & applied |
 | Four PostgreSQL instances + git-tracked eval artifacts | ✅ published (HF and [`eval_dataset/`](eval_dataset/)) |
-| Contamination-delta eval harness | ✅ implemented; ⏳ **re-running (numbers pending)** |
-| Five-arm ablation harness | ✅ implemented; ⏳ **run pending** |
+| Contamination-delta eval harness | ✅ implemented; ✅ first results (Claude Opus 4.8 high, test split) |
+| Five-arm ablation harness | ✅ implemented; ✅ first results (same run) |
 | Interactive execute-and-observe agent that exercises the traps | ⛔ out of scope (separate downstream repo) |
 
 Full history, decisions, and what's next: [PROGRESS.md](PROGRESS.md).
@@ -174,6 +180,7 @@ same-machine run.
 | --- | --- |
 | [`pipeline/`](pipeline/) | The numbered pipeline (`00`-`10`), the eval harnesses (`eval_contamination.py`, `eval_ablation.py`, `probe_schema_recall.py`), and shared helpers (`_db.py`, `_traps.py`, `_corruption.py`, …) |
 | [`eval_dataset/`](eval_dataset/) | Git-tracked deliverable: validated gold question/SQL pairs, rename map, trap manifests, paraphrases |
+| [`exports/`](exports/) | Per-run (question, gold SQL, generated SQL, correctness) tables, shipped as a compressed bundle |
 | [`artifacts/`](artifacts/) | Pipeline working outputs (git-tracked subset: rename map, retained DBs, trap plans/manifests) |
 | [`docs/methodology/`](docs/methodology/) | Why each design decision was made (dataset, obfuscation, evaluation) |
 | [`docs/reference/`](docs/reference/) | Operational detail: pipeline invariants, decoy-trap design, limitations, dataset usage |
