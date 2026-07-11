@@ -18,6 +18,11 @@ workdir/
 # — reproducible, API-cost-heavy to regenerate. jsonl results, *.log, progress *.md. Kept local only.
 eval/
 
+# exports/: commit only the compressed per-run bundle (exports/*.zip). The loose
+# .jsonl/.csv are large and regenerable via pipeline/export_qa_sql.py.
+exports/*.jsonl
+exports/*.csv
+
 # PostgreSQL dumps downloaded from Hugging Face (~12 GB; see docs/reference/using-the-dataset.md)
 bird_obf_dumps/
 *.dump

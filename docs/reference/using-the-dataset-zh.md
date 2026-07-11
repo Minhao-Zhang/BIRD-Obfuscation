@@ -12,7 +12,7 @@
    [`eval_dataset/`](../../eval_dataset/) 目录(见 [eval_dataset/README.md](../../eval_dataset/README-zh.md))。里面是标准答案与混淆的 ground truth。
 
 数据库不纳入 git(≈12 GB),托管在 Hugging Face 上;体积较小的标准答案/映射文件
-则在本仓库中进行版本管理。
+则纳入本仓库版本管理。
 
 ---
 
@@ -84,7 +84,7 @@ sha256sum -c SHA256SUMS.txt          # Linux/macOS
 ### 恢复到本仓库的 Docker 实例(用于本地评测)
 
 [`docker-compose.yml`](../../docker-compose.yml) 定义了四个空的 PostgreSQL 18 实例,
-分别位于端口 5432/5433/5434/5435(后两个在 `decoy` profile 下)。将它们启动起来,
+分别位于端口 5432/5433/5434/5435(后两个在 `decoy` profile 下)。启动这些实例,
 并按**服务名**把每个转储恢复到对应的实例:
 
 ```bash

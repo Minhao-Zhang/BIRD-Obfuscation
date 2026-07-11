@@ -132,6 +132,6 @@ The eval scripts (`eval_ablation.py`, `eval_contamination.py`, `probe_schema_rec
 resolve each input via `_eval_helpers.dataset_path(name)`: **prefer `artifacts/<name>`
 if present, else fall back to `eval_dataset/<name>`.** So a full local checkout uses the
 working copies in `artifacts/`, while a fresh clone that only has this checked-in folder
-(no `artifacts/`) runs against the snapshot automatically: no flags, no edits. If you
-keep `artifacts/` populated, re-run `build_eval_dataset.py` after a rebuild to refresh
-this snapshot. Downstream consumers should consume **this** folder.
+(no `artifacts/`) runs against the snapshot automatically, with no extra flags or edits
+needed. If you keep `artifacts/` populated, re-run `build_eval_dataset.py` after a rebuild
+to refresh this snapshot. Downstream consumers should rely on **this** folder.

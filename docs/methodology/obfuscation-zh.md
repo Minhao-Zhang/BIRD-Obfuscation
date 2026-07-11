@@ -137,7 +137,7 @@
 
 6. **验证重命名(R1==R2)。** 对 `pg_base` 执行已验证的转译后原始 SQL → R1;对 `pg_rename` 执行混淆后的 SQL → R2;断言两者相等。这里出现不匹配意味着 rename map 有缺口(SQL 重写中遗漏了某个标识符),而不是方言问题。
 
-让两个实例都运行在 PostgreSQL 上,消除了 SQLite 到 PostgreSQL 的方言不匹配在 R1==R2 重命名完整性检查中作为一个变量的影响。R0==R1 步骤则用 SQLite 作为语义上的基准真值参照(oracle)。
+让两个实例都运行在 PostgreSQL 上,SQLite 到 PostgreSQL 的方言不匹配就不再是 R1==R2 重命名完整性检查里的一个变量。R0==R1 步骤则用 SQLite 作为语义上的基准真值参照(oracle)。
 
 ---
 

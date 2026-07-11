@@ -150,7 +150,7 @@ docker compose --profile decoy up -d pg_decoy pg_rename_decoy
   }
 }
 ```
-`mimics` 记录某个易混淆的诱饵列影射的是哪个真实列(供后续分析;注入时不使用)。
+`mimics` 记录某个易混淆的诱饵列映射的是哪个真实列(供后续分析;注入时不使用)。
 
 ### `artifacts/gold_star_expanded.jsonl`
 只包含标准答案中带有真实表 `SELECT *` 的那约 5 个问题(测量方法见 obfuscation-extensions.md §2)。由步骤 08 产生:

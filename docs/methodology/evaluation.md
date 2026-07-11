@@ -125,25 +125,102 @@ The per-language breakdown estimates whether Pinyin produces a larger contaminat
 
 ## 8. Results
 
-> **Results pending (being re-run).** To ensure the reported numbers are robust, the
-> full evaluation is being re-run on a stronger model. No result figures are quoted here
-> in the interim; this section will be populated once that run completes.
+### Run: **claude opus 4.8 high**
 
-**Setup for the run:** `pipeline/eval_contamination.py`, one-shot (no retry-on-error, no
-feedback loop), over the full test set (2,030 questions × 4 conditions). Evaluation uses
-the default offline workflow: prompts and private gold are frozen on the PostgreSQL
-machine, model generations run on an API-only machine, and returned SQL is graded on the
-original PostgreSQL snapshot. Raw graded records are written to
-`eval/contamination_results.jsonl`. Each row includes an `eval_metadata` block with the
+| Field | Value |
+| --- | --- |
+| Model | `Claude-Opus-4.8` |
+| Reasoning effort | `high` |
+| Prompt version | `contamination-v1` |
+| Split | test (2,030 questions × 4 conditions = 8,120 generations) |
+| Recorded | 2026-07-10 (UTC) |
+| Git commit | `6b5d9a1` |
+| Bundle hash | `requests_sha256 7d38d28c…` |
+
+One-shot generation (no retry-on-error, no feedback loop), graded once against the frozen
+PostgreSQL snapshots. All 8,120 generations graded; none skipped.
+
+#### 8.1 Execution accuracy by condition
+
+| Condition | Lenient EX | Strict EX |
+| --- | --- | --- |
+| base_hint | 0.5882 (1194/2030) | 0.5655 (1148/2030) |
+| base_nohint | 0.5163 (1048/2030) | 0.4956 (1006/2030) |
+| rename_hint | 0.5704 (1158/2030) | 0.5488 (1114/2030) |
+| rename_nohint | 0.4685 (951/2030) | 0.4507 (915/2030) |
+
+Lenient is BIRD-style type-collapsing equality; strict forbids cross-type matches. Quote
+the strict column for any absolute-EX claim (see [../reference/limitations.md §2](../reference/limitations.md)).
+
+#### 8.2 Contamination delta
+
+| Delta | Lenient | Strict |
+| --- | --- | --- |
+| **No hints** (base_nohint − rename_nohint), primary signal | +0.0478 | +0.0449 |
+| Hints (base_hint − rename_hint), BIRD-comparable | +0.0177 | +0.0167 |
+
+Renaming schema identifiers costs Opus 4.8 about 4.8 lenient EX points without hints and
+1.8 with hints. Both deltas are positive but small: some of the model's accuracy on the
+original schema did lean on memorised BIRD identifiers, but not much of it. This is
+consistent with the prior-literature reading that BIRD is only weakly contaminated on the
+identifier axis (§1). Hints roughly halve the delta because the obfuscated hint text
+echoes the renamed column name and partly re-bridges the gap (§4.1).
+
+#### 8.3 By obfuscation language
+
+The pooled no-hint delta hides a clear gradient. English databases carry an identity
+rename map (their `sql_rename == sql_base`), so they are the noise-floor control, not an
+obfuscation arm (see [../reference/limitations.md §1](../reference/limitations.md)).
+
+| Language | DBs | n | base_nohint (L / S) | rename_nohint (L / S) | Δ no-hint (L / S) |
+| --- | --- | --- | --- | --- | --- |
+| english (control) | 14 | 467 | 0.495 / 0.484 | 0.490 / 0.480 | +0.004 / +0.004 |
+| french | 14 | 382 | 0.463 / 0.448 | 0.435 / 0.419 | +0.029 / +0.029 |
+| spanish | 14 | 438 | 0.573 / 0.555 | 0.523 / 0.507 | +0.050 / +0.048 |
+| german | 14 | 351 | 0.524 / 0.487 | 0.464 / 0.430 | +0.060 / +0.057 |
+| pinyin | 13 | 392 | 0.523 / 0.497 | 0.418 / 0.403 | +0.105 / +0.094 |
+
+The English control sits at its expected ~0 floor (+0.004), which validates the
+measurement: an identity rename produces no delta. The delta then grows monotonically as
+the renamed identifiers move away from English: French +0.029, Spanish +0.050, German
++0.060, Pinyin +0.105. Pinyin, the most distant from English orthography, removes the most
+identifier advantage (about 10 EX points), roughly 25× the English floor. This supports
+using stronger (further-from-English) rename languages when the goal is to suppress
+identifier recall.
+
+#### 8.4 Run health
+
+- **Grading outcomes:** of 8,120 records, 3,769 were incorrect: 3,602 result mismatches
+  and 167 generated-SQL execution failures; the remaining 4,351 are correct (lenient).
+- **Latency:** mean 2.83 s, p50 2.44 s, p95 5.41 s, max 26.44 s (n = 8,120).
+- **Tokens:** input 11,567,297; output 1,375,866; total 12,943,163 (no prompt-cache hits
+  in this offline run).
+
+#### 8.5 Setup
+
+`pipeline/eval_contamination.py`, one-shot, over the full test set (2,030 questions × 4
+conditions), using the default offline workflow: prompts and private gold are frozen on
+the PostgreSQL machine, model generations run on an API-only machine, and returned SQL is
+graded on the original PostgreSQL snapshot. Raw graded records are written to
+`eval/contamination_results.jsonl`. Each row carries an `eval_metadata` block with the
 model, reasoning effort, prompt version, git commit, and input artifact hashes;
-resumability only reuses rows whose metadata matches the current invocation. Metrics and
-the per-language / collision breakdowns are defined in §7.
+resumability only reuses rows whose metadata matches the current invocation. Reproduce the
+figures above with:
+
+```bash
+uv run python pipeline/eval_contamination.py --summarize \
+  --model "Claude-Opus-4.8" --effort high --bundle-dir eval/offline/contamination
+```
+
+Metrics and the per-language / collision breakdowns are defined in §7. Bootstrap CIs and
+McNemar p-values on the paired deltas are not yet computed (planned; see
+[../../PROGRESS.md](../../PROGRESS.md)).
 
 ---
 
 ## 9. Ablation study: extended obfuscation layers
 
-The contamination run (§8) measured only the **rename** dimension (identifier rename). This ablation measures the **independent contribution of each obfuscation dimension** to execution-accuracy drop, adding the two dimensions specified in [obfuscation-extensions.md](obfuscation-extensions.md). The harness (`pipeline/eval_ablation.py`) is **implemented** and uses the same default offline workflow as §8; the full run is **pending** (see [../../PROGRESS.md](../../PROGRESS.md)) and will be executed together with the §8 re-run on the stronger model. No interim numbers are reported.
+The contamination run (§8) measured only the **rename** dimension (identifier rename). This ablation measures the **independent contribution of each obfuscation dimension** to execution-accuracy drop, adding the two dimensions specified in [obfuscation-extensions.md](obfuscation-extensions.md). The harness (`pipeline/eval_ablation.py`) uses the same default offline workflow as §8. First results (run `claude opus 4.8 high`) are in §9.4.
 
 ### 9.1 Arms
 
@@ -170,3 +247,80 @@ All arms are **no-hint** (the cleanest signal; §4.2 makes rename_nohint/base_no
 - **Different mechanisms, not one strength scale** (§1 of the extensions doc): interpret rename/decoy/paraphrase separately.
 - **Not a full factorial.** One-at-a-time + all does **not** isolate interactions: `all − (rename+decoy+paraphrase individual deltas)` is *not* a clean interaction term. A full 2³ = 8-cell factorial would be needed for that; deferred on cost.
 - **Grading contract.** Multiset equality against the SELECT\*-expanded gold, so decoy columns never leak into any arm's answer and all arms are compared on the same well-defined result set. The summarizer reports **two EX columns**: *lenient* (`normalise_result`, BIRD-style, which coerces types so `1 == "1" == True`) and *strict* (`normalise_result_strict`: no cross-type collapse, case-sensitive; numeric equality preserved). The leniency is symmetric across arms so it cancels in the deltas, but **quote the strict column for any absolute-EX claim** (see [../reference/limitations.md §2](../reference/limitations.md)). Exclude the qids in `order_sensitive_qids.json` (153 order-sensitive + 21 exec-failed) from strict cross-variant EX: the trap-population `UPDATE`s reorder the heap, so gold with a `LIMIT` and no total order (or a float aggregate) can return a different-but-valid row set on the decoy instances. The real column values are provably intact (physical row order is not; see limitations §"precision notes").
+
+### 9.4 Results
+
+#### Run: **claude opus 4.8 high**
+
+Same model, effort, and test set as §8 (`Claude-Opus-4.8`, effort `high`, 2,030
+questions), prompt version `ablation-v1`, git commit `674d6a7`, recorded 2026-07-11 (UTC).
+Each arm was prepared as its own offline bundle, generated one-shot on an API machine, and
+graded here against the arm's PostgreSQL instance. All 5 × 2,030 = 10,150 generations
+graded; none skipped. Before grading the two decoy-based arms, gold-on-decoy was
+spot-checked against the clean instance (40/40 identical per arm), confirming the additive
+traps do not hide the correct answer.
+
+**Execution accuracy by arm:**
+
+| Arm | Lenient EX | Strict EX |
+| --- | --- | --- |
+| base | 0.5113 (1038/2030) | 0.4916 (998/2030) |
+| rename | 0.4700 (954/2030) | 0.4527 (919/2030) |
+| decoy | 0.4892 (993/2030) | 0.4690 (952/2030) |
+| paraphrase | 0.5463 (1109/2030) | 0.5256 (1067/2030) |
+| all | 0.4532 (920/2030) | 0.4389 (891/2030) |
+
+**Paired deltas vs base** (per-question paired, n = 2,030; lenient point delta with
+bootstrap 95% CI and McNemar p; discordant pairs b/c = base-right→arm-wrong /
+base-wrong→arm-right; strict delta for reference):
+
+| Arm | Δ lenient | 95% CI | McNemar p | disc b/c | Δ strict |
+| --- | --- | --- | --- | --- | --- |
+| rename | −0.0414 | [−0.0557, −0.0276] | <0.001 | 154/70 | −0.0389 |
+| decoy | −0.0222 | [−0.0350, −0.0094] | 0.0010 | 112/67 | −0.0227 |
+| paraphrase | **+0.0350** | [+0.0182, +0.0512] | <0.001 | 116/187 | +0.0340 |
+| all | −0.0581 | [−0.0768, −0.0384] | <0.001 | 264/146 | −0.0527 |
+
+**Per-language EX by arm** (lenient; n per language: english 467, french 382, german 351,
+pinyin 392, spanish 438):
+
+| Language | base | rename | decoy | paraphrase | all |
+| --- | --- | --- | --- | --- | --- |
+| english (control) | 0.497 | 0.495 | 0.469 | 0.544 | 0.512 |
+| french | 0.474 | 0.435 | 0.461 | 0.487 | 0.414 |
+| german | 0.507 | 0.464 | 0.510 | 0.547 | 0.442 |
+| pinyin | 0.520 | 0.429 | 0.477 | 0.538 | 0.378 |
+| spanish | 0.555 | 0.516 | 0.530 | 0.607 | 0.502 |
+
+**Reading (each mechanism separately, per §9.3):**
+
+- **rename −4.1 pp** (McNemar p < 0.001). Consistent with the §8 contamination no-hint
+  delta (+4.8 pp) measured on the same model: the small identifier-recall effect
+  replicates. The English control is flat (0.497 → 0.495, its noise floor), and the delta
+  grows away from English, largest for pinyin (0.520 → 0.429).
+- **decoy −2.2 pp** (p = 0.001). Corrupted decoy traps cost about two points: the model
+  mostly grounds in the real columns and tables but sometimes grabs a confusable decoy.
+  Gold still resolves correctly on the decoy instance (verified above), so this is added
+  difficulty, not a broken task.
+- **paraphrase +3.5 pp** (p < 0.001): **positive**, an honest negative result for the
+  question-form-recall hypothesis on this model. The cheap-model, SQL-conditioned
+  paraphrases slightly *help* rather than hurt, most likely because they clean up ambiguous
+  BIRD phrasing (116 questions went right→wrong but 187 went wrong→right). So paraphrasing
+  as implemented does not expose memorised question wording here; if anything the original
+  phrasing was marginally harder. Caveat: this also means the paraphrase dimension is not a
+  clean obfuscation lever on this data: it changes difficulty in the easier direction.
+- **all −5.8 pp** (p < 0.001), the largest drop. rename and decoy compound while
+  paraphrase's positive contribution partly offsets them; the net is still clearly
+  negative, and pinyin-all is lowest overall (0.378). Per §9.3 this is not a clean
+  interaction term.
+
+**Reproduce:**
+
+```bash
+uv run python pipeline/eval_ablation.py --summarize \
+  --model "Claude-Opus-4.8" --effort high --bundle-dir eval/offline/ablation-base
+```
+
+(Any one arm's freshly-prepared bundle works as the metadata reference; `metadata_matches`
+keys on model/effort/prompt-version/commit/dataset hashes, not the per-arm request hash.)
+Raw graded records are in `eval/ablation_results.jsonl`.

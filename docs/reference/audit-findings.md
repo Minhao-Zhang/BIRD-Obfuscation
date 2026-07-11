@@ -90,14 +90,14 @@ uppercase/lowercase:
    day after confirming pgloader has a history of not propagating quoting to
    `FOREIGN KEY` clauses even when the base table/column DDL is correct) for
    every DB immediately after its pgloader load, before step 5 even starts.
-5. **Still the priority list to watch** once step 4 is actually run:
+5. **Still a priority list to watch** once step 4 is actually run:
    `works_cycles`, `hockey`, `mondial_geo`, `soccer_2016`,
    `european_football_2`, `professional_basketball`, `synthea`,
    `thrombosis_prediction`, and `legislator` concentrate the identifier risk
    and several were also among the DBs that failed under the old loader.
    `legislator` and `disney` are additionally the only two DBs with
    hyphenated table names (`current-terms`, `historical-terms`,
-   `social-media`, `voice-actors`). The case fix #3 above is still open for.
+   `social-media`, `voice-actors`). The case fix #3 above is still open.
 
 ## Full per-database results
 

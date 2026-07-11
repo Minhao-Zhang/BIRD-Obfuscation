@@ -68,9 +68,9 @@
    的预重命名。目前尚未针对真实的 pgloader 运行做过测试。
 4. **已完成(2026-07-01)。** ~~增加一项自动化的加载后标识符审计。~~ 现在
    `pipeline/04_load_pg_base.py` 会在每个数据库完成 pgloader 加载之后、第 5 步开始之前,立即运行 `verify_casing()`(检查表/列是否存在)和
-   `verify_foreign_keys()`(检查 FK 约束;这项检查是在同一天确认了 pgloader 曾
-   有过即便基础表/列 DDL 正确、也不把引号传递到 `FOREIGN KEY` 子句的历史之后
-   追加的)。
+   `verify_foreign_keys()`(检查 FK 约束;这项检查是后来补上的:同一天还确认过,
+   pgloader 有过一段历史——即便基础表/列 DDL 正确,也不会把引号传递到
+   `FOREIGN KEY` 子句里)。
 5. **一旦第 4 步真正开始运行,以下仍是需要重点关注的优先清单**:
    `works_cycles`、`hockey`、`mondial_geo`、`soccer_2016`、
    `european_football_2`、`professional_basketball`、`synthea`、
@@ -175,7 +175,7 @@
 (已确认这对 SQLite 源是合法语法,并非本次审计最初猜测的那样为 MySQL 专有),
 并在每次加载之后,通过把 SQLite 的 `PRAGMA table_info` 和
 `PRAGMA foreign_key_list` 与 `pg_base` 的 `information_schema` 做比对来实测
-核实结果,这样一来,日后某个 pgloader 版本的变化会被立即发现,而不会在之后
+核实结果。这样一来,日后某个 pgloader 版本的变化会被立即发现,而不会在之后
 以 R0==R1 执行失败的形式浮现。完整的说明见 `../methodology/obfuscation.md`
 §4「Identifier quoting invariant」,其中也解释了为什么外键需要与表/列标识符
 分开单独检查。

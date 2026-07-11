@@ -2,7 +2,7 @@
 
 # Data Directory
 
-This folder contains the BIRD (Benchmark for Information Retrieval from Databases) benchmark dataset.
+This folder contains the BIRD (Benchmark for Information Retrieval from Databases) dataset.
 It is excluded from version control via `.gitignore`. Download the data from the
 [BIRD benchmark website](https://bird-bench.github.io/) and place it here following the structure below.
 

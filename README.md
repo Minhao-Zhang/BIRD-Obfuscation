@@ -82,15 +82,15 @@ produce a number:
   deltas are per-question paired against `base` and read with **McNemar tests and bootstrap CIs**,
   not point estimates.
 - **An empirical null, not zero.** 14 databases keep an identity (English→English) rename, so
-  their rename delta is guaranteed ≈0 by construction. They serve as the **noise-floor control**,
+  their rename delta is guaranteed ≈0 by construction. They are the **noise-floor control**,
   and the rename effect is reported *per-language* rather than as a single pooled number that the
   control would dilute ([limitations §1](docs/reference/limitations.md)).
 - **Strict *and* lenient scoring.** EX is reported under a BIRD-style type-lenient comparator
   *and* a strict one (no cross-type collapse, case-sensitive). The leniency cancels in the deltas,
   and the strict column is quoted for any absolute-accuracy claim ([limitations §2](docs/reference/limitations.md)).
-- **Ablation by mechanism.** `rename−base` probes identifier recall; `decoy−base` probes
-  robustness to schema-probing traps; `paraphrase−base` probes question-form recall; `all−base`
-  measures the combined effect. Design: [evaluation.md §9](docs/methodology/evaluation.md).
+- **Ablation by mechanism.** `rename−base` isolates identifier recall, `decoy−base` isolates
+  robustness to schema-probing traps, and `paraphrase−base` isolates question-form recall.
+  `all−base` then measures the combined effect. Design: [evaluation.md §9](docs/methodology/evaluation.md).
 
 ### Results (pending)
 

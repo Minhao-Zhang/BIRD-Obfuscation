@@ -47,7 +47,7 @@ An earlier design included LLM-based question paraphrase (the **paraphrase** dim
 
 2. **Sampling suggests questions are already mostly natural language.** Only 0.3% of BIRD train questions embed schema identifiers (snake_case column names) directly in the question text. The remaining 99.7% are natural-language English sentences with little direct schema leakage. Paraphrasing them would add cost and possible meaning drift while addressing only a limited part of the contamination risk.
 
-Removing question paraphrase eliminates ~10,000 LLM calls, removes the risk of meaning-drift invalidating gold SQL, and produces a simpler, more auditable pipeline.
+Removing question paraphrase eliminates ~10,000 LLM calls and the risk of meaning-drift invalidating gold SQL, leaving a simpler, more auditable pipeline.
 
 **Revisited (2026-07-03), now implemented:** paraphrase was reintroduced as an *optional* dimension and is now **built** (`pipeline/09_paraphrase_questions.py`) and shipped in the deliverable (`eval_dataset/question_paraphrases.jsonl`, one per test question); see [obfuscation-extensions.md §3](obfuscation-extensions.md). It stays *separate from the core rename gold* (the `question_paraphrase` field parallels the original `question`, which is retained). The motivation changed: SPENCE (arXiv 2604.17771) and SQL2NL (arXiv 2509.04657) show the **question axis is the more sensitive contamination signal** than the identifier axis this pipeline primarily targets. Conditioning the paraphrase on the gold SQL (SQL2NL-style) mitigates the meaning-drift risk that motivated dropping it originally.
 

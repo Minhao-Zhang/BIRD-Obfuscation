@@ -13,15 +13,17 @@
 - **离线分机评测已是默认路径。** `eval_contamination.py` 和 `eval_ablation.py` 在 PostgreSQL 机器上冻结 prompt 并准备公开请求包,在纯 API 机器上调用模型(`run_offline_generations.py`),再在 PostgreSQL 机器上执行返回的 SQL 并打分(`grade_offline_eval.py`)。`--local` 保留旧的同机路径;`--split {test,train}` 选择数据集。
 - **训练集改写已完成。** `09_paraphrase_questions.py --include-train` 已跑完;`artifacts/question_paraphrases.jsonl` 现有 10,164 行(2,030 测试 + 8,134 训练)。
 - **可移植公开包已入库。** `eval/offline-public-bundles.zip`(约 11 MiB)包含全部测试/训练公开包(`requests.jsonl` + `manifest.json`),供 API 机器使用。私有的 `grading_manifest.private.jsonl` 留在 DB 机器,本地通过 `prepare_offline_eval.py` 重新生成。
-- **下一步:** 从 zip(或本地 `eval/offline/` 包)跑 API 生成,把 `generations.jsonl` 拷回 DB 机器,再打分并汇总。
+- **污染评测结果已出(test 划分,运行 `claude opus 4.8 high`)。** 对全部 8,120 条生成完成打分(`Claude-Opus-4.8`,强度 `high`)。无提示污染差值 = **+0.048**(宽松;严格 +0.045);有提示差值 +0.018。按语言呈清晰梯度(english 对照 +0.004 → pinyin +0.105)。完整表格见 [docs/methodology/evaluation.md §8](docs/methodology/evaluation-zh.md);原始记录在 `eval/contamination_results.jsonl`。
+- **消融结果已出(5 臂,test 划分,同一次运行 `claude opus 4.8 high`)。** 全部 10,150 条生成完成打分(base/rename/decoy/paraphrase/all,各 2,030),附 bootstrap 置信区间 + McNemar。base EX 0.5113(宽松)。相对 base 的配对差值:**rename −0.041**(p<0.001)、**decoy −0.022**(p=0.001)、**paraphrase +0.035**(p<0.001,*为正*:以 SQL 为条件的改写理顺了含糊措辞,而非暴露问题措辞记忆)、**all −0.058**(p<0.001)。rename 复现了 §8 的污染信号。decoy 的 gold 已验证可解(每臂 40/40)。完整表格见 [docs/methodology/evaluation.md §9.4](docs/methodology/evaluation-zh.md);原始记录在 `eval/ablation_results.jsonl`。
+- **下一步:**(可选)在 train 划分上跑这两个评测;paraphrase 为正这一点值得复看(是难度降低,还是评分假象?)。
 
 ## 状态快照:2026-07-05
 
 - **核心流水线(步骤 0-7):已完成并通过验证。** 10,541 个候选问题中有 10,164 个通过了端到端验证(8,134 个训练 / 2,030 个测试;训练、测试两边都覆盖了全部 69 个数据库)。见 [docs/methodology/dataset.md §7](docs/methodology/dataset-zh.md)。
-- **扩展混淆(步骤 08-10):已构建并应用。** 问题改写(步骤 09)和最初的诱饵 schema 注入(步骤 08)均已完成;随后诱饵这一维度重做成了 **损坏诱饵陷阱**(步骤 10,`10_inject_traps.py`)——在意识到空诱饵会在交互式"执行并观察"的 agent 面前自我暴露之后,改为附加式的"邪恶双胞胎"列(1,486 个)+ 克隆表(162 个),里面存的是真实数据被微妙*损坏*后的副本。这些内容注入进两个诱饵实例(`pg_decoy`、`pg_rename_decoy`)的两种变体中;真实数据已验证逐字节相同,因此 R1==R2 依然成立。见 [docs/reference/corrupted-decoys-design.md](docs/reference/corrupted-decoys-design-zh.md)。
+- **扩展混淆(步骤 08-10):已构建并应用。** 问题改写(步骤 09)和最初的诱饵 schema 注入(步骤 08)均已完成;随后诱饵这一维度重做成了 **损坏诱饵陷阱**(步骤 10,`10_inject_traps.py`):在意识到空诱饵会在交互式"执行并观察"的 agent 面前自我暴露之后,改为附加式的"邪恶双胞胎"列(1,486 个)+ 克隆表(162 个),里面存的是真实数据被微妙*损坏*后的副本。这些内容注入进两个诱饵实例(`pg_decoy`、`pg_rename_decoy`)的两种变体中;真实数据已验证逐字节相同,因此 R1==R2 依然成立。见 [docs/reference/corrupted-decoys-design.md](docs/reference/corrupted-decoys-design-zh.md)。
 - **四个 PostgreSQL 实例**(`pg_base` / `pg_rename` / `pg_decoy` / `pg_rename_decoy`)已构建,并作为压缩的 `pg_dump` **发布**在 [Hugging Face](https://huggingface.co/datasets/minhaozhang/BIRD_Obfuscation) 上。Gold SQL + 映射 + 陷阱清单以 git 跟踪的形式放在 [`eval_dataset/`](eval_dataset/) 中;下载/恢复/运行说明见 [docs/reference/using-the-dataset.md](docs/reference/using-the-dataset-zh.md)。
-- **混淆有效性评测(四种条件):已实现;正在重跑。** 早前的数据已作废。为确保结果稳健,完整评测正在一个更强的模型上重跑。设置见 [docs/methodology/evaluation.md §8](docs/methodology/evaluation-zh.md);在该次运行完成前不报告任何结果。
-- **五臂消融实验(`eval_ablation.py`:base/rename/decoy/paraphrase/all):已实现;完整运行有待** 上述同一次更强模型的运行。目前尚无结果可报告。
+- **混淆有效性评测(四种条件):已实现;首批结果已出。** test 划分上的运行 `claude opus 4.8 high` 已打分并报告:见上方 2026-07-10 快照与 [docs/methodology/evaluation.md §8](docs/methodology/evaluation-zh.md)。
+- **五臂消融实验(`eval_ablation.py`:base/rename/decoy/paraphrase/all):已实现;首批结果已出。** test 划分上的运行 `claude opus 4.8 high` 已打分并报告:见上方 2026-07-10 快照与 [docs/methodology/evaluation.md §9.4](docs/methodology/evaluation-zh.md)。
 
 ---
 
@@ -30,7 +32,7 @@
 ### 核心流水线(截至 2026-07-02)
 - 已实现步骤 0-7:切分 → 语言分配 → 重命名映射(Bedrock)→ 加载 `pg_base`(pgloader)→ 转译 + R0==R1 → 克隆/重命名 `pg_rename` → 重命名 SQL + R1==R2。交付物:`artifacts/{train,test}_final.jsonl`。
 - 双 oracle 完整性:R0==R1(SQLite 基准真值 vs 转译后的 PG)与 R1==R2(原始 PG vs 混淆后的 PG)。约 12% 通过验证的行使用了 VALUES 物化(见 [docs/reference/step5-transpilation.md](docs/reference/step5-transpilation-zh.md))。
-- 四条件混淆有效性评测已通过 `pipeline/eval_contamination.py` 实现;设置见 [evaluation.md §8](docs/methodology/evaluation-zh.md)(结果正在一个更强的模型上重跑,完成前不予报告)。
+- 四条件混淆有效性评测已通过 `pipeline/eval_contamination.py` 实现;首批结果(运行 `claude opus 4.8 high`,test 划分)已在 [evaluation.md §8](docs/methodology/evaluation-zh.md) 报告。
 
 ### 方向确定(2026-07-03)
 - **文献综述**(SPENCE arXiv 2604.17771;SQL2NL arXiv 2509.04657;Termite/ATD arXiv 2402.08100;ConStat;Min-K%/Time Travel 综述)。核心结论:敏感的污染信号在于 **问题/句法轴**,而非标识符轴;BIRD 在标识符轴上只有微弱污染(τ ≈ −0.35,置信区间跨越零),这是来自已有文献的信号,与我们自己(尚待进行)的测量相互独立。定位结论:该数据集的持久价值在于它是一个 **经过验证的多语言 Postgres Text-to-SQL 资产 + 稳健性测试平台**,污染只是一个次要的(诚实、偏负面的)结果。
@@ -63,7 +65,7 @@
 
 ## 下一步(计划,按顺序)
 
-1. **端到端跑完离线评测:** 从 `eval/offline-public-bundles.zip`(或 `eval/offline/` 各臂包)在 API 机器生成,再在 DB 机器用 `eval_contamination.py` / `eval_ablation.py --generations ...` 打分。结果行会写入 eval 元数据(模型、推理强度、prompt 版本、git commit、输入产物哈希);续跑只复用元数据匹配的行。报告配对差值 + bootstrap 置信区间;严格评分排除 `order_sensitive_qids.json`。
+1. **端到端跑完离线评测。** 污染评测/test **已完成**(`claude opus 4.8 high`,§8)。剩余:污染评测/train,以及五臂消融(需拉起 decoy 实例);随后在配对差值上计算 bootstrap 置信区间 + McNemar,严格评分排除 `order_sensitive_qids.json`。仍走同一离线流程:从 `eval/offline-public-bundles.zip`(或 `eval/offline/` 各臂包)在 API 机器生成,再在 DB 机器用 `grade_offline_eval.py` / `eval_contamination.py --summarize` / `eval_ablation.py` 打分。
 2. **(可选)AWS 部署**:配置现已可移植(环境变量 DSN、Hugging Face 上的 dump、被跟踪的 `eval_dataset/`)。推荐形态:单台 EC2,运行仓库中由 HF dump 恢复的 docker-compose 实例,OpenAI key 来自 Secrets Manager,结果写入 S3。
 3. **(下游,独立仓库)** 交互式 agent harness + 真正触发陷阱的"诱饵一致性回答" / 陷阱命中率指标。
 

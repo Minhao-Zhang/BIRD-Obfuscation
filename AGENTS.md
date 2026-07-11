@@ -42,7 +42,7 @@ Run scripts in order from the repo root with `uv run python pipeline/<script>.py
 | 8 | `08_inject_decoys.py` | steps 3, 7, both `*_decoy` instances cloned + running (extended obfuscation, see below) |
 | 9 | `09_paraphrase_questions.py` | step 7, `pg_rename` running (extended obfuscation) |
 
-Bring up both PostgreSQL instances first: `docker compose up -d`. `pg_base` is `127.0.0.1:5432`, `pg_rename` is `127.0.0.1:5433` (both DSN: `dbname=bird user=bird password=bird`). Step 4 only needs Docker running: pgloader itself runs as a container (`dimitri/pgloader:v3.6.7`), no host install required.
+Bring up both PostgreSQL instances first: `docker compose up -d`. `pg_base` is `127.0.0.1:5432`, `pg_rename` is `127.0.0.1:5433` (both DSN: `dbname=bird user=bird password=bird`). Step 4 only needs Docker running: pgloader itself runs as a container (`dimitri/pgloader:v3.6.7`), so you don't need a host install.
 
 Step 0 is diagnostic (not the critical path). Run it before step 4 when adding a source database or changing identifier-handling logic, to catch risky identifiers before they reach the loader. See [docs/reference/audit-findings.md](docs/reference/audit-findings.md).
 

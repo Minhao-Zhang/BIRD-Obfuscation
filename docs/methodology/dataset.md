@@ -6,7 +6,7 @@
 
 This project prepares an obfuscated evaluation dataset for an agentic Text-to-SQL setting. The dataset is designed to reduce the advantage that frontier language models may get from memorised public BIRD schema identifiers while preserving a semantically usable text-to-SQL task. In the motivating scenario, an agent builds a semantic memory layer from known true SQL paired with schema metadata (column names and dtypes only), then answers new natural-language questions by generating SQL against the correct schema.
 
-The evaluation gives the model the correct database upfront. Routing is not evaluated here; it is left to a downstream evaluation harness. This project's job is to produce a schema lake where column-name memorisation is made less directly useful, not to prove that all forms of benchmark memorisation have been removed.
+The evaluation gives the model the correct database upfront. Routing is not evaluated here; it is left to a downstream evaluation harness. This project's job is to produce a schema lake where column-name memorisation is less directly useful, not to prove that all forms of benchmark memorisation have been removed.
 
 ---
 
