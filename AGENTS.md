@@ -1,5 +1,3 @@
-**English** · [中文](AGENTS-zh.md)
-
 # BIRDBench
 
 This repo transforms the [BIRD benchmark](https://bird-bench.github.io/) dataset into an **obfuscated Text-to-SQL dataset** for measuring how much benchmark accuracy depends on memorised schema identifiers, and for stress-testing execute-and-observe SQL agents over a multi-database schema lake.
@@ -10,7 +8,7 @@ The standard BIRD benchmark is public, including its questions, gold SQL, and sc
 
 The downstream task mirrors an agentic Text-to-SQL setting where an agent builds memory from known true SQL and stripped schema metadata, then answers held-out natural-language questions against the obfuscated schema lake. This repository prepares and validates that dataset; it does not itself evaluate schema routing. In the evaluations described here, the correct database is supplied upfront.
 
-For the full methodology and rationale behind each design decision, see [docs/methodology/](docs/methodology/) (obfuscation, dataset, and evaluation). This file is **operational guidance only**: how to run and extend the pipeline, and invariants to preserve when touching it. Project history, status, and decisions live in [PROGRESS.md](PROGRESS.md); detailed empirical rationale for the invariants below lives in [docs/reference/pipeline-invariants.md](docs/reference/pipeline-invariants.md).
+For the full methodology and rationale behind each design decision, see [docs/methodology/](docs/methodology/) (obfuscation, dataset, and evaluation). This file is **operational guidance only**: how to run and extend the pipeline, and invariants to preserve when touching it. Project history, status, and decisions live in [PROGRESS.md](docs/PROGRESS.md); detailed empirical rationale for the invariants below lives in [docs/reference/pipeline-invariants.md](docs/reference/pipeline-invariants.md).
 
 ## Data
 

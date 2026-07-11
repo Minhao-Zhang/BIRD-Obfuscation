@@ -26,7 +26,7 @@ python eval_dataset/build_eval_dataset.py
 
 这个基准跑在四个 PostgreSQL 18 实例上(Docker,后两个用 `decoy` compose profile)。
 **本地切勿同时运行超过 2 个热实例**(会导致 OOM,参见
-[AGENTS.md](../AGENTS-zh.md));在已配置好的服务器上则不受此限制。
+[AGENTS.md](../AGENTS.md));在已配置好的服务器上则不受此限制。
 
 | 实例 | 端口 | 标识符 | 诱饵/陷阱 | 混淆维度 |
 | --- | --- | --- | --- | --- |

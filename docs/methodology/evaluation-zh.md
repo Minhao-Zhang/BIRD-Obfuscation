@@ -190,7 +190,7 @@ uv run python pipeline/eval_contamination.py --summarize \
   --model "Claude-Opus-4.8" --effort high --bundle-dir eval/offline/contamination
 ```
 
-指标以及按语言/碰撞的拆分定义见 §7。配对差值上的 bootstrap 置信区间与 McNemar p 值尚未计算(计划中;参见 [../../PROGRESS.md](../../PROGRESS-zh.md))。
+指标以及按语言/碰撞的拆分定义见 §7。配对差值上的 bootstrap 置信区间与 McNemar p 值尚未计算(计划中;参见 [../PROGRESS.md](../PROGRESS-zh.md))。
 
 ---
 

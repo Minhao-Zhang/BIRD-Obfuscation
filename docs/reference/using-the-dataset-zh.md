@@ -101,7 +101,7 @@ docker compose exec pg_rename_decoy  pg_restore -U bird -d bird --no-owner -j 4 
 ```
 
 > **OOM 提示(仅限本地):** 在笔记本/台式机上,**不要**让四个实例同时满负荷运行。每次只启动并恢复两个(`pg_base`+`pg_decoy`,然后 `pg_rename`+`pg_rename_decoy`),
-> 中间把其余实例停掉。参见 [AGENTS.md](../../AGENTS-zh.md) 中的警告。在配置充足的服务器上
+> 中间把其余实例停掉。参见 [AGENTS.md](../../AGENTS.md) 中的警告。在配置充足的服务器上
 > 则不受此限制。
 
 ### 恢复到任意 PostgreSQL 服务器

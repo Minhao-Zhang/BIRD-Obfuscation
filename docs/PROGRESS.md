@@ -2,7 +2,7 @@
 
 # Progress Log
 
-Project history and status. `AGENTS.md` stays instructional (how to run/extend the pipeline); this file records **what was done, when, and why**: the narrative `AGENTS.md` deliberately omits. Methodology detail lives under [docs/methodology/](docs/methodology/); this file points at it rather than duplicating it.
+Project history and status. `AGENTS.md` stays instructional (how to run/extend the pipeline); this file records **what was done, when, and why**: the narrative `AGENTS.md` deliberately omits. Methodology detail lives under [docs/methodology/](methodology/); this file points at it rather than duplicating it.
 
 Dates are absolute.
 
@@ -13,17 +13,17 @@ Dates are absolute.
 - **Offline split-machine eval is the default.** `eval_contamination.py` and `eval_ablation.py` now prepare frozen prompts on the PostgreSQL machine, run model calls on an API-only machine (`run_offline_generations.py`), and grade returned SQL on the PostgreSQL machine (`grade_offline_eval.py`). `--local` keeps the legacy same-machine path. `--split {test,train}` selects the dataset.
 - **Train paraphrases complete.** `09_paraphrase_questions.py --include-train` finished; `artifacts/question_paraphrases.jsonl` now has 10,164 rows (2,030 test + 8,134 train).
 - **Portable public bundles committed.** `eval/offline-public-bundles.zip` (~11 MiB) ships all test/train public `requests.jsonl` + `manifest.json` files for the API machine. Private `grading_manifest.private.jsonl` files stay on the DB machine and are regenerated locally via `prepare_offline_eval.py`.
-- **Contamination results are in for the test split, run `claude opus 4.8 high`.** Graded all 8,120 generations (`Claude-Opus-4.8`, effort `high`). No-hint contamination delta = **+0.048** lenient (+0.045 strict); hint delta +0.018. Clean per-language gradient (english control +0.004 → pinyin +0.105). Full table in [docs/methodology/evaluation.md §8](docs/methodology/evaluation.md); raw records in `eval/contamination_results.jsonl`.
-- **Ablation results are in for all 5 arms, test split, same run `claude opus 4.8 high`.** All 10,150 generations graded (base/rename/decoy/paraphrase/all, each 2,030), with bootstrap CIs + McNemar. base EX 0.5113 lenient. Paired deltas vs base: **rename −0.041** (p<0.001), **decoy −0.022** (p=0.001), **paraphrase +0.035** (p<0.001, *positive*: SQL-conditioned paraphrases clean up ambiguous phrasing rather than expose question-form recall), **all −0.058** (p<0.001). rename replicates the §8 contamination signal. Decoy gold verified answerable (40/40 per decoy arm). Full tables in [docs/methodology/evaluation.md §9.4](docs/methodology/evaluation.md); raw records in `eval/ablation_results.jsonl`.
+- **Contamination results are in for the test split, run `claude opus 4.8 high`.** Graded all 8,120 generations (`Claude-Opus-4.8`, effort `high`). No-hint contamination delta = **+0.048** lenient (+0.045 strict); hint delta +0.018. Clean per-language gradient (english control +0.004 → pinyin +0.105). Full table in [docs/methodology/evaluation.md §8](methodology/evaluation.md); raw records in `eval/contamination_results.jsonl`.
+- **Ablation results are in for all 5 arms, test split, same run `claude opus 4.8 high`.** All 10,150 generations graded (base/rename/decoy/paraphrase/all, each 2,030), with bootstrap CIs + McNemar. base EX 0.5113 lenient. Paired deltas vs base: **rename −0.041** (p<0.001), **decoy −0.022** (p=0.001), **paraphrase +0.035** (p<0.001, *positive*: SQL-conditioned paraphrases clean up ambiguous phrasing rather than expose question-form recall), **all −0.058** (p<0.001). rename replicates the §8 contamination signal. Decoy gold verified answerable (40/40 per decoy arm). Full tables in [docs/methodology/evaluation.md §9.4](methodology/evaluation.md); raw records in `eval/ablation_results.jsonl`.
 - **Next:** (optional) run the train split for both evals; the paraphrase-positive result is worth a second look (is it difficulty reduction or a grading artifact?).
 
 ## Status snapshot: 2026-07-05
 
-- **Core pipeline (steps 0-7): complete and validated.** 10,164 / 10,541 candidate questions pass end-to-end validation (8,134 train / 2,030 test; all 69 databases represented in both). See [docs/methodology/dataset.md §7](docs/methodology/dataset.md).
-- **Extended obfuscation (steps 08-10): built and applied.** Question paraphrases (step 09) and the original decoy-schema injection (step 08) are done; the decoy dimension was then reworked into **corrupted decoy traps** (step 10, `10_inject_traps.py`), additive "evil-twin" columns (1,486) + cloned tables (162) holding subtly *corrupted* copies of real data, after recognising that empty decoys unmask themselves under an interactive execute-and-observe agent. Injected into both decoy instances (`pg_decoy`, `pg_rename_decoy`), both variants; real data proven byte-identical, so R1==R2 still holds. See [docs/reference/corrupted-decoys-design.md](docs/reference/corrupted-decoys-design.md).
-- **Four PostgreSQL instances** (`pg_base` / `pg_rename` / `pg_decoy` / `pg_rename_decoy`) built and **published** as compressed `pg_dump`s on [Hugging Face](https://huggingface.co/datasets/minhaozhang/BIRD_Obfuscation). Gold SQL + mappings + trap manifests are git-tracked in [`eval_dataset/`](eval_dataset/); download/restore/run instructions in [docs/reference/using-the-dataset.md](docs/reference/using-the-dataset.md).
-- **Obfuscation effectiveness eval (four conditions): implemented; first results in.** Run `claude opus 4.8 high` on the test split is graded and reported; see the 2026-07-10 snapshot above and [docs/methodology/evaluation.md §8](docs/methodology/evaluation.md).
-- **Five-arm ablation (`eval_ablation.py`: base/rename/decoy/paraphrase/all): implemented; first results in.** Run `claude opus 4.8 high` on the test split is graded and reported; see the 2026-07-10 snapshot above and [docs/methodology/evaluation.md §9.4](docs/methodology/evaluation.md).
+- **Core pipeline (steps 0-7): complete and validated.** 10,164 / 10,541 candidate questions pass end-to-end validation (8,134 train / 2,030 test; all 69 databases represented in both). See [docs/methodology/dataset.md §7](methodology/dataset.md).
+- **Extended obfuscation (steps 08-10): built and applied.** Question paraphrases (step 09) and the original decoy-schema injection (step 08) are done; the decoy dimension was then reworked into **corrupted decoy traps** (step 10, `10_inject_traps.py`), additive "evil-twin" columns (1,486) + cloned tables (162) holding subtly *corrupted* copies of real data, after recognising that empty decoys unmask themselves under an interactive execute-and-observe agent. Injected into both decoy instances (`pg_decoy`, `pg_rename_decoy`), both variants; real data proven byte-identical, so R1==R2 still holds. See [docs/reference/corrupted-decoys-design.md](reference/corrupted-decoys-design.md).
+- **Four PostgreSQL instances** (`pg_base` / `pg_rename` / `pg_decoy` / `pg_rename_decoy`) built and **published** as compressed `pg_dump`s on [Hugging Face](https://huggingface.co/datasets/minhaozhang/BIRD_Obfuscation). Gold SQL + mappings + trap manifests are git-tracked in [`eval_dataset/`](../eval_dataset/); download/restore/run instructions in [docs/reference/using-the-dataset.md](reference/using-the-dataset.md).
+- **Obfuscation effectiveness eval (four conditions): implemented; first results in.** Run `claude opus 4.8 high` on the test split is graded and reported; see the 2026-07-10 snapshot above and [docs/methodology/evaluation.md §8](methodology/evaluation.md).
+- **Five-arm ablation (`eval_ablation.py`: base/rename/decoy/paraphrase/all): implemented; first results in.** Run `claude opus 4.8 high` on the test split is graded and reported; see the 2026-07-10 snapshot above and [docs/methodology/evaluation.md §9.4](methodology/evaluation.md).
 
 ---
 
@@ -31,8 +31,8 @@ Dates are absolute.
 
 ### Core pipeline (through 2026-07-02)
 - Steps 0-7 implemented: split → language assignment → rename map (Bedrock) → load `pg_base` (pgloader) → transpile + R0==R1 → clone/rename `pg_rename` → rename SQL + R1==R2. Deliverable: `artifacts/{train,test}_final.jsonl`.
-- Two-oracle integrity: R0==R1 (SQLite ground truth vs transpiled PG) and R1==R2 (original PG vs obfuscated PG). ~12% of validated rows use VALUES-materialization (see [docs/reference/step5-transpilation.md](docs/reference/step5-transpilation.md)).
-- Four-condition obfuscation-effectiveness eval implemented via `pipeline/eval_contamination.py`; setup and results (run `claude opus 4.8 high`) in [evaluation.md §8](docs/methodology/evaluation.md).
+- Two-oracle integrity: R0==R1 (SQLite ground truth vs transpiled PG) and R1==R2 (original PG vs obfuscated PG). ~12% of validated rows use VALUES-materialization (see [docs/reference/step5-transpilation.md](reference/step5-transpilation.md)).
+- Four-condition obfuscation-effectiveness eval implemented via `pipeline/eval_contamination.py`; setup and results (run `claude opus 4.8 high`) in [evaluation.md §8](methodology/evaluation.md).
 
 ### Direction-setting (2026-07-03)
 - **Literature review** (SPENCE arXiv 2604.17771; SQL2NL arXiv 2509.04657; Termite/ATD arXiv 2402.08100; ConStat; Min-K%/Time Travel surveys). Key takeaway: the **question/syntactic axis** is the sensitive contamination signal, not the identifier axis; BIRD is only weakly contaminated at the identifier axis (τ ≈ −0.35, CI spans zero), a prior-literature signal, independent of our own (pending) measurement. Framing conclusion: the dataset's durable value is as a **validated multilingual Postgres Text-to-SQL asset + robustness testbed**, with contamination as a secondary (honest, negative-ish) result.
@@ -46,7 +46,7 @@ Dates are absolute.
 
 ### Build progress (2026-07-03)
 
-Implementing per [docs/reference/extension-implementation-plan.md](docs/reference/extension-implementation-plan.md):
+Implementing per [docs/reference/extension-implementation-plan.md](reference/extension-implementation-plan.md):
 
 - ✅ §2a `pipeline/_db.py`: shared PG helpers extracted (behaviour-preserving; contamination-eval numbers unchanged).
 - ✅ §2b `pipeline/_eval_helpers.py`: shared eval machinery extracted; `eval_contamination.py` is now a thin contamination-eval entrypoint.
@@ -55,12 +55,12 @@ Implementing per [docs/reference/extension-implementation-plan.md](docs/referenc
 
 ### Extended obfuscation: built + corrupted-decoy pivot (2026-07-04 → 07-05)
 
-- **Corrupted-decoy pivot.** The eval target is an **interactive execute-and-observe SQL agent**, and empty decoy tables / NULL decoy columns unmask themselves for free (`COUNT(*)=0` etc.). So the decoy dimension was reworked from *empty* structural decoys (step 08) into **corrupted traps** (`pipeline/10_inject_traps.py`), strictly **additive** so real data stays byte-identical and R1==R2 holds. Design + risk register: [docs/reference/corrupted-decoys-design.md](docs/reference/corrupted-decoys-design.md).
+- **Corrupted-decoy pivot.** The eval target is an **interactive execute-and-observe SQL agent**, and empty decoy tables / NULL decoy columns unmask themselves for free (`COUNT(*)=0` etc.). So the decoy dimension was reworked from *empty* structural decoys (step 08) into **corrupted traps** (`pipeline/10_inject_traps.py`), strictly **additive** so real data stays byte-identical and R1==R2 holds. Design + risk register: [docs/reference/corrupted-decoys-design.md](reference/corrupted-decoys-design.md).
   - **Phase 1: evil-twin columns** (`trap_manifest.json`, 1,486): a NEW column holding a corrupted copy of a real column under an LLM synonym; ≤500k-row tables; join-keys → permute (RI-preserving), else a mix of sparse perturb / cat-remap / date-offset / null.
   - **Phase 2: corrupted clone tables** (`trap_table_manifest.json`, 162 over 66 DBs): a whole real table cloned + renamed with a corrupted column subset; ≤50k-row sources; R1==R2-safe by construction (gold never references a decoy table).
   - Injected into `pg_decoy` + `pg_rename_decoy`, both variants; **real data proven byte-identical** to the clean instances (532 tables each side). Naming via `gpt-5.4-mini`; all `_alt`/`_archive` fallback names scrubbed. Fixed a `sparse_perturb` int-overflow (clamp to the target int type's range).
   - R1==R2 leaves **153 order-sensitive + 21 pre-existing exec-failed** qids that are excluded from strict cross-variant EX (`artifacts/order_sensitive_qids.json`); benign (heap reorder from trap UPDATEs → different-but-valid LIMIT/float-aggregate results).
-- **Packaging + publication.** All four instances dumped (`pg_dump -Fc`, zstd; ~3 GB each, ~10:1) and **published on Hugging Face**: [minhaozhang/BIRD_Obfuscation](https://huggingface.co/datasets/minhaozhang/BIRD_Obfuscation). Gold + mappings + manifests consolidated into the git-tracked [`eval_dataset/`](eval_dataset/); consumer guide [docs/reference/using-the-dataset.md](docs/reference/using-the-dataset.md).
+- **Packaging + publication.** All four instances dumped (`pg_dump -Fc`, zstd; ~3 GB each, ~10:1) and **published on Hugging Face**: [minhaozhang/BIRD_Obfuscation](https://huggingface.co/datasets/minhaozhang/BIRD_Obfuscation). Gold + mappings + manifests consolidated into the git-tracked [`eval_dataset/`](../eval_dataset/); consumer guide [docs/reference/using-the-dataset.md](reference/using-the-dataset.md).
 - **Eval portability.** Eval scripts resolve inputs `artifacts/` → fall back to `eval_dataset/` (a fresh clone runs with no regeneration). Postgres DSNs are now env-configurable via `PG_*_DSN` (default = local docker), so the eval can target remote Postgres / AWS RDS without code changes.
 
 ## Next (planned, in order)

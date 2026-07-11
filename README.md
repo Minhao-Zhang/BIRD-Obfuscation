@@ -140,7 +140,7 @@ and the train split are pending.
 | Five-arm ablation harness | ✅ implemented; ✅ first results (same run) |
 | Interactive execute-and-observe agent that exercises the traps | ⛔ out of scope (separate downstream repo) |
 
-Full history, decisions, and what's next: [PROGRESS.md](PROGRESS.md).
+Full history, decisions, and what's next: [PROGRESS.md](docs/PROGRESS.md).
 
 ### Scope boundaries
 
@@ -241,7 +241,7 @@ regeneration; Postgres DSNs are env-configurable (`PG_*_DSN`) to target remote P
 | [docs/reference/pipeline-invariants.md](docs/reference/pipeline-invariants.md) | Rules to preserve when editing the pipeline, with rationale |
 | [docs/eda-report.md](docs/eda-report.md) | Exploratory analysis of the BIRD corpus |
 | [AGENTS.md](AGENTS.md) | How to run and extend the pipeline (operational) |
-| [PROGRESS.md](PROGRESS.md) | History, status snapshot, and what's next |
+| [PROGRESS.md](docs/PROGRESS.md) | History, status snapshot, and what's next |
 
 ## Corpus facts
 

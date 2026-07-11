@@ -128,7 +128,7 @@
 | 五臂消融框架 | ✅ 已实现;✅ 首批结果(同一次运行) |
 | 触发这些陷阱的交互式"执行并观察"智能体 | ⛔ 不在本项目范围内(独立的下游仓库) |
 
-完整的历史、决策和后续计划:[PROGRESS.md](PROGRESS-zh.md)。
+完整的历史、决策和后续计划:[PROGRESS.md](docs/PROGRESS-zh.md)。
 
 ### 范围边界
 
@@ -156,7 +156,7 @@
 ## 工作原理
 
 一条 10 步的流水线把原始的 BIRD SQLite 转化为四个经过验证的 PostgreSQL 实例。
-每一步都读取上一步的输出;操作细节和不变量记录在 [AGENTS.md](AGENTS-zh.md) 中。
+每一步都读取上一步的输出;操作细节和不变量记录在 [AGENTS.md](AGENTS.md) 中。
 
 ### 流水线步骤
 
@@ -226,8 +226,8 @@ uv run python pipeline/eval_ablation.py --arms base --model <model>
 | [docs/reference/using-the-dataset.md](docs/reference/using-the-dataset-zh.md) | 下载、恢复并运行评测 |
 | [docs/reference/pipeline-invariants.md](docs/reference/pipeline-invariants-zh.md) | 编辑流水线时需要保持的规则,附带理由 |
 | [docs/eda-report.md](docs/eda-report-zh.md) | 对 BIRD 语料的探索性分析 |
-| [AGENTS.md](AGENTS-zh.md) | 如何运行和扩展流水线(操作层面) |
-| [PROGRESS.md](PROGRESS-zh.md) | 历史、状态快照和后续计划 |
+| [AGENTS.md](AGENTS.md) | 如何运行和扩展流水线(操作层面) |
+| [PROGRESS.md](docs/PROGRESS-zh.md) | 历史、状态快照和后续计划 |
 
 ## 语料事实
 
