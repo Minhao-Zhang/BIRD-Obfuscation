@@ -61,6 +61,66 @@ Each frontier language model is evaluated under four conditions across two dimen
 
 In all conditions the model receives: question text + stripped DDL (column names and dtypes only, with no PRIMARY KEY, FOREIGN KEY, or CHECK constraints, and no column descriptions) + the correct DB label.
 
+**Exact prompt.** Every condition and ablation arm uses the same two-part prompt
+(`pipeline/_eval_helpers.py`); only the schema, the question text, and the optional hint
+line change. System instructions, verbatim:
+
+```text
+You are a PostgreSQL expert. You will be given a database schema and a question
+about the data. Write a single PostgreSQL SQL query that answers the question.
+Quote all identifiers with double quotes. Output ONLY the SQL query, no
+explanation, no markdown code fences.
+```
+
+User message:
+
+```text
+Database: <db_id>
+
+Schema:
+<stripped DDL>
+
+Question: <question>
+Hint: <evidence>          # present ONLY in the hint conditions
+```
+
+The **stripped DDL** is table and column names with PostgreSQL dtypes only — no
+primary/foreign keys, no CHECK constraints, no descriptions — read live from the target
+instance's `information_schema`, one block per table:
+
+```sql
+CREATE TABLE "<db_id>"."<table>" (
+    "<column>" <dtype>,
+    ...
+)
+```
+
+What changes across conditions/arms (everything else is identical):
+
+| Element | base(_hint) | rename(_hint) | decoy | paraphrase | all |
+| --- | --- | --- | --- | --- | --- |
+| Schema / DDL source | `pg_base` (original names) | `pg_rename` (renamed) | `pg_decoy` (real + decoy names) | `pg_base` | `pg_rename_decoy` |
+| Question | original | original | original | paraphrase | paraphrase |
+| `Hint:` line | hint conditions only | hint conditions only | — | — | — |
+
+The run is **one-shot** (a single call per question × condition, no retry-on-error and no
+feedback loop). The `prompt_version` (`contamination-v1` / `ablation-v1`) is stamped on
+every result row, so any prompt change invalidates resumption rather than silently mixing
+runs. A concrete example (base_nohint, schema abridged to one table):
+
+```text
+Database: address
+
+Schema:
+CREATE TABLE "address"."zip_data" (
+    "zip_code" bigint,
+    "male_population" bigint,
+    ...
+)
+
+Question: How many males are there in New Haven County's residential areas?
+```
+
 **Why two hint conditions?** 78% of BIRD hints follow the pattern `"X refers to column_name"`, an explicit NL-to-column bridge. In the obfuscated condition with hints (rename_hint), the hint contains the renamed column name (e.g. `"released in 1945 refers to annee_sortie = 1945"`), partially guiding the model despite obfuscation. The no-hint condition (rename_nohint) is closest to the downstream test-time setting (the agent receives only the question during testing) and gives the clearest view of identifier obfuscation. Hint conditions are retained for comparability with the BIRD leaderboard, which tracks hint usage per submission.
 
 ### 4.2 Primary signal: contamination delta
@@ -138,7 +198,7 @@ The per-language breakdown estimates whether Pinyin produces a larger contaminat
 | Bundle hash | `requests_sha256 7d38d28c…` |
 
 One-shot generation (no retry-on-error, no feedback loop), graded once against the frozen
-PostgreSQL snapshots. All 8,120 generations graded; none skipped.
+PostgreSQL snapshots. All 8,120 generations graded; none skipped. The exact prompt is in §4.1.
 
 > **Units.** EX is a fraction in [0, 1] (0.5163 = 51.63% of questions correct). A delta is the
 > difference between two EX values, written as a percentage of the test set: +0.0478 = 4.8% (4.8 more questions correct per 100), not
