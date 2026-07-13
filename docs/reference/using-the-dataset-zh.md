@@ -188,5 +188,6 @@ uv run python pipeline/run_offline_generations.py \
 | `schema_rename_map.json`、`db_language_map.json` | 重命名映射 | `eval_dataset/`(git) |
 | `trap_manifest.json`、`trap_table_manifest.json` | 诱饵/陷阱 ground truth | `eval_dataset/`(git) |
 | `question_paraphrases.jsonl` | 维度 3:改写后的问题 | `eval_dataset/`(git) |
+| `gold_result_hashes_rename_decoy.jsonl` | `pg_rename_decoy` 上的 gold 结果哈希 | `eval_dataset/`（git）；算法见 [gold-result-hashes-zh.md](gold-result-hashes-zh.md) |
 
 诱饵/陷阱的设计:[corrupted-decoys-design.md](corrupted-decoys-design-zh.md)。

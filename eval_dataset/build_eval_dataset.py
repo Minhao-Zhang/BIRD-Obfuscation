@@ -47,6 +47,9 @@ FILES = [
      "(sql_base_expanded / sql_rename_expanded) so decoy columns can never leak into the gold answer."),
     ("order_sensitive_qids.json", "qids to EXCLUDE from strict EX scoring: order_sensitive "
      "(LIMIT-tie / float-accumulation non-determinism) + exec_failed (pre-existing degenerate gold)."),
+    ("gold_result_hashes_rename_decoy.jsonl", "Precomputed lenient+strict SHA-256 hashes of "
+     "gold SQL results on pg_rename_decoy (train+test). Lets graders skip re-executing gold. "
+     "Algorithm: docs/reference/gold-result-hashes.md."),
 ]
 
 

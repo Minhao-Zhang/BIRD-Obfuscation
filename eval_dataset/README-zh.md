@@ -84,6 +84,11 @@ python eval_dataset/build_eval_dataset.py
   (153 个:gold 带有 `LIMIT` 但没有全序,或含浮点聚合,因此陷阱 UPDATE 引起的堆重排会在
   诱饵实例上产生不同但仍有效的结果)+ `exec_failed`(21 个:本就存在的退化 BIRD gold,
   >200k 行 / 60s 超时)。真实数据已验证完好无损;这些属于比较层面的假象,而非损坏。
+- **`gold_result_hashes_rename_decoy.jsonl`**：`pg_rename_decoy` 上全部 train/test gold
+  SQL 结果的宽松与严格 SHA-256 哈希。对模型结果算同样哈希再比对即可，不必再跑 gold。
+  字段与算法见
+  [docs/reference/gold-result-hashes-zh.md](../docs/reference/gold-result-hashes-zh.md)。
+  重建：`uv run python pipeline/precompute_gold_result_hashes.py`。
 
 ---
 

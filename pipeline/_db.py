@@ -17,6 +17,8 @@ autocommit=True; exec_pg uses fetchmany with a hard cap (not fetchall) to bail o
 fast on runaway result sets.
 """
 
+import hashlib
+import json
 import math
 import numbers
 import os
@@ -124,6 +126,30 @@ def normalise_result_strict(rows) -> list:
         return (3, 0.0, str(v).strip())
 
     return sorted(tuple(scoerce(c) for c in row) for row in rows)
+
+
+def _canonical_json(obj) -> str:
+    """Stable JSON for hashing normalised result multisets.
+
+    Tuples become lists; floats stay JSON numbers. NaN/inf never appear in
+    normalise_result / normalise_result_strict outputs (they are string
+    sentinels), so default json encoding is enough.
+    """
+    return json.dumps(obj, separators=(",", ":"), ensure_ascii=False)
+
+
+def hash_normalised_result(rows) -> str:
+    """SHA-256 of the lenient ``normalise_result`` multiset (BIRD-style EX)."""
+    normalised = normalise_result(rows)
+    payload = _canonical_json([list(row) for row in normalised])
+    return hashlib.sha256(payload.encode("utf-8")).hexdigest()
+
+
+def hash_normalised_result_strict(rows) -> str:
+    """SHA-256 of the strict ``normalise_result_strict`` multiset."""
+    normalised = normalise_result_strict(rows)
+    payload = _canonical_json([list(row) for row in normalised])
+    return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
 
 def exec_pg(conn, sql: str):

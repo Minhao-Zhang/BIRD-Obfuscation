@@ -95,6 +95,11 @@ identifiers and the presence of decoy columns/tables differ.
   so the heap-reorder from trap UPDATEs yields a different-but-valid result on the decoy
   instances) + `exec_failed` (21: pre-existing degenerate BIRD gold, >200k rows / 60s
   timeout). Real data is verified intact; these are comparison artifacts, not corruption.
+- **`gold_result_hashes_rename_decoy.jsonl`**: lenient and strict SHA-256 hashes of gold
+  SQL results on `pg_rename_decoy` (all train and test rows). Hash the model result and
+  compare; you do not need to re-run gold. Fields and algorithm:
+  [docs/reference/gold-result-hashes.md](../docs/reference/gold-result-hashes.md).
+  Rebuild with `uv run python pipeline/precompute_gold_result_hashes.py`.
 
 ---
 

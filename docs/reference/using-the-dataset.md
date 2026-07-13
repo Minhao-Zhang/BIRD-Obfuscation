@@ -210,5 +210,6 @@ Copy each `generations.jsonl` back to the PostgreSQL machine for grading.
 | `schema_rename_map.json`, `db_language_map.json` | rename mappings | `eval_dataset/` (git) |
 | `trap_manifest.json`, `trap_table_manifest.json` | decoy/trap ground truth | `eval_dataset/` (git) |
 | `question_paraphrases.jsonl` | dim 3: paraphrased questions | `eval_dataset/` (git) |
+| `gold_result_hashes_rename_decoy.jsonl` | gold result hashes on `pg_rename_decoy` | `eval_dataset/` (git); see [gold-result-hashes.md](gold-result-hashes.md) |
 
 Design of the decoys/traps: [corrupted-decoys-design.md](corrupted-decoys-design.md).
