@@ -51,6 +51,7 @@ venv/
 
 # Claude Code — ignore personal / machine-local state. Shared config
 # (.claude/settings.json, agents/, skills/) stays trackable if you choose to commit it.
+CLAUDE.md
 .claude/settings.local.json
 .claude/scheduled_tasks.json
 .claude/scheduled_tasks.lock

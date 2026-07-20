@@ -190,7 +190,7 @@ The per-language breakdown estimates whether Pinyin produces a larger contaminat
 | Field | Value |
 | --- | --- |
 | Model | `Claude-Opus-4.8` |
-| Reasoning effort | `high` |
+| Reasoning effort | `high` (requested; not applied — see note below) |
 | Prompt version | `contamination-v1` |
 | Split | test (2,030 questions × 4 conditions = 8,120 generations) |
 | Recorded | 2026-07-10 (UTC) |
@@ -199,6 +199,14 @@ The per-language breakdown estimates whether Pinyin produces a larger contaminat
 
 One-shot generation (no retry-on-error, no feedback loop), graded once against the frozen
 PostgreSQL snapshots. All 8,120 generations graded; none skipped. The exact prompt is in §4.1.
+
+> **Note on reasoning effort.** The run was invoked with `--effort high` and `high` is stamped in
+> every result's metadata, but the offline generation client only forwards the reasoning-effort
+> parameter for OpenAI reasoning-model IDs (`gpt-5*` / `o*`); for `Claude-Opus-4.8` it is not sent.
+> This run is therefore at the endpoint's default (no extended reasoning requested), consistent with
+> the ~2.4 s median latency (§8.4) and the absence of any recorded reasoning tokens. The
+> `--effort high` flag is retained in the reproduce commands because it reproduces this exact run.
+> Applying reasoning effort would be a separate, cleanly-labelled run.
 
 > **Units.** EX is a fraction in [0, 1] (0.5163 = 51.63% of questions correct). A delta is the
 > difference between two EX values, written as a percentage of the test set: +0.0478 = 4.8% (4.8 more questions correct per 100), not
@@ -316,8 +324,9 @@ All arms are **no-hint** (the cleanest signal; §4.2 makes rename_nohint/base_no
 
 #### Run: **claude opus 4.8 high**
 
-Same model, effort, and test set as §8 (`Claude-Opus-4.8`, effort `high`, 2,030
-questions), prompt version `ablation-v1`, git commit `674d6a7`, recorded 2026-07-11 (UTC).
+Same model and test set as §8 (`Claude-Opus-4.8`, `--effort high` requested but not applied — see
+the §8 note; 2,030 questions), prompt version `ablation-v1`, git commit `674d6a7`, recorded
+2026-07-11 (UTC).
 Each arm was prepared as its own offline bundle, generated one-shot on an API machine, and
 graded here against the arm's PostgreSQL instance. All 5 × 2,030 = 10,150 generations
 graded; none skipped. Before grading the two decoy-based arms, gold-on-decoy was

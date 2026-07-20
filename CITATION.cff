@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: >-
+  If you use this dataset, please cite it as below, and credit the upstream
+  BIRD benchmark as the original source.
+title: >-
+  BIRD Obfuscation: a contamination-resistant, adversarial rebuild of the
+  BIRD Text-to-SQL benchmark for evaluating execute-and-observe SQL agents
+type: dataset
+authors:
+  - family-names: Zhang
+    given-names: Minhao
+    email: minhaoz@uchicago.edu
+license: CC-BY-SA-4.0
+repository-code: "https://github.com/Minhao-Zhang/BIRD-Obfuscation"
+url: "https://huggingface.co/datasets/minhaozhang/BIRD_Obfuscation"
+keywords:
+  - text-to-sql
+  - llm-evaluation
+  - agent-evaluation
+  - benchmark-contamination
+  - adversarial-dataset
+  - postgresql

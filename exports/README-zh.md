@@ -6,6 +6,8 @@
 
 这里的全部数据来自 **test 划分**上的 **`claude opus 4.8 high`** 运行(2,030 个问题)。这些行汇总后的聚合数字见 [../docs/methodology/evaluation.md](../docs/methodology/evaluation-zh.md) §8(污染)与 §9.4(消融)。
 
+> 运行名里的 `high` 是记录下来的努力强度标签;本次运行实际并未对 `Claude-Opus-4.8` 生效(端点默认设置)。见 [evaluation.md §8](../docs/methodology/evaluation-zh.md) 的说明。
+
 ## 文件
 
 数据以一个压缩包发布;松散的 `.jsonl`/`.csv` 已被 git 忽略,可按下文重新生成。

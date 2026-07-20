@@ -2,30 +2,72 @@
 
 # BIRD 混淆
 
-> 对 [BIRD](https://bird-bench.github.io/) Text-to-SQL 基准的抗污染重建,外加一项评测,衡量基准分数在多大程度上依赖被记住的 schema 标识符。
+> 对 [BIRD](https://bird-bench.github.io/) Text-to-SQL 基准的抗污染、对抗性重建——
+> 作为一个面向"执行并观察"型 SQL 智能体的评测数据集精心构建。schema 标识符被重命名,
+> 注入损坏的"诱饵"陷阱,题目被改写,而 gold 答案在四个并行的数据库版本间自动校验一致。
 
 ![status](https://img.shields.io/badge/status-active-brightgreen)
-![python](https://img.shields.io/badge/python-uv-blue)
+![python](https://img.shields.io/badge/python-3.13-blue)
 ![postgres](https://img.shields.io/badge/PostgreSQL-18-336791)
 [![dataset](https://img.shields.io/badge/🤗%20dataset-BIRD__Obfuscation-orange)](https://huggingface.co/datasets/minhaozhang/BIRD_Obfuscation)
+[![agent eval](https://img.shields.io/badge/agent%20eval-governed--bi-8A2BE2)](https://github.com/Minhao-Zhang/governed-bi)
 [![License: CC BY-SA 4.0](https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-sa/4.0/)
 
-像 BIRD 这样的公开基准会把题目、gold SQL 和 schema 名称一并公开,
-前沿模型的分数因此可能有一部分来自*见过这个基准*,而不是来自
-对眼前 schema 的推理。本项目把 BIRD 重建成这样一个版本:保留 SQL 任务本身,
-但剥离可记忆的表层信息(重命名标识符、对抗性诱饵数据、改写后的题目),
-再做一次受控评测,衡量这层表层信息到底贡献了多少准确率。
+像 BIRD 这样的公开基准会把题目、gold SQL 和 schema 名称一并公开,前沿模型的分数因此
+可能有一部分来自*见过这个基准*,而不是来自对眼前 schema 的推理——而一个靠执行查询来
+探索数据库的智能体,更是没有任何对抗性的东西需要应对。本项目把 BIRD 重建成这样一个
+评测数据集:**(a)** 剥离可记忆的表层信息(重命名标识符、改写题目),并且 **(b)** 主动
+反击探测 schema 的智能体(损坏的"诱饵"列和克隆表),同时**可证明地**保留 SQL 任务本身。
+该数据集是一个独立下游智能体 [**governed-bi**](https://github.com/Minhao-Zhang/governed-bi)
+的底料——后者会被考核:它有多少时候落在真实 schema 上,而不是咬钩上当。
 
----
+```mermaid
+flowchart LR
+    subgraph THISREPO["本仓库 — 数据集构建"]
+        BIRD["原始 BIRD SQLite"] --> PIPE["10 步流水线:<br/>重命名 · 诱饵陷阱 · 改写"]
+        PIPE --> DB["4 个 Postgres 实例:<br/>base · rename · decoy · rename+decoy"]
+        PIPE --> GOLD["Gold SQL + 陷阱清单<br/>(eval_dataset/)"]
+    end
+    subgraph GOV["governed-bi — 下游智能体评测"]
+        AGENT["执行并观察型 SQL 智能体:<br/>inspect_schema · sample_rows · run_query"]
+        AGENT --> METRICS["EX · decoy_touch_rate · routing_recall"]
+    end
+    DB --> AGENT
+    GOLD --> AGENT
+```
 
 ## 一览
 
 | | |
 | --- | --- |
-| **问题** | 前沿模型可能靠记住 BIRD 的标识符、题目和 SQL 来虚高 Text-to-SQL 分数,而不是靠 schema 推理。 |
-| **交付物** | 一个多语言 PostgreSQL Text-to-SQL 语料库,覆盖 69 个数据库(10,164 对经执行验证的题目/SQL),提供四种混淆变体,发布在 Hugging Face 上。 |
-| **评测** | 一项配对的污染增量(contamination-delta)研究,外加一个 5 臂消融实验,用于隔离每个混淆维度,并配有 McNemar 检验和自助法置信区间(bootstrap CIs)。 |
-| **状态** | 数据流水线已完成;首次评测运行已出(Claude Opus 4.8 high,test 划分);更多模型覆盖待进行。 |
+| **问题** | 前沿模型可能靠记住 BIRD 标识符来虚高 Text-to-SQL 分数,而探测 schema 的智能体又没有任何对抗性障碍需要应对。 |
+| **交付物** | 一个多语言 PostgreSQL Text-to-SQL 语料库,覆盖 69 个数据库(10,164 对经执行验证的题目/SQL),提供四种混淆变体,发布在 Hugging Face 上,专为智能体评测底料而构建。 |
+| **下游评测** | 由 [governed-bi](https://github.com/Minhao-Zhang/governed-bi) 消费——一个"执行并观察"型 SQL 智能体,按执行准确率和 `decoy_touch_rate`(躲开陷阱的程度)打分。 |
+| **完整性** | gold 答案在四个数据库版本间保持执行等价(R0==R1、R1==R2);每个陷阱都严格*增量*,真实的行、列、表从不改动。 |
+| **状态** | 数据集已完成并发布;数据集验证运行已出(Claude Opus 4.8,test 划分);下游智能体规模化运行正在 governed-bi 中进行。 |
+
+## 下游评测:[governed-bi](https://github.com/Minhao-Zhang/governed-bi)
+
+本仓库*构建数据集*;它想要考验的那个智能体在一个独立仓库里,
+[**governed-bi**](https://github.com/Minhao-Zhang/governed-bi)。governed-bi 运行一个真正的
+*执行并观察*型 SQL 智能体(LangGraph + LangChain):它检视 schema、抽样行、执行查询,
+并根据观察到的结果不断修正——这正是诱饵陷阱所针对的威胁模型。它直接消费本数据集:
+[`eval_dataset/`](eval_dataset/) 里的 gold、陷阱清单,以及 `pg_rename_decoy` 实例。
+它报告的指标包括:
+
+- **`decoy_touch_rate`** ——智能体的 SQL 有多少时候引用了损坏的诱饵列,而不是真实的那一列。
+  这正是诱饵存在的意义所要产生的"陷阱触发"信号,在关闭 schema 层护栏的情况下测量,
+  因此它反映的是智能体自身的落地(grounding),而非某个过滤器。
+- **执行准确率(EX)** 与 **routing recall** ——任务成功率,以及在一个汇集了 69 个 schema 的
+  数据湖里,智能体是否找对了表。
+
+这三个仓库是一个整体系统:
+
+> **在这里构建对抗性评测数据集** → **用它评测智能体([governed-bi](https://github.com/Minhao-Zhang/governed-bi))** → **通过前端提供服务([governed-bi-ui](https://github.com/Minhao-Zhang/governed-bi-ui))**
+
+下游的 69 数据库规模化运行正在进行中;当前的智能体结果见
+[governed-bi](https://github.com/Minhao-Zhang/governed-bi)。以下内容记录的是数据集本身,
+以及那次确认混淆行为符合设计的验证运行。
 
 ---
 
@@ -73,8 +115,9 @@
 给出一个数字:
 
 - **配对条件。** 每个实验臂都在同一次运行中,用同一个模型跑同一套测试集;
-  增量是逐题与 `base` 配对计算的,并用 **McNemar 检验和自助法置信区间(bootstrap CIs)**来解读,
-  而不是用点估计。
+  增量是逐题与 `base` 配对计算的。**消融**的增量用 **McNemar 检验和自助法置信区间
+  (bootstrap CIs)**解读([§9.4](docs/methodology/evaluation-zh.md));污染部分的增量
+  目前以点估计报告(配对置信区间待补——见 [PROGRESS.md](docs/PROGRESS-zh.md))。
 - **一个经验性的零假设,而非绝对的零。** 有 14 个数据库保留了恒等(英语→英语)重命名,
   因此按构造,它们的重命名增量必然 ≈0,充当**噪声下限对照**;
   重命名效果*按语言分别*报告,而不是汇总成一个被对照组稀释的数字
@@ -86,9 +129,15 @@
   对 schema 探测陷阱的鲁棒性;`paraphrase−base` 探测题目形式记忆;`all−base`
   衡量综合效果。设计见:[evaluation.md §9](docs/methodology/evaluation-zh.md)。
 
-### 结果——Claude Opus 4.8(high),test 划分
+### 数据集验证——混淆真的改变了模型行为吗?
 
-首次运行:2,030 个测试问题,一次性(one-shot)。**EX** 是执行准确率(答对题目的百分比);**差值(Δ)是两个 EX 之差**——例如 51.6% → 46.9% 是下降 4.8%。下表为宽松 EX;完整表格(严格 EX、按语言拆分、bootstrap 置信区间)见 [evaluation.md §8](docs/methodology/evaluation-zh.md)(污染)与 [§9.4](docs/methodology/evaluation-zh.md)(消融)。
+在把数据集交给智能体之前,先用一个前沿模型对 2,030 个测试题做**一次性(one-shot)**运行,
+以确认混淆确实可测量地改变了行为,并且每个维度的表现都符合设计。这是对数据集的一次验证检查,
+而非最终结论——最终结论是 [governed-bi](https://github.com/Minhao-Zhang/governed-bi) 里的智能体评测。
+
+运行:**Claude Opus 4.8,一次性,test 划分。** **EX** 是执行准确率(答对题目的百分比);
+**差值(Δ)是两个 EX 之差**——例如 51.6% → 46.9% 是下降 4.8%。下表为宽松 EX;
+完整表格(严格 EX、按语言拆分、bootstrap 置信区间)见 [evaluation.md §8](docs/methodology/evaluation-zh.md)(污染)与 [§9.4](docs/methodology/evaluation-zh.md)(消融)。
 
 **污染——重命名 schema 标识符的代价是多少?**(四种条件)
 
@@ -108,32 +157,33 @@
 | paraphrase | 54.6% | **+3.5%**(p<0.001) |
 | all | 45.3% | −5.8%(p<0.001) |
 
-- **重命名**去掉了一小块但真实的标识符记忆优势(无提示 4.8%),消融也复现了这一点(−4.1%)。它在英文对照(恒等重命名)上接近零,在拼音上最大(无提示 +10.5%),即效应随着离英文越远而增大。
-- **诱饵陷阱**只花掉 2.2%——模型大体落在真实的列/表上,抵御了易混淆的诱饵(其 gold 仍能正确求解,每臂验证 40/40)。
+- **重命名**去掉了一小块但真实的标识符记忆优势(无提示 4.8%),消融也复现了这一点(−4.1%)。它在英文对照(恒等重命名)上接近零,在拼音上最大(无提示 +10.5%),即效应随着离英文越远而增大。需要注意,这条按语言的梯度,对一个以英文为中心的模型而言,部分与任务本身的原始难度相混淆;要把二者分开,需要一个英语→英语的同义词对照([limitations §1](docs/reference/limitations-zh.md))。
+- **诱饵陷阱**在这次一次性设置下只花掉 2.2%——但这一臂只把诱饵当作 DDL 里多出来的列*名*来看;它们真正被设计出来要触发的那种交互式"咬钩",是在下游的 [governed-bi](https://github.com/Minhao-Zhang/governed-bi) 里测量的(`decoy_touch_rate`)。
 - **改写为正(+3.5%)**——这是「问题措辞记忆」假设的一个诚实负面结果:保持 SQL 的改写理顺了含糊措辞,而非暴露被记住的措辞。
 - **全部叠加**下降最大(−5.8%),拼音最低。
 
-覆盖 10,164 个题目的流水线完整性(R0==R1、R1==R2)成立。本次运行的逐条(问题、gold SQL、生成 SQL、正确性)记录见 [`exports/`](exports/)。更多模型覆盖与 train 划分待进行。
+覆盖 10,164 个题目的流水线完整性(R0==R1、R1==R2)成立。本次运行的逐条(问题、gold SQL、生成 SQL、正确性)记录见 [`exports/`](exports/)。
 
 ## 项目状态
 
-**数据集已完成并发布;首次评测运行(Claude Opus 4.8,high,test 划分)已打分并报告。剩余的测量工作是 train 划分与更多模型覆盖。**
+**数据集已完成并发布;数据集验证运行(Claude Opus 4.8,test 划分)已打分并报告在此,下游智能体评测已在 [governed-bi](https://github.com/Minhao-Zhang/governed-bi) 中构建。剩余的测量工作是 train 划分与更多模型覆盖。**
 
 | 组件 | 状态 |
 | --- | --- |
 | 核心流水线(步骤 0-7):切分 → 重命名映射 → 加载 → 转译 → 重命名 → 验证 | ✅ 已完成并验证 |
 | 扩展混淆(诱饵陷阱、改写) | ✅ 已构建并应用 |
 | 四个 PostgreSQL 实例 + 受 git 跟踪的评测产物 | ✅ 已发布(HF 和 [`eval_dataset/`](eval_dataset/)) |
-| 污染增量评测框架 | ✅ 已实现;✅ 首批结果(Claude Opus 4.8 high,test 划分) |
+| 污染增量评测框架 | ✅ 已实现;✅ 首批结果(Claude Opus 4.8,test 划分) |
 | 五臂消融框架 | ✅ 已实现;✅ 首批结果(同一次运行) |
-| 触发这些陷阱的交互式"执行并观察"智能体 | ⛔ 不在本项目范围内(独立的下游仓库) |
+| 触发这些陷阱的交互式"执行并观察"智能体 | ✅ 已在 [governed-bi](https://github.com/Minhao-Zhang/governed-bi) 中构建(下游仓库) |
 
 完整的历史、决策和后续计划:[PROGRESS.md](docs/PROGRESS-zh.md)。
 
 ### 范围边界
 
-- 本仓库**准备并验证**数据集;它**不**评测下游智能体或 schema 路由。
-  在所有条件下,正确的数据库都是预先提供的。
+- 本仓库**准备并验证**数据集;下游的*智能体*评测(执行并观察、schema 路由)在
+  [governed-bi](https://github.com/Minhao-Zhang/governed-bi) 里。在这里的验证运行中,
+  正确的数据库在所有条件下都是预先提供的。
 - 它**不修改真实数据**。干净实例保持原样,诱饵实例只是*添加*损坏的列和表,
   因此 R1==R2 成立。
 - 它**并不**声称移除了所有污染路径(被记住的字面量或高层 SQL 模板依然存在);
@@ -143,6 +193,9 @@
 
 如果你把它当作一份工程样例来审阅,其中可迁移的部分包括:
 
+- **面向智能体评测的数据集构建。** 一个从"它将要考验的那个智能体"倒推设计出来的基准:
+  损坏的诱饵之所以存在,是为了在 [governed-bi](https://github.com/Minhao-Zhang/governed-bi)
+  中产生一个可测量的 `decoy_touch_rate`,而不是装点门面。
 - **污染条件下的评测设计。** 受控条件、经验性零假设、逐机制
   消融,以及配对显著性检验,而不是原始的排行榜数字。
 - **对抗性数据设计。** 专门针对"执行并观察"型智能体构建的诱饵陷阱,
@@ -206,8 +259,8 @@ docker compose cp   bird_obf_dumps/pg_base.dump pg_base:/tmp/pg_base.dump
 docker compose exec pg_base pg_restore -U bird -d bird --no-owner -j 4 /tmp/pg_base.dump
 #   ...repeat for pg_rename / pg_decoy / pg_rename_decoy (two at a time on a laptop; see OOM note)
 
-# 3. run one ablation arm (gold + mappings resolve from the checked-in eval_dataset/)
-uv run python pipeline/eval_ablation.py --arms base --model <model>
+# 3. 准备某一臂的公开 API 请求包与私有打分清单
+uv run python pipeline/eval_ablation.py --arms base --prepare-only
 ```
 
 完整的下载、恢复和本地评测说明:[docs/reference/using-the-dataset.md](docs/reference/using-the-dataset-zh.md)。
@@ -245,11 +298,12 @@ uv run python pipeline/eval_ablation.py --arms base --model <model>
 
 ```bash
 uv run python pipeline/<script>.py
-uv run pytest
 uv pip install <package>
 ```
 
-`.venv` 目录由 `uv` 管理;不要手动激活它,也不要直接使用裸的 `python`/`pip`。
+依赖声明在 [`pyproject.toml`](pyproject.toml) 中(并在 [`requirements.txt`](requirements.txt)
+里提供了一份钉死版本的 pip 备用清单);`.venv` 目录由 `uv` 管理——不要手动激活它,
+也不要直接使用裸的 `python`/`pip`。
 
 ## 许可证
 

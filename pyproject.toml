@@ -1,0 +1,28 @@
+[project]
+name = "bird-obfuscation"
+version = "0.1.0"
+description = "A contamination-resistant, adversarial rebuild of the BIRD Text-to-SQL benchmark, curated as an evaluation dataset for execute-and-observe SQL agents."
+readme = "README.md"
+requires-python = ">=3.13"
+license = { text = "CC-BY-SA-4.0" }
+authors = [{ name = "Minhao Zhang", email = "minhaoz@uchicago.edu" }]
+
+# Version floors are the versions this pipeline was built and validated on
+# (Python 3.13). Run `uv lock` to pin an exact, reproducible set; a pinned
+# pip-compatible fallback also lives in requirements.txt.
+dependencies = [
+    "anthropic>=0.113",
+    "matplotlib>=3.11",
+    "numpy>=2.5",
+    "openai>=2.44",
+    "pandas>=3.0",
+    "psycopg2-binary>=2.9.12",
+    "python-dotenv>=1.2",
+    "seaborn>=0.13.2",
+    "sqlglot>=30.12",
+    "tqdm>=4.68",
+]
+
+[tool.uv]
+# This is a script/pipeline project, not an installable package.
+package = false

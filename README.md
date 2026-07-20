@@ -2,31 +2,78 @@
 
 # BIRD Obfuscation
 
-> A contamination-resistant rebuild of the [BIRD](https://bird-bench.github.io/) Text-to-SQL benchmark, plus the eval that measures how much benchmark scores depend on memorised schema identifiers.
+> A contamination-resistant, adversarial rebuild of the [BIRD](https://bird-bench.github.io/)
+> Text-to-SQL benchmark — curated as an evaluation dataset for execute-and-observe SQL agents.
+> Schema identifiers are renamed, corrupted "decoy" traps are injected, and questions are
+> paraphrased, with gold answers auto-verified across four parallel database versions.
 
 ![status](https://img.shields.io/badge/status-active-brightgreen)
-![python](https://img.shields.io/badge/python-uv-blue)
+![python](https://img.shields.io/badge/python-3.13-blue)
 ![postgres](https://img.shields.io/badge/PostgreSQL-18-336791)
 [![dataset](https://img.shields.io/badge/🤗%20dataset-BIRD__Obfuscation-orange)](https://huggingface.co/datasets/minhaozhang/BIRD_Obfuscation)
+[![agent eval](https://img.shields.io/badge/agent%20eval-governed--bi-8A2BE2)](https://github.com/Minhao-Zhang/governed-bi)
 [![License: CC BY-SA 4.0](https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-sa/4.0/)
 
-Public benchmarks like BIRD ship their questions, gold SQL, and schema names in the open,
-so a frontier model may score partly from *having seen the benchmark* rather than from
-reasoning over the schema in front of it. This project rebuilds BIRD into a version that
-keeps the SQL task intact but strips away the memorisable surface (renamed identifiers,
-adversarial decoy data, paraphrased questions), then runs a controlled evaluation to measure
-how much accuracy that surface was actually buying.
+Public benchmarks like BIRD ship their questions, gold SQL, and schema names in the open, so a
+frontier model can score partly from *having seen the benchmark* rather than from reasoning over
+the schema in front of it — and an agent that explores a database by running queries has nothing
+adversarial to navigate. This project rebuilds BIRD into an evaluation dataset that **(a)** strips
+the memorisable surface (renamed identifiers, paraphrased questions) and **(b)** actively fights
+back against schema-probing agents (corrupted "decoy" columns and cloned tables), while keeping the
+SQL task **provably intact**. The dataset is the substrate for a separate downstream agent —
+[**governed-bi**](https://github.com/Minhao-Zhang/governed-bi) — which is scored on how often it
+grounds in the real schema instead of taking the bait.
 
----
+```mermaid
+flowchart LR
+    subgraph THISREPO["This repo — dataset curation"]
+        BIRD["Raw BIRD SQLite"] --> PIPE["10-step pipeline:<br/>rename · decoy traps · paraphrase"]
+        PIPE --> DB["4 Postgres instances:<br/>base · rename · decoy · rename+decoy"]
+        PIPE --> GOLD["Gold SQL + trap manifests<br/>(eval_dataset/)"]
+    end
+    subgraph GOV["governed-bi — downstream agent eval"]
+        AGENT["Execute-and-observe SQL agent:<br/>inspect_schema · sample_rows · run_query"]
+        AGENT --> METRICS["EX · decoy_touch_rate · routing_recall"]
+    end
+    DB --> AGENT
+    GOLD --> AGENT
+```
 
 ## At a glance
 
 | | |
 | --- | --- |
-| **Problem** | Frontier models may inflate Text-to-SQL scores from memorised BIRD identifiers, questions, and SQL rather than from schema reasoning. |
-| **Deliverable** | 69-database multilingual PostgreSQL Text-to-SQL corpus (10,164 execution-validated question/SQL pairs) in four obfuscation variants, published on Hugging Face. |
-| **Eval** | A paired contamination-delta study plus a 5-arm ablation that isolates each obfuscation dimension, with McNemar tests and bootstrap CIs. |
-| **Status** | Data pipeline complete; first eval run in (Claude Opus 4.8 high, test split); wider model coverage pending. |
+| **Problem** | Frontier models may inflate Text-to-SQL scores from memorised BIRD identifiers, and a schema-probing agent has nothing adversarial to navigate. |
+| **Deliverable** | A 69-database multilingual PostgreSQL Text-to-SQL corpus (10,164 execution-validated question/SQL pairs) in four obfuscation variants, published on Hugging Face and purpose-built as an agent-evaluation substrate. |
+| **Downstream eval** | Consumed by [governed-bi](https://github.com/Minhao-Zhang/governed-bi), an execute-and-observe SQL agent scored on execution accuracy and `decoy_touch_rate` (trap avoidance). |
+| **Integrity** | Gold answers stay execution-equivalent across all four DB versions (R0==R1, R1==R2); every trap is strictly *additive*, so real rows, columns, and tables are never modified. |
+| **Status** | Dataset complete and published; a dataset-validation run is in (Claude Opus 4.8, test split); the downstream agent scale-run is underway in governed-bi. |
+
+## The downstream evaluation: [governed-bi](https://github.com/Minhao-Zhang/governed-bi)
+
+This repository *curates the dataset*; the agent it was built to stress lives in a separate repo,
+[**governed-bi**](https://github.com/Minhao-Zhang/governed-bi). governed-bi runs a real
+*execute-and-observe* SQL agent (LangGraph + LangChain) that inspects the schema, samples rows,
+runs queries, and refines on what it observes — exactly the threat model the decoy traps target. It
+consumes this dataset directly: the [`eval_dataset/`](eval_dataset/) gold, the trap manifests, and
+the `pg_rename_decoy` instance. Among the metrics it reports:
+
+- **`decoy_touch_rate`** — how often the agent's SQL references a corrupted decoy column instead of
+  the real one. This is the trap-fire signal the decoys exist to produce, measured with
+  schema-level guardrails disabled so it reflects the agent's own grounding rather than a filter.
+- **Execution accuracy (EX)** and **routing recall** — task success, and whether the agent found
+  the right tables in a pooled 69-schema lake.
+
+The three repositories are one system:
+
+> **curate an adversarial eval dataset (here)** → **evaluate an agent against it
+> ([governed-bi](https://github.com/Minhao-Zhang/governed-bi))** → **serve it through a UI
+> ([governed-bi-ui](https://github.com/Minhao-Zhang/governed-bi-ui))**
+
+The downstream 69-database scale run is in progress; see
+[governed-bi](https://github.com/Minhao-Zhang/governed-bi) for current agent results. Everything
+below documents the dataset and the validation run that confirms the obfuscation behaves as
+designed.
 
 ---
 
@@ -74,8 +121,9 @@ memorisable surface is removed?** It is built to answer that credibly rather tha
 produce a number:
 
 - **Paired conditions.** Every arm runs the same test set through the same model in the same run;
-  deltas are per-question paired against `base` and read with **McNemar tests and bootstrap CIs**,
-  not point estimates.
+  deltas are per-question paired against `base`. The **ablation** deltas are read with **McNemar
+  tests and bootstrap CIs** ([§9.4](docs/methodology/evaluation.md)); the contamination deltas are
+  reported as point estimates (paired CIs pending — see [PROGRESS.md](docs/PROGRESS.md)).
 - **An empirical null, not zero.** 14 databases keep an identity (English→English) rename, so
   their rename delta is guaranteed ≈0 by construction. They are the **noise-floor control**,
   and the rename effect is reported *per-language* rather than as a single pooled number that the
@@ -87,11 +135,16 @@ produce a number:
   robustness to schema-probing traps, and `paraphrase−base` isolates question-form recall.
   `all−base` then measures the combined effect. Design: [evaluation.md §9](docs/methodology/evaluation.md).
 
-### Results — Claude Opus 4.8 (high), test split
+### Dataset validation — does the obfuscation actually change model behaviour?
 
-First run: 2,030 test questions, one-shot. **EX** is execution accuracy (percent of questions
-answered correctly); **Δ is the difference between two EX values** — e.g. 51.6% → 46.9% is a 4.8% drop.
-Numbers below are lenient EX; full tables (strict EX, per-language, bootstrap CIs) are in
+Before handing the dataset to an agent, one frontier model was run **one-shot** over the 2,030-question
+test set to confirm the obfuscation measurably shifts behaviour, and that each dimension behaves as
+designed. This is a validation check on the dataset, not the headline finding — that is the agent
+evaluation in [governed-bi](https://github.com/Minhao-Zhang/governed-bi).
+
+Run: **Claude Opus 4.8, one-shot, test split.** **EX** is execution accuracy (percent of questions
+answered correctly); **Δ is the difference between two EX values** — e.g. 51.6% → 46.9% is a 4.8%
+drop. Numbers below are lenient EX; full tables (strict EX, per-language, bootstrap CIs) are in
 [evaluation.md §8](docs/methodology/evaluation.md) (contamination) and
 [§9.4](docs/methodology/evaluation.md) (ablation).
 
@@ -114,38 +167,45 @@ Numbers below are lenient EX; full tables (strict EX, per-language, bootstrap CI
 | all | 45.3% | −5.8% (p<0.001) |
 
 - **Rename** removes a small but real identifier-recall advantage (4.8% no-hint), and the
-  ablation replicates it (−4.1%). It is near-zero on the English control (identity rename)
-  and largest on Pinyin (+10.5% no-hint), so the effect scales with distance from English.
-- **Decoy traps** cost only 2.2% — the model mostly grounds in the real columns/tables and
-  resists the confusable decoys (whose gold still resolves correctly, verified 40/40 per arm).
+  ablation replicates it (−4.1%). It is near-zero on the English control (identity rename) and
+  largest on Pinyin (+10.5% no-hint), so the effect scales with distance from English. Note this
+  per-language gradient is partly confounded with raw task difficulty for an English-centric
+  model; separating the two needs an English→English synonym control ([limitations §1](docs/reference/limitations.md)).
+- **Decoy traps** cost only 2.2% in this one-shot setting — but this arm sees the decoys only as
+  extra column *names* in the DDL; the interactive trap-firing they were designed for is measured
+  downstream in [governed-bi](https://github.com/Minhao-Zhang/governed-bi) (`decoy_touch_rate`).
 - **Paraphrase is positive (+3.5%)** — an honest negative result for the question-form-recall
   hypothesis: the SQL-preserving paraphrases tidy up ambiguous phrasing rather than expose
   memorised wording.
 - **All combined** is the largest drop (−5.8%), lowest on Pinyin.
 
 Pipeline integrity (R0==R1, R1==R2) over 10,164 questions holds. Per-question (question, gold SQL,
-generated SQL, correctness) records for this run are in [`exports/`](exports/). Wider model coverage
-and the train split are pending.
+generated SQL, correctness) records for this run are in [`exports/`](exports/).
 
 ## Project status
 
-**The dataset is finished and published; the first evaluation run (Claude Opus 4.8, high, test split) is graded and reported. Remaining measurement work is the train split and wider model coverage.**
+**The dataset is finished and published; a dataset-validation run (Claude Opus 4.8, test split) is
+graded and reported here, and the downstream agent evaluation is built in
+[governed-bi](https://github.com/Minhao-Zhang/governed-bi). Remaining measurement work is the train
+split and wider model coverage.**
 
 | Component | State |
 | --- | --- |
 | Core pipeline (steps 0-7): split → rename map → load → transpile → rename → validate | ✅ complete & validated |
 | Extended obfuscation (decoy traps, paraphrases) | ✅ built & applied |
 | Four PostgreSQL instances + git-tracked eval artifacts | ✅ published (HF and [`eval_dataset/`](eval_dataset/)) |
-| Contamination-delta eval harness | ✅ implemented; ✅ first results (Claude Opus 4.8 high, test split) |
+| Contamination-delta eval harness | ✅ implemented; ✅ first results (Claude Opus 4.8, test split) |
 | Five-arm ablation harness | ✅ implemented; ✅ first results (same run) |
-| Interactive execute-and-observe agent that exercises the traps | ⛔ out of scope (separate downstream repo) |
+| Interactive execute-and-observe agent that exercises the traps | ✅ built in [governed-bi](https://github.com/Minhao-Zhang/governed-bi) (downstream repo) |
 
 Full history, decisions, and what's next: [PROGRESS.md](docs/PROGRESS.md).
 
 ### Scope boundaries
 
-- This repo **prepares and validates** the dataset; it does **not** evaluate a downstream agent
-  or schema routing. The correct database is supplied upfront in all conditions.
+- This repo **prepares and validates** the dataset; the downstream *agent* evaluation
+  (execute-and-observe, schema routing) lives in
+  [governed-bi](https://github.com/Minhao-Zhang/governed-bi). In the validation run here, the
+  correct database is supplied upfront in all conditions.
 - It does **not modify real data**. Clean instances are untouched, and decoy instances only *add*
   corrupted columns and tables, so R1==R2 holds.
 - It does **not** claim to remove every contamination path (memorised literals or high-level SQL
@@ -155,6 +215,9 @@ Full history, decisions, and what's next: [PROGRESS.md](docs/PROGRESS.md).
 
 For anyone reviewing this as an engineering sample, the transferable pieces are:
 
+- **Dataset curation for agent evaluation.** A benchmark designed backwards from the agent it
+  will stress: the corrupted decoys exist to produce a measurable `decoy_touch_rate` in
+  [governed-bi](https://github.com/Minhao-Zhang/governed-bi), not as decoration.
 - **Eval design under contamination.** Controlled conditions, an empirical null, per-mechanism
   ablation, and paired significance testing instead of raw leaderboard numbers.
 - **Adversarial data design.** Decoy traps built specifically against execute-and-observe
@@ -259,11 +322,12 @@ Always use `uv`:
 
 ```bash
 uv run python pipeline/<script>.py
-uv run pytest
 uv pip install <package>
 ```
 
-The `.venv` directory is managed by `uv`; do not activate it manually or use bare `python`/`pip`.
+Dependencies are declared in [`pyproject.toml`](pyproject.toml) (with a pinned pip fallback in
+[`requirements.txt`](requirements.txt)); the `.venv` directory is managed by `uv` — do not activate
+it manually or use bare `python`/`pip`.
 
 ## License
 

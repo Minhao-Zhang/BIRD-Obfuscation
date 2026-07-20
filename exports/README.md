@@ -10,6 +10,10 @@ Everything here comes from the **`claude opus 4.8 high`** run on the **test spli
 questions). See [../docs/methodology/evaluation.md](../docs/methodology/evaluation.md) §8
 (contamination) and §9.4 (ablation) for the aggregate numbers these rows roll up to.
 
+> The `high` in the run name is the recorded effort label; the reasoning-effort parameter was not
+> actually applied to `Claude-Opus-4.8` for this run (endpoint default). See the note in
+> [evaluation.md §8](../docs/methodology/evaluation.md).
+
 ## Files
 
 The data ships as one compressed archive; the loose `.jsonl`/`.csv` are git-ignored and
