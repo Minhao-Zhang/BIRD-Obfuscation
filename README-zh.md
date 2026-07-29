@@ -74,6 +74,7 @@ OOM)。完整的恢复与评测步骤见
 | [using-the-dataset.md](docs/reference/using-the-dataset-zh.md) | 下载、恢复、运行 |
 | [pipeline-invariants.md](docs/reference/pipeline-invariants-zh.md) | 每条流水线规则为何存在,附经验证据 |
 | [development.md](docs/development.md) | 运行与扩展流水线:环境、约定、不变量(仅英文) |
+| [hf-dataset-card.md](docs/hf-dataset-card.md) | Hugging Face 数据集卡片的权威源文件(仅英文) |
 
 ## 许可
 

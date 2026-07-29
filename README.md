@@ -80,6 +80,7 @@ env-configurable (`PG_*_DSN`) for remote Postgres.
 | [using-the-dataset.md](docs/reference/using-the-dataset.md) | Download, restore, run |
 | [pipeline-invariants.md](docs/reference/pipeline-invariants.md) | Why each pipeline rule exists, with the evidence |
 | [development.md](docs/development.md) | Run and extend the pipeline; setup, conventions, invariants |
+| [hf-dataset-card.md](docs/hf-dataset-card.md) | Source of truth for the Hugging Face dataset card |
 
 ## License
 
