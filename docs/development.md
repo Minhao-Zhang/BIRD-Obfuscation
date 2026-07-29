@@ -80,6 +80,8 @@ reads the previous step's output; do not skip or reorder.
 | n/a | `build_gold_quality_flags.py` | step 7; upstream birdsql releases in `artifacts/upstream/` (no DB needed) |
 | n/a | `apply_gold_quality_filter.py` | `build_gold_quality_flags.py` (no DB needed; **destructive** on first run) |
 | n/a | `resplit_after_purge.py` | `apply_gold_quality_filter.py` (no DB needed; idempotent) |
+| n/a | `check_split_leakage.py` | steps above (no DB needed; read-only audit) |
+| n/a | `dedupe_and_resplit.py` | `resplit_after_purge.py` (no DB needed; **destructive**, idempotent) |
 
 `artifacts/schema_rename_map.json` is **git-tracked** (regeneratable via step 3 with Bedrock, but
 checked in so steps 6-7 and downstream don't depend on re-running LLM translation).
@@ -195,7 +197,7 @@ a well-provisioned server this limit does not apply.
 - `pipeline/resplit_after_purge.py`: re-apply `MIN_QUESTIONS = 60` over the *surviving* questions
   and rebuild the 80/20 per-database split with step 01's exact mechanism
   (`Random(SEED ^ crc32(db_id))`). Drops 11 databases and restores a uniform 19.5 to 20.6% test
-  fraction → 58 databases / 6,928 questions (5,539 train / 1,389 test). Reassigns rows only, never
+  fraction. Reassigns rows only, never
   edits SQL, so R0==R1 / R1==R2 survive. Emits `evaluated_dbs.json`; leaves `retained_dbs.json` at
   69 (the schemas in the published dumps, leaving 11 schemas present but unreferenced by any
   question; see [using-the-dataset.md](reference/using-the-dataset.md)). Idempotent.

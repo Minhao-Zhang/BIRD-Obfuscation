@@ -13,7 +13,7 @@
 [![agent eval](https://img.shields.io/badge/agent%20eval-governed--bi-8A2BE2)](https://github.com/Minhao-Zhang/governed-bi)
 [![License: CC BY-SA 4.0](https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-sa/4.0/)
 
-**58 databases · 6,928 question/SQL pairs · 5,539 train / 1,389 test · 4 obfuscation variants**
+**57 databases · 6,743 question/SQL pairs · 5,392 train / 1,351 test · 4 obfuscation variants**
 
 ## Three problems this fixes
 
@@ -38,10 +38,11 @@ metrics (`decoy_touch_rate`, `routing_recall`) and results live in
 
 Two things follow for the data itself. Per-schema question count is close to the independent
 variable: how much layer an agent can induce depends on how many *correct* prior questions it had.
-Corpus sizes span 60 to 383 across the 58 retained schemas, so report them alongside any per-schema
+Corpus sizes span 61 to 383 across the 57 retained schemas, so report them alongside any per-schema
 result. And the split boundary must not leak: a corpus question that near-duplicates a test question
-lets the agent retrieve instead of induce. Not yet quantified, see
-[gold-quality-audit.md §6](docs/reference/gold-quality-audit.md).
+lets the agent retrieve instead of induce. BIRD contains such duplicates, so they were removed
+before splitting, which takes measured leakage to 0.22% of the test set
+([gold-quality-audit.md §6](docs/reference/gold-quality-audit.md)).
 
 Separately, this repo carries a small five-arm obfuscation eval (`base` / `rename` / `decoy` /
 `paraphrase` / `all`) run one-shot with full context given. Its only claim is the modest one: the

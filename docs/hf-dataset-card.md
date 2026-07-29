@@ -78,10 +78,11 @@ Numbers below describe the gold data in the GitHub repo, not these dumps.
 
 | | |
 | --- | --- |
-| Databases evaluated | **58** of the 69 present in the dumps |
-| Questions | **6,928** (5,539 train / 1,389 test) |
-| Per-database test fraction | uniform 19.5% to 20.6% |
-| Per-database corpus size | 60 to 383 questions |
+| Databases evaluated | **57** of the 69 present in the dumps |
+| Questions | **6,743** (5,392 train / 1,351 test) |
+| Per-database test fraction | uniform 19.4% to 20.6% |
+| Per-database corpus size | 61 to 383 questions |
+| Cross-split duplicate leakage | 0.22% of the test set |
 
 **BIRD's own gold SQL is substantially and systematically mis-annotated.** Published audits report
 49% to 61% error rates depending on the split. 2,739 questions were removed from this dataset by
@@ -89,22 +90,24 @@ joining against the official
 [`bird_sql_dev_20251106`](https://huggingface.co/datasets/birdsql/bird_sql_dev_20251106) (corrected
 dev) and [`bird23-train-filtered`](https://huggingface.co/datasets/birdsql/bird23-train-filtered)
 (filtered train) releases, after which 11 databases fell below the 60-question floor and were
-dropped. Per-question provenance for all 10,164 pre-purge questions, including the corrected gold
-SQL for every changed row, ships as `gold_quality_flags.jsonl`. Method, evidence and citations:
+dropped. A later pass removed 127 duplicate questions, taking cross-split leakage from 3.6% of
+the test set to 0.22%. Per-question provenance for all 10,164 pre-purge questions, including the
+corrected gold SQL for every changed row, ships as `gold_quality_flags.jsonl`, and the collapsed
+duplicate clusters as `dedupe_clusters.json`. Method, evidence and citations:
 [gold-quality-audit.md](https://github.com/Minhao-Zhang/BIRD-Obfuscation/blob/main/docs/reference/gold-quality-audit.md).
 
 > [!IMPORTANT]
-> **The dumps carry 69 schemas; the evaluation covers 58.** The 11 databases dropped by the purge
-> were not removed from the dumps, so they are still present, fully obfuscated and trap-injected,
-> but no question, gold SQL or result hash references them:
+> **The dumps carry 69 schemas; the evaluation covers 57.** The 12 databases that fell below the
+> 60-question floor were not removed from the dumps, so they are still present, fully obfuscated
+> and trap-injected, but no question, gold SQL or result hash references them:
 > `app_store`, `bike_share_1`, `california_schools`, `college_completion`, `computer_student`,
 > `cookbook`, `debit_card_specializing`, `financial`, `music_platform_2`, `retail_world`,
-> `software_company`.
+> `sales_in_weather`, `software_company`.
 >
 > For an agent over a pooled schema lake they are either extra distractors that make routing
 > genuinely harder, or wasted exploration budget. Either reading is defensible, but it sets the
 > `routing_recall` denominator, so state which one you used. Drive an evaluation from
-> `evaluated_dbs.json` (58); use `retained_dbs.json` (69) only to reason about what a probing agent
+> `evaluated_dbs.json` (57); use `retained_dbs.json` (69) only to reason about what a probing agent
 > can see.
 
 ## Verify

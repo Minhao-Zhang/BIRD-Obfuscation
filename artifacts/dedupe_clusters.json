@@ -1,0 +1,642 @@
+{
+  "note": "Duplicate clusters collapsed before the split. Signals: exact question text, identical gold SQL, word-token Jaccard >= threshold, compared within one database. The first id of each cluster survived; the rest were dropped. Template collision was deliberately excluded, see pipeline/dedupe_and_resplit.py.",
+  "threshold": 0.8,
+  "clusters": [
+    {
+      "kept": "216",
+      "dropped": [
+        "276"
+      ]
+    },
+    {
+      "kept": "241",
+      "dropped": [
+        "291",
+        "331"
+      ]
+    },
+    {
+      "kept": "746",
+      "dropped": [
+        "813"
+      ]
+    },
+    {
+      "kept": "863",
+      "dropped": [
+        "875"
+      ]
+    },
+    {
+      "kept": "train_103",
+      "dropped": [
+        "train_94"
+      ]
+    },
+    {
+      "kept": "train_1080",
+      "dropped": [
+        "train_1138"
+      ]
+    },
+    {
+      "kept": "train_1104",
+      "dropped": [
+        "train_1140"
+      ]
+    },
+    {
+      "kept": "train_1105",
+      "dropped": [
+        "train_1135"
+      ]
+    },
+    {
+      "kept": "train_1278",
+      "dropped": [
+        "train_1354"
+      ]
+    },
+    {
+      "kept": "train_1571",
+      "dropped": [
+        "train_1581"
+      ]
+    },
+    {
+      "kept": "train_1574",
+      "dropped": [
+        "train_1580"
+      ]
+    },
+    {
+      "kept": "train_1675",
+      "dropped": [
+        "train_1701"
+      ]
+    },
+    {
+      "kept": "train_1742",
+      "dropped": [
+        "train_1750"
+      ]
+    },
+    {
+      "kept": "train_1805",
+      "dropped": [
+        "train_1930"
+      ]
+    },
+    {
+      "kept": "train_1984",
+      "dropped": [
+        "train_2003"
+      ]
+    },
+    {
+      "kept": "train_2197",
+      "dropped": [
+        "train_2216"
+      ]
+    },
+    {
+      "kept": "train_2700",
+      "dropped": [
+        "train_2716"
+      ]
+    },
+    {
+      "kept": "train_3315",
+      "dropped": [
+        "train_3335",
+        "train_3346",
+        "train_3405",
+        "train_3459"
+      ]
+    },
+    {
+      "kept": "train_3812",
+      "dropped": [
+        "train_3898"
+      ]
+    },
+    {
+      "kept": "train_3813",
+      "dropped": [
+        "train_3841",
+        "train_3988"
+      ]
+    },
+    {
+      "kept": "train_3886",
+      "dropped": [
+        "train_3923",
+        "train_4127"
+      ]
+    },
+    {
+      "kept": "train_3887",
+      "dropped": [
+        "train_4128"
+      ]
+    },
+    {
+      "kept": "train_3892",
+      "dropped": [
+        "train_4133"
+      ]
+    },
+    {
+      "kept": "train_3897",
+      "dropped": [
+        "train_3934",
+        "train_4138"
+      ]
+    },
+    {
+      "kept": "train_4197",
+      "dropped": [
+        "train_4238",
+        "train_4277"
+      ]
+    },
+    {
+      "kept": "train_4370",
+      "dropped": [
+        "train_4429",
+        "train_4446",
+        "train_4461",
+        "train_4465",
+        "train_4472",
+        "train_4473",
+        "train_4480",
+        "train_4555"
+      ]
+    },
+    {
+      "kept": "train_4376",
+      "dropped": [
+        "train_4443",
+        "train_4476",
+        "train_4541"
+      ]
+    },
+    {
+      "kept": "train_4419",
+      "dropped": [
+        "train_4421",
+        "train_4434"
+      ]
+    },
+    {
+      "kept": "train_4426",
+      "dropped": [
+        "train_4519"
+      ]
+    },
+    {
+      "kept": "train_4428",
+      "dropped": [
+        "train_4438"
+      ]
+    },
+    {
+      "kept": "train_4445",
+      "dropped": [
+        "train_4556"
+      ]
+    },
+    {
+      "kept": "train_4450",
+      "dropped": [
+        "train_4474",
+        "train_4495"
+      ]
+    },
+    {
+      "kept": "train_4477",
+      "dropped": [
+        "train_4539"
+      ]
+    },
+    {
+      "kept": "train_4562",
+      "dropped": [
+        "train_4569"
+      ]
+    },
+    {
+      "kept": "train_4682",
+      "dropped": [
+        "train_4703"
+      ]
+    },
+    {
+      "kept": "train_4736",
+      "dropped": [
+        "train_4865"
+      ]
+    },
+    {
+      "kept": "train_4756",
+      "dropped": [
+        "train_4825"
+      ]
+    },
+    {
+      "kept": "train_4793",
+      "dropped": [
+        "train_4833"
+      ]
+    },
+    {
+      "kept": "train_4814",
+      "dropped": [
+        "train_4822"
+      ]
+    },
+    {
+      "kept": "train_4921",
+      "dropped": [
+        "train_4994"
+      ]
+    },
+    {
+      "kept": "train_4924",
+      "dropped": [
+        "train_4993"
+      ]
+    },
+    {
+      "kept": "train_4941",
+      "dropped": [
+        "train_5068"
+      ]
+    },
+    {
+      "kept": "train_4949",
+      "dropped": [
+        "train_5016",
+        "train_5048"
+      ]
+    },
+    {
+      "kept": "train_4962",
+      "dropped": [
+        "train_5049"
+      ]
+    },
+    {
+      "kept": "train_4964",
+      "dropped": [
+        "train_5051"
+      ]
+    },
+    {
+      "kept": "train_5254",
+      "dropped": [
+        "train_5362"
+      ]
+    },
+    {
+      "kept": "train_5282",
+      "dropped": [
+        "train_5331"
+      ]
+    },
+    {
+      "kept": "train_5392",
+      "dropped": [
+        "train_5447"
+      ]
+    },
+    {
+      "kept": "train_5483",
+      "dropped": [
+        "train_5562"
+      ]
+    },
+    {
+      "kept": "train_5491",
+      "dropped": [
+        "train_5541"
+      ]
+    },
+    {
+      "kept": "train_5695",
+      "dropped": [
+        "train_5744",
+        "train_5772",
+        "train_5789"
+      ]
+    },
+    {
+      "kept": "train_5698",
+      "dropped": [
+        "train_5707"
+      ]
+    },
+    {
+      "kept": "train_5721",
+      "dropped": [
+        "train_5810"
+      ]
+    },
+    {
+      "kept": "train_5763",
+      "dropped": [
+        "train_5778"
+      ]
+    },
+    {
+      "kept": "train_5829",
+      "dropped": [
+        "train_5831"
+      ]
+    },
+    {
+      "kept": "train_5914",
+      "dropped": [
+        "train_5971"
+      ]
+    },
+    {
+      "kept": "train_5916",
+      "dropped": [
+        "train_5931",
+        "train_5957",
+        "train_6086"
+      ]
+    },
+    {
+      "kept": "train_5925",
+      "dropped": [
+        "train_5964"
+      ]
+    },
+    {
+      "kept": "train_5934",
+      "dropped": [
+        "train_5948"
+      ]
+    },
+    {
+      "kept": "train_5968",
+      "dropped": [
+        "train_6047"
+      ]
+    },
+    {
+      "kept": "train_6113",
+      "dropped": [
+        "train_6208",
+        "train_6211"
+      ]
+    },
+    {
+      "kept": "train_6673",
+      "dropped": [
+        "train_6746"
+      ]
+    },
+    {
+      "kept": "train_6704",
+      "dropped": [
+        "train_6819"
+      ]
+    },
+    {
+      "kept": "train_6717",
+      "dropped": [
+        "train_6750"
+      ]
+    },
+    {
+      "kept": "train_6727",
+      "dropped": [
+        "train_6823"
+      ]
+    },
+    {
+      "kept": "train_6818",
+      "dropped": [
+        "train_6866"
+      ]
+    },
+    {
+      "kept": "train_6870",
+      "dropped": [
+        "train_6892"
+      ]
+    },
+    {
+      "kept": "train_7495",
+      "dropped": [
+        "train_7496"
+      ]
+    },
+    {
+      "kept": "train_7512",
+      "dropped": [
+        "train_7551"
+      ]
+    },
+    {
+      "kept": "train_7584",
+      "dropped": [
+        "train_7593"
+      ]
+    },
+    {
+      "kept": "train_7589",
+      "dropped": [
+        "train_7599"
+      ]
+    },
+    {
+      "kept": "train_7693",
+      "dropped": [
+        "train_7790"
+      ]
+    },
+    {
+      "kept": "train_7694",
+      "dropped": [
+        "train_7799"
+      ]
+    },
+    {
+      "kept": "train_7820",
+      "dropped": [
+        "train_7830"
+      ]
+    },
+    {
+      "kept": "train_7831",
+      "dropped": [
+        "train_7832"
+      ]
+    },
+    {
+      "kept": "train_7898",
+      "dropped": [
+        "train_7905"
+      ]
+    },
+    {
+      "kept": "train_8002",
+      "dropped": [
+        "train_8024"
+      ]
+    },
+    {
+      "kept": "train_8013",
+      "dropped": [
+        "train_8062"
+      ]
+    },
+    {
+      "kept": "train_8030",
+      "dropped": [
+        "train_8068"
+      ]
+    },
+    {
+      "kept": "train_8034",
+      "dropped": [
+        "train_8095"
+      ]
+    },
+    {
+      "kept": "train_8037",
+      "dropped": [
+        "train_8085"
+      ]
+    },
+    {
+      "kept": "train_8038",
+      "dropped": [
+        "train_8077"
+      ]
+    },
+    {
+      "kept": "train_8049",
+      "dropped": [
+        "train_8087"
+      ]
+    },
+    {
+      "kept": "train_8137",
+      "dropped": [
+        "train_8138"
+      ]
+    },
+    {
+      "kept": "train_8139",
+      "dropped": [
+        "train_8177"
+      ]
+    },
+    {
+      "kept": "train_8245",
+      "dropped": [
+        "train_8437"
+      ]
+    },
+    {
+      "kept": "train_8280",
+      "dropped": [
+        "train_8281"
+      ]
+    },
+    {
+      "kept": "train_8293",
+      "dropped": [
+        "train_8405"
+      ]
+    },
+    {
+      "kept": "train_872",
+      "dropped": [
+        "train_893"
+      ]
+    },
+    {
+      "kept": "train_873",
+      "dropped": [
+        "train_959"
+      ]
+    },
+    {
+      "kept": "train_8787",
+      "dropped": [
+        "train_8792"
+      ]
+    },
+    {
+      "kept": "train_890",
+      "dropped": [
+        "train_942"
+      ]
+    },
+    {
+      "kept": "train_9112",
+      "dropped": [
+        "train_9178"
+      ]
+    },
+    {
+      "kept": "train_9116",
+      "dropped": [
+        "train_9161"
+      ]
+    },
+    {
+      "kept": "train_9119",
+      "dropped": [
+        "train_9299"
+      ]
+    },
+    {
+      "kept": "train_9120",
+      "dropped": [
+        "train_9123"
+      ]
+    },
+    {
+      "kept": "train_9136",
+      "dropped": [
+        "train_9185"
+      ]
+    },
+    {
+      "kept": "train_9151",
+      "dropped": [
+        "train_9290"
+      ]
+    },
+    {
+      "kept": "train_9187",
+      "dropped": [
+        "train_9250",
+        "train_9251"
+      ]
+    },
+    {
+      "kept": "train_9303",
+      "dropped": [
+        "train_9384"
+      ]
+    },
+    {
+      "kept": "train_9387",
+      "dropped": [
+        "train_9414"
+      ]
+    }
+  ],
+  "counts": {
+    "clusters": 101,
+    "rows_dropped": 127
+  }
+}

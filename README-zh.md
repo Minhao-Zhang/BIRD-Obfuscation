@@ -12,7 +12,7 @@
 [![agent eval](https://img.shields.io/badge/agent%20eval-governed--bi-8A2BE2)](https://github.com/Minhao-Zhang/governed-bi)
 [![License: CC BY-SA 4.0](https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-sa/4.0/)
 
-**58 个数据库 · 6,928 对题目/SQL · 5,539 train / 1,389 test · 4 种混淆变体**
+**57 个数据库 · 6,743 对题目/SQL · 5,392 train / 1,351 test · 4 种混淆变体**
 
 ## 本项目解决的三个问题
 
@@ -34,9 +34,10 @@
 [**governed-bi**](https://github.com/Minhao-Zhang/governed-bi)。
 
 对数据本身有两点推论。每个 schema 的题量接近自变量:能归纳出多少语义层,取决于此前有多少*正确*
-的题目。保留的 58 个 schema 语料规模跨 60 到 383,因此报告任何逐 schema 结果时请一并给出规模。另外,
-划分边界不能泄漏:语料中一条与测试题近重复的问题,会让智能体用检索代替归纳。这一点目前尚未量化,
-见 [gold-quality-audit.md §6](docs/reference/gold-quality-audit-zh.md)。
+的题目。保留的 57 个 schema 语料规模跨 61 到 383,因此报告任何逐 schema 结果时请一并给出规模。另外,
+划分边界不能泄漏:语料中一条与测试题近重复的问题,会让智能体用检索代替归纳。BIRD 本身就含有这类
+重复,因此在划分之前已将其去重,实测泄漏降到测试集的 0.22%
+(见 [gold-quality-audit.md §6](docs/reference/gold-quality-audit-zh.md))。
 
 另有一项独立的小型五臂混淆评测(`base` / `rename` / `decoy` / `paraphrase` / `all`),在给全上下文
 的条件下一次性运行。它的结论仅止于一个朴素的事实:重命名确实抹掉了前沿模型中的一部分记忆信息。

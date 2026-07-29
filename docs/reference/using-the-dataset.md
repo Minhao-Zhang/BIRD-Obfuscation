@@ -17,24 +17,25 @@ The databases live off-git (≈12 GB) on Hugging Face; the small gold/mapping fi
 are versioned in this repo.
 
 > [!IMPORTANT]
-> **The dumps carry 69 schemas; the eval only uses 58 of them.** After the 2026-07-29
-> gold-quality purge ([gold-quality-audit.md](gold-quality-audit.md)), 11 databases fell below
-> the 60-question floor and were dropped from the splits. The dumps were **not** rebuilt, so
-> those 11 remain present, fully obfuscated and trap-injected and byte-identical to before, but
+> **The dumps carry 69 schemas; the eval only uses 57 of them.** After the 2026-07-29
+> gold-quality purge and the deduplication pass that followed it
+> ([gold-quality-audit.md](gold-quality-audit.md)), 12 databases fell below the 60-question floor
+> and were dropped from the splits. The dumps were **not** rebuilt, so
+> those 12 remain present, fully obfuscated and trap-injected and byte-identical to before, but
 > **no question, gold SQL, or result hash references them**:
 >
 > ```text
 > app_store   bike_share_1   california_schools   college_completion   computer_student
 > cookbook    debit_card_specializing   financial   music_platform_2   retail_world
-> software_company
+> sales_in_weather   software_company
 > ```
 >
 > `artifacts/retained_dbs.json` (69) is the list of schemas physically in the dumps.
-> `eval_dataset/evaluated_dbs.json` (58) is the list the eval actually covers. Use the latter to
+> `eval_dataset/evaluated_dbs.json` (57) is the list the eval actually covers. Use the latter to
 > drive an eval; use the former only to reason about what a probing agent can see.
 >
 > This is a deliberate open choice rather than a cleanup we skipped. For an execute-and-observe
-> agent over a pooled schema lake, the 11 unreferenced schemas are either extra distractors that
+> agent over a pooled schema lake, the 12 unreferenced schemas are either extra distractors that
 > make routing genuinely harder, or wasted exploration budget that penalises the agent for
 > nothing. **Decide which before running an agent eval, and state the choice alongside any
 > `routing_recall` number**, because it changes the denominator. Removing them would mean re-dumping and

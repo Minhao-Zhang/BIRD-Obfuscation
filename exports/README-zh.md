@@ -4,9 +4,9 @@
 
 > [!WARNING]
 > **已过时(2026-07-29)。** 本 bundle 是在**旧的 2,030 题测试集**上那次运行的逐题记录。数据集此后
-> 已被清理并重新划分,现为 58 个数据库 / 6,928 个问题(test 1,389),见
+> 已被清理、去重并重新划分,现为 57 个数据库 / 6,743 个问题(test 1,351),见
 > [../docs/reference/gold-quality-audit.md](../docs/reference/gold-quality-audit-zh.md)。保留本
-> bundle 是有意的:它是 evaluation.md §8–§9 作为历史记录保留的那些 EX 数字的支撑证据。请勿将其
+> bundle 是有意的:它是 evaluation.md §8-§9 作为历史记录保留的那些 EX 数字的支撑证据。请勿将其
 > 当作当前结果;并请注意其中约 29% 的行所对照的 gold 已被上游 BIRD 修正或撤回。按 `question_id`
 > 与 `eval_dataset/gold_quality_flags.jsonl` 连接即可过滤掉这些行。
 

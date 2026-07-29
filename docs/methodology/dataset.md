@@ -119,18 +119,20 @@ Reported overall and broken down by:
 
 ### Final validated deliverable
 
-Each of the 58 evaluated databases is represented in both `train_final.jsonl` and `test_final.jsonl` (schema-symmetric split, §5); the other 11 of the lake's 69 fell below the `MIN_QUESTIONS` floor after the gold-quality purge and contribute schemas but no questions. Not every question from the pre-validation split survives; see [step5-transpilation.md](../reference/step5-transpilation.md) for why a small number are excluded (transpilation failures, and gold SQL with genuine defects like a missing join condition caught by the R1==R2 check). The canonical, git-tracked copies of these files (plus the rename map, trap manifests, paraphrases, and other mappings) live in [`eval_dataset/`](../../eval_dataset/); the `artifacts/` copies are the pipeline's working versions.
+Each of the 57 evaluated databases is represented in both `train_final.jsonl` and `test_final.jsonl` (schema-symmetric split, §5); the other 12 of the lake's 69 fell below the `MIN_QUESTIONS` floor, 11 after the gold-quality purge and one more after deduplication, and contribute schemas but no questions. Not every question from the pre-validation split survives; see [step5-transpilation.md](../reference/step5-transpilation.md) for why a small number are excluded (transpilation failures, and gold SQL with genuine defects like a missing join condition caught by the R1==R2 check). The canonical, git-tracked copies of these files (plus the rename map, trap manifests, paraphrases, and other mappings) live in [`eval_dataset/`](../../eval_dataset/); the `artifacts/` copies are the pipeline's working versions.
 
 | | Count |
 | --- | --- |
-| Databases represented (`evaluated_dbs.json`) | 58 / 69 |
+| Databases represented (`evaluated_dbs.json`) | 57 / 69 |
 | Passed execution validation (R0==R1, R1==R2) | 10,164 |
 | Excluded (transpilation failures + R1==R2 rename failures) | 377 (10,541 − 10,164) |
 | Removed by the gold-quality purge (2026-07-29) | 2,739 |
 | Databases dropped below `MIN_QUESTIONS` after the purge | 11 (497 questions) |
-| `artifacts/train_final.jsonl` (train questions) | **5,539** |
-| `artifacts/test_final.jsonl` (test questions) | **1,389** |
-| **Total questions in final deliverable** | **6,928** |
+| Removed as duplicates before the split | 127 |
+| Database dropped below `MIN_QUESTIONS` after dedupe | 1 (`sales_in_weather`, 58 questions) |
+| `artifacts/train_final.jsonl` (train questions) | **5,392** |
+| `artifacts/test_final.jsonl` (test questions) | **1,351** |
+| **Total questions in final deliverable** | **6,743** |
 
 > [!IMPORTANT]
 > The 2,739-question removal is **not** a pipeline validation failure. Those questions passed
@@ -140,7 +142,9 @@ Each of the 58 evaluated databases is represented in both `train_final.jsonl` an
 > method, per-database survival, and citations: [gold-quality-audit.md](../reference/gold-quality-audit.md).
 >
 > Consequence for §5's schema-symmetric split: the 11 databases that fell below the
-> `MIN_QUESTIONS = 60` floor were dropped and the remaining 58 were re-split 80/20 with step 01's
-> mechanism (`pipeline/resplit_after_purge.py`), restoring a uniform 19.5 to 20.6% per-database test
-> fraction. All 58 are represented in both splits. `retained_dbs.json` still lists 69, the schemas
-> physically present in the published dumps; the evaluated subset is `evaluated_dbs.json`.
+> `MIN_QUESTIONS = 60` floor were dropped and the rest re-split with step 01's mechanism
+> (`pipeline/resplit_after_purge.py`). A second pass then removed 127 duplicate questions and
+> re-split again (`pipeline/dedupe_and_resplit.py`), which dropped `sales_in_weather` below the
+> floor as well. The result is 57 databases at a uniform 19.4 to 20.6% per-database test fraction,
+> all represented in both splits. `retained_dbs.json` still lists 69, the schemas physically
+> present in the published dumps; the evaluated subset is `evaluated_dbs.json`.

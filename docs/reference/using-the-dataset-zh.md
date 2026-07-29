@@ -15,23 +15,23 @@
 则纳入本仓库版本管理。
 
 > [!IMPORTANT]
-> **转储文件里有 69 个 schema,但评测只用其中 58 个。** 在 2026-07-29 的 gold 质量清理之后
-> ([gold-quality-audit.md](gold-quality-audit-zh.md)),有 11 个数据库跌破 60 题下限,被从划分中
-> 剔除。转储文件**没有**重建,因此这 11 个仍然存在:完整混淆、完整注入陷阱、与之前逐字节相同,
+> **转储文件里有 69 个 schema,但评测只用其中 57 个。** 在 2026-07-29 的 gold 质量清理以及随后的
+> 去重之后([gold-quality-audit.md](gold-quality-audit-zh.md)),有 12 个数据库跌破 60 题下限,被从
+> 划分中剔除。转储文件**没有**重建,因此这 12 个仍然存在:完整混淆、完整注入陷阱、与之前逐字节相同,
 > 但**没有任何问题、gold SQL 或结果哈希引用它们**:
 >
 > ```text
 > app_store   bike_share_1   california_schools   college_completion   computer_student
 > cookbook    debit_card_specializing   financial   music_platform_2   retail_world
-> software_company
+> sales_in_weather   software_company
 > ```
 >
 > `artifacts/retained_dbs.json`(69)是转储文件中物理存在的 schema 列表;
-> `eval_dataset/evaluated_dbs.json`(58)才是评测实际覆盖的列表。驱动评测请用后者;前者只用于
+> `eval_dataset/evaluated_dbs.json`(57)才是评测实际覆盖的列表。驱动评测请用后者;前者只用于
 > 推断一个探测型 agent 能看到什么。
 >
 > 这是一个有意保留的开放选择,而不是漏做的清理。对于在汇集式 schema lake 上"执行并观察"的
-> agent 而言,这 11 个未被引用的 schema 要么是让路由确实更难的额外干扰项,要么是白耗的探索预算
+> agent 而言,这 12 个未被引用的 schema 要么是让路由确实更难的额外干扰项,要么是白耗的探索预算
 > 让 agent 无谓地被扣分。**请在运行 agent 评测之前决定按哪种理解,并在报告任何
 > `routing_recall` 数字时一并说明**,因为它会改变分母。移除它们意味着重新导出并上传约 12 GB,
 > 因此保留是成本最低的默认做法,而非结论。

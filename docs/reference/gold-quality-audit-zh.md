@@ -2,9 +2,11 @@
 
 # Gold 质量审计:BIRD 标注错误与 2026-07-29 问题清理
 
-**状态:** 已执行。2026-07-29,10,164 个问题里的 2,739 个(27.0%)被移除;随后又剔除了跌破
-`MIN_QUESTIONS = 60` 下限的 11 个数据库,并对剩余部分重新划分。最终数据集:**58 个数据库、
-6,928 个问题(5,539 train / 1,389 test)**。四个已发布的 PostgreSQL dump **未受影响**,也没有重建。
+**状态:** 已执行。2026-07-29,10,164 个问题里的 2,739 个(27.0%)因 gold 被取代而移除;随后剔除
+跌破 `MIN_QUESTIONS = 60` 下限的 11 个数据库并重新划分(§4b);之后又移除 127 个重复问题并再次
+重建划分,代价是再少一个数据库(§4c)。最终数据集:**57 个数据库、6,743 个问题
+(5,392 train / 1,351 test)**,实测跨划分泄漏为 0.22%。四个已发布的 PostgreSQL dump **未受影响**,
+也没有重建。
 
 本文记录数据集为何缩减、受影响的问题如何被识别、划分如何重建、哪些内容被有意保留,以及哪些
 决策仍待定。
@@ -50,7 +52,7 @@ rs = 0.32(p = 0.23),在统计上与"无关"无法区分([2])。
 
 | Release | 行数 | 性质 |
 | --- | --- | --- |
-| [`birdsql/bird_sql_dev_20251106`](https://huggingface.co/datasets/birdsql/bird_sql_dev_20251106)([6]) | 1,534,11 个库 | **已修正**的 dev。`question_id` 0–1533 连续,可直接与 dev 来源的行对齐。 |
+| [`birdsql/bird_sql_dev_20251106`](https://huggingface.co/datasets/birdsql/bird_sql_dev_20251106)([6]) | 1,534,11 个库 | **已修正**的 dev。`question_id` 0-1533 连续,可直接与 dev 来源的行对齐。 |
 | [`birdsql/bird23-train-filtered`](https://huggingface.co/datasets/birdsql/bird23-train-filtered)([7]) | 9,428 中的 6,601 | **已过滤**的 train。无 `question_id`,需按 `(db_id, 规范化问题文本)` 对齐。 |
 
 这个区别很关键。`dev_20251106` **修正** gold SQL;[`bird23-train-filtered`](https://huggingface.co/datasets/birdsql/bird23-train-filtered) 则是**删除**了 BIRD 不愿
@@ -118,12 +120,12 @@ computer_student         53/72    software_company        56/75
 ## 4b. 恢复下限并重新划分
 
 清理破坏了步骤 01 的两条不变量:11 个数据库跌破 `MIN_QUESTIONS = 60`;而且由于清理对 train 和
-test 的命中并不均匀,各库的 test 占比漂移到 **12–26%**,而非统一的 20%(`bike_share_1` 只剩 6 个
+test 的命中并不均匀,各库的 test 占比漂移到 **12-26%**,而非统一的 20%(`bike_share_1` 只剩 6 个
 测试题,`retail_world` 6 个,`menu` 10 个,少到无法对该 schema 做任何估计)。
 
 `pipeline/resplit_after_purge.py` 恢复了这两条。所采取的决策是**保持步骤 01 的原始判据不变**,
 即一个数据库需要实际存在 ≥60 个问题,而不是放宽下限或改用固定测试集规模。分布对两种做法都有话
-说:45–129 区间的桶连续有值,不存在自然的间隙,而 `<60` 这一刀为移除 6.7% 的问题付出了 16% 的
+说:45-129 区间的桶连续有值,不存在自然的间隙,而 `<60` 这一刀为移除 6.7% 的问题付出了 16% 的
 schema 多样性。最终仍保留该下限,理由是与已发布的方法论保持一致,且在 ≥60 时按比例取 20% 仍能为
 每个 schema 留下 ≥12 个测试题。
 
@@ -138,7 +140,7 @@ schema 多样性。最终仍保留该下限,理由是与已发布的方法论保
 | **保留的数据库** | **58** |
 | **train_final.jsonl** | **5,539(80.0%)** |
 | **test_final.jsonl** | **1,389(20.0%)** |
-| 各库 test 占比 | 0.195 – 0.206(此前为 0.12 – 0.26) |
+| 各库 test 占比 | 0.195 到 0.206(此前为 0.12 到 0.26) |
 | 最小的测试集 | `sales_in_weather` 12、`social_media` 12、`airline` 13 |
 
 被剔除:`app_store`(34)、`financial`(38)、`retail_world`(38)、`music_platform_2`(40)、
@@ -163,6 +165,56 @@ agent 运行之前请先决定并记录。
 
 ---
 
+## 4c. 去重与第二次重新划分
+
+`check_split_leakage.py`(§6.4)显示,1,389 个测试题中有 50 个可以靠检索而非归纳从 train 划分中
+还原出来。重复本身来自 BIRD,但把它们分到划分两侧是我们造成的,因此
+`pipeline/dedupe_and_resplit.py` 先去重,再重建划分。
+
+三个信号算作重复,均在同一个数据库内比较:问题原文相同、gold SQL 相同(无论问题如何措辞)、
+词元 Jaccard >= 0.80。相连的行按传递关系合并成簇,每簇保留一个代表(`question_id` 最小者,因此
+选择是确定的)。
+
+**模板撞车被有意排除在去重信号之外。** 把数字和引号字面量掩码后,`language_corpus` 的 train_5761
+(「the page titled Anys 90」)会与 train_5763(「the page titled Abril」)撞在一起,但两者 gold SQL
+不同,是正当的不同问题。20 个模板组里有 14 个属于这种情况。删掉它们会损失真实的覆盖面,因此
+`check_split_leakage.py` 仍会报告它们,但不做删除。
+
+| | 数值 |
+| --- | --- |
+| 去重前的候选池 | 6,928 个问题 / 58 个数据库 |
+| 发现的重复簇 | 101 个,覆盖 228 行 |
+| 删除的行 | 127 |
+| 此后跌破下限的数据库 | 1 个(`sales_in_weather`,60 降至 58) |
+| **保留的数据库** | **57** |
+| **train_final.jsonl** | **5,392(80.0%)** |
+| **test_final.jsonl** | **1,351(20.0%)** |
+| 各库 test 占比 | 0.194 到 0.206 |
+| 各库语料规模 | 61 到 383 |
+
+丢掉 `sales_in_weather` 是唯一让人不太舒服的取舍:为了从它里面移除 2 个重复,整个 58 题的 schema
+被剔除。这是一致地施加 `MIN_QUESTIONS = 60` 下限的结果,而该下限是 §4b 中的明确决策;若要保住这个
+schema,就得为单独一个数据库把下限降到 58,那样更糟。
+
+行只被删除或重新分配,从未被修改,因此 R0==R1 与 R1==R2 依然成立。划分机制与 §4b 完全相同,且在
+洗牌前会先对候选池排序,因此脚本是幂等的(已通过重跑并比对对象哈希验证)。
+
+被合并的内容记录在 `dedupe_clusters.json` 中:每个簇都列出存活的 id 和被删除的 id。
+
+用同一个脚本重新测量的本轮前后泄漏:
+
+| 信号 | 之前 | 之后 |
+| --- | --- | --- |
+| 问题原文在 train 中存在 | 7 | **0** |
+| gold SQL 在 train 中存在 | 28 | **0** |
+| 模板撞车 | 11 | 3 |
+| Jaccard >= 0.80 | 28 | **0** |
+| **并集** | **50(3.60%)** | **3(0.22%)** |
+
+剩下的 3 个都是 gold SQL 不同的模板撞车,正是被有意保留的那一类。
+
+---
+
 ## 5. 有意未改动的部分
 
 - **四个 PostgreSQL dump。** [Hugging Face](https://huggingface.co/datasets/minhaozhang/BIRD_Obfuscation)
@@ -173,9 +225,9 @@ agent 运行之前请先决定并记录。
   `trap_table_manifest.json`、`db_language_map.json`。它们都不依赖于保留了哪些问题。1,486 个
   evil-twin 列和 162 个克隆表均未改动。
 - **没有重新转译、没有重新校验、没有重建数据库。** 存活的行保留原有的 train/test 归属,以及已校验的
-  `sql_base` / `sql_rename`,因此步骤 04–08 和 10 都没有重跑,R0==R1 / R1==R2 保证对每一条保留的行
+  `sql_base` / `sql_rename`,因此步骤 04-08 和 10 都没有重跑,R0==R1 / R1==R2 保证对每一条保留的行
   依然成立。
-- **历史评测结果。** [docs/methodology/evaluation.md](../methodology/evaluation.md) §8–§9 中的数字是
+- **历史评测结果。** [docs/methodology/evaluation.md](../methodology/evaluation.md) §8-§9 中的数字是
   在旧的 2,030 题测试集上运行的事实记录。它们被标注为已过时,而不是被改写。
 
 ---
@@ -191,7 +243,7 @@ agent 运行之前请先决定并记录。
    按库 80/20 划分。被考虑但未采用的替代方案是固定测试集规模(`test = min(25, n 的 30%)`)配合更低
    的语料下限,那样能让各 schema 的测试精度趋于一致,并且仅 `works_cycles` 一个库就能把约 50 个
    测试行归还给语料。如果日后以"逐 schema 估计"为主要分析单位,值得重新考虑,因为目前各 schema
-   的测试集规模仍在 12–78 之间浮动。
+   的测试集规模仍在 12-78 之间浮动。
 3. **把每个数据库的语料规模作为协变量报告。** 清理对各库的削减极不均匀(`financial` −64%,
    `retail_world` −12%),而在下限剔除掉受损最重的那些之后,保留的 58 个库仍横跨 60 到 383 题,
    相差 6 倍。若不公布语料规模,就无法把跨库准确率差异与语料规模差异区分开。
@@ -215,9 +267,9 @@ agent 运行之前请先决定并记录。
    中有 18 题的问题措辞*并不相同*,单靠文本相似度抓不到。另外那 7 对原文完全相同的题目,是 BIRD 自身
    内部的重复恰好落在了划分两侧,不是 seed 42 洗牌带来的产物。
 
-   受影响的 id 按信号分类,随 `leakage_test_qids.json` 一并发布,评测框架可以在完整的 1,389 题之外,
-   再报一个基于 1,339 道干净题的「无检索」分数。另外,划分内部的冗余很小:train 有 48 行 gold SQL 重复
-   (无害,只是略微缩小了有效语料),test 有 3 行。
+   **以上数字描述的是去重之前的划分。** 由于重复来自 BIRD、而把它们分到两侧是我们造成的,随后这些
+   重复被直接移除并重建了划分,见 §4c。那一轮之后的泄漏为 3 个测试题(0.22%),且都是 gold SQL 不同
+   的模板撞车,正是被有意保留的那一类。`leakage_test_qids.json` 由同一个脚本重新生成,反映的是当前划分。
 
 ---
 
@@ -265,7 +317,7 @@ python eval_dataset/build_eval_dataset.py
 1. Niklas Wretblad, Fredrik Riseby, Rahul Biswas, Amin Ahmadi, Oskar Holmström.
    "Understanding the Effects of Noise in Text-to-SQL: An Examination of the BIRD-Bench
    Benchmark." *Proceedings of the 62nd Annual Meeting of the ACL (Volume 2: Short Papers)*,
-   pp. 356–369, 2024. ACL ID `2024.acl-short.34`,DOI
+   pp. 356-369, 2024. ACL ID `2024.acl-short.34`,DOI
    [10.18653/v1/2024.acl-short.34](https://doi.org/10.18653/v1/2024.acl-short.34) ·
    [arXiv:2402.12243](https://arxiv.org/abs/2402.12243) ·
    [代码](https://github.com/niklaswretblad/the-effects-of-noise-in-text-to-SQL)
@@ -281,7 +333,7 @@ python eval_dataset/build_eval_dataset.py
 4. Yuxuan Zhu, Tengjun Jin, Yoojin Choi, Daniel Kang. "ReViSQL: Achieving Human-Level
    Text-to-SQL." 2026 年 3 月。[arXiv:2603.20004](https://arxiv.org/abs/2603.20004) ·
    [BIRD-Platinum / BIRD-Verified 数据](https://github.com/uiuc-kang-lab/ReViSQL)。
-   61.1% 的 train 错误率,以及"在修正数据上训练带来 +8.2–13.9 个点提升"的来源。该文亦转述了
+   61.1% 的 train 错误率,以及"在修正数据上训练带来 +8.2-13.9 个点提升"的来源。该文亦转述了
    Pourreza & Rafiei(2023)更早的 18.2% train 子集数字,本文为二手引用。
 
 **数据集**

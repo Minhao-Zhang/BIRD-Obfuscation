@@ -4,8 +4,8 @@
 
 > [!WARNING]
 > **Superseded (2026-07-29).** This bundle is the per-question record of a run over the **old
-> 2,030-question test split**. The dataset has since been purged and re-split, and is now 58
-> databases / 6,928 questions (1,389 test), see
+> 2,030-question test split**. The dataset has since been purged, deduplicated and re-split, and is now 57
+> databases / 6,743 questions (1,351 test), see
 > [../docs/reference/gold-quality-audit.md](../docs/reference/gold-quality-audit.md). The bundle
 > is retained deliberately: it is the backing evidence for the EX numbers that evaluation.md §8-§9
 > keeps as a historical record. Do not read it as current results, and note that ~29% of its rows

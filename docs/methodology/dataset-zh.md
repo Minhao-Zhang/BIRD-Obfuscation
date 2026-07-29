@@ -119,18 +119,20 @@ BIRD 的 gold SQL 会从 SQLite 转译到 PostgreSQL 方言,并被改写为使�
 
 ### 最终验证交付物
 
-被评测的 58 个数据库都同时出现在 `train_final.jsonl` 和 `test_final.jsonl` 中(schema 对称划分,§5);数据湖 69 个中的其余 11 个在 gold 质量清理后跌破 `MIN_QUESTIONS` 下限,只贡献 schema 而不贡献问题。验证前划分中的问题并非全部保留;少数问题为何被排除(转译失败,以及带有真实缺陷的 gold SQL,比如被 R1==R2 检查抓出的缺失连接条件),见 [step5-transpilation.md](../reference/step5-transpilation-zh.md)。这些文件的权威、纳入 git 跟踪的副本(外加重命名映射、陷阱清单、改写以及其他映射)位于 [`eval_dataset/`](../../eval_dataset/);`artifacts/` 中的副本则是管线的工作版本。
+被评测的 57 个数据库都同时出现在 `train_final.jsonl` 和 `test_final.jsonl` 中(schema 对称划分,§5);数据湖 69 个中的其余 12 个跌破 `MIN_QUESTIONS` 下限(11 个在 gold 质量清理之后,又有 1 个在去重之后),只贡献 schema 而不贡献问题。验证前划分中的问题并非全部保留;少数问题为何被排除(转译失败,以及带有真实缺陷的 gold SQL,比如被 R1==R2 检查抓出的缺失连接条件),见 [step5-transpilation.md](../reference/step5-transpilation-zh.md)。这些文件的权威、纳入 git 跟踪的副本(外加重命名映射、陷阱清单、改写以及其他映射)位于 [`eval_dataset/`](../../eval_dataset/);`artifacts/` 中的副本则是管线的工作版本。
 
 | | 数量 |
 | --- | --- |
-| 已覆盖的数据库(`evaluated_dbs.json`) | 58 / 69 |
+| 已覆盖的数据库(`evaluated_dbs.json`) | 57 / 69 |
 | 通过执行验证(R0==R1、R1==R2) | 10,164 |
 | 被排除(转译失败 + R1==R2 重命名失败) | 377 (10,541 − 10,164) |
 | 被 gold 质量清理移除(2026-07-29) | 2,739 |
 | 清理后跌破 `MIN_QUESTIONS` 而被剔除的数据库 | 11 个(497 个问题) |
-| `artifacts/train_final.jsonl`(train 问题) | **5,539** |
-| `artifacts/test_final.jsonl`(test 问题) | **1,389** |
-| **最终交付物中的问题总数** | **6,928** |
+| 划分前作为重复被移除 | 127 |
+| 去重后跌破 `MIN_QUESTIONS` 的数据库 | 1 个(`sales_in_weather`,58 个问题) |
+| `artifacts/train_final.jsonl`(train 问题) | **5,392** |
+| `artifacts/test_final.jsonl`(test 问题) | **1,351** |
+| **最终交付物中的问题总数** | **6,743** |
 
 > [!IMPORTANT]
 > 这 2,739 个问题的移除**不是**流水线校验失败。它们都通过了 R0==R1 与 R1==R2。执行校验证明的是
@@ -139,6 +141,7 @@ BIRD 的 gold SQL 会从 SQLite 转译到 PostgreSQL 方言,并被改写为使�
 > 存活情况与引用:[gold-quality-audit.md](../reference/gold-quality-audit-zh.md)。
 >
 > 对 §5 的 schema 对称划分的影响:跌破 `MIN_QUESTIONS = 60` 下限的 11 个数据库已被剔除,余下 58 个
-> 用步骤 01 的机制重新按 80/20 划分(`pipeline/resplit_after_purge.py`),各库 test 占比恢复为统一的
-> 19.5 到 20.6%。58 个数据库都同时出现在两个划分中。`retained_dbs.json` 仍列出 69 个,那是已发布
+> 用步骤 01 的机制重新划分(`pipeline/resplit_after_purge.py`)。随后又有一轮移除了 127 个重复问题
+> 并再次划分(`pipeline/dedupe_and_resplit.py`),这使 `sales_in_weather` 也跌破了下限。最终为 57 个
+> 数据库,各库 test 占比统一在 19.4 到 20.6%,且都同时出现在两个划分中。`retained_dbs.json` 仍列出 69 个,那是已发布
 > dump 中物理存在的 schema;被评测的子集见 `evaluated_dbs.json`。

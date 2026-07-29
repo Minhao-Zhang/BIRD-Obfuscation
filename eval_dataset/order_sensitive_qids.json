@@ -81,7 +81,6 @@
     "train_7404",
     "train_7817",
     "train_7820",
-    "train_7830",
     "train_7842",
     "train_8072",
     "train_8300",
@@ -113,7 +112,7 @@
     "train_6845"
   ],
   "counts": {
-    "order_sensitive": 98,
+    "order_sensitive": 97,
     "exec_failed": 10
   }
 }

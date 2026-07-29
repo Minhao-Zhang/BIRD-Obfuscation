@@ -4,14 +4,11 @@
 {"question_id": "1462", "question_paraphrase": "For the event called 'January Speaker', which budget category was allocated and what was the budgeted amount for that category?"}
 {"question_id": "train_4789", "question_paraphrase": "What is the male-to-female ratio among historical legislators?"}
 {"question_id": "train_3839", "question_paraphrase": "How many Yelp businesses are located in Scottsdale?"}
-{"question_id": "train_8147", "question_paraphrase": "How many units of item number 5 were sold at store number 3 on the day when the temperature difference was at its highest?"}
 {"question_id": "train_5145", "question_paraphrase": "Which county is Arecibo City in?"}
 {"question_id": "1330", "question_paraphrase": "Which college offers the major that Tyler Hewitt studied?"}
-{"question_id": "train_8209", "question_paraphrase": "On rainy days, which products sold from store 1 had the greatest number of units?"}
 {"question_id": "train_5199", "question_paraphrase": "What was Arecibo’s population in 2020?"}
 {"question_id": "train_3962", "question_paraphrase": "In which city is the business that received a medium-length tip with 3 likes located?"}
 {"question_id": "train_7042", "question_paraphrase": "How many employees in total worked in the Finance department?"}
-{"question_id": "train_8182", "question_paraphrase": "In March 2014, which weather stations had the greatest count of days with temperatures below the 30-year average?"}
 {"question_id": "train_5217", "question_paraphrase": "List the counties for cities whose 2020 population is greater than 97% of the average 2020 population across all counties."}
 {"question_id": "1429", "question_paraphrase": "Which social event, held at 900 E. Washington St., was attended by the Student_Club’s vice president?"}
 {"question_id": "train_4081", "question_paraphrase": "What are the user ID, business ID, and review length for the business whose tip got the highest number of likes?"}
@@ -31,7 +28,6 @@
 {"question_id": "train_5146", "question_paraphrase": "How many zip codes are included in Barre, VT?"}
 {"question_id": "1427", "question_paraphrase": "Which budget categories are associated with guest speaker events held in MU 215 that have spent nothing from the budget?"}
 {"question_id": "train_7264", "question_paraphrase": "What was the earliest job title the company hired for, and who was the person hired for it? Give the person’s full name."}
-{"question_id": "train_8138", "question_paraphrase": "What was the total number of units sold of item 9 in store 1 during January 2012?"}
 {"question_id": "train_5188", "question_paraphrase": "What is the average household income for the place called “Danzig”?"}
 {"question_id": "1349", "question_paraphrase": "What is the sum of the budget amount for the \"September Speaker\" event?"}
 {"question_id": "train_3765", "question_paraphrase": "How many more businesses are classified as buffets than as gyms in Yelp?"}
@@ -124,7 +120,6 @@
 {"question_id": "train_948", "question_paraphrase": "What is the average capability among students whose GPA is below 2.5?"}
 {"question_id": "train_4806", "question_paraphrase": "How many legislators are missing a Federal Election Commission registration?"}
 {"question_id": "train_5874", "question_paraphrase": "What were the planned local departure time and the actual departure time for the flight from Philadelphia to Harrisburg on August 13, 2018, with tail number N627AE?"}
-{"question_id": "train_4556", "question_paraphrase": "What is the name of the student who has the longest absence duration?"}
 {"question_id": "train_7903", "question_paraphrase": "What are the surface area and GNP of the country that Namibe district is part of?"}
 {"question_id": "train_2023", "question_paraphrase": "Which player is the youngest, and what city are they from?"}
 {"question_id": "train_4037", "question_paraphrase": "How many distinct users have received an Uber vote for funny on a review from fans?"}
@@ -157,7 +152,6 @@
 {"question_id": "train_881", "question_paraphrase": "How many courses is Alvera McQuillin enrolled in?"}
 {"question_id": "train_5223", "question_paraphrase": "How many ZIP codes fall under the congressional representative for Puerto Rico?"}
 {"question_id": "train_5851", "question_paraphrase": "What percentage of flights departing from Los Angeles International airport were canceled because of a C cancellation code?"}
-{"question_id": "train_4434", "question_paraphrase": "What is the average length of absence for students with disabilities?"}
 {"question_id": "train_3787", "question_paraphrase": "How many additional Yelp businesses are classified as Chinese compared with Filipino?"}
 {"question_id": "train_7879", "question_paraphrase": "What languages are used in Malaysia?"}
 {"question_id": "train_2043", "question_paraphrase": "What were the venue and the winning team for the match with ID 392194?"}
@@ -178,7 +172,6 @@
 {"question_id": "train_4431", "question_paraphrase": "How many female students enlisted in the air force?"}
 {"question_id": "train_5138", "question_paraphrase": "What is the male population for every zip code that falls under the Berlin, NH CBSA?"}
 {"question_id": "train_869", "question_paraphrase": "Which professor supervised Willie Rechert as a research assistant? Please provide the professor’s full name."}
-{"question_id": "train_7830", "question_paraphrase": "Name any five countries where English is an official language."}
 {"question_id": "train_4398", "question_paraphrase": "Which students in the marines have had a 6-month absence?"}
 {"question_id": "train_2579", "question_paraphrase": "Show every order number together with the name of its product for all orders handled by the sales team led by Douglas Tucker."}
 {"question_id": "train_5228", "question_paraphrase": "Which CBSA is associated with the postal area that has the greatest number of employees?"}
@@ -192,10 +185,8 @@
 {"question_id": "train_4425", "question_paraphrase": "How many students have missed more than 2 months?"}
 {"question_id": "train_5512", "question_paraphrase": "What are the total height and width for the menu named \"El Fuerte Del Palmar\"?"}
 {"question_id": "train_2038", "question_paraphrase": "Which team won the match played on April 26, 2009 by 6 points?"}
-{"question_id": "train_4472", "question_paraphrase": "How many women students are registered with the Navy organization?"}
 {"question_id": "train_3624", "question_paraphrase": "How many papers were published in IEEE Transactions on Nuclear Science in 1999?"}
 {"question_id": "train_1989", "question_paraphrase": "What is the team name for T Kohli in match 335989?"}
-{"question_id": "train_7905", "question_paraphrase": "Which district belongs to the country with the smallest land area?"}
 {"question_id": "train_4468", "question_paraphrase": "Among the students who are unemployed, how many do not have any payment due?"}
 {"question_id": "train_2025", "question_paraphrase": "What is the number of seasons in which Pune Warriors took part?"}
 {"question_id": "train_3669", "question_paraphrase": "What is the title of the most recent publication by Zuliang Du?"}
@@ -235,7 +226,6 @@
 {"question_id": "train_2182", "question_paraphrase": "Which countries have finished vital registration? Please list every country."}
 {"question_id": "train_8295", "question_paraphrase": "Which city has the largest population in the country with the 12th highest population density?"}
 {"question_id": "train_4674", "question_paraphrase": "Which voice actors were in the movie released on 11/24/2010?"}
-{"question_id": "train_8405", "question_paraphrase": "What is the population density of the country that Hanoi belongs to?"}
 {"question_id": "train_4420", "question_paraphrase": "What is the average absence for students who are employed?"}
 {"question_id": "train_3619", "question_paraphrase": "Which papers were published under the conference whose homepage is \"http://www.irma-international.org/\"?"}
 {"question_id": "train_4719", "question_paraphrase": "What was the earliest movie Disney released?"}
@@ -286,7 +276,6 @@
 {"question_id": "train_3510", "question_paraphrase": "What are the titles of the papers published in the journal \"Concepts in Magnetic Resonance Part A\" in 2008?"}
 {"question_id": "train_4644", "question_paraphrase": "For the film where Tress MacNeille voiced the character Hyacinth Hippo, what was its release date?"}
 {"question_id": "train_5883", "question_paraphrase": "How many flights depart from Oklahoma?"}
-{"question_id": "train_8437", "question_paraphrase": "Which country has the largest GDP? Please provide its full name."}
 {"question_id": "train_8434", "question_paraphrase": "Which city and province host the headquarters of the European Bank for Reconstruction and Development?"}
 {"question_id": "train_8402", "question_paraphrase": "What is Switzerland’s GDP divided by its population?"}
 {"question_id": "train_4716", "question_paraphrase": "Who provides Elsa’s voice, and who directed the film?"}
@@ -463,7 +452,6 @@
 {"question_id": "train_2457", "question_paraphrase": "Show the sales amount, profit, and subcategory for the product in order US-2011-126571 from the East region."}
 {"question_id": "train_1546", "question_paraphrase": "Who is the sales representative for the unique customer who made the largest payment in 2004?"}
 {"question_id": "train_3447", "question_paraphrase": "What is the overall number of games sold in the region with ID 1?"}
-{"question_id": "train_3335", "question_paraphrase": "Which publisher has the highest number of games?"}
 {"question_id": "train_206", "question_paraphrase": "In what country is the publisher of the book Life Without Fear based?"}
 {"question_id": "train_9292", "question_paraphrase": "Can you list three cities located in Algeria?"}
 {"question_id": "train_1427", "question_paraphrase": "Which medications were given to patients who had an allergy to mould on 6 June 2016?"}
@@ -474,7 +462,6 @@
 {"question_id": "train_9382", "question_paraphrase": "What is the rental period for the movie Dirty Ace?"}
 {"question_id": "train_6801", "question_paraphrase": "How many line items with a quantity above 40 were shipped by air?"}
 {"question_id": "train_6079", "question_paraphrase": "What proportion of all books published by Carole Marsh Mysteries are in English?"}
-{"question_id": "train_3405", "question_paraphrase": "Which publisher has released the greatest number of games?"}
 {"question_id": "train_6043", "question_paraphrase": "What is the mean page count of the books authored by Jennifer Crusie?"}
 {"question_id": "train_1566", "question_paraphrase": "What is the total amount paid by customers from the United States?"}
 {"question_id": "train_1501", "question_paraphrase": "How many healthcare encounters did Lorri Simonis have between 2010 and 2017, and what share of those encounters were prenatal visits?"}
@@ -506,7 +493,6 @@
 {"question_id": "train_3136", "question_paraphrase": "What are the prices of Ford cars from model years 1970 through 1980?"}
 {"question_id": "train_6828", "question_paraphrase": "Which shipping methods were used for orders placed on 12/31/1994?"}
 {"question_id": "train_1407", "question_paraphrase": "What is the number of Asian female patients who take oxaliplatin 5 MG/ML [Eloxatin]?"}
-{"question_id": "train_5948", "question_paraphrase": "What is the full name of the customer who has placed the most orders ever?"}
 {"question_id": "train_9405", "question_paraphrase": "How many active customers are named Nina as their first name?"}
 {"question_id": "train_6999", "question_paraphrase": "What is the average standard cost for the product with number CA-1098?"}
 {"question_id": "train_3090", "question_paraphrase": "What is the swept volume of the car priced at $34538.97449?"}
@@ -544,7 +530,6 @@
 {"question_id": "train_9330", "question_paraphrase": "What is the full name of the customer living at 692 Joliet Street?"}
 {"question_id": "train_7355", "question_paraphrase": "Which sales region is expected to have the largest annual sales quota?"}
 {"question_id": "train_5921", "question_paraphrase": "Could you provide the titles of every book written in British English?"}
-{"question_id": "train_9384", "question_paraphrase": "What are the titles of the longest movies, listed in alphabetical order?"}
 {"question_id": "train_7085", "question_paraphrase": "What is the mean total amount due for products that have an approved status?"}
 {"question_id": "train_6108", "question_paraphrase": "For books bought for under 1 dollar, what is the difference between how many have fewer than 500 pages and how many have more than 500 pages?"}
 {"question_id": "train_688", "question_paraphrase": "What is the average processing time for the solution whose repository has 254 likes, 88 followers, and 254 watchers?"}
@@ -611,10 +596,7 @@
 {"question_id": "train_6844", "question_paraphrase": "How many customers are in the household segment and located in Germany?"}
 {"question_id": "train_8785", "question_paraphrase": "Among Tiramisu Kitchen and OMNI S.F. Hotel - 2nd Floor Pantry, which one had more low-risk violations during inspections?"}
 {"question_id": "train_5990", "question_paraphrase": "In which year were the most orders placed by customers?"}
-{"question_id": "train_6823", "question_paraphrase": "How many part supplies have fewer than 10 units available?"}
-{"question_id": "train_9161", "question_paraphrase": "How many movies are in English?"}
 {"question_id": "532", "question_paraphrase": "Show the display names of every user whose account was created during 2011."}
-{"question_id": "train_1140", "question_paraphrase": "What age corresponds to the youngest woman device user?"}
 {"question_id": "train_8811", "question_paraphrase": "What is the name of the business that received the lowest inspection rating ever?"}
 {"question_id": "train_9111", "question_paraphrase": "What email address belongs to the staff member named Jon Stephens?"}
 {"question_id": "train_1161", "question_paraphrase": "How does the count of app users in the Securities category compare to the count of app users in the Finance category, expressed as a ratio?"}
@@ -675,7 +657,6 @@
 {"question_id": "1224", "question_paraphrase": "Which patient had the highest recorded total bilirubin value, and what were their ID, sex, and date of birth?"}
 {"question_id": "train_1599", "question_paraphrase": "Among all orders that were placed and shipped during 2005, what percentage were for customer 186?"}
 {"question_id": "train_5377", "question_paraphrase": "List all product IDs for items sold by Meander."}
-{"question_id": "train_8169", "question_paraphrase": "What sunrise time was recorded at the weather station associated with store 30 on 2014-02-21?"}
 {"question_id": "train_1631", "question_paraphrase": "What is the office address of the company’s President?"}
 {"question_id": "train_6126", "question_paraphrase": "How many inspection records are there for All Style Buffet Restaurant?"}
 {"question_id": "train_128", "question_paraphrase": "What is the URL of the movie that received a 5 rating at 2013/5/3 5:11:17?"}
@@ -684,7 +665,6 @@
 {"question_id": "train_6150", "question_paraphrase": "What is the salary of the employee who has carried out the greatest number of inspections overall?"}
 {"question_id": "train_1557", "question_paraphrase": "How many distinct cancelled orders have a line-item total exceeding 4000?"}
 {"question_id": "train_6162", "question_paraphrase": "Which employee had a canvass inspection on March 09, 2010?"}
-{"question_id": "train_8187", "question_paraphrase": "Which station had the greatest total sales of item 5 overall?"}
 {"question_id": "train_159", "question_paraphrase": "Which movie has the rating from a critic with the most likes, and what is the URL for that rating on Mubi?"}
 {"question_id": "1237", "question_paraphrase": "Which outpatients have low hemoglobin levels? Provide the unique IDs and their sex."}
 {"question_id": "1230", "question_paraphrase": "Show the distinct IDs for all outpatients whose creatinine phosphokinase level is below the normal cutoff."}
@@ -693,11 +673,8 @@
 {"question_id": "train_6145", "question_paraphrase": "What is the date of the earliest inspection for Renaldi's Pizza?"}
 {"question_id": "1206", "question_paraphrase": "On what date was patient 48473’s lab test performed when the GOT value was at least 60?"}
 {"question_id": "train_0", "question_paraphrase": "Which movie title from 1945 has the highest popularity?"}
-{"question_id": "train_6211", "question_paraphrase": "What is the business name of the place that Joshua Rosa inspected?"}
-{"question_id": "train_8201", "question_paraphrase": "What were the highest and lowest temperatures recorded for station 1 on January 15, 2012?"}
 {"question_id": "1198", "question_paraphrase": "How many patients who are female received an APS diagnosis?"}
 {"question_id": "train_1562", "question_paraphrase": "How many ordered items are for products whose catalog price is more than 100 higher than their purchase price?"}
-{"question_id": "train_8179", "question_paraphrase": "How many items had zero units sold in store 2 on 1/1/2012?"}
 {"question_id": "train_6159", "question_paraphrase": "What is the employee’s surname for the person located at 7211 S Hermitage Ave in Chicago, IL?"}
 {"question_id": "train_134", "question_paraphrase": "Among the movies released in 1995, how many ratings below 3 does the most popular one have?"}
 {"question_id": "train_6216", "question_paraphrase": "How many inspection items marked as serious have a fine amount of zero?"}
@@ -706,7 +683,6 @@
 {"question_id": "train_1639", "question_paraphrase": "Which customers have orders that are still in process?"}
 {"question_id": "train_6196", "question_paraphrase": "What are the phone numbers of the employees who conducted Canvass inspections?"}
 {"question_id": "train_58", "question_paraphrase": "How many Mubi-listed films were directed by Hong Sang-soo?"}
-{"question_id": "train_8206", "question_paraphrase": "Which station numbers and sold items correspond to store 17?"}
 {"question_id": "1208", "question_paraphrase": "Which patient IDs belong to men who have a GPT value at or above 60?"}
 {"question_id": "train_6146", "question_paraphrase": "Who was the employee with the highest number of inspections in March 2016, and what is their full name?"}
 {"question_id": "train_1573", "question_paraphrase": "What is the email address of each employee who reports to Murphy Diane, has employee number 1002, and is based in San Francisco?"}
@@ -715,11 +691,9 @@
 {"question_id": "train_1654", "question_paraphrase": "Among the customers managed by employee 1370, which one has the largest credit limit? Please give the contact person’s full name."}
 {"question_id": "train_8855", "question_paraphrase": "Among businesses scored below 95 and situated near postal code 94110, what percentage are classified as low risk?"}
 {"question_id": "1205", "question_paraphrase": "For the patient numbered 57266, was the uric acid level in the normal range?"}
-{"question_id": "train_8204", "question_paraphrase": "How many units of product 7 were sold by store 7 on days when snowfall was below 5 inches?"}
 {"question_id": "train_1586", "question_paraphrase": "How many customers in Germany have a credit limit of zero?"}
 {"question_id": "929", "question_paraphrase": "Which Formula 1 races did Lewis Hamilton take part in?"}
 {"question_id": "train_3023", "question_paraphrase": "What is the complete title of the work that includes the character described as Servant to Montague?"}
-{"question_id": "train_8172", "question_paraphrase": "What was the sea-level pressure recorded on 2013/2/24 by the weather station linked to store 19?"}
 {"question_id": "train_2341", "question_paraphrase": "Which genres are associated with all foreign films in English that run for two hours or less? List them all."}
 {"question_id": "1248", "question_paraphrase": "How many patients who were born after 1980/1/1 have an abnormal fibrinogen result?"}
 {"question_id": "901", "question_paraphrase": "Which races held in September 2005 are, along with each race’s circuit name and location?"}
@@ -850,7 +824,6 @@
 {"question_id": "train_6231", "question_paraphrase": "What are the establishment type and license number for places with the lowest risk level that did not pass the inspection?"}
 {"question_id": "train_469", "question_paraphrase": "Which movie titles were released in Latin between January 1, 1990 and December 31, 1995?"}
 {"question_id": "train_556", "question_paraphrase": "Which keyword would someone use to look up the movie Finding Nemo?"}
-{"question_id": "train_8085", "question_paraphrase": "How many women students did Stanford University have in 2011?"}
 {"question_id": "train_3105", "question_paraphrase": "Which car names have a model year of 1975?"}
 {"question_id": "train_505", "question_paraphrase": "Which movies were produced by Lucasfilm?"}
 {"question_id": "train_5641", "question_paraphrase": "What is the surname of the driver who handled shipment 1088?"}
@@ -886,7 +859,6 @@
 {"question_id": "train_7804", "question_paraphrase": "What are the full names of the players who were born in Finland?"}
 {"question_id": "train_455", "question_paraphrase": "Which person IDs are associated with the second film editor role for movie number 12?"}
 {"question_id": "train_3103", "question_paraphrase": "Which country has made the most cars overall? Also, compute that country’s average number of cars produced per year across the full period from the beginning to now."}
-{"question_id": "train_8024", "question_paraphrase": "What are the names of the criteria associated with the ranking system named Center for World University Rankings?"}
 {"question_id": "train_3111", "question_paraphrase": "What is the model year of the car with the greatest weight?"}
 {"question_id": "train_546", "question_paraphrase": "What job titles did Sally Menke have in the crew?"}
 {"question_id": "train_8011", "question_paraphrase": "Which university ID corresponds to Harvard University?"}
@@ -905,7 +877,6 @@
 {"question_id": "train_8049", "question_paraphrase": "What is the ID of the ranking system called Center for World University Rankings?"}
 {"question_id": "train_5548", "question_paraphrase": "What is the name of the menu that has the greatest number of pages?"}
 {"question_id": "train_4290", "question_paraphrase": "Which character was voiced by the winner of the \"Outstanding Voice-Over Performance\" award?"}
-{"question_id": "train_8062", "question_paraphrase": "What is the name of the ranking system associated with the \"Quality of Education Rank\" criterion?"}
 {"question_id": "train_8728", "question_paraphrase": "Which communities belong to the Central side?"}
 {"question_id": "train_4287", "question_paraphrase": "Which episodes is Oscar Cervantes listed in the credits for?"}
 {"question_id": "train_8032", "question_paraphrase": "Which university had the highest percentage of women students in 2012?"}
@@ -1021,14 +992,12 @@
 {"question_id": "train_7538", "question_paraphrase": "How many objects are detected in image 31?"}
 {"question_id": "train_3318", "question_paraphrase": "Can you provide the names of the publishers for every game in the Puzzle genre?"}
 {"question_id": "train_8734", "question_paraphrase": "Which neighborhoods are in the North Center community area?"}
-{"question_id": "train_5049", "question_paraphrase": "Who is the competitor with the greatest age?"}
 {"question_id": "train_3343", "question_paraphrase": "How many distinct games were published by Electronic Arts?"}
 {"question_id": "train_4946", "question_paraphrase": "How many athletes come from Australia?"}
 {"question_id": "train_1806", "question_paraphrase": "In how many games did Sunrisers Hyderabad win the toss?"}
 {"question_id": "train_4975", "question_paraphrase": "How many athletes from China took part in the 2016 Summer Olympics?"}
 {"question_id": "train_3410", "question_paraphrase": "How many distinct publishers have released a game whose title begins with \"Marvel\"?"}
 {"question_id": "train_626", "question_paraphrase": "What percentage more stars does the repository for solution 51424 have than the repository for solution 167053?"}
-{"question_id": "train_7599", "question_paraphrase": "What attribute categories are associated with image 22?"}
 {"question_id": "train_2315", "question_paraphrase": "Could you determine the negative critical reception for movies made in the United States?"}
 {"question_id": "train_5018", "question_paraphrase": "What is the average body weight of male athletes from Tonga?"}
 {"question_id": "train_7524", "question_paraphrase": "What object category does the image have when its bounding box is 0, 0, 135, 212?"}
@@ -1115,7 +1084,6 @@
 {"question_id": "train_3826", "question_paraphrase": "How many businesses in Gilbert City are marked as active?"}
 {"question_id": "541", "question_paraphrase": "What is the displayed name of the user who owns the post with the highest number of favorites?"}
 {"question_id": "train_1904", "question_paraphrase": "What is the name of the venue that has hosted the highest number of matches?"}
-{"question_id": "train_5744", "question_paraphrase": "How many Wikipedia pages are there in Catalan altogether?"}
 {"question_id": "train_4116", "question_paraphrase": "How many businesses in Scottsdale are open at 12 PM on Sunday?"}
 {"question_id": "train_5811", "question_paraphrase": "What are the titles of the three Wikipedia pages in Catalan that contain the most distinct words?"}
 {"question_id": "train_2942", "question_paraphrase": "For the 1997 all-star game, which team was the player with the highest rebound total playing for? Give the team ID."}
@@ -1187,7 +1155,6 @@
 {"question_id": "train_1311", "question_paraphrase": "What is the role of the tallest individual?"}
 {"question_id": "train_3964", "question_paraphrase": "How many compliments of the “cool” kind has user 41717 received?"}
 {"question_id": "713", "question_paraphrase": "What is the number of upvotes for the user who posted the comment \"R is also lazy evaluated.\"?"}
-{"question_id": "train_3841", "question_paraphrase": "How many businesses in Scottsdale have a rating above 3?"}
 {"question_id": "551", "question_paraphrase": "How many badges has the user csgillespie received?"}
 {"question_id": "train_3951", "question_paraphrase": "What is the difference between the number of businesses that are open from 10 AM to 9 PM on Monday and the number that are open from 10 AM to 9 PM on Tuesday?"}
 {"question_id": "train_7408", "question_paraphrase": "What email address should I use to contact David Bradley?"}
@@ -1247,7 +1214,6 @@
 {"question_id": "train_7192", "question_paraphrase": "Which sales employees have a hire date earlier than 2010?"}
 {"question_id": "train_7086", "question_paraphrase": "What percentage of sales order items have a quantity of less than 3 and a discount of 0.2?"}
 {"question_id": "train_9228", "question_paraphrase": "How many customers with an ID under 100 have Thomas as their surname?"}
-{"question_id": "train_3923", "question_paraphrase": "Which active businesses belong to the Pets category, and what are their business IDs and star ratings?"}
 {"question_id": "train_7310", "question_paraphrase": "Which employees are no longer with the company, and what were their hire dates?"}
 {"question_id": "train_9112", "question_paraphrase": "What are the first and last names of every staff member who is currently active?"}
 {"question_id": "train_8760", "question_paraphrase": "Who is the alderman for the ward that had the highest crime count in January 2018, and what is the alderman’s full name?"}
@@ -1394,7 +1360,6 @@
 {"question_id": "train_4745", "question_paraphrase": "Provide the official YouTube usernames for every female legislator who is currently serving."}
 {"question_id": "train_250", "question_paraphrase": "How many clients based in New York City have submitted a complaint regarding Deposits and withdrawals?"}
 {"question_id": "train_8708", "question_paraphrase": "In the Jefferson Park district, what percentage of crimes were classified as non-domestic?"}
-{"question_id": "276", "question_paraphrase": "List the IDs of the first and second atoms that are joined by bonds of the triple-bond type."}
 {"question_id": "train_7482", "question_paraphrase": "For image 1, what is the relationship of object sample 8 to object sample 4?"}
 {"question_id": "train_8400", "question_paraphrase": "What is the total number of mountains located in the United States?"}
 {"question_id": "230", "question_paraphrase": "Which element types and what name are associated with the molecule identified as TR060?"}
@@ -1467,7 +1432,6 @@
 {"question_id": "train_7657", "question_paraphrase": "Is the tallest player in the Hall of Fame, and if so, what year was he inducted?"}
 {"question_id": "train_8710", "question_paraphrase": "Which five aldermen represent the wards with the largest populations, and what are their full names?"}
 {"question_id": "train_7501", "question_paraphrase": "What is the relation in image number 2345528 that links \"feathers\" with \"onion\"?"}
-{"question_id": "291", "question_paraphrase": "How many compounds in the database are marked with a '+' to indicate they are carcinogenic?"}
 {"question_id": "train_8679", "question_paraphrase": "What percentage of the recorded crimes are classified as severe?"}
 {"question_id": "train_8362", "question_paraphrase": "Which border has the least length, and what forms of government do the two countries on that border have?"}
 {"question_id": "train_7553", "question_paraphrase": "For image number 2654, what portion (as a percentage) of the object samples are labeled \"surface\"?"}
@@ -1479,9 +1443,7 @@
 {"question_id": "train_7694", "question_paraphrase": "Which hand does the goaltender who recorded the most shutouts in 2010 use to catch?"}
 {"question_id": "236", "question_paraphrase": "For the bond with ID TR001_6_9, what is its bond type and which atoms does it connect?"}
 {"question_id": "train_8740", "question_paraphrase": "What is the primary description associated with case number JB106010?"}
-{"question_id": "train_9123", "question_paraphrase": "How many films featuring PENELOPE GUINESS are in English?"}
 {"question_id": "train_7699", "question_paraphrase": "In the 2009 season, which coach recorded the highest winning percentage, and what is that coach's nickname?"}
-{"question_id": "train_7551", "question_paraphrase": "Which object class IDs correspond to the category named 'onion'?"}
 {"question_id": "train_9388", "question_paraphrase": "Which movies are rated PG-13?"}
 {"question_id": "train_365", "question_paraphrase": "Provide the complaint ID, the call ID, and the final phone number for complaints handled by the AVIDAN server from January 1, 2014 through December 30, 2014."}
 {"question_id": "train_7701", "question_paraphrase": "During the Stanley Cup finals in 1922, how many games did the player with id \"broadpu01\" participate in?"}
@@ -1656,7 +1618,6 @@
 {"question_id": "train_9373", "question_paraphrase": "How many action movies are available for rent?"}
 {"question_id": "train_9127", "question_paraphrase": "List the titles of all movies in the \"Horror\" category that have a rental rate of $2.99."}
 {"question_id": "train_7487", "question_paraphrase": "Which predicted relation category corresponds to the relation where an object sample in image number 5 is related to itself?"}
-{"question_id": "train_7496", "question_paraphrase": "How many samples in image number 2377985 possess the attribute electrical?"}
 {"question_id": "train_9335", "question_paraphrase": "What is the total sum of payment amounts made by customers living in the Nagasaki district?"}
 {"question_id": "train_9417", "question_paraphrase": "How many customers are active and have their residence located in Arlington?"}
 {"question_id": "train_7607", "question_paraphrase": "Provide the predicate-class name for image 4434, selecting the entry that appears last when sorted in descending order."}
@@ -1693,13 +1654,11 @@
 {"question_id": "train_8114", "question_paraphrase": "What is the average score for university 79 over the period from 2013 to 2015?"}
 {"question_id": "train_8060", "question_paraphrase": "Which ranking criteria are associated with the Shanghai Ranking system?"}
 {"question_id": "train_4811", "question_paraphrase": "What is the title of the legislator who was born on February 20, 1942?"}
-{"question_id": "train_7593", "question_paraphrase": "Provide the names of the attribute categories for images positioned at the (5,5) coordinate."}
 {"question_id": "train_9372", "question_paraphrase": "Which movie did Dorothy Taylor rent most recently?"}
 {"question_id": "train_4829", "question_paraphrase": "Give the official full names of legislators who were born in 1960."}
 {"question_id": "train_615", "question_paraphrase": "What is the number of solutions contained in the repository that has 1445 forks?"}
 {"question_id": "train_7499", "question_paraphrase": "How many samples of the food object are present in image number 6?"}
 {"question_id": "train_7999", "question_paraphrase": "How many entries show a score of 0 for the Award criterion during the years 2005 through 2015?"}
-{"question_id": "train_4822", "question_paraphrase": "How many female legislators are not senators?"}
 {"question_id": "train_9171", "question_paraphrase": "What percentage of Penelope Guinness's film total is represented by the number of films Gina DeGeneres has acted in?"}
 {"question_id": "train_8004", "question_paraphrase": "For the years 2011 through 2016, which countries host universities where more than 50% of the students are international?"}
 {"question_id": "train_7547", "question_paraphrase": "For image number 908, how many object samples belong to the class labeled 'tip'?"}
@@ -1707,7 +1666,6 @@
 {"question_id": "train_4798", "question_paraphrase": "What was Matt Salmon's final date in office?"}
 {"question_id": "train_8104", "question_paraphrase": "Which university had the fewest students in 2015 — provide its name."}
 {"question_id": "train_590", "question_paraphrase": "How many solution entries belong to the repository with the highest popularity?"}
-{"question_id": "train_8077", "question_paraphrase": "In which country is Harvard University located?"}
 {"question_id": "train_7498", "question_paraphrase": "In image no. 2345524, which object sample number is in the \"lying on\" relationship with object sample number 1?"}
 {"question_id": "train_4828", "question_paraphrase": "Which district numbers are represented by members of the Anti-Administration party?"}
 {"question_id": "train_652", "question_paraphrase": "What is the id of the repository with the greatest number of forks among repositories that have exactly 21 stars?"}
@@ -1730,7 +1688,6 @@
 {"question_id": "train_5702", "question_paraphrase": "How many times does the word pair i followed by a occur in the Catalan language?"}
 {"question_id": "train_9160", "question_paraphrase": "How many address records are located in the city called Woodridge?"}
 {"question_id": "train_631", "question_paraphrase": "Provide the distinct solution paths that contain at least one code method written in the \"it\" language."}
-{"question_id": "train_5810", "question_paraphrase": "Which word appears most frequently in Catalan?"}
 {"question_id": "train_5738", "question_paraphrase": "Provide the three words with the highest occurrence counts together with their identifiers."}
 {"question_id": "train_8125", "question_paraphrase": "Which countries are home to universities that received a score below 70 in 2016?"}
 {"question_id": "train_9310", "question_paraphrase": "Who manages the store that has the most films in its inventory?"}
@@ -1739,7 +1696,6 @@
 {"question_id": "train_6713", "question_paraphrase": "How many customers from Russia who belong to the household market segment have an account balance below zero?"}
 {"question_id": "train_9168", "question_paraphrase": "What is the title of the movie associated with inventory number 3479?"}
 {"question_id": "train_598", "question_paraphrase": "Give the paths of every solution that is part of the repository with URL \"https://github.com/maxild/playground.git\"."}
-{"question_id": "train_8068", "question_paraphrase": "Which university's ID corresponds to the institution that had the largest student enrollment in 2011?"}
 {"question_id": "train_5695", "question_paraphrase": "How many pages are in the Catalan Wikipedia?"}
 {"question_id": "train_592", "question_paraphrase": "What is the GitHub URL of the repository that contains the files for the solution with ID 12?"}
 {"question_id": "train_6711", "question_paraphrase": "Which country has the largest number of customers?"}
@@ -1768,7 +1724,6 @@
 {"question_id": "train_4901", "question_paraphrase": "Of the current legislators who have served more than four terms, what percentage are female?"}
 {"question_id": "train_646", "question_paraphrase": "How many stars does the repository containing solution 20 have?"}
 {"question_id": "train_9313", "question_paraphrase": "Which actors appear in the movie \"Jason trap\"?"}
-{"question_id": "train_5789", "question_paraphrase": "How many pages does Catalan have on Wikipedia?"}
 {"question_id": "train_6682", "question_paraphrase": "Provide the phone numbers for every customer who belongs to the household market segment and whose country is Brazil."}
 {"question_id": "train_6782", "question_paraphrase": "How many order lines with a quantity greater than 10 were marked as returned?"}
 {"question_id": "train_8064", "question_paraphrase": "Which ranking criteria and corresponding scores did Harvard University receive in the year 2005?"}
@@ -1783,7 +1738,6 @@
 {"question_id": "train_5687", "question_paraphrase": "What is the page title on the Catalan Wikipedia that has a revision id of 16203226?"}
 {"question_id": "train_8041", "question_paraphrase": "How many universities are located in Argentina?"}
 {"question_id": "train_6852", "question_paraphrase": "For suppliers based in Argentina, which one currently has a negative account balance?"}
-{"question_id": "train_8095", "question_paraphrase": "Which university had the greatest number of students in 2011? Provide its name."}
 {"question_id": "train_9159", "question_paraphrase": "What are the address and address2 for the staff member named Jon Stephens?"}
 {"question_id": "train_5794", "question_paraphrase": "What is the identifier for the word periodograma?"}
 {"question_id": "train_9334", "question_paraphrase": "Give the descriptions for all movies that are classified in the Travel category."}
@@ -1804,7 +1758,6 @@
 {"question_id": "train_6733", "question_paraphrase": "Provide the country identifiers and names for all countries in the Africa region."}
 {"question_id": "train_8097", "question_paraphrase": "What score did Chosun University receive for the Influence Rank in 2015?"}
 {"question_id": "train_4752", "question_paraphrase": "How many women who are currently in office have served more than four terms?"}
-{"question_id": "train_9251", "question_paraphrase": "Provide the full name of the actor who has appeared in more drama films than any other."}
 {"question_id": "train_8093", "question_paraphrase": "In which country is McMaster University situated?"}
 {"question_id": "train_5803", "question_paraphrase": "How many two-word sequences have \"base\" as the second term?"}
 {"question_id": "train_6778", "question_paraphrase": "What proportion, as a percentage, of suppliers situated in the EUROPE region have account balances lower than the overall average?"}
@@ -1829,7 +1782,6 @@
 {"question_id": "train_9235", "question_paraphrase": "How many films tied to an inventory ID between 20 and 60 carry a G rating?"}
 {"question_id": "train_589", "question_paraphrase": "Which method is described by the summary \"Write a command to the log\"?"}
 {"question_id": "train_6795", "question_paraphrase": "How many suppliers based in Germany have comments that include the phrase 'carefully regular packages'?"}
-{"question_id": "train_9299", "question_paraphrase": "Which actors appear in the film titled ACADEMY DINOSAUR?"}
 {"question_id": "train_9182", "question_paraphrase": "Provide the titles of films that can be found only at the store with id 2."}
 {"question_id": "train_8000", "question_paraphrase": "What country is home to the University of Oxford?"}
 {"question_id": "train_5475", "question_paraphrase": "What are the prices for the dish \"Clear green turtle\" on all menu pages where it appears?"}
@@ -1870,7 +1822,6 @@
 {"question_id": "train_8293", "question_paraphrase": "What is the number of people per unit area in the country that contains Petropavl?"}
 {"question_id": "train_8455", "question_paraphrase": "Which country with a constitutional monarchy has the largest number of organizations established after 1907?"}
 {"question_id": "train_5693", "question_paraphrase": "List the page titles alongside the number of occurrences on each page in which the word 'quipu' appears."}
-{"question_id": "train_9290", "question_paraphrase": "What are the address, address2 and district for store number 2?"}
 {"question_id": "train_8074", "question_paraphrase": "Which institution had the largest proportion of international students in 2011?"}
 {"question_id": "train_6811", "question_paraphrase": "Which country is supplier number one located in?"}
 {"question_id": "train_9143", "question_paraphrase": "How many customers are inactive, i.e., marked with a value of 0?"}
@@ -1889,7 +1840,6 @@
 {"question_id": "train_674", "question_paraphrase": "For the tokenized string \"string extensions to pascal case\", what is the task segment of the method name?"}
 {"question_id": "train_8111", "question_paraphrase": "What is the name of the ranking criterion corresponding to ID 13?"}
 {"question_id": "train_5777", "question_paraphrase": "Which words occur more than 200000 times?"}
-{"question_id": "train_9185", "question_paraphrase": "Which movie title has been rented the most times?"}
 {"question_id": "train_5758", "question_paraphrase": "What is the title of the Catalan Wikipedia page with revision id 106601?"}
 {"question_id": "train_9135", "question_paraphrase": "For customers who have ever rented the film titled ACADEMY DINOSAUR, how many are marked as active?"}
 {"question_id": "train_6853", "question_paraphrase": "How many regions does the country named ALGERIA belong to?"}
@@ -1910,7 +1860,6 @@
 {"question_id": "train_8057", "question_paraphrase": "What was the number of international students enrolled at Harvard University in 2012?"}
 {"question_id": "544", "question_paraphrase": "What's the display name of the user who most recently edited the post titled \"Examples for teaching: Correlation does not mean causation\"?"}
 {"question_id": "train_5740", "question_paraphrase": "How many words are on the page whose revision number is 27457362?"}
-{"question_id": "train_6746", "question_paraphrase": "Which order priority belongs to the order that has the highest total price?"}
 {"question_id": "train_9270", "question_paraphrase": "Give the first names of customers whose address postal codes begin with 76."}
 {"question_id": "665", "question_paraphrase": "During 2010, what was the average number of links created per month for posts that have at most two answers?"}
 {"question_id": "train_5797", "question_paraphrase": "What is the ID of the word that appears most frequently on the Wikipedia page titled \"Agricultura\"?"}
@@ -1998,7 +1947,6 @@
 {"question_id": "train_6781", "question_paraphrase": "Provide the three order IDs for the items that have the smallest prices after applying their discounts, sorted by that discounted price from lowest to highest."}
 {"question_id": "651", "question_paraphrase": "What is the title of the post that is linked to \"How to tell if something happened in a data set which monitors a value over time\"?"}
 {"question_id": "train_9343", "question_paraphrase": "Which language is associated with the film titled CHILL LUCK?"}
-{"question_id": "train_8087", "question_paraphrase": "What is the id corresponding to Center for World University Rankings?"}
 {"question_id": "train_5813", "question_paraphrase": "How many Catalan Wikipedia pages that contain more than 300 distinct words have a revision identifier greater than 28330000?"}
 {"question_id": "train_8075", "question_paraphrase": "Provide the names of all universities that are located in Australia."}
 {"question_id": "train_5767", "question_paraphrase": "How many words appear on pages that contain exactly three words?"}
@@ -2020,7 +1968,6 @@
 {"question_id": "train_5804", "question_paraphrase": "How many times does the word \"exemple\" occur in Catalan?"}
 {"question_id": "603", "question_paraphrase": "How many favorites in total did user 686 acquire during 2011?"}
 {"question_id": "680", "question_paraphrase": "What is the average score of the posts written by Stephen Turner?"}
-{"question_id": "train_6866", "question_paraphrase": "How many suppliers currently have a negative account balance?"}
 {"question_id": "train_8088", "question_paraphrase": "Which country is the University of Veterinary Medicine Vienna located in, and please provide the identifier for that country?"}
 {"question_id": "train_5742", "question_paraphrase": "What is the page number that contains the greatest word count among Catalan Wikipedia pages?"}
 {"question_id": "train_3297", "question_paraphrase": "Show the poverty level for each school that received a donation from a donor whose postal code is \"7079\"."}
@@ -2036,7 +1983,6 @@
 {"question_id": "train_5781", "question_paraphrase": "What is the total number of words on the page where the term \"grec\" appears exactly 52 times?"}
 {"question_id": "train_9221", "question_paraphrase": "What percentage of customers were based in India?"}
 {"question_id": "train_3470", "question_paraphrase": "How many publisher IDs have released games on the X360 platform?"}
-{"question_id": "train_5707", "question_paraphrase": "Which title corresponds to the corpus that contains the largest number of words?"}
 {"question_id": "train_6784", "question_paraphrase": "For the latest order date, how many orders have the '1-URGENT' priority?"}
 {"question_id": "train_9393", "question_paraphrase": "Give the first and last names of every actor who appears in the film \"Ending Crowds\"."}
 {"question_id": "train_3354", "question_paraphrase": "Which game titles were published by 505 Games?"}
@@ -2074,7 +2020,6 @@
 {"question_id": "train_5793", "question_paraphrase": "Which word appears exactly 340691 times?"}
 {"question_id": "train_3348", "question_paraphrase": "How many distinct games came out for the PS4 in 2014?"}
 {"question_id": "train_3177", "question_paraphrase": "What is the average donation amount for donors who contributed to the project \"Recording Rockin' Readers\"?"}
-{"question_id": "train_9178", "question_paraphrase": "What are the first and last names of every active staff member?"}
 {"question_id": "train_9193", "question_paraphrase": "What is the number of cities located in the United States?"}
 {"question_id": "train_5745", "question_paraphrase": "Provide three Wikipedia pages that are in Catalan, including each page's title and its revision number."}
 {"question_id": "train_3311", "question_paraphrase": "Which company published the game 3D Lemmings?"}
@@ -2094,7 +2039,6 @@
 {"question_id": "train_3413", "question_paraphrase": "In which year were the largest number of video games released?"}
 {"question_id": "train_9406", "question_paraphrase": "How many films available in store number 2 have an R rating?"}
 {"question_id": "562", "question_paraphrase": "How many comments does the post that has 1910 views have?"}
-{"question_id": "train_5778", "question_paraphrase": "What is the locale for the language associated with the page titled \"Asclepi\"?"}
 {"question_id": "train_5737", "question_paraphrase": "How many occurrences does word number 8 have?"}
 {"question_id": "train_3277", "question_paraphrase": "For donations that occurred in March 2013, what percentage of the total does each payment method represent?"}
 {"question_id": "595", "question_paraphrase": "Which users have histories on posts with at least 1000 views that include exactly one distinct history type?"}
@@ -2112,7 +2056,6 @@
 {"question_id": "train_6793", "question_paraphrase": "How many distinct employees have handled orders for the customer whose address is uFTe2u518et8Q8UC?"}
 {"question_id": "train_9416", "question_paraphrase": "Can you provide the address for Mary Smith?"}
 {"question_id": "train_5748", "question_paraphrase": "In the pair formed by items number 1 and number 8968, what is the word in the second position?"}
-{"question_id": "train_6750", "question_paraphrase": "Provide the names of the countries that belong to the ASIA region."}
 {"question_id": "train_3148", "question_paraphrase": "At what date and time did the largest donation take place, and what was the amount of that donation?"}
 {"question_id": "train_6872", "question_paraphrase": "How many units in total do all suppliers have available for the part \"hot spring dodger dim light\"?"}
 {"question_id": "train_3452", "question_paraphrase": "Which genre does the game 2010 FIFA World Cup South Africa belong to?"}
@@ -2129,7 +2072,6 @@
 {"question_id": "train_3506", "question_paraphrase": "Among titles available on the Wii, what percentage were released in 2007?"}
 {"question_id": "train_9306", "question_paraphrase": "What are the ratings of films that include \"Behind the Scenes\" among their listed extras?"}
 {"question_id": "train_6672", "question_paraphrase": "Between order number 4 and order number 36, which one is considered higher priority?"}
-{"question_id": "train_5772", "question_paraphrase": "What is the total number of Wikipedia pages in Catalan?"}
 {"question_id": "539", "question_paraphrase": "Which user is the owner of the post titled \"Eliciting priors from experts\"?"}
 {"question_id": "train_9350", "question_paraphrase": "Which category does the film titled \"BLADE POLISH\" belong to?"}
 {"question_id": "564", "question_paraphrase": "Return the text of the sole comment for the post whose parent id is 107829."}
@@ -2167,7 +2109,6 @@
 {"question_id": "663", "question_paraphrase": "What is the identifier of the user who has the smallest age?"}
 {"question_id": "train_9151", "question_paraphrase": "Retrieve the full address details for the store with number 2."}
 {"question_id": "train_9136", "question_paraphrase": "Which movie has been rented the greatest number of times by customers? Provide its title."}
-{"question_id": "train_1354", "question_paraphrase": "Which keywords are associated with the episode titled \"Shield\"?"}
 {"question_id": "train_3157", "question_paraphrase": "For the project titled 'Lights, Camera, Action!', list the suppliers along with each resource's name and its unit price."}
 {"question_id": "train_6849", "question_paraphrase": "Provide the names of customers who have at least one order with a total price greater than 300000."}
 {"question_id": "train_6816", "question_paraphrase": "From which country and which region is Customer#000000008 located?"}
@@ -2177,7 +2118,6 @@
 {"question_id": "615", "question_paraphrase": "What percentage of users who earned the \"Organizer\" badge are between 13 and 18 years old (inclusive)?"}
 {"question_id": "train_3285", "question_paraphrase": "Which suppliers provide materials for projects intended for grades 9-12?"}
 {"question_id": "train_1347", "question_paraphrase": "Which person was nominated for portraying Katrina Ludlow in the Law and Order series?"}
-{"question_id": "train_9250", "question_paraphrase": "Which actor's full name belongs to the person who appeared in more films than any other?"}
 {"question_id": "train_6910", "question_paraphrase": "Which employee handled the order line that has the highest extended price?"}
 {"question_id": "712", "question_paraphrase": "Provide the ID of the post and the text of the comments associated with the post whose title is \"Group differences on a five point Likert item\"."}
 {"question_id": "train_3345", "question_paraphrase": "How many Role-Playing titles were published by Microsoft Game Studios?"}
@@ -2249,7 +2189,6 @@
 {"question_id": "train_8780", "question_paraphrase": "Which establishments had a low-risk violation noted during inspections in 2014? List their names."}
 {"question_id": "train_1326", "question_paraphrase": "How many cast members from the USA were listed as uncredited in episode tt0629228?"}
 {"question_id": "train_3460", "question_paraphrase": "How many games belong to the Shooter genre?"}
-{"question_id": "train_9414", "question_paraphrase": "What is the total number of customers who are currently active?"}
 {"question_id": "608", "question_paraphrase": "Provide the full text of the comment that was posted on July 19, 2010 at 7:16:14 PM."}
 {"question_id": "577", "question_paraphrase": "Provide the content of every comment posted by the user whose display name is 'A Lion'."}
 {"question_id": "train_1248", "question_paraphrase": "Which keywords are associated with episodes that have a rating greater than 8?"}
@@ -2265,7 +2204,6 @@
 {"question_id": "train_9366", "question_paraphrase": "Provide the first and last names of the actors who appear in the film titled ALABAMA DEVIL."}
 {"question_id": "train_1349", "question_paraphrase": "When was the performer who portrayed the role \"writer\" born?"}
 {"question_id": "train_3366", "question_paraphrase": "What is the total number of games that belong to the \"Role-Playing\" genre?"}
-{"question_id": "train_6819", "question_paraphrase": "Which customer has the smallest account balance?"}
 {"question_id": "696", "question_paraphrase": "How many posts have been tagged with 'careers'?"}
 {"question_id": "train_9249", "question_paraphrase": "What percentage of all films belong to the horror category?"}
 {"question_id": "train_3476", "question_paraphrase": "Provide the titles of all games whose genre is 'Racing'."}
@@ -2554,7 +2492,6 @@
 {"question_id": "train_5218", "question_paraphrase": "How many postal points fall within the congressional district represented by Kirkpatrick Ann?"}
 {"question_id": "train_7203", "question_paraphrase": "List the business entity ID for the salesperson whose 2013 quota record shows the yearly sales quota was less than their sales from the prior year."}
 {"question_id": "train_161", "question_paraphrase": "What is the average number of followers across the lists owned by the user who rated \"Pavee Lackeen: The Traveller Girl\" on March 27, 2011 at 2:06:34 AM?"}
-{"question_id": "train_4865", "question_paraphrase": "How many legislators who are Catholic do not have a Ballotpedia account?"}
 {"question_id": "720", "question_paraphrase": "Provide the full names of every superhero who possesses more than fifteen superpowers."}
 {"question_id": "train_7377", "question_paraphrase": "What is the tax amount for the purchase order that has the highest tax, and what is that purchase order's ID?"}
 {"question_id": "train_89", "question_paraphrase": "What year was the movie Cops released?"}
@@ -2591,7 +2528,6 @@
 {"question_id": "train_5189", "question_paraphrase": "Which states have a female population that exceeds the overall average?"}
 {"question_id": "train_5368", "question_paraphrase": "Which products are free? Provide their names."}
 {"question_id": "train_7400", "question_paraphrase": "Show the three discounts in the reseller category that have the highest discount percentages, listed from largest to smallest."}
-{"question_id": "train_5447", "question_paraphrase": "How many products have a price of zero?"}
 {"question_id": "train_2428", "question_paraphrase": "How many days passed between ordering and shipping for order CA-2011-134103?"}
 {"question_id": "train_4786", "question_paraphrase": "Provide the official full names of legislators who are Republicans and who also have a recorded nickname."}
 {"question_id": "train_7041", "question_paraphrase": "Which job title corresponds to the smallest pay rate?"}
@@ -2657,7 +2593,6 @@
 {"question_id": "train_7157", "question_paraphrase": "How many documents lacking a summary does the employee with the job title Document Control Assistant, born on December 25, 1975, have?"}
 {"question_id": "train_1467", "question_paraphrase": "During his admission for acute bronchitis, how long was Berry Keebler on Acetaminophen 160 MG?"}
 {"question_id": "train_4892", "question_paraphrase": "How many terms has the oldest current legislator served?"}
-{"question_id": "train_94", "question_paraphrase": "Give the titles of the three movies with the highest number of critic likes on user-submitted ratings."}
 {"question_id": "train_7110", "question_paraphrase": "Give the last names of employees whose middle name begins with the letter C."}
 {"question_id": "train_5208", "question_paraphrase": "For cities that use the alias St Thomas, list the postal point type for each."}
 {"question_id": "train_1363", "question_paraphrase": "Which patient had the highest systolic blood pressure? Please provide his or her full name."}
@@ -2698,16 +2633,13 @@
 {"question_id": "train_4827", "question_paraphrase": "How many legislators have the first name John?"}
 {"question_id": "train_5202", "question_paraphrase": "What percentage of residential areas within countries have more than 10,000 households?"}
 {"question_id": "train_59", "question_paraphrase": "Was the person who created the list called \"250 Favourite Films\" marked as a trialist at the time they created that list?"}
-{"question_id": "train_8170", "question_paraphrase": "Provide the store number associated with the weather station that reported the largest snowfall."}
 {"question_id": "train_1362", "question_paraphrase": "How many times was Elly Koss's systolic blood pressure recorded?"}
 {"question_id": "train_4785", "question_paraphrase": "List the Wikipedia IDs for historical legislators who were Readjuster Democrats."}
 {"question_id": "train_150", "question_paraphrase": "Which movies were rated by user 39115684? For each, give the movie title, the rating date, and the rating score."}
-{"question_id": "train_8177", "question_paraphrase": "Which item's number had the largest number of units sold in store number 1 on 1/1/2012?"}
 {"question_id": "train_5088", "question_paraphrase": "Give the names of all counties that contain at least one residential area which observes daylight saving time."}
 {"question_id": "train_1430", "question_paraphrase": "Among measurements recorded in 2011, list each patient's name and age for those with a systolic blood pressure reading of 200 mmHg."}
 {"question_id": "train_7147", "question_paraphrase": "Which contact type is represented by the number 16?"}
 {"question_id": "train_5183", "question_paraphrase": "How many people lived in Wilcox County in 2010?"}
-{"question_id": "train_8176", "question_paraphrase": "For the station associated with store number 9, by what percentage did the average temperature increase from 2012-02-02 to 2012-02-03?"}
 {"question_id": "train_7035", "question_paraphrase": "Which single female employee earns the highest pay? Provide her full name (first, middle, last) and her job title."}
 {"question_id": "train_29", "question_paraphrase": "Which movie is associated with the user rating whose critic accumulated the highest number of likes?"}
 {"question_id": "train_4805", "question_paraphrase": "When was Amy Klobuchar born?"}
@@ -2715,55 +2647,42 @@
 {"question_id": "train_7012", "question_paraphrase": "Give the product's name, its product line, the rating, and its selling price for the product that has the lowest rating."}
 {"question_id": "train_1526", "question_paraphrase": "What is the start date of the care plan for patient Walter Bahringer?"}
 {"question_id": "train_5156", "question_paraphrase": "What are the area code and country for the city called Savoy?"}
-{"question_id": "train_8141", "question_paraphrase": "Which dates did station number 2 record temperatures higher than its 30-year normal?"}
-{"question_id": "train_8178", "question_paraphrase": "How many stores are associated with weather station number 12?"}
 {"question_id": "train_4797", "question_paraphrase": "For legislators who maintain an Instagram profile and whose Thomas identifier is less than 1000, provide their official full names and their nicknames."}
 {"question_id": "train_7225", "question_paraphrase": "How many production technicians earn a pay rate that is below the average pay rate for production technicians?"}
 {"question_id": "train_1373", "question_paraphrase": "What was the body height measurement for Mr. Vincent Wyman on 2010/8/2?"}
 {"question_id": "train_4838", "question_paraphrase": "What is the district number for the House representative named Jonathan Grout?"}
 {"question_id": "train_5216", "question_paraphrase": "For places with the alias Ponce, what percentage have a country level FIPS code less than 20?"}
 {"question_id": "train_130", "question_paraphrase": "Of the films with a popularity value greater than 13000, which one received the lowest rating?"}
-{"question_id": "train_8200", "question_paraphrase": "What's the lowest recorded dew point?"}
 {"question_id": "train_1489", "question_paraphrase": "At what age was Mr. Stacy Morar when he was first admitted to the emergency department for a drug overdose?"}
 {"question_id": "train_4751", "question_paraphrase": "Which state did the incumbent Sherrod Brown represent during the term that began on January 5, 1993?"}
-{"question_id": "train_8165", "question_paraphrase": "What was the dew point recorded by the weather station assigned to store number 15 on 2012-02-18?"}
 {"question_id": "train_7007", "question_paraphrase": "What is the total number of transactions recorded for products that belong to the Mountain product line?"}
 {"question_id": "train_5099", "question_paraphrase": "How many Post Office locations are there in the state of New York?"}
 {"question_id": "train_1428", "question_paraphrase": "What care plan descriptions were provided to the patient diagnosed with Secondary malignant neoplasm of colon?"}
 {"question_id": "train_4853", "question_paraphrase": "Which legislators lack an Instagram account?"}
 {"question_id": "train_30", "question_paraphrase": "What is the highest popularity value among films released from 1920 through 1929, and what is the earliest timestamp at which a rating of 1 was submitted by a user who had a payment method?"}
-{"question_id": "train_8137", "question_paraphrase": "How many units of product number 9 did store number 1 sell on January 1, 2012?"}
 {"question_id": "train_7311", "question_paraphrase": "Provide the first and last names of every employee who is salaried and was hired in 2007 or any later year."}
-{"question_id": "train_4833", "question_paraphrase": "Provide the official full names of legislators whose party affiliation is Independent."}
 {"question_id": "train_78", "question_paraphrase": "How many ratings for the film \"A Way of Life\" were submitted after the year 2011?"}
 {"question_id": "train_7393", "question_paraphrase": "Which person type is most frequent among single female employees hired from 2008-01-01 through 2008-12-31?"}
-{"question_id": "train_8167", "question_paraphrase": "How many stores are linked to the weather station that logged the highest average wind speed?"}
 {"question_id": "train_1495", "question_paraphrase": "What was Mrs. Laronda Bernier's age on the date of her latest medical visit?"}
-{"question_id": "train_8163", "question_paraphrase": "What was the difference between the highest and lowest recorded temperatures at the weather station assigned to store number 7 on 2014-04-28?"}
 {"question_id": "train_7244", "question_paraphrase": "What is the description of the discount associated with the product with id 762?"}
 {"question_id": "train_4756", "question_paraphrase": "How many male members are there among the current legislators?"}
 {"question_id": "train_16", "question_paraphrase": "What is the title of the list that has the largest number of followers?"}
 {"question_id": "train_5163", "question_paraphrase": "For all cities named Arroyo, what is the percentage increase in their total population from 2010 to 2020?"}
 {"question_id": "train_7358", "question_paraphrase": "On which shelves is the product named Down Tube stored?"}
-{"question_id": "train_8192", "question_paraphrase": "How many stores are associated with the station that has the highest recorded heat index of all time?"}
 {"question_id": "train_5229", "question_paraphrase": "How many postal locations in Ohio are classified as Unique Post Office?"}
 {"question_id": "train_5104", "question_paraphrase": "What is the population change (2020 population minus 2010 population) for the most populous city in Allentown-Bethlehem-Easton, PA-NJ?"}
 {"question_id": "train_1493", "question_paraphrase": "For Jacquelyn Shanahan, what were the dates covering and the description of her most recent recommended care plan?"}
 {"question_id": "train_4885", "question_paraphrase": "How many current legislators have identifiers listed for both VoteView.com and maplight.org?"}
 {"question_id": "train_7034", "question_paraphrase": "What is the number of employees in the Production department who began their employment during 2009?"}
 {"question_id": "train_5164", "question_paraphrase": "For locations in Texas, list the zip codes and city names for those places whose total beneficiaries exceed 10,000."}
-{"question_id": "train_8175", "question_paraphrase": "On 2014-10-31, what percentage of the total units sold for the weather station linked to store number 10 were accounted for by store number 10?"}
 {"question_id": "train_4817", "question_paraphrase": "Which Twitter handle belongs to the legislator born on May 27, 1946?"}
-{"question_id": "train_8184", "question_paraphrase": "How many stores are linked to the station that has the highest average wind speed?"}
 {"question_id": "train_7365", "question_paraphrase": "What percentage of the number of product descriptions in Thai is represented by the product descriptions in Arabic?"}
-{"question_id": "train_8140", "question_paraphrase": "What was the difference between the high and low temperature at station number 1 on January 1, 2012?"}
 {"question_id": "train_7401", "question_paraphrase": "Where can I find the demographic details for the Valley Bicycle Specialists store?"}
 {"question_id": "train_1371", "question_paraphrase": "Based on all of Elly Koss's observation records, what was her average weight?"}
 {"question_id": "train_4813", "question_paraphrase": "Provide the first names of legislators who serve as senior Senators."}
 {"question_id": "train_96", "question_paraphrase": "How many users gave the movie \"White Night Wedding\" a score of 5?"}
 {"question_id": "train_5094", "question_paraphrase": "What is the maximum male-to-female population ratio among residential areas within Arecibo county?"}
 {"question_id": "train_7029", "question_paraphrase": "Which customer has the sales order with the largest subtotal among orders assigned to the salesperson who has the highest bonus?"}
-{"question_id": "train_8183", "question_paraphrase": "Which weather station is associated with the store that sold the largest number of units of item 9?"}
 {"question_id": "train_4879", "question_paraphrase": "How many representatives were Federalists and have the first name Benjamin?"}
 {"question_id": "train_1369", "question_paraphrase": "Which condition did Elly Koss have on 2009/1/8?"}
 {"question_id": "train_151", "question_paraphrase": "How many movies released from 1970 through 1980 had a popularity greater than 11,000?"}
@@ -2773,39 +2692,32 @@
 {"question_id": "train_67", "question_paraphrase": "Provide all critic names from ratings given for the movie \"A Way of Life\"."}
 {"question_id": "train_1539", "question_paraphrase": "Provide the first and last names of five patients who require medication because of a streptococcal sore throat disorder."}
 {"question_id": "train_5131", "question_paraphrase": "Which area code covers Phillips County in the state of Montana?"}
-{"question_id": "train_8181", "question_paraphrase": "Which weather station is linked to the greatest number of stores?"}
 {"question_id": "train_82", "question_paraphrase": "What portion (as a percentage) of users gave a rating of 1 to the movie \"When Will I Be Loved\"?"}
 {"question_id": "train_7018", "question_paraphrase": "Retrieve each product's name and its product line for every purchase order with an order quantity of 5000 or greater."}
 {"question_id": "train_4909", "question_paraphrase": "For the legislator born on November 26, 1727, what is the term type and when did that term begin?"}
 {"question_id": "train_114", "question_paraphrase": "How many films were directed by the director of the single most popular movie?"}
 {"question_id": "train_5086", "question_paraphrase": "Which zip code in Arecibo county has the greatest white population?"}
 {"question_id": "train_7359", "question_paraphrase": "What address type is assigned to Fun Toys and Bikes?"}
-{"question_id": "train_8210", "question_paraphrase": "For store number 11, what is the ratio formed by dividing the difference between the highest observed maximum temperature and the lowest observed minimum temperature by that lowest minimum temperature?"}
 {"question_id": "train_7307", "question_paraphrase": "Which single in-house product has the highest total rating?"}
 {"question_id": "train_93", "question_paraphrase": "Which movie that was released in 2008 received the highest score?"}
 {"question_id": "train_5098", "question_paraphrase": "How many counties does the state of Alabama have?"}
 {"question_id": "train_1384", "question_paraphrase": "On which date did Mrs. Ira Deckow receive the routine pregnancy test?"}
 {"question_id": "train_4783", "question_paraphrase": "Provide the official full names of members who are Republicans with a junior ranking."}
 {"question_id": "train_7054", "question_paraphrase": "How many employees are married among those whose pay frequency is the maximum?"}
-{"question_id": "train_8174", "question_paraphrase": "What was the station pressure recorded by the weather station associated with store number 12 on 2012-05-15?"}
 {"question_id": "train_1359", "question_paraphrase": "What was the height recorded for Elly Koss in the observation on 2008/3/11?"}
 {"question_id": "train_66", "question_paraphrase": "How many users gave the movie \"A Way of Life\" the top rating of 5?"}
 {"question_id": "train_5193", "question_paraphrase": "How many distinct cities are represented by the congressman with first name Pierluisi and last name Pedro?"}
-{"question_id": "train_4825", "question_paraphrase": "How many legislators have gender recorded as male?"}
 {"question_id": "train_7467", "question_paraphrase": "Which locations hold the product with ID 810?"}
 {"question_id": "train_1498", "question_paraphrase": "What was the duration that Elly Koss was required to take Acetaminophen 160 MG?"}
 {"question_id": "train_117", "question_paraphrase": "What is the total number of followers across all lists owned by the user who has created the greatest number of lists?"}
 {"question_id": "train_4900", "question_paraphrase": "Which of the two current legislators, Sherrod Brown or Maria Cantwell, has served more terms?"}
-{"question_id": "train_8173", "question_paraphrase": "What was the total precipitation in inches measured by the weather station associated with store number 2 on December 25, 2012?"}
 {"question_id": "train_7113", "question_paraphrase": "How many products that are Black in color are not marked as finished goods?"}
 {"question_id": "train_62", "question_paraphrase": "Give the description of the movie list owned by user 85981819 that has the greatest number of followers."}
 {"question_id": "train_5128", "question_paraphrase": "What is the name of the core-based statistical area and its type for York, Maine?"}
 {"question_id": "train_4746", "question_paraphrase": "What is the Facebook username for the oldest legislator who is currently serving?"}
-{"question_id": "train_8193", "question_paraphrase": "What was the minimum temperature on 2014-02-08 at the weather station associated with store 29?"}
 {"question_id": "train_5084", "question_paraphrase": "What is the total number of males across all residential ZIP code areas in Arecibo county?"}
 {"question_id": "train_1383", "question_paraphrase": "Between 2016/9/24 and 2016/10/10, what condition was Keven Kuhn diagnosed with? Describe the condition."}
 {"question_id": "train_7229", "question_paraphrase": "List the names of vendors that are marked as active."}
-{"question_id": "train_8197", "question_paraphrase": "What is the highest observed average speed?"}
 {"question_id": "train_7347", "question_paraphrase": "What is the transaction ID of the work order transaction that has the greatest product quantity?"}
 {"question_id": "train_35", "question_paraphrase": "How many users who had a payment method when they rated the film released in 1924 and directed by Erich von Stroheim gave it a score of 5?"}
 {"question_id": "train_4858", "question_paraphrase": "How many women began serving as representatives for California in 2015?"}
@@ -2826,7 +2738,6 @@
 {"question_id": "train_1381", "question_paraphrase": "Which patient's name corresponds to a claim dated 1947/9/11?"}
 {"question_id": "train_2277", "question_paraphrase": "How many action films produced in the United States are not in English?"}
 {"question_id": "train_4775", "question_paraphrase": "What is the YouTube ID for the channel called 'RepWassermanSchultz'?"}
-{"question_id": "train_8139", "question_paraphrase": "Which item ID had the highest number of units sold on 2012-01-01 at store number 1?"}
 {"question_id": "train_5230", "question_paraphrase": "What is the average number of beneficiaries per postal area in Guam?"}
 {"question_id": "train_5136", "question_paraphrase": "What is the count of representatives from Alabama divided by the count of representatives from Illinois?"}
 {"question_id": "train_1394", "question_paraphrase": "For patients who initiated Ibuprofen 200mg Oral Tablet during 2016, how many Dominican patients discontinued the medication exactly one month after the start date?"}
@@ -2834,18 +2745,14 @@
 {"question_id": "train_7106", "question_paraphrase": "What is the full name (first, middle, and last) of the employee associated with company number 1?"}
 {"question_id": "train_5842", "question_paraphrase": "How many flights arrived earlier than scheduled at Miami on 2018/8/12?"}
 {"question_id": "train_2265", "question_paraphrase": "Which actor IDs have a quality rating of 3 and appeared in English-language films from the USA?"}
-{"question_id": "train_8158", "question_paraphrase": "How many units of item number 9 did store number 11 sell on December 7, 2012?"}
 {"question_id": "train_7095", "question_paraphrase": "What is the total number of products when you include all items located in the Subassembly category?"}
 {"question_id": "train_1476", "question_paraphrase": "Show every observation entry recorded for the patient named Bella Rolfson."}
-{"question_id": "train_8162", "question_paraphrase": "To which weather station is store number 20 assigned?"}
-{"question_id": "train_8161", "question_paraphrase": "Which weather station id is linked to the largest number of stores?"}
 {"question_id": "train_1521", "question_paraphrase": "What is the number of white patients born in 1935 who have experienced a stroke?"}
 {"question_id": "train_2249", "question_paraphrase": "What are the genres of films in which the actor with identifier 851 served as the star?"}
 {"question_id": "train_4802", "question_paraphrase": "How many more legislators began their term in 2005 than in 1875?"}
 {"question_id": "train_2276", "question_paraphrase": "Which genres correspond to films that are English-language and classified as the newest?"}
 {"question_id": "train_7094", "question_paraphrase": "Provide the first and last names of every male employee who is single and whose job title begins with \"Production Supervisor\"."}
 {"question_id": "train_5880", "question_paraphrase": "On August 20, 2018, what was the actual departure time for the JetBlue Airways flight operated by the aircraft with tail number N903JB that flew to Fort Lauderdale–Hollywood International Airport?"}
-{"question_id": "train_8208", "question_paraphrase": "For stores 3 and 4, what are the sea-level pressure and the mean wind speed?"}
 {"question_id": "train_7443", "question_paraphrase": "Which product has the largest gap between its list price and its standard cost?"}
 {"question_id": "train_1541", "question_paraphrase": "Provide five birth dates of male patients who are taking the medication \"Penicillin V Potassium 250 MG\"."}
 {"question_id": "train_2333", "question_paraphrase": "Which actor has appeared in more films than any other?"}
@@ -2854,8 +2761,6 @@
 {"question_id": "train_1524", "question_paraphrase": "Provide the first and last names of every patient who has a condition recorded with the description cystitis."}
 {"question_id": "train_5840", "question_paraphrase": "How many planes arrived at Oakland Airport on 2018/8/7?"}
 {"question_id": "train_7315", "question_paraphrase": "Which job title belongs to the employee with the earliest hire date at the company, and which department is he in?"}
-{"question_id": "train_8164", "question_paraphrase": "How many stores are linked to the weather station that showed the largest positive deviation from the 30-year normal temperature?"}
-{"question_id": "train_8155", "question_paraphrase": "What was the average number of units sold of product number 5 at store number 3 on days when the daily maximum temperature was greater than 90?"}
 {"question_id": "train_7402", "question_paraphrase": "How many products produced internally are sellable finished goods?"}
 {"question_id": "train_2308", "question_paraphrase": "Give the IDs of movies that have publication year 1 and have a cast size of zero."}
 {"question_id": "train_1425", "question_paraphrase": "Which individuals were required to take Clopidogrel 75 MG Oral Tablet for more than ten years?"}
@@ -2863,16 +2768,13 @@
 {"question_id": "train_4869", "question_paraphrase": "What is the full name of the legislator who was born earliest?"}
 {"question_id": "train_2313", "question_paraphrase": "How many movies released in the most recent year are either Action or drama?"}
 {"question_id": "train_7070", "question_paraphrase": "How many currently active employees have the courtesy title \"Mr.\"?"}
-{"question_id": "train_8194", "question_paraphrase": "For stations associated with exactly three stores, how many reported station pressure below 30 on February 18, 2014?"}
 {"question_id": "train_1385", "question_paraphrase": "What is the average length (in days) of care plans for Mr. Wesley Lemke?"}
 {"question_id": "train_2330", "question_paraphrase": "Provide the distinct directors who have a quality rating of 3 and average earnings equal to 2 and who have not directed any films in the Comedy genre, and report how many such directors there are."}
 {"question_id": "train_5890", "question_paraphrase": "What is the origin of the flight that had the smallest recorded actual duration?"}
-{"question_id": "train_8168", "question_paraphrase": "What was the maximum temperature recorded by the weather station linked to store number 21 on 2012-11-09?"}
 {"question_id": "train_7228", "question_paraphrase": "Which business entity ID belongs to the salesperson with the highest year-to-date sales total?"}
 {"question_id": "train_1445", "question_paraphrase": "What is the average age of patients who have a care plan for prediabetes?"}
 {"question_id": "train_2307", "question_paraphrase": "How many actor entries are there for films from the USA whose cast position is greater than one?"}
 {"question_id": "train_5910", "question_paraphrase": "Return the carrier descriptions for flights to Phoenix whose arrival time is less than 40% of the average arrival time across all flights."}
-{"question_id": "train_8142", "question_paraphrase": "Which of the two dates, January 1, 2012 or January 2, 2012, had stronger winds at station number 1?"}
 {"question_id": "train_1406", "question_paraphrase": "How old is the patient named Giovanni Russel who has hypertension?"}
 {"question_id": "train_7261", "question_paraphrase": "Which vendor ranks tenth by net profit among vendors whose maximum order quantity falls between 500 and 750?"}
 {"question_id": "train_4835", "question_paraphrase": "What is the Google entity identifier for the senators who represent New York?"}
@@ -2881,14 +2783,10 @@
 {"question_id": "train_2303", "question_paraphrase": "What percentage of directors of action films are considered box office success paradox?"}
 {"question_id": "train_4855", "question_paraphrase": "List every district Benjamin Contee has previously served."}
 {"question_id": "train_2273", "question_paraphrase": "Provide five adventure films made in the UK that are not in English."}
-{"question_id": "train_8205", "question_paraphrase": "How many distinct articles did store 9 sell on days when snowfall was recorded?"}
-{"question_id": "train_8212", "question_paraphrase": "By how many degrees did the average temperature at store 18 differ from the average temperature at store 19 on September 16, 2022?"}
 {"question_id": "train_5846", "question_paraphrase": "Which airline operates the plane bearing the tail number 'N702SK'?"}
 {"question_id": "train_2306", "question_paraphrase": "Which actors have appeared in more than two films made in France? Please provide their IDs."}
 {"question_id": "train_7056", "question_paraphrase": "How many male employees have a pay rate greater than 40?"}
 {"question_id": "train_7026", "question_paraphrase": "What quantity was ordered for the purchase that has the largest price per unit?"}
-{"question_id": "train_8171", "question_paraphrase": "What was the weather summary code reported by the weather station linked to store number 2 on 2013-02-12?"}
-{"question_id": "train_8198", "question_paraphrase": "On how many distinct days did the snowfall exceed 5 inches?"}
 {"question_id": "train_4889", "question_paraphrase": "What is the current official Instagram handle for the sitting legislator Bob Corker?"}
 {"question_id": "train_5893", "question_paraphrase": "How many flights operated by the carrier named JetBlue Airways: B6 experienced zero minutes of new arrival delay?"}
 {"question_id": "train_7335", "question_paraphrase": "Which employee (first and last name) born after 1970 has the fewest sick leave hours?"}
@@ -2961,7 +2859,6 @@
 {"question_id": "train_5898", "question_paraphrase": "Provide the carrier descriptions for flights that had a departure delay of 0."}
 {"question_id": "train_4832", "question_paraphrase": "List the first and last names of the House representatives serving district 9."}
 {"question_id": "train_2983", "question_paraphrase": "In Shakespeare's works dated 1594, what proportion of scenes are from tragedies, expressed as a percentage?"}
-{"question_id": "train_893", "question_paraphrase": "How many students are research postgraduates (RPG)?"}
 {"question_id": "train_927", "question_paraphrase": "How many credits does the class called \"Computer Vision\" have?"}
 {"question_id": "train_7416", "question_paraphrase": "In how many different departments has David Bradley worked?"}
 {"question_id": "train_565", "question_paraphrase": "Find the average revenue for films that are tagged with the keyword \"paris\" and show the title of each film."}
@@ -2980,7 +2877,6 @@
 {"question_id": "train_5852", "question_paraphrase": "What percentage of flights that arrived in Pittsburgh had actual elapsed times shorter than their scheduled elapsed times?"}
 {"question_id": "train_871", "question_paraphrase": "What is the average satisfying degree for students enrolled in the course Machine Learning Theory?"}
 {"question_id": "train_534", "question_paraphrase": "Which department contains the greatest number of people?"}
-{"question_id": "train_5831", "question_paraphrase": "How many flights operated by American Airlines Inc.: AA on 2018/8/1 had actual elapsed times shorter than their scheduled elapsed times?"}
 {"question_id": "train_922", "question_paraphrase": "Provide the students' first and last names, email addresses, and intelligence values for those students whose capability is the maximum and whose salary is high."}
 {"question_id": "train_2334", "question_paraphrase": "Which film genre has the greatest number of directed movies?"}
 {"question_id": "train_5477", "question_paraphrase": "What is the maximum listed price for the dish called \"Clear green turtle\" as it appears on any menu page?"}
@@ -3053,7 +2949,6 @@
 {"question_id": "train_5563", "question_paraphrase": "How many menus that did not provide a contact number for ordering or booking were created before 1950?"}
 {"question_id": "train_7389", "question_paraphrase": "Which non-sales employee has the highest number of rejected purchase orders, and what is their full name?"}
 {"question_id": "train_3001", "question_paraphrase": "How many distinct characters appear in Hamlet?"}
-{"question_id": "train_5541", "question_paraphrase": "How many dishes have a total appearance count that is greater than the number of distinct menus on which they appeared?"}
 {"question_id": "train_563", "question_paraphrase": "What fraction of all movies belong to the Horror genre?"}
 {"question_id": "train_886", "question_paraphrase": "Among the research assistants supervised by Professor Ogdon Zywicki, what percentage are taught postgraduate students?"}
 {"question_id": "train_391", "question_paraphrase": "During 2015, how many consumer complaints related to Billing disputes were submitted by customers in Portland?"}
@@ -3166,7 +3061,6 @@
 {"question_id": "train_414", "question_paraphrase": "Give the names of every crew member who worked on the film Pirates of the Caribbean: At World's End."}
 {"question_id": "train_5843", "question_paraphrase": "How many American Airlines flights were cancelled with a cancellation code of 'A'?"}
 {"question_id": "train_2968", "question_paraphrase": "How many of Shakespeare's works are labeled as comedies?"}
-{"question_id": "train_942", "question_paraphrase": "Which course or courses rank highest in both importance and difficulty?"}
 {"question_id": "train_5482", "question_paraphrase": "What is the name of the dish with the highest price on the menu titled \"Zentral Theater Terrace\"?"}
 {"question_id": "train_7357", "question_paraphrase": "List the five products that have the highest total quantity ordered."}
 {"question_id": "train_512", "question_paraphrase": "Show the taglines for movies that are in the Polski language."}
@@ -3280,7 +3174,6 @@
 {"question_id": "train_5676", "question_paraphrase": "What is the name of the customer for the shipment with ID 1147?"}
 {"question_id": "train_3806", "question_paraphrase": "Give the attribute values for businesses located in Scottsdale that are in the Fashion category."}
 {"question_id": "train_5494", "question_paraphrase": "Which dish names appeared on the menu page whose identifier is 174?"}
-{"question_id": "train_959", "question_paraphrase": "Provide the first and last names of the student(s) who have the highest GPA."}
 {"question_id": "train_7300", "question_paraphrase": "Of the products that have received more than one review, how many belong to the mountain product line?"}
 {"question_id": "train_550", "question_paraphrase": "Which genres are associated with the film titled Forrest Gump?"}
 {"question_id": "train_5650", "question_paraphrase": "Which driver carried the shipment with the smallest weight? Provide the driver's full name."}
@@ -3292,7 +3185,6 @@
 {"question_id": "train_5605", "question_paraphrase": "On average, how many shipments has each truck of the Kenworth brand completed?"}
 {"question_id": "train_7414", "question_paraphrase": "Provide the first and last names of all store-contact employees who had credit cards that expired in 2007."}
 {"question_id": "train_3769", "question_paraphrase": "Which category is the business with the largest number of \"long\" reviews classified in?"}
-{"question_id": "train_5562", "question_paraphrase": "What is the number of dishes listed on the menu titled \"Zentral Theater Terrace\"?"}
 {"question_id": "train_3635", "question_paraphrase": "What is the ratio of the count of papers presented at the International Conference on Thermoelectrics to the count presented at the International Conference on Wireless Networks, Communications and Mobile Computing?"}
 {"question_id": "train_444", "question_paraphrase": "Which actor portrayed Captain Jack Sparrow in every Pirates of the Caribbean film?"}
 {"question_id": "train_7040", "question_paraphrase": "What is the pay frequency for the employee who has the fewest sick leave hours?"}
@@ -3682,7 +3574,6 @@
 {"question_id": "train_5012", "question_paraphrase": "How many different events are there in Athletics?"}
 {"question_id": "train_4735", "question_paraphrase": "For the Disney films directed by Gary Trousdale, what percentage earned more than USD 100 million based on their actual total gross?"}
 {"question_id": "train_3615", "question_paraphrase": "Which papers with non-empty titles were published in 2003 by the journal named \"Theoretical Computer Science\"?"}
-{"question_id": "train_4994", "question_paraphrase": "In which city did the 1992 Summer Olympics take place?"}
 {"question_id": "train_4232", "question_paraphrase": "How many awards were won in total (how many award entries have the result 'Winner')?"}
 {"question_id": "train_4688", "question_paraphrase": "Which films feature Donald Duck as the hero, and who directed each of those films?"}
 {"question_id": "train_2320", "question_paraphrase": "How many distinct 35-year-old users have rated the film from the United Kingdom?"}
@@ -3757,7 +3648,6 @@
 {"question_id": "train_4656", "question_paraphrase": "How many films directed by Gary Trousdale are classified as Adventure?"}
 {"question_id": "train_4245", "question_paraphrase": "Who is credited as producer for The simpson 20s: Season 20?"}
 {"question_id": "train_2319", "question_paraphrase": "Which movie received the most ratings from users aged 25?"}
-{"question_id": "train_5051", "question_paraphrase": "How many male athletes from Belgium have participated in the Olympic Games?"}
 {"question_id": "train_4661", "question_paraphrase": "How many movies belong to the Horror genre?"}
 {"question_id": "train_7160", "question_paraphrase": "What is the number of characters in the password for Catherine Ward's e-mail account?"}
 {"question_id": "train_2261", "question_paraphrase": "Which user ID corresponds to the individual who gave the greatest number of ratings equal to 5?"}
@@ -3765,7 +3655,6 @@
 {"question_id": "train_4966", "question_paraphrase": "Which editions of the Olympic Games did Morten Aleksander Djupvik compete in?"}
 {"question_id": "train_4210", "question_paraphrase": "For the episode \"No Loan Again, Naturally\", how many star ratings received no more than 50 votes?"}
 {"question_id": "train_5245", "question_paraphrase": "Provide the first and last names of customers who bought one or more root beers made by AJ Stephans Beverages."}
-{"question_id": "train_4703", "question_paraphrase": "Which films were directed by Jack Kinney?"}
 {"question_id": "train_7038", "question_paraphrase": "Which department has an employee who began working most recently?"}
 {"question_id": "train_5074", "question_paraphrase": "Which season did the games occur in that a competitor who weighed 73 kg and was 180 cm tall took part in?"}
 {"question_id": "train_4666", "question_paraphrase": "Show every song that appears in movies categorized as Drama."}
@@ -3818,7 +3707,6 @@
 {"question_id": "train_5292", "question_paraphrase": "What percentage of all transactions took place at Sac State American River Courtyard?"}
 {"question_id": "train_4623", "question_paraphrase": "Which individual was the director of the movie Pinocchio?"}
 {"question_id": "train_2325", "question_paraphrase": "How many distinct actors appeared in the movie with the highest rating?"}
-{"question_id": "train_4277", "question_paraphrase": "Which keywords are associated with the episode titled \"Take My Life, Please\"?"}
 {"question_id": "train_5069", "question_paraphrase": "Return the IDs of the games that were held in Tokyo."}
 {"question_id": "train_7378", "question_paraphrase": "How many people have a projected annual sales quota of less than 500,000?"}
 {"question_id": "train_5289", "question_paraphrase": "Which brand Id corresponds to the root beer that has the greatest number of customers who gave it a 1-star rating?"}
@@ -3878,11 +3766,9 @@
 {"question_id": "train_498", "question_paraphrase": "Provide the titles of all movies that were produced in Canada."}
 {"question_id": "train_7823", "question_paraphrase": "What is the number of countries that use Portuguese?"}
 {"question_id": "train_4214", "question_paraphrase": "In \"Sex, Pies and Idiot Scrapes\", what percentage of the votes did the 9-star rating receive?"}
-{"question_id": "train_5016", "question_paraphrase": "Which region contains the greatest number of athletes?"}
 {"question_id": "train_5332", "question_paraphrase": "What did the customer write in their review of Bulldog root beer dated July 26, 2013?"}
 {"question_id": "train_7894", "question_paraphrase": "In which year did Brunei gain its independence?"}
 {"question_id": "train_524", "question_paraphrase": "Which actors have portrayed characters whose names contain the word captain?"}
-{"question_id": "train_4238", "question_paraphrase": "Which keywords are linked to the episode titled 'Take My Life, Please'?"}
 {"question_id": "train_5003", "question_paraphrase": "How much does Dagfinn Sverre Aarskog weigh?"}
 {"question_id": "train_5277", "question_paraphrase": "Which root beer brand was given a 5-star rating by customers?"}
 {"question_id": "train_3286", "question_paraphrase": "How many distinct teachers have made donations to projects based in Chicago?"}
@@ -3933,7 +3819,6 @@
 {"question_id": "train_4299", "question_paraphrase": "Which keywords are associated with episode number 426 of the series?"}
 {"question_id": "228", "question_paraphrase": "What proportion of the hydrogen in molecule TR206 is accounted for, expressed as a percentage with four decimal places?"}
 {"question_id": "train_4972", "question_paraphrase": "How many Olympic Games took place from 1990 through 1999?"}
-{"question_id": "train_7832", "question_paraphrase": "Which languages spoken in the Baltic Countries are used by more than 80%?"}
 {"question_id": "train_5235", "question_paraphrase": "Which root beer brand has the smallest per-unit margin between its retail price and its wholesale price?"}
 {"question_id": "train_3213", "question_paraphrase": "What are the names of the resources for projects created by the teacher '822b7b8768c17456fdce78b65abcc18e'?"}
 {"question_id": "train_4363", "question_paraphrase": "Which episode title corresponds to the April 19, 2009 broadcast that received five stars and was a nominee for the Prism Award?"}
@@ -3991,7 +3876,6 @@
 {"question_id": "train_7856", "question_paraphrase": "How many cities are named PHL?"}
 {"question_id": "train_3240", "question_paraphrase": "Does the project titled \"I Can't See It...Can You Help Me???\" include a tip as part of its donation?"}
 {"question_id": "train_2102", "question_paraphrase": "In 2002, how many footnotes did Aruba have across the various series codes?"}
-{"question_id": "train_4993", "question_paraphrase": "How many Olympic Games took place in London?"}
 {"question_id": "train_5268", "question_paraphrase": "List the first and last names of the ten customers when ordered by their first purchase date, with missing purchase dates treated as coming first."}
 {"question_id": "train_3185", "question_paraphrase": "What is the number of students affected by the project titled Fit Firsties!?"}
 {"question_id": "train_7853", "question_paraphrase": "Which country became independent in 1994?"}
@@ -4058,7 +3942,6 @@
 {"question_id": "train_2154", "question_paraphrase": "List the series codes and country codes for poor countries situated in Latin America & Caribbean."}
 {"question_id": "train_4164", "question_paraphrase": "Which character was the 2009 winner of the Outstanding Voice-Over Performance award?"}
 {"question_id": "train_3209", "question_paraphrase": "Is the donor with ID 22cbc920c9b5fa08dfb331422f5926b5 a teacher?"}
-{"question_id": "train_5068", "question_paraphrase": "Who is the competitor with the lowest recorded age?"}
 {"question_id": "train_7913", "question_paraphrase": "What is the life expectancy for residents of the city of Calama?"}
 {"question_id": "train_4227", "question_paraphrase": "Give the award name, the person associated with it, and the character's name for the award with ID 326."}
 {"question_id": "train_7890", "question_paraphrase": "Which city has the greatest number of inhabitants?"}
@@ -4123,7 +4006,6 @@
 {"question_id": "train_4386", "question_paraphrase": "Is there an outstanding payment linked to student348?"}
 {"question_id": "train_2215", "question_paraphrase": "In 1961, what percentage of countries in Latin America and the Caribbean had more than half of their land area used for agricultural purposes?"}
 {"question_id": "train_7859", "question_paraphrase": "Which language is officially recognized in China?"}
-{"question_id": "train_4476", "question_paraphrase": "What is the count of students with disabilities who are female?"}
 {"question_id": "train_4313", "question_paraphrase": "Provide the episode summary for episodes that have crew members indicated as not included in the credits."}
 {"question_id": "train_4984", "question_paraphrase": "How many athletes who competed in Canoeing at the 2008 Summer have a BMI between 25.0 and 30?"}
 {"question_id": "train_4445", "question_paraphrase": "Which students have been absent the most?"}
@@ -4142,7 +4024,6 @@
 {"question_id": "train_5017", "question_paraphrase": "What percentage of athletes representing Vanuatu have a height exceeding 175?"}
 {"question_id": "train_3273", "question_paraphrase": "Which cities are home to suburban schools in Los Angeles County?"}
 {"question_id": "train_4175", "question_paraphrase": "What is the title of the episode in which Pamela Hayden provided the voice for the character 'Ruthie'?"}
-{"question_id": "train_4541", "question_paraphrase": "How many students who are disabled are also male?"}
 {"question_id": "train_4506", "question_paraphrase": "Which students are enrolled at two schools and linked to two organizations?"}
 {"question_id": "train_3168", "question_paraphrase": "Which project's identifier corresponds to the largest gap between the total cost that includes optional support and the total cost that excludes optional support, and what are the names of the resources requested for that project?"}
 {"question_id": "train_4968", "question_paraphrase": "How many distinct events are held in Modern Pentathlon?"}
@@ -4150,10 +4031,8 @@
 {"question_id": "train_4942", "question_paraphrase": "What is the number of competitors aged 24 who participated in the Men's Basketball event?"}
 {"question_id": "train_4311", "question_paraphrase": "How many individuals credited as additional timer were born in the USA?"}
 {"question_id": "train_7860", "question_paraphrase": "What percentage of China's population speaks Chinese?"}
-{"question_id": "train_4461", "question_paraphrase": "How many students are registered with the Army organization?"}
 {"question_id": "train_3260", "question_paraphrase": "On what date did the project that has an essay titled Lets Share Ideas go live?"}
 {"question_id": "train_4329", "question_paraphrase": "How many episodes received a rating of more than 8 stars?"}
-{"question_id": "train_4421", "question_paraphrase": "What is the mean duration of absence for students who are disabled?"}
 {"question_id": "train_7838", "question_paraphrase": "Which continent is the country with the smallest surface area located in?"}
 {"question_id": "train_3315", "question_paraphrase": "Which publisher has released the greatest number of games?"}
 {"question_id": "train_7895", "question_paraphrase": "How many countries report a GNP value of zero?"}
@@ -4167,13 +4046,11 @@
 {"question_id": "train_5173", "question_paraphrase": "List the ZIP codes and CBSA officers for the postal locations in Oxford."}
 {"question_id": "train_3331", "question_paraphrase": "Return the identifier of the game-platform record that has the highest number of sales in Japan."}
 {"question_id": "train_3233", "question_paraphrase": "What is the teacher's title (prefix) for the teacher who authored the project whose title begins with 'Creating Memories and Inspiring Dreams'?"}
-{"question_id": "train_5048", "question_paraphrase": "Which region has the largest number of athletes?"}
 {"question_id": "train_4426", "question_paraphrase": "How many students have no payment due?"}
 {"question_id": "train_7876", "question_paraphrase": "Provide the names of countries for which English is an official language."}
 {"question_id": "train_3218", "question_paraphrase": "For the schools that received donations from account '000eebf28658900e63b538cf8a73afbd', how many are classified at the highest poverty level?"}
 {"question_id": "train_5162", "question_paraphrase": "For area code 787, how many more cities are classified as P.O. Box Only than those classified as Post Office?"}
 {"question_id": "train_3338", "question_paraphrase": "How many units were sold in Europe for the platform entry with identifier 3871?"}
-{"question_id": "train_3346", "question_paraphrase": "Which publisher has published more games than any other?"}
 {"question_id": "train_7819", "question_paraphrase": "Which country has the lowest life expectancy?"}
 {"question_id": "train_4562", "question_paraphrase": "How many students with disabilities recorded zero absences?"}
 {"question_id": "train_5211", "question_paraphrase": "What is the alias of the city that had the greatest population in 2020?"}
@@ -4215,7 +4092,6 @@
 {"question_id": "train_1241", "question_paraphrase": "What is the count of male users who use a device model labeled 'Galaxy Note 3'?"}
 {"question_id": "train_6134", "question_paraphrase": "How many establishments did the sanitarian living at 5000 N Wolcott Ave inspect in May 2011?"}
 {"question_id": "521", "question_paraphrase": "For cards with a 1997 frame style, what is the legacy-format status of the card illustrated by D. Alexander Gregory that carries a content warning (sensitive content or Wizards of the Coast)?"}
-{"question_id": "train_8185", "question_paraphrase": "Which store linked to weather station 14 sold at least 300 units of item 44 on a single day in February 2014?"}
 {"question_id": "train_1671", "question_paraphrase": "Which types of cuisine are offered by the four restaurants with the highest rating?"}
 {"question_id": "train_3866", "question_paraphrase": "How many businesses located in Arizona close at 12PM on Sundays?"}
 {"question_id": "839", "question_paraphrase": "For superheroes weighing under 100 kilograms, provide the full names of those whose eye color is brown."}
@@ -4249,7 +4125,6 @@
 {"question_id": "train_8645", "question_paraphrase": "For IUCR code 142, what is the secondary description and the incidents' latitude and longitude?"}
 {"question_id": "train_6187", "question_paraphrase": "What is the sum total of fines for violations classified in the food equipment and utensil category?"}
 {"question_id": "train_8684", "question_paraphrase": "What is the ward office address and phone number for the ward that has the greatest number of crimes in which no arrest was made?"}
-{"question_id": "train_1750", "question_paraphrase": "How many cities are located in the Bay Area?"}
 {"question_id": "train_807", "question_paraphrase": "Identify the gender of the user associated with the tweet that received 535 retweets."}
 {"question_id": "830", "question_paraphrase": "Which attribute has the lowest value for Black Panther?"}
 {"question_id": "train_4094", "question_paraphrase": "Give the categories of businesses that have a 5-star rating."}
@@ -4346,7 +4221,6 @@
 {"question_id": "train_1681", "question_paraphrase": "Which counties have A&W Root Beer restaurants?"}
 {"question_id": "779", "question_paraphrase": "How many powers does the hero named Amazo possess?"}
 {"question_id": "train_5096", "question_paraphrase": "Which area code(s) belong to cities whose female median age is greater than 32 years old?"}
-{"question_id": "train_8202", "question_paraphrase": "What is the count of distinct stations that recorded sales of item 5 during January 2014?"}
 {"question_id": "train_1081", "question_paraphrase": "How many people who use a Galaxy Note 2 are female?"}
 {"question_id": "train_780", "question_paraphrase": "What is the content of the tweet that received more likes than any other?"}
 {"question_id": "train_8242", "question_paraphrase": "Which country has the highest percentage of its population that is Albanian?"}
@@ -4416,7 +4290,6 @@
 {"question_id": "train_1940", "question_paraphrase": "On what date and in which role did the youngest player make his first appearance?"}
 {"question_id": "train_4050", "question_paraphrase": "For active businesses in the city of Phoenix that are open in the late afternoon, what is the count of such businesses and what are the top three category names among them?"}
 {"question_id": "train_1199", "question_paraphrase": "How many users aged between 20 and 60 own a phone manufactured by TCL?"}
-{"question_id": "train_8180", "question_paraphrase": "For the period from January 1, 2012 through December 31, 2014, on which date did station number 1 record its highest maximum temperature?"}
 {"question_id": "train_8391", "question_paraphrase": "In Bangladesh, which city excluding the national capital has the largest population?"}
 {"question_id": "train_1549", "question_paraphrase": "List the employee numbers of sales representatives located in New York City who report to Anthony Bow (employee number 1143)."}
 {"question_id": "train_1694", "question_paraphrase": "What are the house numbers of the locations of Aux Delices Vietnamese Restaurant?"}
@@ -4498,14 +4371,12 @@
 {"question_id": "812", "question_paraphrase": "Provide at least five superhero names who have blue eyes."}
 {"question_id": "train_6199", "question_paraphrase": "What kind of inspection was conducted at John Schaller?"}
 {"question_id": "train_8700", "question_paraphrase": "How many domestic incidents has Commander Ronald A. Pontecore Jr. been responsible for investigating?"}
-{"question_id": "train_4128", "question_paraphrase": "Which category names and attribute names apply to the business or businesses that have the highest star rating?"}
 {"question_id": "train_1721", "question_paraphrase": "How many restaurants have a rating greater than 4?"}
 {"question_id": "train_1572", "question_paraphrase": "Provide the full name and email address for each Sales Rep who works in Tokyo."}
 {"question_id": "841", "question_paraphrase": "What are the race and weight of the superhero whose identifier is 40?"}
 {"question_id": "train_1652", "question_paraphrase": "What is the total cost for order number 10100?"}
 {"question_id": "train_1664", "question_paraphrase": "Which customer and which country correspond to the payment made with check number GG31455?"}
 {"question_id": "train_6237", "question_paraphrase": "Provide the names of establishments that have a risk level of 3 and whose inspection result was 'Fail'."}
-{"question_id": "train_8186", "question_paraphrase": "Which products had the highest sales on rainy days in June 2013 at weather station number 9?"}
 {"question_id": "train_3990", "question_paraphrase": "What percentage of businesses have a five-star rating?"}
 {"question_id": "817", "question_paraphrase": "Which race does the male superhero who has blue hair belong to?"}
 {"question_id": "train_8733", "question_paraphrase": "What percentage of severe cases (those with index 'I') are classified as CRIM SEXUAL ASSAULT?"}
@@ -4518,12 +4389,9 @@
 {"question_id": "train_1585", "question_paraphrase": "For products in the \"Motorcycles\" category, show each product's code and its quantity on hand for the five items with the greatest stock, ordered from highest to lowest."}
 {"question_id": "train_1770", "question_paraphrase": "Which restaurant in San Francisco serving Asian cuisine has the highest rating, and what is its name?"}
 {"question_id": "759", "question_paraphrase": "Which eye colour does the heaviest superhero have?"}
-{"question_id": "train_1138", "question_paraphrase": "How many female users of the devices are older than 30?"}
 {"question_id": "536", "question_paraphrase": "How many users who have received more than 10 profile views registered their accounts after 2013?"}
 {"question_id": "train_6118", "question_paraphrase": "Provide the assumed names of every facility that received a failing inspection during 2010."}
-{"question_id": "train_1581", "question_paraphrase": "Provide the first and last names of employees who work in Boston."}
 {"question_id": "train_3943", "question_paraphrase": "Show the category for businesses that have a high number of reviews and a 2-star rating."}
-{"question_id": "train_1701", "question_paraphrase": "Which cities are situated in Northern California?"}
 {"question_id": "609", "question_paraphrase": "What is the total number of posts that have a score equal to 10?"}
 {"question_id": "741", "question_paraphrase": "Which superhero has the greatest number of powers?"}
 {"question_id": "train_1047", "question_paraphrase": "What is the total number of users who belong to the Home Decoration category?"}
@@ -4540,7 +4408,6 @@
 {"question_id": "train_7291", "question_paraphrase": "What is the description for the product named Headset Ball Bearings?"}
 {"question_id": "train_1629", "question_paraphrase": "Provide the phone numbers of the three customers with the largest credit limits whose sales representative is Leslie Jennings."}
 {"question_id": "train_1564", "question_paraphrase": "How many employees with the job title 'Sales Rep' are assigned to the office with code 1?"}
-{"question_id": "train_8146", "question_paraphrase": "For how many dates did the maximum temperature exceed 90 and the sales of item number 5 at store number 3 exceed 100 units?"}
 {"question_id": "train_6213", "question_paraphrase": "Which risk level is assigned to the establishment inspected by Bob Benson?"}
 {"question_id": "train_4107", "question_paraphrase": "Which kind of compliment have users received most often from other users?"}
 {"question_id": "train_3231", "question_paraphrase": "How many projects were created by teachers who teach Grades 3-5 in the Boston Public School District?"}
@@ -4571,7 +4438,6 @@
 {"question_id": "train_8454", "question_paraphrase": "Which sea does the Baltic Sea join with, and what is the depth of the Baltic Sea?"}
 {"question_id": "train_3997", "question_paraphrase": "Which cities are businesses categorized as \"Pet Services\" located in?"}
 {"question_id": "train_6212", "question_paraphrase": "How many distinct restaurants received a failing inspection during July 2010?"}
-{"question_id": "813", "question_paraphrase": "What is the average attribute value for all superheroes whose alignment is 'Neutral'?"}
 {"question_id": "664", "question_paraphrase": "What is the total score of posts that had their last activity on 2010-07-19?"}
 {"question_id": "train_1598", "question_paraphrase": "What was the average payment amount received from customers between January 1, 2004 and June 30, 2004?"}
 {"question_id": "train_1798", "question_paraphrase": "Which bowling skill is used by the largest number of players?"}
@@ -4587,7 +4453,6 @@
 {"question_id": "train_7294", "question_paraphrase": "Count how many vendors who sell the product Hex Nut 5 have a good credit rating."}
 {"question_id": "1139", "question_paraphrase": "What were the home and away teams' final goal counts for the match in the Belgian Jupiler League on September 24, 2008?"}
 {"question_id": "train_6183", "question_paraphrase": "What is the number of inspections that fall into the 'Display of Inspection Report Summary' category?"}
-{"question_id": "train_8211", "question_paraphrase": "What was the difference in total units sold between station 1 and station 2 for the year 2012?"}
 {"question_id": "train_3981", "question_paraphrase": "Provide five business IDs together with their state and city for businesses in the \"Coffee & Tea\" category."}
 {"question_id": "train_3535", "question_paraphrase": "Provide the paper titles along with each paper's author identifier for papers from 2006 that appeared at conferences with an identifier less than 100."}
 {"question_id": "train_8250", "question_paraphrase": "How many cities contain at least one salt lake within them?"}
@@ -4621,9 +4486,7 @@
 {"question_id": "train_1726", "question_paraphrase": "List the names of restaurants located in marin county."}
 {"question_id": "train_2695", "question_paraphrase": "Which product was purchased the least by stores located in Santa Clarita?"}
 {"question_id": "train_3572", "question_paraphrase": "Give the affiliations of authors who contributed to papers on Quantum Physics."}
-{"question_id": "train_1580", "question_paraphrase": "List the email address and employee number for employees who work in the United States, specifically in the state of California."}
 {"question_id": "train_7305", "question_paraphrase": "What is the average selling price across the various vendors who sell the product Hex Nut 5?"}
-{"question_id": "train_8149", "question_paraphrase": "Across all days when total precipitation exceeded 0.05, what is the sum of units sold of item number 5 at store number 3?"}
 {"question_id": "train_4124", "question_paraphrase": "What is the length of the review that user 11021 wrote for the business with ID 3?"}
 {"question_id": "1091", "question_paraphrase": "How many games took place in the Belgium Jupiler League during April 2009?"}
 {"question_id": "train_8244", "question_paraphrase": "Provide the names of countries that have more than five distinct ethnic groups."}
@@ -4665,7 +4528,6 @@
 {"question_id": "920", "question_paraphrase": "Provide all years when the Silverstone Circuit served as the venue for a Formula 1 race."}
 {"question_id": "train_1587", "question_paraphrase": "How many customers made payments more than three times during the years 2003 through 2004?"}
 {"question_id": "train_5357", "question_paraphrase": "What are the exact coordinates of the location where Tommy Kono bought something in 2014?"}
-{"question_id": "train_8153", "question_paraphrase": "Which item ID had the highest sales on the date that recorded the highest maximum temperature for store number 3 during 2012?"}
 {"question_id": "892", "question_paraphrase": "Which driver has scored the greatest number of points? Give his full name and the points total."}
 {"question_id": "train_7313", "question_paraphrase": "Which employee assigned to the night shift is the oldest, and how old are they?"}
 {"question_id": "train_1607", "question_paraphrase": "For customers based in the city of Boston, identify the customer who has the largest average payment amount."}
@@ -4705,7 +4567,6 @@
 {"question_id": "960", "question_paraphrase": "What is the average of the fastest-lap speeds from the Spanish Grand Prix held in 2009?"}
 {"question_id": "train_957", "question_paraphrase": "For professors whose teaching ability is above the overall average, provide their first and last names and email addresses for those who advise at least two students."}
 {"question_id": "train_1563", "question_paraphrase": "Compute the mean total amount per order in 2005 for orders supplied by Exoto Designs."}
-{"question_id": "train_8188", "question_paraphrase": "What is the earliest sunrise time observed at stations that were linked to at most one store during February 2012?"}
 {"question_id": "904", "question_paraphrase": "Which race and year did Michael Schumacher record his fastest lap?"}
 {"question_id": "train_1663", "question_paraphrase": "Which employees with the title 'Sales Rep' are based in NYC? Provide their full names."}
 {"question_id": "train_8463", "question_paraphrase": "List the full name and the city for every organization whose headquarters are located in the USA."}
@@ -4726,7 +4587,6 @@
 {"question_id": "1064", "question_paraphrase": "Provide the names of players who prefer using their left foot."}
 {"question_id": "train_1738", "question_paraphrase": "What proportion of the restaurants are located in the Bay Area, expressed as a percentage?"}
 {"question_id": "742", "question_paraphrase": "What is the number of superheroes who are vampires?"}
-{"question_id": "train_1135", "question_paraphrase": "What is the total number of devices that have the brand vivo?"}
 {"question_id": "train_1636", "question_paraphrase": "On what date were the items Cruz & Sons Co. ordered on 2003-03-03 sent out?"}
 {"question_id": "1116", "question_paraphrase": "Give the name(s) of the player(s) who have the greatest height."}
 {"question_id": "861", "question_paraphrase": "What is the racing number of the driver who set a 0:01:54 in Q3 during qualifying for race number 903?"}
@@ -4770,13 +4630,11 @@
 {"question_id": "1385", "question_paraphrase": "Which students received income greater than $40?"}
 {"question_id": "train_1684", "question_paraphrase": "Which street names in San Francisco have restaurants that serve seafood?"}
 {"question_id": "train_1152", "question_paraphrase": "Which device models correspond to devices that have an event recorded at longitude 121 and latitude 31?"}
-{"question_id": "875", "question_paraphrase": "Provide the season page URL for the year in which race number 901 was held."}
 {"question_id": "train_8297", "question_paraphrase": "Which capital cities belong to countries that have more than four mountains?"}
 {"question_id": "train_1584", "question_paraphrase": "Provide the first name, last name and email address of employees who are located in Paris?"}
 {"question_id": "834", "question_paraphrase": "For the superheroes produced by George Lucas, what percentage are female?"}
 {"question_id": "train_2005", "question_paraphrase": "How many matches in 2008 had a declared winner?"}
 {"question_id": "1443", "question_paraphrase": "List each event's identifier, its venue, and its status for events held between 1 November 2019 and 31 March 2020."}
-{"question_id": "train_3459", "question_paraphrase": "Which publisher has released the greatest number of distinct games overall?"}
 {"question_id": "1003", "question_paraphrase": "What is the number of accidents recorded by the driver who suffered the most accidents in the Canadian Grand Prix?"}
 {"question_id": "train_8491", "question_paraphrase": "Which organization's name corresponds to the most recent establishment in Saudi Arabia?"}
 {"question_id": "train_1702", "question_paraphrase": "What is the name of the sole 24-hour diner?"}
@@ -4788,7 +4646,6 @@
 {"question_id": "train_3600", "question_paraphrase": "List the titles of papers published in 1996."}
 {"question_id": "585", "question_paraphrase": "How much is the total bounty awarded to the post whose title is about 'data'?"}
 {"question_id": "1062", "question_paraphrase": "Which players recorded an overall rating above 80 during the years 2008 through 2010? Please provide their names."}
-{"question_id": "train_8203", "question_paraphrase": "What was the lowest recorded daily minimum temperature for store 16 during January 2012?"}
 {"question_id": "1420", "question_paraphrase": "Which major is the member serving as Vice President enrolled in?"}
 {"question_id": "806", "question_paraphrase": "What is the eye colour of the superhero whose full name is Karen Beecher-Duncan?"}
 {"question_id": "train_1106", "question_paraphrase": "Provide at least 15 phone model names manufactured by the OPPO brand."}
@@ -5202,7 +5059,6 @@
 {"question_id": "1414", "question_paraphrase": "Which major is Phillip Cullen enrolled in?"}
 {"question_id": "train_336", "question_paraphrase": "What are the distinct problems reported in complaints filed by Kaitlyn Eliza Elliott?"}
 {"question_id": "train_2453", "question_paraphrase": "Which customer from the eastern region had an order shipped on March 5, 2013?"}
-{"question_id": "train_5362", "question_paraphrase": "What are the exact latitude and longitude coordinates for the Sac State American River Courtyard?"}
 {"question_id": "train_7376", "question_paraphrase": "How much profit would the company earn from selling ten units of the product that has the lowest weight?"}
 {"question_id": "train_7717", "question_paraphrase": "Who coached the team that recorded the highest number of bench minor penalties in 2003?"}
 {"question_id": "train_3837", "question_paraphrase": "How long is business 12 in Scottsdale open on day 3?"}
@@ -5262,7 +5118,6 @@
 {"question_id": "train_2431", "question_paraphrase": "What product was purchased by Phillina Ober?"}
 {"question_id": "train_260", "question_paraphrase": "Which specific sub-product did Mr Lennox Oliver Drake complain about?"}
 {"question_id": "1350", "question_paraphrase": "What is the status of the event that purchased \"Post Cards, Posters\" on 2019-08-20?"}
-{"question_id": "train_2003", "question_paraphrase": "What is the number of matches that occurred in April 2008?"}
 {"question_id": "train_7002", "question_paraphrase": "List the product names alongside the quantity for each item in the shopping cart with ID 14951."}
 {"question_id": "385", "question_paraphrase": "Provide the ruling for Beacon of Immortality."}
 {"question_id": "1159", "question_paraphrase": "List each patient's unique identifier, gender and diagnosis for those whose serum albumin measurement is below 3.5."}
@@ -5419,9 +5274,7 @@
 {"question_id": "874", "question_paraphrase": "Which driver secured second place at the 2006 San Marino Grand Prix?"}
 {"question_id": "1355", "question_paraphrase": "Which state is listed as the hometown for Sacha Harrison?"}
 {"question_id": "train_4223", "question_paraphrase": "For the episode tagged with the keyword \"arab stereotype\", what are the vote count and percentage for its highest (10-star) rating?"}
-{"question_id": "train_5957", "question_paraphrase": "Which publisher has released the largest number of books?"}
 {"question_id": "873", "question_paraphrase": "What was Bruce McLaren's finishing time in race number 743?"}
-{"question_id": "train_4138", "question_paraphrase": "For active businesses located in Goodyear whose star rating exceeds 80% of the average star rating for active Goodyear businesses, show each business's closing time and the corresponding day of the week."}
 {"question_id": "train_8433", "question_paraphrase": "What is the difference in population between the United Kingdom and Italy?"}
 {"question_id": "train_4318", "question_paraphrase": "What is the total number of votes across all episodes that involved Adam Kuhlman?"}
 {"question_id": "1345", "question_paraphrase": "What is the total number of majors in the College of Humanities and Social Sciences?"}
@@ -5531,7 +5384,6 @@
 {"question_id": "train_6101", "question_paraphrase": "Which language is the book titled Zorro written in?"}
 {"question_id": "925", "question_paraphrase": "What is the website link that provides more information about the circuit used in the 2009 Spanish Grand Prix?"}
 {"question_id": "504", "question_paraphrase": "How many cards in the set titled 'World Championship Decks 2004' have a converted mana cost of 3?"}
-{"question_id": "train_4127", "question_paraphrase": "Provide the IDs and star ratings of businesses that are active and belong to the Food category."}
 {"question_id": "train_1841", "question_paraphrase": "What is the name of the first team in the match that had the greatest winning margin?"}
 {"question_id": "1313", "question_paraphrase": "What is the number of students whose college is the College of Engineering?"}
 {"question_id": "train_2432", "question_paraphrase": "Which customer in the South Region superstore purchased the greatest number of \"Hon Multipurpose Stacking Arm Chairs\"?"}
@@ -5546,7 +5398,6 @@
 {"question_id": "1441", "question_paraphrase": "How many members holding the position Member have a major that includes \"Education\" in its name and are in the College of Education & Human Services?"}
 {"question_id": "500", "question_paraphrase": "What is the set's name in Japanese for the card Fellwar Stone?"}
 {"question_id": "1154", "question_paraphrase": "Give the sex and date of birth for patient number 163109, and also provide the date when the examination was performed and the symptom recorded for that patient."}
-{"question_id": "train_8281", "question_paraphrase": "How large is Egypt's area expressed as a percentage of the total area of Asia?"}
 {"question_id": "train_1876", "question_paraphrase": "Which match IDs correspond to matches where the player of the match award was given to BB McCullum?"}
 {"question_id": "train_7647", "question_paraphrase": "How many players who received an award in 1983 were goalies?"}
 {"question_id": "1331", "question_paraphrase": "How much money did the Vice President receive?"}
@@ -5624,7 +5475,6 @@
 {"question_id": "train_1874", "question_paraphrase": "Between 2010 and 2016, what percentage of toss winners chose to bowl (field) first?"}
 {"question_id": "train_2430", "question_paraphrase": "Give three order IDs for orders that incurred a loss for the company."}
 {"question_id": "train_3791", "question_paraphrase": "Which users have received compliments of type \"funny\"? Provide their user IDs."}
-{"question_id": "train_8216", "question_paraphrase": "By how much did the average temperature for store 6 differ from the average temperature for store 7 during May 2012?"}
 {"question_id": "1259", "question_paraphrase": "Provide the diagnoses of patients born after January 1, 1985 who have a normal rheumatoid factor (negative or borderline)."}
 {"question_id": "train_6070", "question_paraphrase": "Provide the list of books that are written in the Arabic language."}
 {"question_id": "486", "question_paraphrase": "Among the cards from the Coldsnap set, what proportion have a converted mana cost of 7, expressed as a percentage?"}
@@ -5722,7 +5572,6 @@
 {"question_id": "train_2026", "question_paraphrase": "In which year was R Dravid born, and which role did he have?"}
 {"question_id": "train_6024", "question_paraphrase": "What are the names of publishers that have published thirty or more books?"}
 {"question_id": "1360", "question_paraphrase": "For the event named \"November Speaker\", what percentage of the total budget was allocated to Parking?"}
-{"question_id": "train_5931", "question_paraphrase": "Give the name of the publisher that has released the greatest number of books."}
 {"question_id": "train_7635", "question_paraphrase": "Give the names of all goalies born in Canada who are deceased, along with the teams they played for."}
 {"question_id": "train_3766", "question_paraphrase": "Which business category does the business with the highest number of five-star reviews belong to?"}
 {"question_id": "1373", "question_paraphrase": "How many members have their hometowns located in the state of Maryland?"}
@@ -5773,7 +5622,6 @@
 {"question_id": "train_3900", "question_paraphrase": "How many businesses sell beer and wine?"}
 {"question_id": "train_7709", "question_paraphrase": "How many years passed between Don Waddell’s earliest and latest recorded year as an NHL coach?"}
 {"question_id": "train_1412", "question_paraphrase": "What is the social security number of the female patient of Irish ethnicity who has an allergy to grass pollen?"}
-{"question_id": "train_4474", "question_paraphrase": "How many unemployed students currently have a payment outstanding?"}
 {"question_id": "train_5174", "question_paraphrase": "List the zip codes and their organization for postal locations that belong to Kingsport-Bristol, TN-VA."}
 {"question_id": "train_3999", "question_paraphrase": "How many businesses that are closed have more than ten attributes?"}
 {"question_id": "347", "question_paraphrase": "List all cards illustrated by Stephen Daniele, provide the ruling text for each, and indicate whether those cards have any missing or degraded properties or values."}
@@ -5784,7 +5632,6 @@
 {"question_id": "train_4323", "question_paraphrase": "Which title won the Best International TV Series award in 2017?"}
 {"question_id": "train_7613", "question_paraphrase": "Give the given names of players whose handedness is unspecified (i.e., recorded as both left and right) and who play in the forward position."}
 {"question_id": "train_5125", "question_paraphrase": "Which city and state are associated with the bad alias Lawrenceville?"}
-{"question_id": "train_4133", "question_paraphrase": "Which categories do active businesses located in Glendale, Arizona belong to?"}
 {"question_id": "train_7816", "question_paraphrase": "Which player has the smallest height, and what is that player's team ID for the years 1925 through 1936?"}
 {"question_id": "train_5973", "question_paraphrase": "For books released in 2004, provide each book's title together with its publisher for those whose page count is greater than 70% of the overall average page count across all books."}
 {"question_id": "train_1972", "question_paraphrase": "In how many matches did Mohammad Hafeez appear?"}
@@ -5795,7 +5642,6 @@
 {"question_id": "train_7091", "question_paraphrase": "What is the credit rating of the company that has an average lead time of 16 days, a standard price of 18.9900, and a last receipt date of August 27, 2011?"}
 {"question_id": "train_8", "question_paraphrase": "List all movie titles that were rated in April 2020 by users who were trialists."}
 {"question_id": "train_6810", "question_paraphrase": "Provide the names of any two parts that use the wrap bag container and have a supply cost less than 10."}
-{"question_id": "train_6047", "question_paraphrase": "Which author wrote the book that has the greatest number of pages?"}
 {"question_id": "train_5130", "question_paraphrase": "Which county corresponds to the bad alias Druid Hills?"}
 {"question_id": "train_4062", "question_paraphrase": "How many businesses classified as \"DJs\" have a rating below 5?"}
 {"question_id": "362", "question_paraphrase": "What is the ruling text for the card Condemn?"}
@@ -5896,7 +5742,6 @@
 {"question_id": "train_1879", "question_paraphrase": "What is the total number of matches that Mumbai Indians have won?"}
 {"question_id": "train_3878", "question_paraphrase": "What is the average star rating for businesses that close at 12PM on Sundays?"}
 {"question_id": "train_2801", "question_paraphrase": "Which coach was in charge of the BOS team in 1950; provide the coach's ID along with the number of wins and losses."}
-{"question_id": "331", "question_paraphrase": "How many molecules have a designation of '+'?"}
 {"question_id": "train_1379", "question_paraphrase": "How many claims did Ms. Abbie Cole have in 2011?"}
 {"question_id": "train_7706", "question_paraphrase": "Which position did the player identified as \"hartgi01\" play during his Stanley Cup finals appearances?"}
 {"question_id": "train_5986", "question_paraphrase": "How many orders were delivered in 2019?"}
@@ -5909,7 +5754,6 @@
 {"question_id": "344", "question_paraphrase": "Show all printed cards of mythic rarity that are banned in the gladiator format."}
 {"question_id": "train_7765", "question_paraphrase": "Give the first names of coaches who have coached the Montreal Canadiens."}
 {"question_id": "train_1858", "question_paraphrase": "How many players were dismissed in inning 1 of game number 548335?"}
-{"question_id": "train_3988", "question_paraphrase": "How many businesses in Phoenix have a rating higher than 3 stars?"}
 {"question_id": "1012", "question_paraphrase": "What was the position when Lewis Hamilton recorded the fastest lap in a Formula 1 race?"}
 {"question_id": "train_4534", "question_paraphrase": "Provide the names of students who are female and have applied for bankruptcy."}
 {"question_id": "train_4328", "question_paraphrase": "For the episode titled \"No Loan Again, Naturally\" with an overall score of 6.8, what percentage of that score comes from ratings between 5 and 10?"}
@@ -5927,7 +5771,6 @@
 {"question_id": "train_1420", "question_paraphrase": "Which procedures were performed on the patient named Emmy Waelchi?"}
 {"question_id": "train_926", "question_paraphrase": "How many students with GPAs from 3.1 through 3.7 inclusive are undergraduate students?"}
 {"question_id": "train_7105", "question_paraphrase": "How many employees are paid on a monthly schedule and have an hourly rate exceeding 50?"}
-{"question_id": "train_7799", "question_paraphrase": "In 2010, which hand did the goaltender with the most shutouts use to catch?"}
 {"question_id": "275", "question_paraphrase": "Which molecule IDs have a bond with type '='?"}
 {"question_id": "train_7455", "question_paraphrase": "For order number 425, how many days elapsed from its start until it was completed?"}
 {"question_id": "train_2841", "question_paraphrase": "Between 1962 and 1975 inclusive, how many distinct coaches received the award?"}
@@ -5936,7 +5779,6 @@
 {"question_id": "train_3819", "question_paraphrase": "Provide the IDs of all businesses located in Mesa that have at least one review with more than 3 stars."}
 {"question_id": "train_1410", "question_paraphrase": "For patients diagnosed with hypertension, what is the mean diastolic blood pressure?"}
 {"question_id": "train_6096", "question_paraphrase": "How many pages does the book included in order 1167 have?"}
-{"question_id": "train_5331", "question_paraphrase": "What are the exact geographic coordinates (latitude and longitude) for Sac State Union?"}
 {"question_id": "train_2887", "question_paraphrase": "Provide the first name, last name, height, and weight of players who attempted at least one free throw and made every free throw they attempted."}
 {"question_id": "train_7651", "question_paraphrase": "List the years in which, for the NHL, shots against a goalie were recorded."}
 {"question_id": "train_5940", "question_paraphrase": "Which country contains the city called Žirovnica?"}
@@ -5963,7 +5805,6 @@
 {"question_id": "train_2818", "question_paraphrase": "Which team, among those led by the recipient of the 1994 NBA Coach of the Year award, has the greatest number of home losses?"}
 {"question_id": "424", "question_paraphrase": "What percentage of all cards lack a text box and have a normal layout?"}
 {"question_id": "train_2006", "question_paraphrase": "What is the ID of the country in which the city called East London is located?"}
-{"question_id": "train_4473", "question_paraphrase": "What is the count of unemployed students who are registered with the Army organization?"}
 {"question_id": "train_4059", "question_paraphrase": "List the opening times and the corresponding days of the week for businesses classified under the category named Doctors."}
 {"question_id": "train_1527", "question_paraphrase": "List the descriptions of the care plans for the patient whose name is Major D'Amore."}
 {"question_id": "train_7107", "question_paraphrase": "What is the name of the supplier with ID 1492?"}
@@ -5985,7 +5826,6 @@
 {"question_id": "train_6058", "question_paraphrase": "What percentage of orders that had a status update in 2022 were marked as returned?"}
 {"question_id": "train_3813", "question_paraphrase": "How many businesses located in Scottsdale have ratings that indicate a wonderful experience?"}
 {"question_id": "train_2797", "question_paraphrase": "Which team(s) have lost more than 75% of the games they played?"}
-{"question_id": "train_5971", "question_paraphrase": "What's the name of the publisher for the book titled The Illuminati?"}
 {"question_id": "train_7676", "question_paraphrase": "Which birth year corresponds to players who have collectively received the greatest number of awards?"}
 {"question_id": "train_1913", "question_paraphrase": "Count the number of players who are older than the player named Gurkeerat Singh."}
 {"question_id": "train_4035", "question_paraphrase": "In which year did the number of elite users reach its highest value?"}
@@ -6046,7 +5886,6 @@
 {"question_id": "train_7732", "question_paraphrase": "How many players with no recorded shooting/catching hand made their NHL debut in 2011?"}
 {"question_id": "393", "question_paraphrase": "How many cards illustrated by John Avon are missing either the regular or the foil marketplace listing?"}
 {"question_id": "train_1429", "question_paraphrase": "What is the prevalence rate for the patients' conditions that began on May 9, 2014?"}
-{"question_id": "train_4495", "question_paraphrase": "Of the students who owe a payment, how many are unemployed?"}
 {"question_id": "train_3848", "question_paraphrase": "How many long reviews written by the user whose id is 3 received a medium number of useful votes?"}
 {"question_id": "train_4215", "question_paraphrase": "Which award titles and the people who won them in 2009 should be listed?"}
 {"question_id": "335", "question_paraphrase": "How many distinct molecules contain an oxygen atom that is double-bonded?"}
@@ -6058,7 +5897,6 @@
 {"question_id": "train_2621", "question_paraphrase": "For the customer Ei, how many of their orders had a quantity exceeding 4?"}
 {"question_id": "train_1479", "question_paraphrase": "How many mothers received an immunization on the same day as a prenatal visit (normal pregnancy)?"}
 {"question_id": "197", "question_paraphrase": "Compute the mean number of oxygen atoms per molecule among molecules that have single bonds."}
-{"question_id": "train_6892", "question_paraphrase": "What is the mean supply cost for the part called \"hot spring dodger dim light\"?"}
 {"question_id": "train_7125", "question_paraphrase": "What is the average lead time to receive purchased items, and what is the vendor's name for business number 1496?"}
 {"question_id": "train_7661", "question_paraphrase": "Which awards were received by coaches who were born in 1952?"}
 {"question_id": "train_3567", "question_paraphrase": "How many papers were preprinted from 1990 through 2000 inclusive?"}
@@ -6155,7 +5993,6 @@
 {"question_id": "train_3085", "question_paraphrase": "Give the price of the sole Toyota Corona hardtop present in the database."}
 {"question_id": "train_2672", "question_paraphrase": "What was the average number of orders per year placed by Weimei Corp across 2018, 2019, and 2020?"}
 {"question_id": "train_8773", "question_paraphrase": "How many restaurants have owners who are located in California?"}
-{"question_id": "train_4539", "question_paraphrase": "How many students with disabilities currently owe payments?"}
 {"question_id": "train_1852", "question_paraphrase": "What was the winning margin (in points) in the match between Mumbai Indians and Royal Challengers Bangalore on May 28, 2008?"}
 {"question_id": "train_5356", "question_paraphrase": "Which brand in 2012 received a one-star rating and contains both cane sugar and honey?"}
 {"question_id": "train_5945", "question_paraphrase": "What is the customer's full name for the person who uses the e-mail address aalleburtonkc@yellowbook.com?"}
@@ -6184,7 +6021,6 @@
 {"question_id": "train_3082", "question_paraphrase": "What is the price of the Volkswagen Dasher that has an acceleration of 14.1 mph?"}
 {"question_id": "train_7710", "question_paraphrase": "What hand does the goalie who recorded the most shutouts in 1996 use to catch?"}
 {"question_id": "train_2836", "question_paraphrase": "Which coaches led teams whose win percentage exceeded 80%?"}
-{"question_id": "train_4569", "question_paraphrase": "What is the count of disabled students who are employed and recorded zero absences?"}
 {"question_id": "258", "question_paraphrase": "Which bond types are associated with atoms that have the element Tin?"}
 {"question_id": "train_1477", "question_paraphrase": "Which patients' first and last names correspond to a 'Calcium' measurement value below 8.6?"}
 {"question_id": "train_1793", "question_paraphrase": "What is the bowling ability of SC Ganguly?"}
@@ -6211,14 +6047,12 @@
 {"question_id": "train_1514", "question_paraphrase": "What percentage of patients who began a care plan in 2010 are female?"}
 {"question_id": "train_7792", "question_paraphrase": "For the goaltender with the last name Young, for how many different teams did he play?"}
 {"question_id": "325", "question_paraphrase": "How many distinct carcinogenic molecules contain nitrogen?"}
-{"question_id": "train_6086", "question_paraphrase": "Which publisher has released the greatest number of books?"}
 {"question_id": "train_9247", "question_paraphrase": "What is the average amount paid by the customer with an id of 15?"}
 {"question_id": "train_4514", "question_paraphrase": "How many male students, as opposed to female students, filed for bankruptcy?"}
 {"question_id": "train_8822", "question_paraphrase": "How many establishments received the highest inspection score in 2013?"}
 {"question_id": "train_2670", "question_paraphrase": "List the product names sold through the wholesale channel by stores located in the Pacific/Honolulu time zone."}
 {"question_id": "train_3083", "question_paraphrase": "What is the engine displacement for the vehicle that costs 37443.85589?"}
 {"question_id": "train_1916", "question_paraphrase": "Which player's name belongs to the individual who has been named Man of the Series more times than any other?"}
-{"question_id": "train_4443", "question_paraphrase": "What is the total number of students who are disabled?"}
 {"question_id": "train_5972", "question_paraphrase": "What percentage of the works written by Abraham Lincoln were published in 1992?"}
 {"question_id": "299", "question_paraphrase": "Does TR124 have carcinogenic properties?"}
 {"question_id": "train_8790", "question_paraphrase": "What is the Id number of the business that has the highest total number of violations?"}
@@ -6269,7 +6103,6 @@
 {"question_id": "train_8777", "question_paraphrase": "How many distinct establishments that were inspected in 2016 are located in San Francisco (including entries listed as San Francisco, SAN FRANCISCO, SF, or S.F.)?"}
 {"question_id": "train_2016", "question_paraphrase": "List the names of players who play for team number 1."}
 {"question_id": "train_1520", "question_paraphrase": "List the first and last names of patients who have been on Penicillin V Potassium 250 MG from 1948 onward."}
-{"question_id": "train_5964", "question_paraphrase": "Compute the sum of prices for all ordered books placed by the customer with first name Lucas and last name Wyldbore."}
 {"question_id": "train_4524", "question_paraphrase": "Provide the names of students who have been absent from school for five months and do not owe any payment."}
 {"question_id": "train_2200", "question_paraphrase": "Which country has the highest percentage of arable land?"}
 {"question_id": "train_2873", "question_paraphrase": "What is the full name of the team that drafted Mike Lynn?"}
@@ -6317,14 +6150,11 @@
 {"question_id": "train_1535", "question_paraphrase": "Give the social security number for the patient whose systolic blood pressure reading is the highest."}
 {"question_id": "train_4417", "question_paraphrase": "How many female students are not members of any organization?"}
 {"question_id": "train_2141", "question_paraphrase": "Which indicator names had values below 100 during 1968 through 1970 and have an \"Open\" license type?"}
-{"question_id": "train_8792", "question_paraphrase": "Which establishment accumulated the greatest number of High Risk violations? Provide the establishment's name."}
 {"question_id": "train_3095", "question_paraphrase": "How many instances are there of the Ford Maverick being released to the market?"}
 {"question_id": "train_6076", "question_paraphrase": "How many titles did A.J. Ayer author?"}
 {"question_id": "train_7614", "question_paraphrase": "Which players are not included in the Hall of Fame?"}
 {"question_id": "train_2885", "question_paraphrase": "Which coach had the largest margin of wins over losses in 1988?"}
-{"question_id": "train_1930", "question_paraphrase": "What is the name of the player born most recently?"}
 {"question_id": "train_3910", "question_paraphrase": "What is the average number of reviews per year for the user with ID 3?"}
-{"question_id": "train_4446", "question_paraphrase": "How many students are registered with the organization 'army'?"}
 {"question_id": "train_2638", "question_paraphrase": "Provide the precise geographic coordinates of the store associated with order SO - 000115."}
 {"question_id": "train_2090", "question_paraphrase": "How many countries identified as Heavily Indebted Poor Countries are in the International Development Association lending category?"}
 {"question_id": "train_1522", "question_paraphrase": "Which conditions did the patient have at the time they received the IPV immunization?"}
@@ -6382,7 +6212,6 @@
 {"question_id": "train_2902", "question_paraphrase": "How many distinct players who were All-Stars in the 1973 season were black?"}
 {"question_id": "train_1917", "question_paraphrase": "In which season year was SP Narine awarded the Orange Cap?"}
 {"question_id": "train_2620", "question_paraphrase": "Give the name(s) of customers who had orders shipped on 7/8/2018."}
-{"question_id": "train_4465", "question_paraphrase": "How many students are registered with the Navy organization?"}
 {"question_id": "train_1510", "question_paraphrase": "What number of white patients have a reason code of 10509002?"}
 {"question_id": "train_7201", "question_paraphrase": "Which product colors have been reviewed?"}
 {"question_id": "train_3072", "question_paraphrase": "How many cars have acceleration greater than 10 miles per squared hour and have a price between $20,000 and $30,000 inclusive?"}
@@ -6428,7 +6257,6 @@
 {"question_id": "train_6106", "question_paraphrase": "What is the name of the author of the book that was published most recently?"}
 {"question_id": "train_3063", "question_paraphrase": "Which car model that has eight cylinders is the most expensive?"}
 {"question_id": "train_2616", "question_paraphrase": "Provide the names of cities that are in states belonging to the South region."}
-{"question_id": "train_4429", "question_paraphrase": "What is the total number of unemployed students affiliated with the navy organization?"}
 {"question_id": "train_2181", "question_paraphrase": "What is the number of countries that use the 1993 System of National Accounts methodology?"}
 {"question_id": "train_1502", "question_paraphrase": "What is the description of the medication taken by Joye Homenick?"}
 {"question_id": "train_232", "question_paraphrase": "Which titles from 1994 had an order quantity below the overall average order quantity? Return each title's name, its type, and its price."}
@@ -6644,7 +6472,6 @@
 {"question_id": "train_6937", "question_paraphrase": "How many games did the tallest player ever appear in?"}
 {"question_id": "train_2870", "question_paraphrase": "Of the coaches who received the 'ABA Coach of the Year' award, who has the most wins?"}
 {"question_id": "train_2663", "question_paraphrase": "Provide the IDs of stores and their corresponding region for locations in the state of Michigan."}
-{"question_id": "train_4438", "question_paraphrase": "Provide the names of students who are unemployed and have no recorded absences."}
 {"question_id": "train_1162", "question_paraphrase": "What is the label ID for the category \"Third-party card management\"?"}
 {"question_id": "train_2133", "question_paraphrase": "Which indicator names falling under the Education: Inputs topic are present for the year 2000?"}
 {"question_id": "train_6209", "question_paraphrase": "How many employees earning over 70,000 received a Fail result on their inspection?"}
@@ -6678,7 +6505,6 @@
 {"question_id": "train_8706", "question_paraphrase": "Which ward with a population greater than 55,000 has the highest number of crimes described as INTIMIDATION with a secondary description of EXTORTION?"}
 {"question_id": "train_6921", "question_paraphrase": "How many players who weigh more than 90 kg have the position of defense?"}
 {"question_id": "train_2598", "question_paraphrase": "List the customer names and their delivery dates for sales of the product \"Bedroom Furniture\" made through the wholesale channel in 2019."}
-{"question_id": "train_4480", "question_paraphrase": "How many students registered with the navy?"}
 {"question_id": "train_806", "question_paraphrase": "Which city is tied to the user that posted the tweet \"One of our favorite stories is @FINRA_News's move to the cloud with AWS Enterprise Support! https://amp.twimg.com/v/991837f1-4815-4edc-a88f-e68ded09a02a\"?"}
 {"question_id": "train_1173", "question_paraphrase": "For the event with identifier 79641, how many application IDs are associated with it and what are its longitude and latitude?"}
 {"question_id": "942", "question_paraphrase": "Across all Formula 1 races, what is Lewis Hamilton's average fastest-lap time measured in seconds?"}
@@ -6722,12 +6548,10 @@
 {"question_id": "train_2144", "question_paraphrase": "Which indicator names for Sudan in 1961 have an annual reporting frequency?"}
 {"question_id": "train_805", "question_paraphrase": "What is the user's gender for the tweet with identifier 'tw-715909161071091712'?"}
 {"question_id": "train_8676", "question_paraphrase": "List the latitude and longitude for incidents described as occurring in alleys where an arrest was recorded."}
-{"question_id": "train_3898", "question_paraphrase": "How many businesses that are marked active are situated in Phoenix, Arizona?"}
 {"question_id": "train_6093", "question_paraphrase": "What is the publisher's name for the book that has ISBN 76092025986?"}
 {"question_id": "train_3363", "question_paraphrase": "What is the average number of sales for Japan?"}
 {"question_id": "train_6963", "question_paraphrase": "Which game type did Matthias Trattnig play?"}
 {"question_id": "train_6195", "question_paraphrase": "Provide the addresses of employees who carried out inspections on 2010-11-05."}
-{"question_id": "train_2716", "question_paraphrase": "What is the total number of sales teams based in the Midwest?"}
 {"question_id": "train_846", "question_paraphrase": "Which city did the tweet with the greatest number of retweets originate from?"}
 {"question_id": "train_2930", "question_paraphrase": "How many coaches who won the 'NBA Coach of the Year' award from 1971 through 1975 were coaching Portland?"}
 {"question_id": "train_1137", "question_paraphrase": "Which device identifier belongs to the user with the smallest age?"}
@@ -6752,7 +6576,6 @@
 {"question_id": "train_6984", "question_paraphrase": "What is the average height in centimeters for all players who appeared for Acadie-Bathurst Titan in regular season games?"}
 {"question_id": "train_5119", "question_paraphrase": "Provide the officer’s name and title for the core-based statistical area that corresponds to ZIP code 45503."}
 {"question_id": "train_2681", "question_paraphrase": "Which sales teams have provided service to the client named Apotheca, Ltd?"}
-{"question_id": "train_4555", "question_paraphrase": "How many students registered with the Navy?"}
 {"question_id": "train_7762", "question_paraphrase": "Which team recorded the most victories in the Stanley Cup finals?"}
 {"question_id": "train_1058", "question_paraphrase": "For the event numbered 844, provide each application's identifier and indicate whether it was installed (YES or NO)."}
 {"question_id": "train_6245", "question_paraphrase": "Which establishment has an inspection category listed as No Smoking Regulations?"}
@@ -6761,9 +6584,7 @@
 {"question_id": "train_4262", "question_paraphrase": "Which episode was associated with Al Jean's Primetime Emmy Award win in 2009?"}
 {"question_id": "train_3847", "question_paraphrase": "How many reviews written by the user with ID 3 are long?"}
 {"question_id": "train_2608", "question_paraphrase": "What is the full name of the state that has the code \"GA\"?"}
-{"question_id": "train_4519", "question_paraphrase": "How many male students are not required to make a payment?"}
 {"question_id": "train_8698", "question_paraphrase": "What are the latitude and longitude coordinates for crimes that took place in the Belmont Cragin community?"}
-{"question_id": "train_3934", "question_paraphrase": "Show the closing time and weekday for active businesses in Scottsdale whose star rating exceeds 60% of the average star rating."}
 {"question_id": "train_3368", "question_paraphrase": "Which publisher released the game that achieved the greatest number of sales in North America?"}
 {"question_id": "train_6029", "question_paraphrase": "How many orders were placed in December 2020?"}
 {"question_id": "train_2137", "question_paraphrase": "Which country recorded the highest Death rate, crude (per 1,000 people) in the period 1960 to 1965?"}
@@ -6783,7 +6604,6 @@
 {"question_id": "train_6931", "question_paraphrase": "Among players whose total NHL games in their first seven seasons are at least 500, who is the player with the highest number of rule infractions?"}
 {"question_id": "train_777", "question_paraphrase": "Provide the text content of every tweet that was reshared."}
 {"question_id": "train_5100", "question_paraphrase": "Provide the exact latitude and longitude coordinates for every city that uses the area code 787."}
-{"question_id": "train_2216", "question_paraphrase": "Which countries located in South Asia are in the low income group; give their full names?"}
 {"question_id": "train_8730", "question_paraphrase": "Provide all contact information for the police district called Near West."}
 {"question_id": "train_6154", "question_paraphrase": "What was the total amount of fines imposed on RON OF JAPAN INC for the inspection conducted in February 2014?"}
 {"question_id": "train_778", "question_paraphrase": "How many tweets have a reach greater than 1000 unique users?"}
@@ -6792,7 +6612,6 @@
 {"question_id": "train_2109", "question_paraphrase": "List the indicator names along with their aggregation methods for indicators whose topic is Economic Policy & Debt: Balance of payments: Capital & financial account."}
 {"question_id": "train_1967", "question_paraphrase": "How many games took place during the year 2011?"}
 {"question_id": "train_5271", "question_paraphrase": "What is the number of transactions that used MasterCard as the payment method during 2014?"}
-{"question_id": "train_8189", "question_paraphrase": "Which store recorded the greatest number of units sold of item 45 at weather station 17 in October 2012?"}
 {"question_id": "train_1835", "question_paraphrase": "What was the date of the Chennai Super Kings' first match?"}
 {"question_id": "train_6218", "question_paraphrase": "Among establishments that passed their inspections, what proportion are classified as risk level 1, expressed as a percentage?"}
 {"question_id": "train_3971", "question_paraphrase": "For every attribute whose name begins with \"music\", provide the attribute's ID and its name."}
@@ -6830,12 +6649,10 @@
 {"question_id": "train_2576", "question_paraphrase": "Return all customers whose name contains the word 'Group'."}
 {"question_id": "train_838", "question_paraphrase": "Provide the tweet text for the three tweets that were seen by the largest number of distinct users."}
 {"question_id": "train_4469", "question_paraphrase": "How many female students are not required to make any payment?"}
-{"question_id": "train_8199", "question_paraphrase": "For how many days did the sun come up before 5:00 AM?"}
 {"question_id": "train_2201", "question_paraphrase": "Which subjects correspond to series that have a license type of 'Restricted'?"}
 {"question_id": "train_5287", "question_paraphrase": "For the root beer bought in 2014, what percentage were packaged in cans?"}
 {"question_id": "train_1071", "question_paraphrase": "What is the number of application IDs assigned to the category 'science fiction'?"}
 {"question_id": "train_6233", "question_paraphrase": "How many distinct restaurants received a failing inspection result in April 2010?"}
-{"question_id": "train_7790", "question_paraphrase": "Among players who scored exactly ten empty-net goals in their career, who is the tallest? Give his full name."}
 {"question_id": "train_6936", "question_paraphrase": "Which players appeared for Acadie-Bathurst Titan in the 1998–1999 regular season?"}
 {"question_id": "train_788", "question_paraphrase": "How many tweets that originated in Buenos Aires were posted on a Thursday?"}
 {"question_id": "train_8770", "question_paraphrase": "Which blocks contain the incidents that occurred in the district overseen by Robert A. Rubio?"}
@@ -6871,9 +6688,7 @@
 {"question_id": "train_853", "question_paraphrase": "Between Bangkok and Chiang Mai, which city's tweets have the higher average number of likes?"}
 {"question_id": "train_4486", "question_paraphrase": "What proportion of the entire student body is made up of students with disabilities, expressed as a percentage?"}
 {"question_id": "train_2131", "question_paraphrase": "Which country in the upper middle income group has the smallest CO2 emissions (kt)?"}
-{"question_id": "train_8195", "question_paraphrase": "Which station is linked to the greatest number of stores, and what is that station’s average maximum temperature for February 2012?"}
 {"question_id": "train_5251", "question_paraphrase": "Of all root beers sold during 2014, what percentage were produced by the brewery AJ Stephans Beverages?"}
-{"question_id": "train_6208", "question_paraphrase": "Which businesses were inspected by Joshua Rosa?"}
 {"question_id": "train_7616", "question_paraphrase": "List the first and last name of every deceased player who could use both hands, along with the age at which he died."}
 {"question_id": "train_6949", "question_paraphrase": "What proportion, expressed as a percentage, of players selected by the Toronto Maple Leafs come from Eastern European countries?"}
 {"question_id": "train_2591", "question_paraphrase": "Show the product IDs along with their names for products whose name contains the word \"Outdoor\"."}
