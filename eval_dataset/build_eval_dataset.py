@@ -42,12 +42,16 @@ FILES = [
      "rename:{table,columns}}."),
     # --- obfuscation dimension 3: question paraphrase ---
     ("question_paraphrases.jsonl", "One SQL-preserving paraphrase per test question "
-     "(question_id -> question_paraphrase). Covers the 2030 test questions."),
+     "(question_id -> question_paraphrase). One per retained question, train and test."),
     # --- eval support ---
     ("gold_star_expanded.jsonl", "SELECT*-expanded gold for the ~5 star queries "
      "(sql_base_expanded / sql_rename_expanded) so decoy columns can never leak into the gold answer."),
     ("order_sensitive_qids.json", "qids to EXCLUDE from strict EX scoring: order_sensitive "
      "(LIMIT-tie / float-accumulation non-determinism) + exec_failed (pre-existing degenerate gold)."),
+    ("leakage_test_qids.json", "Test question_ids recoverable from the train split by retrieval "
+     "rather than induction: exact_question_text (7), exact_gold_sql (28), template_collision (11), "
+     "fuzzy_jaccard_080 (28), and their union (50 of 1,389 = 3.6%). Same-database comparisons only. "
+     "Filter these out for a retrieval-free semantic-layer score."),
     ("gold_quality_flags.jsonl", "Per-question BIRD gold-annotation provenance: clean flag, "
      "bird_origin (dev/train), reason (dev1106_gold_sql_changed / dropped_by_bird23_train_filter) "
      "and, where gold changed, the corrected dev1106 SQL. The rows already excluded from the "

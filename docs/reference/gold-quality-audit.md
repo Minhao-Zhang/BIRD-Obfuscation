@@ -230,11 +230,34 @@ any companion file.
    unevenly (`financial` −64%, `retail_world` −12%) before the floor removed the worst-hit ones,
    and the retained 58 still span 60 to 383 questions, a 6x range. Without publishing corpus size,
    a per-database accuracy difference cannot be separated from a corpus-size difference.
-4. **Measure cross-split near-duplicate leakage.** The split is random per database at seed
-   42, and BIRD contains many templated near-identical questions within a database. A corpus
-   question that near-duplicates a test question lets an agent retrieve instead of induce,
-   inflating exactly the capability being measured. Worth quantifying before finalising a
-   new split.
+4. ~~**Measure cross-split near-duplicate leakage.**~~ **DONE** (`pipeline/check_split_leakage.py`,
+   run 2026-07-29). Leakage is low. Of 1,389 test questions, compared only against train
+   questions on the *same* database:
+
+   | Signal | Test questions | Share |
+   | --- | --- | --- |
+   | Exact question text present in train | 7 | 0.50% |
+   | Exact gold SQL present in train | 28 | 2.02% |
+   | Template collision (numbers / quoted literals masked) | 11 | 0.79% |
+   | Word-token Jaccard >= 0.80 to nearest train question | 28 | 2.02% |
+   | **Union of all four** | **50** | **3.60%** |
+
+   So 96.4% of the test set is clean. The distribution supports that rather than just the
+   cutoff: median nearest-neighbour similarity is 0.364 and p90 is 0.556, so the split is not
+   sitting on a bed of templated near-misses. Sweeping the cutoff gives 0.70 -> 54 questions,
+   0.60 -> 108, 0.50 -> 271; below about 0.70 the matches are generic phrasing overlap
+   ("what is the name of the ...") rather than duplication, so 0.80 is the defensible line.
+
+   Two details worth knowing. **Exact gold SQL is the sharpest signal**, because the agent has
+   literally seen that query, and 18 of those 28 have a *differently worded* question, so they
+   cannot be caught by text similarity alone. And the 7 exact-text pairs are duplicates inside
+   BIRD itself that happened to land on opposite sides of the split, not an artefact of the
+   seed-42 shuffle.
+
+   The affected ids ship as `leakage_test_qids.json`, split by signal, so a harness can report
+   a retrieval-free score over the 1,339 clean questions next to the full 1,389. Separately,
+   within-split redundancy is minor: 48 duplicate gold SQL rows in train (harmless, it slightly
+   shrinks the effective corpus) and 3 in test.
 
 ---
 
