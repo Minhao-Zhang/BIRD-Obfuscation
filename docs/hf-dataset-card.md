@@ -15,10 +15,10 @@ language:
   - es
   - zh
 task_categories:
-  - text2text-generation
+  - text-generation
 tags:
   - text-to-sql
-  - postgresql
+  - bird
   - benchmark-contamination
   - agent-evaluation
   - semantic-layer
