@@ -53,7 +53,7 @@ rs = 0.32(p = 0.23)—— 在统计上与"无关"无法区分([2])。
 | [`birdsql/bird_sql_dev_20251106`](https://huggingface.co/datasets/birdsql/bird_sql_dev_20251106)([6]) | 1,534,11 个库 | **已修正**的 dev。`question_id` 0–1533 连续,可直接与 dev 来源的行对齐。 |
 | [`birdsql/bird23-train-filtered`](https://huggingface.co/datasets/birdsql/bird23-train-filtered)([7]) | 9,428 中的 6,601 | **已过滤**的 train。无 `question_id`,需按 `(db_id, 规范化问题文本)` 对齐。 |
 
-这个区别很关键。`dev_20251106` **修正** gold SQL;`bird23-train-filtered` 则是**删除**了 BIRD 不愿
+这个区别很关键。`dev_20251106` **修正** gold SQL;[`bird23-train-filtered`](https://huggingface.co/datasets/birdsql/bird23-train-filtered) 则是**删除**了 BIRD 不愿
 背书的问题,几乎不做修正 —— 在与本数据集匹配上的 6,292 行中,只有 6 行(0.1%)SQL 不同。对
 train 来源的问题而言,"不在过滤后的 release 里"就是全部信号;上游不存在修正后的 train gold。
 
@@ -74,7 +74,7 @@ train 来源的问题而言,"不在过滤后的 release 里"就是全部信号;�
   都匹配上了。当 `dev_20251106` 的 gold SQL 在规范化(空白、大小写、结尾分号)后与我们的
   `sql_sqlite` 不同时,该行被标记。
 - **train 来源**(其余 58 个数据库):按 `(db_id, 问题)` 对齐,问题文本规范化为小写字母数字。当该
-  行**不存在于** `bird23-train-filtered` 时被标记。
+  行**不存在于** [`bird23-train-filtered`](https://huggingface.co/datasets/birdsql/bird23-train-filtered) 时被标记。
 
 删除比例佐证了"缺失=删除"而非"文本改写":BIRD 在全局删掉了 train 的 30.0%(9,428 → 6,601),
 我们 train 来源的行有 27.1% 缺失,而匹配上的行里只有 0.1% SQL 不同。
@@ -233,8 +233,8 @@ python eval_dataset/build_eval_dataset.py
 
 ## 8. 溯源
 
-清理于 2026-07-29 执行,依据的 `gold_quality_flags.jsonl` 由当日发布的 `bird_sql_dev_20251106` 与
-`bird23-train-filtered` 推导得出。清理前的问题清单可从携带本文档的那个提交的父提交中恢复。
+清理于 2026-07-29 执行,依据的 `gold_quality_flags.jsonl` 由当日发布的 [`bird_sql_dev_20251106`](https://huggingface.co/datasets/birdsql/bird_sql_dev_20251106) 与
+[`bird23-train-filtered`](https://huggingface.co/datasets/birdsql/bird23-train-filtered) 推导得出。清理前的问题清单可从携带本文档的那个提交的父提交中恢复。
 
 ---
 

@@ -136,7 +136,7 @@ Each of the 58 evaluated databases is represented in both `train_final.jsonl` an
 > The 2,739-question removal is **not** a pipeline validation failure. Those questions passed
 > R0==R1 and R1==R2 — execution validation proves the obfuscated SQL matches the original SQL, not
 > that the original SQL answers the question. They were removed because upstream BIRD has since
-> corrected (`bird_sql_dev_20251106`) or withdrawn (`bird23-train-filtered`) their gold. Rationale,
+> corrected ([`bird_sql_dev_20251106`](https://huggingface.co/datasets/birdsql/bird_sql_dev_20251106)) or withdrawn ([`bird23-train-filtered`](https://huggingface.co/datasets/birdsql/bird23-train-filtered)) their gold. Rationale,
 > method, per-database survival, and citations: [gold-quality-audit.md](../reference/gold-quality-audit.md).
 >
 > Consequence for §5's schema-symmetric split: the 11 databases that fell below the

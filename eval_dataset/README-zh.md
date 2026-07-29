@@ -51,7 +51,7 @@ python eval_dataset/build_eval_dataset.py
 
   > [!IMPORTANT]
   > **2026-07-29 已清理。** 在 10,164 个通过执行校验的问题中移除了 2,739 个,原因是上游 BIRD
-  > 已修正(`bird_sql_dev_20251106`)或撤回(`bird23-train-filtered`)了它们的 gold。见
+  > 已修正([`bird_sql_dev_20251106`](https://huggingface.co/datasets/birdsql/bird_sql_dev_20251106))或撤回([`bird23-train-filtered`](https://huggingface.co/datasets/birdsql/bird23-train-filtered))了它们的 gold。见
   > [gold-quality-audit.md](../docs/reference/gold-quality-audit-zh.md) 与下文的
   > `gold_quality_flags.jsonl`。随后有 11 个数据库跌破 60 题下限而被剔除,余下 58 个重新按 80/20
   > 划分 —— 因此数据集现为 **58 个数据库 / 6,928 个问题**。任何基于旧的 2,030 题测试集测得的结果

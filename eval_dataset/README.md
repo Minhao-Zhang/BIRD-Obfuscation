@@ -56,8 +56,8 @@ identifiers and the presence of decoy columns/tables differ.
 
   > [!IMPORTANT]
   > **Purged 2026-07-29.** 2,739 of the 10,164 execution-validated questions were removed
-  > because upstream BIRD corrected (`bird_sql_dev_20251106`) or withdrew
-  > (`bird23-train-filtered`) their gold. See
+  > because upstream BIRD corrected ([`bird_sql_dev_20251106`](https://huggingface.co/datasets/birdsql/bird_sql_dev_20251106)) or withdrew
+  > ([`bird23-train-filtered`](https://huggingface.co/datasets/birdsql/bird23-train-filtered)) their gold. See
   > [gold-quality-audit.md](../docs/reference/gold-quality-audit.md) and
   > `gold_quality_flags.jsonl` below. 11 databases then fell below the 60-question floor and
   > were dropped, and the remaining 58 were re-split 80/20 — so the dataset is now **58

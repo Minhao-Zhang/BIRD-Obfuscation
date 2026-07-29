@@ -62,7 +62,7 @@ Both are official `birdsql` publications, CC-BY-SA-4.0 (the same licence as this
 | [`birdsql/bird_sql_dev_20251106`](https://huggingface.co/datasets/birdsql/bird_sql_dev_20251106) ([6]) | 1,534, 11 DBs | **Corrected** dev. `question_id` 0–1533 contiguous, so it joins to dev-origin rows directly. |
 | [`birdsql/bird23-train-filtered`](https://huggingface.co/datasets/birdsql/bird23-train-filtered) ([7]) | 6,601 of 9,428 | **Filtered** train. No `question_id`; join on `(db_id, normalised question)`. |
 
-The distinction is load-bearing. `dev_20251106` **corrects** gold SQL. `bird23-train-filtered`
+The distinction is load-bearing. `dev_20251106` **corrects** gold SQL. [`bird23-train-filtered`](https://huggingface.co/datasets/birdsql/bird23-train-filtered)
 **deletes** questions BIRD would not stand behind and corrects almost nothing — of the 6,292
 rows that matched this dataset, only 6 (0.1%) had different SQL. For train-origin questions,
 absence from the filtered release is the entire signal; no corrected train gold exists
@@ -88,7 +88,7 @@ questions overlapping this dataset, its PostgreSQL gold is semantically identica
   `sql_sqlite` after whitespace/case/trailing-semicolon normalisation.
 - **train-origin** (the other 58 databases): join on `(db_id, question)` with the question
   normalised to lowercase alphanumerics. A row is flagged when it is **absent** from
-  `bird23-train-filtered`.
+  [`bird23-train-filtered`](https://huggingface.co/datasets/birdsql/bird23-train-filtered).
 
 Drop ratios corroborate that absence means deletion rather than text edits: BIRD removed
 30.0% of train globally (9,428 → 6,601), 27.1% of our train-origin rows are missing, and
@@ -274,7 +274,7 @@ Recover pre-purge question files from git history (the commit tagged in §8) if 
 ## 8. Provenance
 
 Purge applied 2026-07-29 against `gold_quality_flags.jsonl` derived from
-`bird_sql_dev_20251106` and `bird23-train-filtered` as published at that date. The
+[`bird_sql_dev_20251106`](https://huggingface.co/datasets/birdsql/bird_sql_dev_20251106) and [`bird23-train-filtered`](https://huggingface.co/datasets/birdsql/bird23-train-filtered) as published at that date. The
 pre-purge question manifest is recoverable from the parent of the commit that carries this
 document.
 

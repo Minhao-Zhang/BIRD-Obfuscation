@@ -187,8 +187,8 @@ a well-provisioned server this limit does not apply.
   `--summarize` prints EX/deltas/CIs. Design:
   [docs/methodology/evaluation.md §9](methodology/evaluation.md).
 - `pipeline/build_gold_quality_flags.py` → `pipeline/apply_gold_quality_filter.py`: drop questions
-  whose BIRD gold upstream has since corrected (`bird_sql_dev_20251106`) or withdrawn
-  (`bird23-train-filtered`). Purely question-level — no DB, no re-transpilation, no R1==R2 re-run,
+  whose BIRD gold upstream has since corrected ([`bird_sql_dev_20251106`](https://huggingface.co/datasets/birdsql/bird_sql_dev_20251106)) or withdrawn
+  ([`bird23-train-filtered`](https://huggingface.co/datasets/birdsql/bird23-train-filtered)). Purely question-level — no DB, no re-transpilation, no R1==R2 re-run,
   and the published dumps are untouched. Run `apply_*` with `--dry-run` first; it rewrites
   `artifacts/` in place, so refresh the snapshot with `eval_dataset/build_eval_dataset.py`
   afterwards. Applied 2026-07-29 (10,164 → 7,425 questions).
