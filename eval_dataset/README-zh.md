@@ -46,7 +46,8 @@ python eval_dataset/build_eval_dataset.py
 - **`test_final.jsonl`**(1,389):测试集划分;**评测就基于这份数据运行**。
 - **`evaluated_dbs.json`**(58):出现在上述划分中的数据库,即存活问题数 ≥60 的那些。它与
   `artifacts/retained_dbs.json` 不同 —— 后者列出四个已发布 dump 中物理存在的 69 个 schema;
-  其余 11 个只贡献 schema,不贡献问题。
+  其余 11 个只贡献 schema,不贡献问题,因此它们以未被引用的干扰项形式留在 dump 中
+  ([using-the-dataset.md](../docs/reference/using-the-dataset-zh.md))。
 
   > [!IMPORTANT]
   > **2026-07-29 已清理。** 在 10,164 个通过执行校验的问题中移除了 2,739 个,原因是上游 BIRD

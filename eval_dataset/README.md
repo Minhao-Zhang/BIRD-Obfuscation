@@ -51,7 +51,8 @@ identifiers and the presence of decoy columns/tables differ.
 - **`evaluated_dbs.json`** (58): the databases present in the splits above, i.e. those with
   ≥60 surviving questions. Distinct from `artifacts/retained_dbs.json`, which lists the 69
   schemas physically present in the four published dumps — the other 11 contribute schemas
-  but no questions.
+  but no questions, so they sit in the dumps as unreferenced distractors
+  ([using-the-dataset.md](../docs/reference/using-the-dataset.md)).
 
   > [!IMPORTANT]
   > **Purged 2026-07-29.** 2,739 of the 10,164 execution-validated questions were removed

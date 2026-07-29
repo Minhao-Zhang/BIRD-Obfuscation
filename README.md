@@ -62,7 +62,11 @@ the `pg_rename_decoy` instance. Among the metrics it reports:
   the real one. This is the trap-fire signal the decoys exist to produce, measured with
   schema-level guardrails disabled so it reflects the agent's own grounding rather than a filter.
 - **Execution accuracy (EX)** and **routing recall** — task success, and whether the agent found
-  the right tables in a pooled 69-schema lake.
+  the right tables in a pooled schema lake. Note the lake holds **69** schemas while the eval
+  covers **58** of them — the other 11 were dropped by the
+  [gold-quality purge](docs/reference/gold-quality-audit.md) but remain in the dumps, so they act
+  as unreferenced distractors. State which reading you use alongside any `routing_recall` figure;
+  it sets the denominator ([using-the-dataset.md](docs/reference/using-the-dataset.md)).
 
 The three repositories are one system:
 
@@ -70,7 +74,7 @@ The three repositories are one system:
 > ([governed-bi](https://github.com/Minhao-Zhang/governed-bi))** → **serve it through a UI
 > ([governed-bi-ui](https://github.com/Minhao-Zhang/governed-bi-ui))**
 
-The downstream 69-database scale run is in progress; see
+The downstream scale run is in progress; see
 [governed-bi](https://github.com/Minhao-Zhang/governed-bi) for current agent results. Everything
 below documents the dataset and the validation run that confirms the obfuscation behaves as
 designed.

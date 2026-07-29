@@ -189,7 +189,9 @@ a well-provisioned server this limit does not apply.
   (`Random(SEED ^ crc32(db_id))`). Drops 11 databases and restores a uniform 19.5–20.6% test
   fraction → 58 databases / 6,928 questions (5,539 train / 1,389 test). Reassigns rows only, never
   edits SQL, so R0==R1 / R1==R2 survive. Emits `evaluated_dbs.json`; leaves `retained_dbs.json` at
-  69 (the schemas in the published dumps). Idempotent. Rationale, method and citations:
+  69 (the schemas in the published dumps, leaving 11 schemas present but unreferenced by any
+  question — see [using-the-dataset.md](docs/reference/using-the-dataset.md)). Idempotent.
+  Rationale, method and citations:
   [docs/reference/gold-quality-audit.md](docs/reference/gold-quality-audit.md).
 
 ## Testing & validation

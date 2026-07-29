@@ -58,14 +58,17 @@ flowchart LR
 - **`decoy_touch_rate`** ——智能体的 SQL 有多少时候引用了损坏的诱饵列,而不是真实的那一列。
   这正是诱饵存在的意义所要产生的"陷阱触发"信号,在关闭 schema 层护栏的情况下测量,
   因此它反映的是智能体自身的落地(grounding),而非某个过滤器。
-- **执行准确率(EX)** 与 **routing recall** ——任务成功率,以及在一个汇集了 69 个 schema 的
-  数据湖里,智能体是否找对了表。
+- **执行准确率(EX)** 与 **routing recall** ——任务成功率,以及在一个汇集式 schema 数据湖里,
+  智能体是否找对了表。注意:数据湖中有 **69** 个 schema,而评测只覆盖其中 **58** 个 —— 另外 11 个
+  已被 [gold 质量清理](docs/reference/gold-quality-audit-zh.md)剔除,但仍留在转储文件中,因此充当
+  未被引用的干扰项。报告任何 `routing_recall` 数字时请说明采用哪种理解,它决定了分母
+  ([using-the-dataset.md](docs/reference/using-the-dataset-zh.md))。
 
 这三个仓库是一个整体系统:
 
 > **在这里构建对抗性评测数据集** → **用它评测智能体([governed-bi](https://github.com/Minhao-Zhang/governed-bi))** → **通过前端提供服务([governed-bi-ui](https://github.com/Minhao-Zhang/governed-bi-ui))**
 
-下游的 69 数据库规模化运行正在进行中;当前的智能体结果见
+下游的规模化运行正在进行中;当前的智能体结果见
 [governed-bi](https://github.com/Minhao-Zhang/governed-bi)。以下内容记录的是数据集本身,
 以及那次确认混淆行为符合设计的验证运行。
 
