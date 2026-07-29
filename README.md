@@ -44,7 +44,7 @@ flowchart LR
 | | |
 | --- | --- |
 | **Problem** | Frontier models may inflate Text-to-SQL scores from memorised BIRD identifiers, and a schema-probing agent has nothing adversarial to navigate. |
-| **Deliverable** | A 69-database multilingual PostgreSQL Text-to-SQL corpus (10,164 execution-validated question/SQL pairs) in four obfuscation variants, published on Hugging Face and purpose-built as an agent-evaluation substrate. |
+| **Deliverable** | A 69-database multilingual PostgreSQL Text-to-SQL corpus (7,425 execution-validated question/SQL pairs, after the [gold-quality purge](docs/reference/gold-quality-audit.md)) in four obfuscation variants, published on Hugging Face and purpose-built as an agent-evaluation substrate. |
 | **Downstream eval** | Consumed by [governed-bi](https://github.com/Minhao-Zhang/governed-bi), an execute-and-observe SQL agent scored on execution accuracy and `decoy_touch_rate` (trap avoidance). |
 | **Integrity** | Gold answers stay execution-equivalent across all four DB versions (R0==R1, R1==R2); every trap is strictly *additive*, so real rows, columns, and tables are never modified. |
 | **Status** | Dataset complete and published; a dataset-validation run is in (Claude Opus 4.8, test split); the downstream agent scale-run is underway in governed-bi. |
@@ -99,9 +99,12 @@ accuracy drop to a *mechanism* rather than to a single blurred "obfuscation" kno
 
 ## What this produces
 
-- **A validated multilingual Postgres Text-to-SQL corpus.** 69 databases; **10,164 of 10,541**
-  candidate questions pass end-to-end execution validation (8,134 train / 2,030 test, every
-  database represented in both). See [docs/methodology/dataset.md §7](docs/methodology/dataset.md).
+- **A validated multilingual Postgres Text-to-SQL corpus.** 69 databases; **7,425 questions**
+  (5,984 train / 1,441 test, every database represented in both). 10,164 of 10,541 candidates
+  pass end-to-end execution validation, and 2,739 of those were then removed because upstream
+  BIRD superseded or withdrew their gold — see
+  [docs/reference/gold-quality-audit.md](docs/reference/gold-quality-audit.md) and
+  [docs/methodology/dataset.md §7](docs/methodology/dataset.md).
 - **Obfuscated gold SQL and evidence hints**, rewritten to the renamed identifiers.
 - **Four PostgreSQL instances** covering the obfuscation combinations: `pg_base` (original),
   `pg_rename` (renamed), `pg_decoy` (traps), and `pg_rename_decoy` (renamed plus traps),
@@ -136,6 +139,14 @@ produce a number:
   `all−base` then measures the combined effect. Design: [evaluation.md §9](docs/methodology/evaluation.md).
 
 ### Dataset validation — does the obfuscation actually change model behaviour?
+
+> [!WARNING]
+> **Superseded (2026-07-29).** The numbers in this section were measured on the **old
+> 2,030-question test set**, before 2,739 questions were removed for upstream BIRD gold-annotation
+> errors ([gold-quality-audit.md](docs/reference/gold-quality-audit.md)). The test split is now
+> 1,441 questions. These EX values are retained as a record of the run, not as current results;
+> the deltas are more robust to the purge than the absolute EX, since a wrong gold penalised every
+> arm equally. Recompute by filtering stored per-question grades on `question_id`.
 
 Before handing the dataset to an agent, one frontier model was run **one-shot** over the 2,030-question
 test set to confirm the obfuscation measurably shifts behaviour, and that each dimension behaves as
@@ -179,8 +190,11 @@ drop. Numbers below are lenient EX; full tables (strict EX, per-language, bootst
   memorised wording.
 - **All combined** is the largest drop (−5.8%), lowest on Pinyin.
 
-Pipeline integrity (R0==R1, R1==R2) over 10,164 questions holds. Per-question (question, gold SQL,
-generated SQL, correctness) records for this run are in [`exports/`](exports/).
+Pipeline integrity (R0==R1, R1==R2) held over all 10,164 questions that existed at the time of this
+run, and still holds over the 7,425 retained after the purge — execution validation is unaffected by
+it, since the removed questions failed on *gold annotation quality*, not on obfuscation equivalence.
+Per-question (question, gold SQL, generated SQL, correctness) records for this run are in
+[`exports/`](exports/).
 
 ## Project status
 
@@ -299,6 +313,7 @@ regeneration; Postgres DSNs are env-configurable (`PG_*_DSN`) to target remote P
 | [docs/methodology/obfuscation.md](docs/methodology/obfuscation.md) | Obfuscation design, decisions, physical realisation; decoy-trap + paraphrase dimensions (§7-§11) |
 | [docs/methodology/evaluation.md](docs/methodology/evaluation.md) | Integrity check, contamination delta, ablation (§9) |
 | [docs/reference/corrupted-decoys-design.md](docs/reference/corrupted-decoys-design.md) | Decoy-trap design, risk register, as-built parameters |
+| [docs/reference/gold-quality-audit.md](docs/reference/gold-quality-audit.md) | BIRD gold-annotation errors, the 2026-07-29 question purge, and what is still open |
 | [docs/reference/limitations.md](docs/reference/limitations.md) | Known limitations and scope caveats; read before citing any number |
 | [docs/reference/using-the-dataset.md](docs/reference/using-the-dataset.md) | Download, restore, and run the eval |
 | [docs/reference/pipeline-invariants.md](docs/reference/pipeline-invariants.md) | Rules to preserve when editing the pipeline, with rationale |

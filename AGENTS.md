@@ -76,6 +76,8 @@ reads the previous step's output; do not skip or reorder.
 | 7 | `07_rename_sql_and_validate.py` | steps 3, 5, 6, both PG instances running |
 | 8 | `08_inject_decoys.py` | steps 3, 7, both `*_decoy` instances cloned + running (extended obfuscation, see below) |
 | 9 | `09_paraphrase_questions.py` | step 7, `pg_rename` running (extended obfuscation) |
+| — | `build_gold_quality_flags.py` | step 7; upstream birdsql releases in `artifacts/upstream/` (no DB needed) |
+| — | `apply_gold_quality_filter.py` | `build_gold_quality_flags.py` (no DB needed; **destructive** on first run) |
 
 `artifacts/schema_rename_map.json` is **git-tracked** (regeneratable via step 3 with Bedrock, but
 checked in so steps 6-7 and downstream don't depend on re-running LLM translation).
@@ -175,6 +177,13 @@ a well-provisioned server this limit does not apply.
   09's paraphrases. Train `paraphrase`/`all` additionally require step 09 with `--include-train`.
   `--summarize` prints EX/deltas/CIs. Design:
   [docs/methodology/evaluation.md §9](docs/methodology/evaluation.md).
+- `pipeline/build_gold_quality_flags.py` → `pipeline/apply_gold_quality_filter.py`: drop questions
+  whose BIRD gold upstream has since corrected (`bird_sql_dev_20251106`) or withdrawn
+  (`bird23-train-filtered`). Purely question-level — no DB, no re-transpilation, no R1==R2 re-run,
+  and the published dumps are untouched. Run `apply_*` with `--dry-run` first; it rewrites
+  `artifacts/` in place, so refresh the snapshot with `eval_dataset/build_eval_dataset.py`
+  afterwards. Applied 2026-07-29 (10,164 → 7,425 questions); rationale, method, and the open
+  re-split decision: [docs/reference/gold-quality-audit.md](docs/reference/gold-quality-audit.md).
 
 ## Testing & validation
 

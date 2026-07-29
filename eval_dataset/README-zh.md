@@ -42,8 +42,14 @@ python eval_dataset/build_eval_dataset.py
 ## 文件
 
 ### Gold 问题 / SQL 数据集(基准本身)
-- **`train_final.jsonl`**(8,134):经过验证的训练集划分。
-- **`test_final.jsonl`**(2,030):经过验证的测试集划分;**评测就基于这份数据运行**。
+- **`train_final.jsonl`**(5,984):训练集划分。
+- **`test_final.jsonl`**(1,441):测试集划分;**评测就基于这份数据运行**。
+
+  > [!IMPORTANT]
+  > **2026-07-29 已清理。** 在 10,164 个通过执行校验的问题中移除了 2,739 个,原因是上游 BIRD
+  > 已修正(`bird_sql_dev_20251106`)或撤回(`bird23-train-filtered`)了它们的 gold。见
+  > [gold-quality-audit.md](../docs/reference/gold-quality-audit-zh.md) 与下文的
+  > `gold_quality_flags.jsonl`。任何基于旧的 2,030 题测试集测得的结果均已过时。
 
   字段(两者相同):`question_id`、`db_id`、`question`、`evidence`、`evidence_rename`、
   `difficulty`、`sql_sqlite`(原始 BIRD gold)、`sql_base`(为 `pg_base` 转译的 gold)、
@@ -73,16 +79,22 @@ python eval_dataset/build_eval_dataset.py
   [docs/reference/corrupted-decoys-design.md](../docs/reference/corrupted-decoys-design-zh.md)。
 
 ### 维度 3:问题改写
-- **`question_paraphrases.jsonl`**:每个问题的 SQL 保持不变的改写
-  (`question_id -> question_paraphrase`)。`eval_dataset/` 快照含 2,030 条测试改写;
-  训练改写(再加 8,134 条)在 `artifacts/question_paraphrases.jsonl`,需步骤 09 加 `--include-train`。
+- **`question_paraphrases.jsonl`**(7,425):每个保留问题的 SQL 保持不变的改写
+  (`question_id -> question_paraphrase`),覆盖 train 与 test。
 
 ### 评测支持
-- **`gold_star_expanded.jsonl`**:为约 5 条 star 查询提供的 `SELECT *` 展开版 gold
+- **`gold_quality_flags.jsonl`**(10,164 —— 唯一仍覆盖清理前完整问题集的文件,这是有意为之):
+  每个问题的 BIRD gold 溯源信息。字段:`question_id`、`db_id`、`split`、`bird_origin`
+  (`dev`/`train`)、`clean`、`reason`(`dev1106_gold_sql_changed` /
+  `dropped_by_bird23_train_filter`),以及 398 行 dev gold 被上游修正时附带的 `dev1106_gold_sql`。
+  `clean: false` 的行正是从上述划分中移除的那些;本文件既是审计轨迹,也是重新计算任何清理前
+  指标时的连接键。见 [gold-quality-audit.md](../docs/reference/gold-quality-audit-zh.md)。
+- **`gold_star_expanded.jsonl`**:为 star 查询提供的 `SELECT *` 展开版 gold
   (`sql_base_expanded` / `sql_rename_expanded`),以确保诱饵列绝不会泄漏进 gold 答案。
+  清理后为 3 行。
 - **`order_sensitive_qids.json`**:需要**从严格 EX 评分中排除**的 qid:`order_sensitive`
-  (153 个:gold 带有 `LIMIT` 但没有全序,或含浮点聚合,因此陷阱 UPDATE 引起的堆重排会在
-  诱饵实例上产生不同但仍有效的结果)+ `exec_failed`(21 个:本就存在的退化 BIRD gold,
+  (清理后 104 个:gold 带有 `LIMIT` 但没有全序,或含浮点聚合,因此陷阱 UPDATE 引起的堆重排会在
+  诱饵实例上产生不同但仍有效的结果)+ `exec_failed`(10 个:本就存在的退化 BIRD gold,
   >200k 行 / 60s 超时)。真实数据已验证完好无损;这些属于比较层面的假象,而非损坏。
 - **`gold_result_hashes_rename_decoy.jsonl`**：`pg_rename_decoy` 上全部 train/test gold
   SQL 结果的宽松与严格 SHA-256 哈希。对模型结果算同样哈希再比对即可，不必再跑 gold。

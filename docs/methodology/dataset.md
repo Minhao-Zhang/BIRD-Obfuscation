@@ -124,7 +124,20 @@ Every one of the 69 databases in the lake is represented in both `train_final.js
 | | Count |
 | --- | --- |
 | Databases represented | 69 / 69 |
-| `artifacts/train_final.jsonl` (validated train questions) | 8,134 |
-| `artifacts/test_final.jsonl` (validated test questions) | 2,030 |
-| **Total validated questions in final deliverable** | **10,164** |
+| Passed execution validation (R0==R1, R1==R2) | 10,164 |
 | Excluded (transpilation failures + R1==R2 rename failures) | 377 (10,541 − 10,164) |
+| Removed by the gold-quality purge (2026-07-29) | 2,739 |
+| `artifacts/train_final.jsonl` (train questions) | **5,984** |
+| `artifacts/test_final.jsonl` (test questions) | **1,441** |
+| **Total questions in final deliverable** | **7,425** |
+
+> [!IMPORTANT]
+> The 2,739-question removal is **not** a pipeline validation failure. Those questions passed
+> R0==R1 and R1==R2 — execution validation proves the obfuscated SQL matches the original SQL, not
+> that the original SQL answers the question. They were removed because upstream BIRD has since
+> corrected (`bird_sql_dev_20251106`) or withdrawn (`bird23-train-filtered`) their gold. Rationale,
+> method, per-database survival, and citations: [gold-quality-audit.md](../reference/gold-quality-audit.md).
+>
+> Consequence for §5's schema-symmetric split: all 69 databases are still represented in both
+> splits, but the 80/20 balance is now uneven per database and 11 databases have fallen below the
+> `MIN_QUESTIONS = 60` floor. Re-splitting is an open decision — see that document's §6.

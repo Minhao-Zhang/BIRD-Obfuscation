@@ -11,6 +11,10 @@ artifacts/translation_quality_flags.jsonl
 # Ignored for now like the other artifacts; could be tracked (as schema_rename_map.json
 # is) if we want reproducibility without re-running the cheap model.
 artifacts/decoy_map.json
+# Upstream birdsql releases downloaded for the gold-quality audit (CC-BY-SA-4.0).
+# Not tracked, same as raw BIRD under data/ — re-download per
+# docs/reference/gold-quality-audit.md before re-running build_gold_quality_flags.py.
+artifacts/upstream/
 # workdir/ is entirely transient step-5/7/8 repair-queue + run-log scratch — never tracked
 # (jsonl queues, *.log run logs, fix_batches). Nothing here is a deliverable.
 workdir/

@@ -46,8 +46,16 @@ identifiers and the presence of decoy columns/tables differ.
 ## Files
 
 ### Gold question / SQL dataset (the benchmark itself)
-- **`train_final.jsonl`** (8,134): validated train split.
-- **`test_final.jsonl`** (2,030): validated test split; **the eval runs on this**.
+- **`train_final.jsonl`** (5,984): train split.
+- **`test_final.jsonl`** (1,441): test split; **the eval runs on this**.
+
+  > [!IMPORTANT]
+  > **Purged 2026-07-29.** 2,739 of the 10,164 execution-validated questions were removed
+  > because upstream BIRD corrected (`bird_sql_dev_20251106`) or withdrew
+  > (`bird23-train-filtered`) their gold. See
+  > [gold-quality-audit.md](../docs/reference/gold-quality-audit.md) and
+  > `gold_quality_flags.jsonl` below. Anything measured on the old 2,030-question test split
+  > is superseded.
 
   Fields (both): `question_id`, `db_id`, `question`, `evidence`, `evidence_rename`,
   `difficulty`, `sql_sqlite` (original BIRD gold), `sql_base` (gold transpiled for
@@ -81,20 +89,27 @@ identifiers and the presence of decoy columns/tables differ.
   [docs/reference/corrupted-decoys-design.md](../docs/reference/corrupted-decoys-design.md).
 
 ### Dimension 3: question paraphrase
-- **`question_paraphrases.jsonl`**: one SQL-preserving paraphrase per question
-  (`question_id -> question_paraphrase`). The `eval_dataset/` snapshot has 2,030 test rows;
-  train paraphrases (8,134 more) live in `artifacts/question_paraphrases.jsonl` after
-  step 09 with `--include-train`.
+- **`question_paraphrases.jsonl`** (7,425): one SQL-preserving paraphrase per surviving
+  question (`question_id -> question_paraphrase`), train and test.
 
 ### Eval support
-- **`gold_star_expanded.jsonl`**: `SELECT *`-expanded gold for the ~5 star queries
+- **`gold_quality_flags.jsonl`** (10,164 — the only file that still spans the pre-purge
+  question set, by design): per-question BIRD gold provenance. Fields: `question_id`,
+  `db_id`, `split`, `bird_origin` (`dev`/`train`), `clean`, `reason`
+  (`dev1106_gold_sql_changed` / `dropped_by_bird23_train_filter`), plus
+  `dev1106_gold_sql` for the 398 dev rows whose gold was corrected upstream. The
+  `clean: false` rows are exactly what was removed from the splits above; this file is the
+  audit trail and the join key for recomputing any pre-purge metric.
+  [gold-quality-audit.md](../docs/reference/gold-quality-audit.md).
+- **`gold_star_expanded.jsonl`**: `SELECT *`-expanded gold for the star queries
   (`sql_base_expanded` / `sql_rename_expanded`) so decoy columns can never leak into a
-  gold answer.
+  gold answer. 3 rows after the purge.
 - **`order_sensitive_qids.json`**: qids to **exclude from strict EX scoring**:
-  `order_sensitive` (153: gold has a `LIMIT` without a total order or a float aggregate,
-  so the heap-reorder from trap UPDATEs yields a different-but-valid result on the decoy
-  instances) + `exec_failed` (21: pre-existing degenerate BIRD gold, >200k rows / 60s
-  timeout). Real data is verified intact; these are comparison artifacts, not corruption.
+  `order_sensitive` (104 after the purge: gold has a `LIMIT` without a total order or a
+  float aggregate, so the heap-reorder from trap UPDATEs yields a different-but-valid
+  result on the decoy instances) + `exec_failed` (10: pre-existing degenerate BIRD gold,
+  >200k rows / 60s timeout). Real data is verified intact; these are comparison artifacts,
+  not corruption.
 - **`gold_result_hashes_rename_decoy.jsonl`**: lenient and strict SHA-256 hashes of gold
   SQL results on `pg_rename_decoy` (all train and test rows). Hash the model result and
   compare; you do not need to re-run gold. Fields and algorithm:

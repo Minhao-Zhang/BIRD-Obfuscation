@@ -124,7 +124,18 @@ BIRD 的 gold SQL 会从 SQLite 转译到 PostgreSQL 方言,并被改写为使�
 | | 数量 |
 | --- | --- |
 | 已覆盖的数据库 | 69 / 69 |
-| `artifacts/train_final.jsonl`(通过验证的 train 问题) | 8,134 |
-| `artifacts/test_final.jsonl`(通过验证的 test 问题) | 2,030 |
-| **最终交付物中通过验证的问题总数** | **10,164** |
+| 通过执行验证(R0==R1、R1==R2) | 10,164 |
 | 被排除(转译失败 + R1==R2 重命名失败) | 377 (10,541 − 10,164) |
+| 被 gold 质量清理移除(2026-07-29) | 2,739 |
+| `artifacts/train_final.jsonl`(train 问题) | **5,984** |
+| `artifacts/test_final.jsonl`(test 问题) | **1,441** |
+| **最终交付物中的问题总数** | **7,425** |
+
+> [!IMPORTANT]
+> 这 2,739 个问题的移除**不是**流水线校验失败。它们都通过了 R0==R1 与 R1==R2 —— 执行校验证明的是
+> 混淆后的 SQL 与原始 SQL 结果一致,而不是原始 SQL 正确回答了问题。移除的原因是上游 BIRD 此后
+> 修正了(`bird_sql_dev_20251106`)或撤回了(`bird23-train-filtered`)这些 gold。理由、方法、各库
+> 存活情况与引用:[gold-quality-audit.md](../reference/gold-quality-audit-zh.md)。
+>
+> 对 §5 的 schema 对称划分的影响:69 个数据库仍然全部出现在两个划分中,但各库的 80/20 比例现已不
+> 均匀,且有 11 个数据库跌破 `MIN_QUESTIONS = 60` 下限。是否重新划分属于待定决策 —— 见该文档 §6。
