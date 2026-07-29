@@ -14,7 +14,7 @@ splits were rebuilt, what was deliberately left alone, and which decisions are s
 
 ## 1. The finding
 
-The gold SQL this dataset was built from — BIRD 2023 `train` + `dev` — is substantially
+The gold SQL this dataset was built from, BIRD 2023 `train` + `dev`, is substantially
 mis-annotated, and the annotation errors are *systematic* rather than random. Three
 independent audits agree, and two official `birdsql` releases published after BIRD 2023
 supersede or withdraw a large fraction of the original gold.
@@ -25,7 +25,7 @@ supersede or withdraw a large fraction of the original gold.
 | Jin et al. 2026 ([2]) | Mini-Dev | 498 | **52.8%** |
 | Jin et al. 2026 ([2]) | `dev` sample | 100 | 48% required correction |
 | Zhu et al. 2026 ([4]) | **`train`** | 2,500 | **61.1%** |
-| Pourreza & Rafiei 2023 (reported via [4]) | `train` subset | — | 18.2% |
+| Pourreza & Rafiei 2023 (reported via [4]) | `train` subset | n/a | 18.2% |
 
 Jin et al.'s taxonomy, as a share of the erroneous examples (multi-label): E2
 schema/data misunderstanding 57.8%, E4 ambiguous question 29.7%, E1 question↔SQL
@@ -37,14 +37,14 @@ are counted as schools.
 The consequences for leaderboards are severe: re-evaluating 16 BIRD leaderboard agents on
 100 corrected `dev` examples moved execution accuracy by −7% to +31% relative and rankings
 by −9 to +9 positions, and rank correlation between the original leaderboard and the
-corrected subset was rs = 0.32 (p = 0.23) — statistically indistinguishable from unrelated
+corrected subset was rs = 0.32 (p = 0.23), statistically indistinguishable from unrelated
 ([2]).
 
 ### Why this matters more here than for a per-question benchmark
 
 This dataset measures whether an agent can build a **semantic layer** from prior
 (question, SQL) pairs and apply it to unseen questions. Under that paradigm the train
-split is not gradient-training data — it is the evidence corpus from which schema
+split is not gradient-training data. It is the evidence corpus from which schema
 semantics are induced. A wrong gold SQL there does not waste one row; it teaches a wrong
 mapping that propagates into every later question touching the same concept. Because
 BIRD's errors recur consistently within a database (the `rtype` omission, the `BETWEEN`
@@ -59,11 +59,11 @@ Both are official `birdsql` publications, CC-BY-SA-4.0 (the same licence as this
 
 | Release | Rows | Nature |
 | --- | --- | --- |
-| [`birdsql/bird_sql_dev_20251106`](https://huggingface.co/datasets/birdsql/bird_sql_dev_20251106) ([6]) | 1,534, 11 DBs | **Corrected** dev. `question_id` 0–1533 contiguous, so it joins to dev-origin rows directly. |
+| [`birdsql/bird_sql_dev_20251106`](https://huggingface.co/datasets/birdsql/bird_sql_dev_20251106) ([6]) | 1,534, 11 DBs | **Corrected** dev. `question_id` 0 to 1533 contiguous, so it joins to dev-origin rows directly. |
 | [`birdsql/bird23-train-filtered`](https://huggingface.co/datasets/birdsql/bird23-train-filtered) ([7]) | 6,601 of 9,428 | **Filtered** train. No `question_id`; join on `(db_id, normalised question)`. |
 
-The distinction is load-bearing. `dev_20251106` **corrects** gold SQL. [`bird23-train-filtered`](https://huggingface.co/datasets/birdsql/bird23-train-filtered)
-**deletes** questions BIRD would not stand behind and corrects almost nothing — of the 6,292
+The difference between the two matters. `dev_20251106` **corrects** gold SQL. [`bird23-train-filtered`](https://huggingface.co/datasets/birdsql/bird23-train-filtered)
+**deletes** questions BIRD would not stand behind and corrects almost nothing: of the 6,292
 rows that matched this dataset, only 6 (0.1%) had different SQL. For train-origin questions,
 absence from the filtered release is the entire signal; no corrected train gold exists
 upstream.
@@ -103,8 +103,8 @@ keeping `clean: true` rows only.
 
 | Split | Before | After | Removed |
 | --- | --- | --- | --- |
-| `train_final.jsonl` | 8,134 | **5,984** | 2,150 — 1,837 filter-dropped, 313 dev-changed |
-| `test_final.jsonl` | 2,030 | **1,441** | 589 — 504 filter-dropped, 85 dev-changed |
+| `train_final.jsonl` | 8,134 | **5,984** | 2,150 (1,837 filter-dropped, 313 dev-changed) |
+| `test_final.jsonl` | 2,030 | **1,441** | 589 (504 filter-dropped, 85 dev-changed) |
 | **Total** | **10,164** | **7,425** | **2,739 (27.0%)** |
 
 Also filtered, all keyed on `question_id`: `question_paraphrases.jsonl` (10,164 → 7,425),
@@ -129,7 +129,7 @@ computer_student         53/72    software_company        56/75
 ```
 
 `financial` (36% survive), `california_schools` (52%) and `bike_share_1` (46%) are exactly
-the domains the literature flags as noisiest — `financial` losing 64% of its questions is
+the domains the literature flags as noisiest. `financial` losing 64% of its questions is
 Wretblad et al.'s 49%-noise finding reproducing independently in our data. Note that
 `app_store` (54) and `retail_world` (43) were **already** below 60 before this filter, from
 step 05/07 validation attrition.
@@ -140,30 +140,30 @@ step 05/07 validation attrition.
 
 The purge left two step-01 invariants broken: 11 databases had dropped below
 `MIN_QUESTIONS = 60`, and because the purge hit train and test rows unevenly the per-database
-test fraction had drifted to **12–26%** rather than a uniform 20% (`bike_share_1` was down to
-6 test questions, `retail_world` to 6, `menu` to 10 — too few to estimate anything per schema).
+test fraction had drifted to **12-26%** rather than a uniform 20%. `bike_share_1` was down to
+6 test questions, `retail_world` to 6, `menu` to 10, too few to estimate anything per schema.
 
 `pipeline/resplit_after_purge.py` restores both. The decision taken was to **keep step 01's
-original criterion unchanged** — a database needs ≥60 questions actually present — rather than
-relax the floor or switch to a capped test size. The distribution argued both ways: bins 45–129
+original criterion unchanged**, meaning a database needs ≥60 questions actually present, rather
+than relax the floor or switch to a capped test size. The distribution argued both ways: bins 45-129
 are continuously occupied with no natural gap, and the `<60` cut sheds 16% of schema diversity to
 remove 6.7% of questions. The floor was kept anyway for consistency with the published
 methodology, and because at ≥60 a proportional 20% still yields ≥12 test questions per schema.
 
 The split mechanism is step 01's, reused verbatim rather than reimplemented: per-database
 `Random(SEED ^ crc32(db_id))` with `SEED = 42` and `n_test = max(1, round(n * 0.20))`. The
-per-database seed matters — a single shared `Random(42)` would apply one identical permutation
+per-database seed matters, because a single shared `Random(42)` would apply one identical permutation
 index-for-index across every database, correlating the split with any positional structure in
 BIRD's source JSON.
 
 | | Value |
 | --- | --- |
 | Pool after purge | 7,425 questions / 69 databases |
-| Databases dropped (< 60 surviving) | 11 — 497 questions |
+| Databases dropped (< 60 surviving) | 11 (497 questions) |
 | **Databases retained** | **58** |
 | **train_final.jsonl** | **5,539 (80.0%)** |
 | **test_final.jsonl** | **1,389 (20.0%)** |
-| Per-database test fraction | 0.195 – 0.206 (was 0.12 – 0.26) |
+| Per-database test fraction | 0.195 to 0.206 (was 0.12 to 0.26) |
 | Smallest test sets | `sales_in_weather` 12, `social_media` 12, `airline` 13 |
 
 Dropped: `app_store` (34), `financial` (38), `retail_world` (38), `music_platform_2` (40),
@@ -174,13 +174,13 @@ Companions were filtered to the surviving qid set: `question_paraphrases.jsonl` 
 `gold_result_hashes_rename_decoy.jsonl` 7,425 → 6,928, `order_sensitive` 104 → 98,
 `exec_failed` 10 (unchanged), `gold_star_expanded.jsonl` 3 (unchanged).
 
-Rows were **reassigned, never edited** — `sql_sqlite` / `sql_base` / `sql_rename` carry through
+Rows were **reassigned, never edited**. `sql_sqlite` / `sql_base` / `sql_rename` carry through
 untouched, so R0==R1 and R1==R2 still hold and no re-transpilation ran.
 
 `artifacts/retained_dbs.json` was deliberately **not** reduced: it describes the 69 schemas
 physically present in the four published dumps, which are unchanged. The evaluated subset is a
 new artifact, `evaluated_dbs.json` (58 databases). The 11 dropped databases therefore remain in
-the dumps as **unreferenced schemas**. That is a deliberate open choice, not an oversight — to an
+the dumps as **unreferenced schemas**. This was left open on purpose rather than overlooked: to an
 agent that explores the database they are either free distractors or wasted exploration budget.
 Decide and document which before the next agent run.
 
@@ -195,17 +195,17 @@ any companion file.
 - **The four PostgreSQL dumps.** `pg_base`, `pg_rename`, `pg_decoy` and `pg_rename_decoy`
   on [Hugging Face](https://huggingface.co/datasets/minhaozhang/BIRD_Obfuscation) ([5]) are
   question-agnostic: the published repo contains only the dumps, `SHA256SUMS.txt` and a
-  README — no question files. Nothing there needs re-uploading, and the dumps are shared
+  README, and no question files. Nothing there needs re-uploading, and the dumps are shared
   unchanged across the pre- and post-purge question manifests.
 - **All schema-level artifacts:** `schema_rename_map.json`, `trap_manifest.json`,
   `trap_table_manifest.json`, `db_language_map.json`. None depends on
   which questions are retained. The 1,486 evil-twin columns and 162 clone tables are unchanged.
 - **No re-transpilation, no re-validation, no database rebuild.** Surviving rows keep their
   existing train/test assignment and their already-validated `sql_base` / `sql_rename`, so
-  steps 04–08 and 10 did not re-run and the R0==R1 / R1==R2 guarantees still hold for every
+  steps 04 to 08 and step 10 did not re-run, and the R0==R1 / R1==R2 guarantees still hold for every
   retained row.
 - **Historical eval results.** The numbers in
-  [docs/methodology/evaluation.md](../methodology/evaluation.md) §8–§9 are facts about runs
+  [docs/methodology/evaluation.md](../methodology/evaluation.md) §8 and §9 are facts about runs
   over the old 2,030-question test set. They are marked superseded rather than rewritten.
 
 ---
@@ -215,20 +215,20 @@ any companion file.
 1. **Resolve the 398 dev-changed rows by execution, not text diff.** The
    `dev1106_gold_sql_changed` flag is textual difference after normalisation; some of those
    398 are semantically equivalent rewrites (e.g. `question_id` 0 is a `WITH` restructure).
-   Executing old vs new gold against the SQLite sources and comparing result hashes — the
-   comparison step 07 already performs — would reclassify the equivalent ones as clean.
+   Executing old vs new gold against the SQLite sources and comparing result hashes, which is the
+   comparison step 07 already performs, would reclassify the equivalent ones as clean.
    `california_schools` (46) and `debit_card_specializing` (47) are close enough to any
    threshold that this check alone may decide whether they survive. **Do this before
    re-splitting.**
-2. ~~**Re-split.**~~ **DONE** — see §4b. The floor was kept at ≥60 present questions and the
+2. ~~**Re-split.**~~ **DONE**, see §4b. The floor was kept at ≥60 present questions and the
    80/20 per-database split was rebuilt with step 01's mechanism. The alternative considered and
    rejected was a capped test size (`test = min(25, 30% of n)`) with a lower corpus floor, which
    would have equalised test precision across schemas and returned ~50 test rows from
    `works_cycles` alone to the corpus. Worth revisiting if per-schema estimates turn out to be
-   the primary unit of analysis, since test-set size still varies 12–78 across schemas.
+   the primary unit of analysis, since test-set size still varies from 12 to 78 across schemas.
 3. **Report per-database corpus size as a covariate.** The purge shrank databases very
    unevenly (`financial` −64%, `retail_world` −12%) before the floor removed the worst-hit ones,
-   and the retained 58 still span 60–383 questions — a 6× range. Without publishing corpus size,
+   and the retained 58 still span 60 to 383 questions, a 6x range. Without publishing corpus size,
    a per-database accuracy difference cannot be separated from a corpus-size difference.
 4. **Measure cross-split near-duplicate leakage.** The split is random per database at seed
    42, and BIRD contains many templated near-identical questions within a database. A corpus
@@ -266,7 +266,7 @@ databases and reproduces the same assignment, because the per-database seed depe
 `db_id`.
 
 `apply_gold_quality_filter.py` is **not** idempotent against an already-filtered tree in the
-sense of producing further changes — it is a no-op — but it is destructive on first run.
+sense of producing further changes, since it is then a no-op, but it is destructive on first run.
 Recover pre-purge question files from git history (the commit tagged in §8) if needed.
 
 ---
@@ -287,7 +287,7 @@ document.
 1. Niklas Wretblad, Fredrik Riseby, Rahul Biswas, Amin Ahmadi, Oskar Holmström.
    "Understanding the Effects of Noise in Text-to-SQL: An Examination of the BIRD-Bench
    Benchmark." *Proceedings of the 62nd Annual Meeting of the ACL (Volume 2: Short Papers)*,
-   pp. 356–369, 2024. ACL ID `2024.acl-short.34`, DOI
+   pp. 356-369, 2024. ACL ID `2024.acl-short.34`, DOI
    [10.18653/v1/2024.acl-short.34](https://doi.org/10.18653/v1/2024.acl-short.34) ·
    [arXiv:2402.12243](https://arxiv.org/abs/2402.12243) ·
    [code](https://github.com/niklaswretblad/the-effects-of-noise-in-text-to-SQL)
@@ -304,27 +304,27 @@ document.
 4. Yuxuan Zhu, Tengjun Jin, Yoojin Choi, Daniel Kang. "ReViSQL: Achieving Human-Level
    Text-to-SQL." March 2026. [arXiv:2603.20004](https://arxiv.org/abs/2603.20004) ·
    [BIRD-Platinum / BIRD-Verified data](https://github.com/uiuc-kang-lab/ReViSQL).
-   Source of the 61.1% train-split error rate and the +8.2–13.9 point gain from training on
+   Source of the 61.1% train-split error rate and the +8.2 to +13.9 point gain from training on
    corrected data. Also reports Pourreza & Rafiei (2023)'s earlier 18.2% train-subset figure,
    cited here at second hand.
 
 **Datasets**
 
-5. `minhaozhang/BIRD_Obfuscation` — this project's published PostgreSQL dumps.
+5. `minhaozhang/BIRD_Obfuscation`: this project's published PostgreSQL dumps.
    [Hugging Face](https://huggingface.co/datasets/minhaozhang/BIRD_Obfuscation). CC-BY-SA-4.0.
-6. `birdsql/bird_sql_dev_20251106` — official corrected BIRD dev split, released 2025-11-06.
+6. `birdsql/bird_sql_dev_20251106`: official corrected BIRD dev split, released 2025-11-06.
    [Hugging Face](https://huggingface.co/datasets/birdsql/bird_sql_dev_20251106). CC-BY-SA-4.0.
-7. `birdsql/bird23-train-filtered` — official filtered BIRD 2023 train split, 6,601 rows.
+7. `birdsql/bird23-train-filtered`: official filtered BIRD 2023 train split, 6,601 rows.
    [Hugging Face](https://huggingface.co/datasets/birdsql/bird23-train-filtered). CC-BY-SA-4.0.
-8. `birdsql/bird_mini_dev` — 500-question dev subset in SQLite / MySQL / PostgreSQL dialects.
+8. `birdsql/bird_mini_dev`: a 500-question dev subset in SQLite / MySQL / PostgreSQL dialects.
    [Hugging Face](https://huggingface.co/datasets/birdsql/bird_mini_dev). CC-BY-SA-4.0.
    Examined, not used for filtering.
-9. `uiuc-kang-lab/ReViSQL` — BIRD-Platinum (formerly BIRD-Verified), 2,462 expert-corrected
+9. `uiuc-kang-lab/ReViSQL`: BIRD-Platinum (formerly BIRD-Verified), 2,462 expert-corrected
    BIRD train instances. [GitHub](https://github.com/uiuc-kang-lab/ReViSQL). No licence
-   stated upstream. Not used here — see §6.1 — but the only corrected train gold in existence.
+   stated upstream. Not used here (see §6.1), but the only corrected train gold in existence.
 
 **Upstream project**
 
-10. BIRD-SQL benchmark. [bird-bench.github.io](https://bird-bench.github.io/) — carries the
+10. BIRD-SQL benchmark. [bird-bench.github.io](https://bird-bench.github.io/) carries the
     May 2025 acknowledgement of dev-set issues and the November 2025 `bird-sql-dev-1106`
     release announcement.

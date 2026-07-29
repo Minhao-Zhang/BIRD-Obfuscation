@@ -3,7 +3,7 @@
 # BIRD Obfuscation
 
 > A cleaned, contamination-resistant, adversarial rebuild of the
-> [BIRD](https://bird-bench.github.io/) Text-to-SQL benchmark — curated as the substrate for a
+> [BIRD](https://bird-bench.github.io/) Text-to-SQL benchmark, curated as the substrate for a
 > **semantic-layer** agent evaluation, not for one-shot Text-to-SQL.
 
 ![status](https://img.shields.io/badge/status-active-brightgreen)
@@ -20,34 +20,34 @@
 | Problem | What was done |
 | --- | --- |
 | **Contamination.** BIRD ships questions, gold SQL, and schema names in the open, so a frontier model can score from *having seen the benchmark*. | Schema identifiers renamed into one of five languages; questions paraphrased SQL-preservingly. Each surface is an independently-toggleable dimension. |
-| **Wrong gold SQL.** BIRD's own annotations are substantially and *systematically* mis-annotated — published audits report 49–61% error rates, and upstream has since corrected or withdrawn much of it. | 2,739 questions removed by joining against the official [`bird_sql_dev_20251106`](https://huggingface.co/datasets/birdsql/bird_sql_dev_20251106) and [`bird23-train-filtered`](https://huggingface.co/datasets/birdsql/bird23-train-filtered) releases, then 11 under-populated databases dropped and the rest re-split. Provenance for every question is shipped in `gold_quality_flags.jsonl`. |
+| **Wrong gold SQL.** BIRD's own annotations are substantially and *systematically* mis-annotated. Published audits report 49-61% error rates, and upstream has since corrected or withdrawn much of it. | 2,739 questions removed by joining against the official [`bird_sql_dev_20251106`](https://huggingface.co/datasets/birdsql/bird_sql_dev_20251106) and [`bird23-train-filtered`](https://huggingface.co/datasets/birdsql/bird23-train-filtered) releases, then 11 under-populated databases dropped and the rest re-split. Provenance for every question is shipped in `gold_quality_flags.jsonl`. |
 | **Nothing adversarial to probe.** An agent that explores a database by *running queries* faces no traps in stock BIRD. | 1,486 corrupted "evil-twin" columns and 162 cloned tables holding subtly wrong copies of real data under plausible synonym names. Strictly additive, so the ground-truth task is provably intact. |
 
-Question filtering is a **feature of the dataset**, not a caveat: gold quality is load-bearing for
-the task below, because a wrong (question, SQL) pair in the corpus does not waste one row — it
-teaches a wrong mapping that propagates. Full evidence, method, and citations:
+Question filtering is part of what the dataset offers, not an apology for it. Gold quality matters
+more here than in a per-question benchmark: a wrong (question, SQL) pair in the corpus does not
+waste one row, it teaches a wrong mapping that then propagates. Full evidence, method, and citations:
 [gold-quality-audit.md](docs/reference/gold-quality-audit.md).
 
 ## What it is for
 
 The dataset targets a **semantic-layer** task rather than one-shot Text-to-SQL. An agent reads the
-`train` split — (question, SQL) pairs over a schema — induces a reusable mapping from it, then
+`train` split, which is (question, SQL) pairs over a schema, induces a reusable mapping from it, then
 answers unseen `test` questions over the same schema without being handed that mapping. The harness,
 metrics (`decoy_touch_rate`, `routing_recall`) and results live in
 [**governed-bi**](https://github.com/Minhao-Zhang/governed-bi).
 
 Two things follow for the data itself. Per-schema question count is close to the independent
-variable — how much layer an agent can induce depends on how many *correct* prior questions it had,
-and corpus sizes span 60–383 across the 58 retained schemas, so report them alongside any per-schema
+variable: how much layer an agent can induce depends on how many *correct* prior questions it had.
+Corpus sizes span 60 to 383 across the 58 retained schemas, so report them alongside any per-schema
 result. And the split boundary must not leak: a corpus question that near-duplicates a test question
-lets the agent retrieve instead of induce (not yet quantified —
-[gold-quality-audit.md §6](docs/reference/gold-quality-audit.md)).
+lets the agent retrieve instead of induce. Not yet quantified, see
+[gold-quality-audit.md §6](docs/reference/gold-quality-audit.md).
 
 Separately, this repo carries a small five-arm obfuscation eval (`base` / `rename` / `decoy` /
 `paraphrase` / `all`) run one-shot with full context given. Its only claim is the modest one: the
 renaming does remove some memorised information from a frontier model. Design and numbers:
-[evaluation.md](docs/methodology/evaluation.md) §8–§9 — measured before the gold-quality purge and
-therefore superseded.
+[evaluation.md](docs/methodology/evaluation.md) §8 and §9. Those were measured before the
+gold-quality purge and are therefore superseded.
 
 ## Get the dataset
 
@@ -61,8 +61,8 @@ docker compose cp bird_obf_dumps/pg_base.dump pg_base:/tmp/pg_base.dump
 docker compose exec pg_base pg_restore -U bird -d bird --no-owner -j 4 /tmp/pg_base.dump
 ```
 
-Repeat for `pg_rename`, `pg_decoy` and `pg_rename_decoy` — **at most two hot at once on a laptop**
-(OOM). Full restore and eval
+Repeat for `pg_rename`, `pg_decoy` and `pg_rename_decoy`, keeping **at most two hot at once on a
+laptop** (OOM). Full restore and eval
 instructions: [using-the-dataset.md](docs/reference/using-the-dataset.md). Eval scripts read
 `artifacts/` and fall back to `eval_dataset/`, so a fresh clone runs with no regeneration; DSNs are
 env-configurable (`PG_*_DSN`) for remote Postgres.
@@ -76,13 +76,13 @@ env-configurable (`PG_*_DSN`) for remote Postgres.
 | [obfuscation.md](docs/methodology/obfuscation.md) | Obfuscation design and physical realisation |
 | [evaluation.md](docs/methodology/evaluation.md) | Integrity checks, contamination delta, ablation |
 | [corrupted-decoys-design.md](docs/reference/corrupted-decoys-design.md) | Trap design, risk register, as-built parameters |
-| [limitations.md](docs/reference/limitations.md) | Scope caveats — read before citing any number |
+| [limitations.md](docs/reference/limitations.md) | Scope caveats; read before citing any number |
 | [using-the-dataset.md](docs/reference/using-the-dataset.md) | Download, restore, run |
 | [pipeline-invariants.md](docs/reference/pipeline-invariants.md) | Why each pipeline rule exists, with the evidence |
 | [development.md](docs/development.md) | Run and extend the pipeline; setup, conventions, invariants |
 
 ## License
 
-[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) — share and adapt with credit,
+[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/). Share and adapt with credit,
 under the same license. This project is a derivative of the
 [BIRD benchmark](https://bird-bench.github.io/); please credit BIRD as the upstream source.

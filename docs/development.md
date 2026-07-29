@@ -2,7 +2,7 @@
 
 How to run and extend the pipeline, and the invariants to preserve while doing it. The
 human-facing overview is [README.md](../README.md); the *why* behind each design decision is in
-[methodology/](methodology/). Keep this file instructional — not a changelog or run history;
+[methodology/](methodology/). Keep this file instructional, not a changelog or run history.
 `git log` is the history.
 
 English only, deliberately: this is a contributor-facing operations doc, not part of the published
@@ -14,14 +14,14 @@ This repo transforms the [BIRD benchmark](https://bird-bench.github.io/) into an
 Text-to-SQL dataset** that measures how much benchmark accuracy depends on memorised schema
 identifiers, and stress-tests execute-and-observe SQL agents over a multi-database schema lake.
 
-Standard BIRD is public — questions, gold SQL, and schema identifiers — so a frontier model may
+Standard BIRD is public, including questions, gold SQL and schema identifiers, so a frontier model may
 score partly from recall rather than from reasoning over the schema in front of it. The pipeline
 renames tables and columns (and adds decoy traps and question paraphrases) while preserving a
 semantically equivalent SQL task, then measures the accuracy that the memorisable surface was
 buying. This repository **prepares and validates** that dataset; it does not itself evaluate
 schema routing (the correct database is supplied upfront in the evaluations here). The downstream
-agent evaluation that consumes this dataset — an execute-and-observe SQL agent scored on
-`decoy_touch_rate` and execution accuracy — lives in the sibling repo
+agent evaluation that consumes this dataset, an execute-and-observe SQL agent scored on
+`decoy_touch_rate` and execution accuracy, lives in the sibling repo
 [governed-bi](https://github.com/Minhao-Zhang/governed-bi). Detailed
 empirical rationale for the invariants below lives in
 [docs/reference/pipeline-invariants.md](reference/pipeline-invariants.md).
@@ -38,7 +38,7 @@ The `data/` directory holds the BIRD dataset (not in version control). See
 
 ## Setup commands
 
-- **Always use `uv`** for anything involving Python — never bare `python`/`pip`, and do not
+- **Always use `uv`** for anything involving Python. Never bare `python`/`pip`, and do not
   activate `.venv` manually (it is uv-managed):
 
   ```bash
@@ -77,9 +77,9 @@ reads the previous step's output; do not skip or reorder.
 | 7 | `07_rename_sql_and_validate.py` | steps 3, 5, 6, both PG instances running |
 | 8 | `08_inject_decoys.py` | steps 3, 7, both `*_decoy` instances cloned + running (extended obfuscation, see below) |
 | 9 | `09_paraphrase_questions.py` | step 7, `pg_rename` running (extended obfuscation) |
-| — | `build_gold_quality_flags.py` | step 7; upstream birdsql releases in `artifacts/upstream/` (no DB needed) |
-| — | `apply_gold_quality_filter.py` | `build_gold_quality_flags.py` (no DB needed; **destructive** on first run) |
-| — | `resplit_after_purge.py` | `apply_gold_quality_filter.py` (no DB needed; idempotent) |
+| n/a | `build_gold_quality_flags.py` | step 7; upstream birdsql releases in `artifacts/upstream/` (no DB needed) |
+| n/a | `apply_gold_quality_filter.py` | `build_gold_quality_flags.py` (no DB needed; **destructive** on first run) |
+| n/a | `resplit_after_purge.py` | `apply_gold_quality_filter.py` (no DB needed; idempotent) |
 
 `artifacts/schema_rename_map.json` is **git-tracked** (regeneratable via step 3 with Bedrock, but
 checked in so steps 6-7 and downstream don't depend on re-running LLM translation).
@@ -159,7 +159,7 @@ a well-provisioned server this limit does not apply.
 
 - `08_inject_decoys.py`: **superseded by step 10 and no longer part of the shipped dataset.**
   Its structural decoys are *not present* in the published dumps (verified 2026-07-29 against
-  `pg_rename_decoy`: 223 of 224 decoy tables and 547 of 563 decoy columns absent — the decoy
+  `pg_rename_decoy`: 223 of 224 decoy tables and 547 of 563 decoy columns absent, because the decoy
   volumes were re-cloned from clean before step 10). `decoy_map.json` was deleted for that
   reason; do not resurrect it as ground truth. The script is retained only because its
   `SELECT *` gold expansion and R1==R2 revalidation phases are still referenced by history.
@@ -188,17 +188,17 @@ a well-provisioned server this limit does not apply.
   [docs/methodology/evaluation.md §9](methodology/evaluation.md).
 - `pipeline/build_gold_quality_flags.py` → `pipeline/apply_gold_quality_filter.py`: drop questions
   whose BIRD gold upstream has since corrected ([`bird_sql_dev_20251106`](https://huggingface.co/datasets/birdsql/bird_sql_dev_20251106)) or withdrawn
-  ([`bird23-train-filtered`](https://huggingface.co/datasets/birdsql/bird23-train-filtered)). Purely question-level — no DB, no re-transpilation, no R1==R2 re-run,
+  ([`bird23-train-filtered`](https://huggingface.co/datasets/birdsql/bird23-train-filtered)). Purely question-level: no DB, no re-transpilation, no R1==R2 re-run,
   and the published dumps are untouched. Run `apply_*` with `--dry-run` first; it rewrites
   `artifacts/` in place, so refresh the snapshot with `eval_dataset/build_eval_dataset.py`
   afterwards. Applied 2026-07-29 (10,164 → 7,425 questions).
 - `pipeline/resplit_after_purge.py`: re-apply `MIN_QUESTIONS = 60` over the *surviving* questions
   and rebuild the 80/20 per-database split with step 01's exact mechanism
-  (`Random(SEED ^ crc32(db_id))`). Drops 11 databases and restores a uniform 19.5–20.6% test
+  (`Random(SEED ^ crc32(db_id))`). Drops 11 databases and restores a uniform 19.5 to 20.6% test
   fraction → 58 databases / 6,928 questions (5,539 train / 1,389 test). Reassigns rows only, never
   edits SQL, so R0==R1 / R1==R2 survive. Emits `evaluated_dbs.json`; leaves `retained_dbs.json` at
   69 (the schemas in the published dumps, leaving 11 schemas present but unreferenced by any
-  question — see [using-the-dataset.md](reference/using-the-dataset.md)). Idempotent.
+  question; see [using-the-dataset.md](reference/using-the-dataset.md)). Idempotent.
   Rationale, method and citations:
   [docs/reference/gold-quality-audit.md](reference/gold-quality-audit.md).
 
@@ -211,7 +211,7 @@ the pipeline, plus reproducible eval summaries. Preserve these gates when editin
   gold (normalized multiset equality). Mismatches queue for agent repair and are re-validated
   before merge. See [docs/reference/step5-transpilation.md](reference/step5-transpilation.md).
 - **R1==R2** (step 7): obfuscated SQL on `pg_rename` returns the same rows as validated SQL on
-  `pg_base`. Steps 08/10 re-check R1==R2 as their acceptance gate — decoy traps are strictly
+  `pg_base`. Steps 08/10 re-check R1==R2 as their acceptance gate, since decoy traps are strictly
   additive, so real rows/columns/tables are never modified and the gate must stay at 0 failures.
 - Every pgloader load is verified with `verify_casing()` + `verify_row_counts()`: `check=True` is
   not enough, because pgloader exits 0 even on data-losing failures.
@@ -290,14 +290,13 @@ used by step 0.
 
 ## Commit & docs conventions
 
-- **Commits:** short scope-prefixed subject, sentence case, imperative — matching the existing
+- **Commits:** short scope-prefixed subject, sentence case, imperative, matching the existing
   `git log` (e.g. `Docs: …`, `Eval: …`, `Repo: …`, `Add …`).
 - **Bilingual docs:** most files under `docs/`, the root `README.md`, and package READMEs ship a
   `<name>-zh.md` Simplified-Chinese counterpart with a nav line at the top linking the two
   (`**English** · [中文](…-zh.md)` and its mirror). Update both sides together. This file
-  is the one deliberate exception — see the header. This
-  file is the one exception — see the header.
+  is the one deliberate exception; see the header.
 - **English-only exceptions:** this file and `CLAUDE.md` have **no** `-zh` counterpart.
-- **Keep this file instructional only** — operational guidance and invariants, not progress logs
-  or history — this repo does not keep a progress log; `git log` is the history.
+- **Keep this file instructional only:** operational guidance and invariants, not progress logs
+  or history. This repo does not keep a progress log; `git log` is the history.
 - `CLAUDE.md` is a thin, git-ignored pointer to this file; edit this file, not `CLAUDE.md`.

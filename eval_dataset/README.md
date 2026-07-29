@@ -50,7 +50,7 @@ identifiers and the presence of decoy columns/tables differ.
 - **`test_final.jsonl`** (1,389): test split; **the eval runs on this**.
 - **`evaluated_dbs.json`** (58): the databases present in the splits above, i.e. those with
   ≥60 surviving questions. Distinct from `artifacts/retained_dbs.json`, which lists the 69
-  schemas physically present in the four published dumps — the other 11 contribute schemas
+  schemas physically present in the four published dumps. The other 11 contribute schemas
   but no questions, so they sit in the dumps as unreferenced distractors
   ([using-the-dataset.md](../docs/reference/using-the-dataset.md)).
 
@@ -60,7 +60,7 @@ identifiers and the presence of decoy columns/tables differ.
   > ([`bird23-train-filtered`](https://huggingface.co/datasets/birdsql/bird23-train-filtered)) their gold. See
   > [gold-quality-audit.md](../docs/reference/gold-quality-audit.md) and
   > `gold_quality_flags.jsonl` below. 11 databases then fell below the 60-question floor and
-  > were dropped, and the remaining 58 were re-split 80/20 — so the dataset is now **58
+  > were dropped, and the remaining 58 were re-split 80/20, so the dataset is now **58
   > databases / 6,928 questions**. Anything measured on the old 2,030-question test split is
   > superseded.
 
@@ -96,7 +96,7 @@ identifiers and the presence of decoy columns/tables differ.
   question (`question_id -> question_paraphrase`), train and test.
 
 ### Eval support
-- **`gold_quality_flags.jsonl`** (10,164 — the only file that still spans the pre-purge
+- **`gold_quality_flags.jsonl`** (10,164 rows, the only file that still spans the pre-purge
   question set, by design): per-question BIRD gold provenance. Fields: `question_id`,
   `db_id`, `split`, `bird_origin` (`dev`/`train`), `clean`, `reason`
   (`dev1106_gold_sql_changed` / `dropped_by_bird23_train_filter`), plus

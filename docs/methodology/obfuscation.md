@@ -82,7 +82,7 @@ Each of the 69 databases is assigned one schema language. All table names and co
 | Spanish | ~20% | `pais` | `nombre` |
 | Mandarin Pinyin | ~20% | `guojia` | `mingzi` |
 
-With 69 databases and 5 languages, each language covers approximately 14 databases. English is included as one of the five slots so that a subset of DBs serves as a within-experiment control. Databases assigned to the English slot keep their original BIRD identifiers unchanged; no translation is applied.
+With 69 databases and 5 languages, each language covers approximately 14 databases. English is included as one of the five slots so that a subset of DBs is a within-experiment control. Databases assigned to the English slot keep their original BIRD identifiers unchanged; no translation is applied.
 
 Pinyin is expected to be the strongest obfuscation variant: it uses Latin characters (SQL-safe, no encoding issues) but produces identifiers that are much less likely to overlap with memorised English BIRD SQL. It should make direct identifier recall substantially harder, though it does not rule out other forms of memorised reasoning or template reuse.
 
@@ -205,7 +205,7 @@ The three gold-SQL fields: `sql_sqlite` (raw **SQLite**, original BIRD identifie
 
 ## 7. Extended obfuscation dimensions (decoy + paraphrase)
 
-Sections 1-6 cover the core validated pipeline (steps 0-7), which obfuscates **only schema identifiers** (the **rename** dimension) and leaves questions and database content untouched. This part specifies two **additional, independently-toggleable** obfuscation dimensions and the ablation that measures each. **Status: implemented and applied** — pipeline steps 08-10 and the ablation harness `pipeline/eval_ablation.py` all exist and have been run; results are in [evaluation.md §9.4](evaluation.md). The decoy dimension was **reworked** from the empty/structural design first sketched during planning into **corrupted "evil-twin" traps** (step 10); §8 reflects the as-built design, with full detail in [../reference/corrupted-decoys-design.md](../reference/corrupted-decoys-design.md).
+Sections 1-6 cover the core validated pipeline (steps 0-7), which obfuscates **only schema identifiers** (the **rename** dimension) and leaves questions and database content untouched. This part specifies two **additional, independently-toggleable** obfuscation dimensions and the ablation that measures each. **Status: implemented and applied.** Pipeline steps 08-10 and the ablation harness `pipeline/eval_ablation.py` all exist and have been run; results are in [evaluation.md §9.4](evaluation.md). The decoy dimension was **reworked** from the empty/structural design first sketched during planning into **corrupted "evil-twin" traps** (step 10); §8 reflects the as-built design, with full detail in [../reference/corrupted-decoys-design.md](../reference/corrupted-decoys-design.md).
 
 ### 7.1 Why extend
 
@@ -293,7 +293,7 @@ Canonical copies are git-tracked in [`eval_dataset/`](../../eval_dataset/) (work
 - `trap_manifest.json`: **evil-twin columns** ground truth. Per trap: `{db, table, source_column, source_type, operator, is_key, in_correlated_group, salt, names:{base, rename}}`.
 - `trap_table_manifest.json`: **corrupted clone tables** ground truth. Per clone: `{db, source_table, columns:[{source_column, source_type, operator, is_key}], names:{base:{table, columns}, rename:{table, columns}}}`.
 - `order_sensitive_qids.json`: qids excluded from strict cross-variant EX (153 order-sensitive + 21 exec-failed).
-- ~~`decoy_map.json`~~: **deleted 2026-07-29.** The step-08 *structural* decoy map described objects that are **not in the published dumps** — verified against `pg_rename_decoy`, 223 of 224 decoy tables and 547 of 563 decoy columns absent, and the instance's 731 tables equal 569 clean + 162 step-10 clones exactly, leaving no room for them. The decoy volumes were evidently re-cloned from clean before step 10, wiping step 08's payload. The map was therefore false information about the shipped dataset, not merely superseded ground truth.
+- ~~`decoy_map.json`~~: **deleted 2026-07-29.** The step-08 *structural* decoy map described objects that are **not in the published dumps**. Verified against `pg_rename_decoy`: 223 of 224 decoy tables and 547 of 563 decoy columns absent, and the instance's 731 tables equal 569 clean plus 162 step-10 clones exactly, leaving no room for them. The decoy volumes were evidently re-cloned from clean before step 10, wiping step 08's payload. The map was therefore false information about the shipped dataset rather than merely outdated ground truth.
 - `gold_star_expanded.jsonl`: `SELECT *`-expanded gold for the ~5 star queries.
 
 ### New PostgreSQL instances (docker-compose)

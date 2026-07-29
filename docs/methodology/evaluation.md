@@ -8,8 +8,9 @@
 > 2,739 questions with superseded or withdrawn upstream BIRD gold
 > ([gold-quality-audit.md](../reference/gold-quality-audit.md)), and 11 databases below the
 > `MIN_QUESTIONS` floor were then dropped and the rest re-split. The test split is now **1,389
-> questions over 58 databases**. The numbers are retained deliberately as a record of what was run — they are not
-> rewritten, because they are facts about those runs. The **methodology** (§1–§7, §9.1–§9.3) is
+> questions over 58 databases**. The numbers are retained deliberately as a record of what was run.
+> They are not rewritten, because they are facts about those runs. The **methodology** (§1 to §7,
+> §9.1 to §9.3) is
 > unaffected and remains current.
 >
 > When recomputing: filter stored per-question grades on `question_id`, use the *same* clean id set
@@ -99,8 +100,8 @@ Question: <question>
 Hint: <evidence>          # present ONLY in the hint conditions
 ```
 
-The **stripped DDL** is table and column names with PostgreSQL dtypes only — no
-primary/foreign keys, no CHECK constraints, no descriptions — read live from the target
+The **stripped DDL** is table and column names with PostgreSQL dtypes only, with no
+primary/foreign keys, no CHECK constraints and no descriptions. It is read live from the target
 instance's `information_schema`, one block per table:
 
 ```sql
@@ -116,7 +117,7 @@ What changes across conditions/arms (everything else is identical):
 | --- | --- | --- | --- | --- | --- |
 | Schema / DDL source | `pg_base` (original names) | `pg_rename` (renamed) | `pg_decoy` (real + decoy names) | `pg_base` | `pg_rename_decoy` |
 | Question | original | original | original | paraphrase | paraphrase |
-| `Hint:` line | hint conditions only | hint conditions only | — | — | — |
+| `Hint:` line | hint conditions only | hint conditions only | no | no | no |
 
 The run is **one-shot** (a single call per question × condition, no retry-on-error and no
 feedback loop). The `prompt_version` (`contamination-v1` / `ablation-v1`) is stamped on
@@ -205,7 +206,7 @@ The per-language breakdown estimates whether Pinyin produces a larger contaminat
 | Field | Value |
 | --- | --- |
 | Model | `Claude-Opus-4.8` |
-| Reasoning effort | `high` (requested; not applied — see note below) |
+| Reasoning effort | `high` (requested; not applied, see note below) |
 | Prompt version | `contamination-v1` |
 | Split | test (2,030 questions × 4 conditions = 8,120 generations) |
 | Recorded | 2026-07-10 (UTC) |
@@ -339,7 +340,7 @@ All arms are **no-hint** (the cleanest signal; §4.2 makes rename_nohint/base_no
 
 #### Run: **claude opus 4.8 high**
 
-Same model and test set as §8 (`Claude-Opus-4.8`, `--effort high` requested but not applied — see
+Same model and test set as §8 (`Claude-Opus-4.8`, `--effort high` requested but not applied, see
 the §8 note; 2,030 questions), prompt version `ablation-v1`, git commit `674d6a7`, recorded
 2026-07-11 (UTC).
 Each arm was prepared as its own offline bundle, generated one-shot on an API machine, and

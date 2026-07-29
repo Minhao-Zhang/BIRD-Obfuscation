@@ -4,7 +4,7 @@
 
 > [!WARNING]
 > **Superseded (2026-07-29).** This bundle is the per-question record of a run over the **old
-> 2,030-question test split**. The dataset has since been purged and re-split — it is now 58
+> 2,030-question test split**. The dataset has since been purged and re-split, and is now 58
 > databases / 6,928 questions (1,389 test), see
 > [../docs/reference/gold-quality-audit.md](../docs/reference/gold-quality-audit.md). The bundle
 > is retained deliberately: it is the backing evidence for the EX numbers that evaluation.md §8-§9
@@ -14,7 +14,7 @@
 
 Flat, self-contained tables pairing each benchmark question with its gold SQL and the
 model's generated SQL, plus the execution-accuracy verdict. They are meant to be reused
-without the PostgreSQL machine or the eval harness — load the JSONL (or CSV) and go.
+without the PostgreSQL machine or the eval harness: load the JSONL (or CSV) and go.
 
 Everything here comes from the **`claude opus 4.8 high`** run on the **test split** (2,030
 questions). See [../docs/methodology/evaluation.md](../docs/methodology/evaluation.md) §8
@@ -29,7 +29,7 @@ questions). See [../docs/methodology/evaluation.md](../docs/methodology/evaluati
 The data ships as one compressed archive; the loose `.jsonl`/`.csv` are git-ignored and
 regenerable (see below).
 
-**`Claude-Opus-4.8_high_qa_sql.zip`** — unzip to get four files:
+**`Claude-Opus-4.8_high_qa_sql.zip`** unzips to four files:
 
 | File | Rows | Content |
 | --- | --- | --- |
@@ -79,6 +79,6 @@ paraphrased text (`question_paraphrases.jsonl`), and the obfuscation language
 - `generated_sql` reflects one specific one-shot run; it is not a canonical answer. For a
   correct reference query, use `gold_sql`.
 - The `english` rows are the noise-floor control (identity rename), not an obfuscation
-  arm — see [../docs/reference/limitations.md](../docs/reference/limitations.md) §1.
+  arm; see [../docs/reference/limitations.md](../docs/reference/limitations.md) §1.
 - To execute any of this SQL yourself, restore the PostgreSQL instances as described in
   [../docs/reference/using-the-dataset.md](../docs/reference/using-the-dataset.md).

@@ -20,8 +20,8 @@ are versioned in this repo.
 > **The dumps carry 69 schemas; the eval only uses 58 of them.** After the 2026-07-29
 > gold-quality purge ([gold-quality-audit.md](gold-quality-audit.md)), 11 databases fell below
 > the 60-question floor and were dropped from the splits. The dumps were **not** rebuilt, so
-> those 11 remain present — fully obfuscated, fully trap-injected, byte-identical to before —
-> but **no question, gold SQL, or result hash references them**:
+> those 11 remain present, fully obfuscated and trap-injected and byte-identical to before, but
+> **no question, gold SQL, or result hash references them**:
 >
 > ```text
 > app_store   bike_share_1   california_schools   college_completion   computer_student
@@ -37,7 +37,7 @@ are versioned in this repo.
 > agent over a pooled schema lake, the 11 unreferenced schemas are either extra distractors that
 > make routing genuinely harder, or wasted exploration budget that penalises the agent for
 > nothing. **Decide which before running an agent eval, and state the choice alongside any
-> `routing_recall` number** — it changes the denominator. Removing them would mean re-dumping and
+> `routing_recall` number**, because it changes the denominator. Removing them would mean re-dumping and
 > re-uploading ≈12 GB, so leaving them is the cheap default, not a verdict.
 
 ---
