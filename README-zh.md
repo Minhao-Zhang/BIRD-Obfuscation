@@ -26,50 +26,22 @@
 语料中一对错误的(问题, SQL)不是浪费一行,而是教会模型一个会传播的错误映射。完整证据、方法与
 引用见 [gold-quality-audit.md](docs/reference/gold-quality-audit-zh.md)。
 
-## 两种评测 —— 请勿混为一谈
+## 用途
 
-```mermaid
-flowchart LR
-    DATA["本仓库:<br/>4 个 Postgres 变体 + gold<br/>58 个库 / 6,928 题"]
-    DATA --> A["A. 混淆维度评测(本仓库)<br/>给全上下文<br/>→ 各维度是否真的起效?"]
-    DATA --> B["B. 语义层评测(governed-bi)<br/>测试时不给上下文<br/>→ 智能体能否归纳出语义层?"]
-```
+本数据集面向的是**语义层**任务,而不是单轮 Text-to-SQL。智能体读取 `train` 划分 —— 某个 schema 上
+的(问题, SQL)对 —— 从中归纳出一个可复用的映射,然后在同一个 schema 上回答未见过的 `test` 问题,
+而不会被提供那份映射。评测框架、指标(`decoy_touch_rate`、`routing_recall`)与结果都在
+[**governed-bi**](https://github.com/Minhao-Zhang/governed-bi)。
 
-### A. 混淆维度评测 —— *在本仓库*
+对数据本身有两点推论。每个 schema 的题量接近自变量 —— 能归纳出多少语义层,取决于此前有多少*正确*
+的题目;保留的 58 个 schema 语料规模跨 60–383,因此报告任何逐 schema 结果时请一并给出规模。另外,
+划分边界不能泄漏:语料中一条与测试题近重复的问题,会让智能体用检索代替归纳(目前尚未量化 ——
+见 [gold-quality-audit.md §6](docs/reference/gold-quality-audit-zh.md))。
 
-这是一次**数据集验证**检查,而非最终结论。模型拿到的东西与原版 BIRD 任务给的一样 —— 题目、
-完整的精简 DDL,以及可选的证据提示 —— 然后被要求一次性写出 SQL。它唯一的目的,是确认每个混淆
-维度确实可测量地改变了行为,且表现符合设计。
-
-五个实验臂(`base` / `rename` / `decoy` / `paraphrase` / `all`)外加一项四条件污染研究,以逐题
-配对、McNemar 检验、bootstrap 置信区间,以及 14 个数据库的恒等重命名噪声下限来解读。设计与结果见
-[evaluation.md](docs/methodology/evaluation-zh.md) §8–§9。
-
-> `evaluation.md` 中测得的数字早于 gold 质量清理,**已过时**。它们作为"当时跑了什么"的记录被
-> 保留,而非改写。重新计算方式:把已保存的逐题评分按 `question_id` 与 `gold_quality_flags.jsonl`
-> 连接后过滤。
-
-### B. 语义层评测 —— *下游,在 [governed-bi](https://github.com/Minhao-Zhang/governed-bi)*
-
-这才是数据集存在的目的,而且它**与 BIRD 是不同的任务**。
-
-- 智能体拿到 **train** 划分 —— 某个 schema 上的(问题, SQL)对 —— 必须从中归纳出一个可复用的
-  语义层:混淆后的标识符*意味着什么*、哪些表如何连接、哪些列能回答哪类问题。
-- 测试时,它要在**同一个 schema 上回答未见过的问题,而不会被提供那份映射**。它知道什么,取决于
-  它自己建成了什么。
-
-由此产生三条塑造该数据集的推论:
-
-- **每个 schema 的题量接近自变量**,而不是干扰参数 —— 你能归纳出多少语义层,取决于此前有多少
-  题目。保留的 58 个 schema 语料规模跨 60–383;报告任何逐 schema 结果时请一并给出规模。
-- **语料的 gold 质量是承重的**,这正是清理在这里比在逐题基准里更重要的原因。BIRD 的错误在同一个
-  数据库内*一致地*反复出现,恰好是归纳型学习者会当作规则吸收的规律。
-- **划分边界不能泄漏。** 语料中一条与测试题近重复的问题,会让智能体用检索代替归纳。目前尚未量化
-  —— 见 [gold-quality-audit.md §6](docs/reference/gold-quality-audit-zh.md)。
-
-governed-bi 运行一个真正的"执行并观察"型智能体(LangGraph),报告执行准确率、`routing_recall`
-以及 `decoy_touch_rate` —— 智能体的 SQL 有多少时候引用了被污染的诱饵而不是真实的那一列。最后
-这个指标正是陷阱存在的理由。
+另有一项独立的小型五臂混淆评测(`base` / `rename` / `decoy` / `paraphrase` / `all`),在给全上下文
+的条件下一次性运行。它的结论仅止于一个朴素的事实:重命名确实抹掉了前沿模型中的一部分记忆信息。
+设计与数字见 [evaluation.md](docs/methodology/evaluation-zh.md) §8–§9 —— 测于 gold 质量清理之前,
+因此已过时。
 
 ## 四个数据库变体
 
@@ -147,8 +119,8 @@ docker compose exec pg_base pg_restore -U bird -d bird --no-owner -j 4 /tmp/pg_b
 
 ## 范围
 
-本仓库负责**准备并验证**数据集。它不修改真实数据,不评测 schema 路由(在评测 A 中正确的数据库
-是预先给出的),也不声称封堵了所有污染路径 —— 被记住的字面量和高层 SQL 模板依然存在。
+本仓库负责**准备并验证**数据集。它不修改真实数据,不评测 schema 路由(在本仓库的混淆评测里,正确
+的数据库是预先给出的),也不声称封堵了所有污染路径 —— 被记住的字面量和高层 SQL 模板依然存在。
 
 ## Python
 

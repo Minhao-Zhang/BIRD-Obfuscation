@@ -28,56 +28,26 @@ the task below, because a wrong (question, SQL) pair in the corpus does not wast
 teaches a wrong mapping that propagates. Full evidence, method, and citations:
 [gold-quality-audit.md](docs/reference/gold-quality-audit.md).
 
-## Two evaluations — do not conflate them
+## What it is for
 
-```mermaid
-flowchart LR
-    DATA["This repo:<br/>4 Postgres variants + gold<br/>58 dbs / 6,928 questions"]
-    DATA --> A["A. Obfuscation-arm eval (here)<br/>full context given<br/>→ does each dimension bite?"]
-    DATA --> B["B. Semantic-layer eval (governed-bi)<br/>no context at test time<br/>→ can an agent induce a layer?"]
-```
+The dataset targets a **semantic-layer** task rather than one-shot Text-to-SQL. An agent reads the
+`train` split — (question, SQL) pairs over a schema — induces a reusable mapping from it, then
+answers unseen `test` questions over the same schema without being handed that mapping. The harness,
+metrics (`decoy_touch_rate`, `routing_recall`) and results live in
+[**governed-bi**](https://github.com/Minhao-Zhang/governed-bi).
 
-### A. Obfuscation-arm evaluation — *in this repo*
+Two things follow for the data itself. Per-schema question count is close to the independent
+variable — how much layer an agent can induce depends on how many *correct* prior questions it had,
+and corpus sizes span 60–383 across the 58 retained schemas, so report them alongside any per-schema
+result. And the split boundary must not leak: a corpus question that near-duplicates a test question
+lets the agent retrieve instead of induce (not yet quantified —
+[gold-quality-audit.md §6](docs/reference/gold-quality-audit.md)).
 
-A **dataset-validation** check, not a headline finding. The model is handed everything the original
-BIRD task hands it — the question, the full stripped DDL, optionally the evidence hint — and asked
-for SQL, one-shot. Its only purpose is to confirm that each obfuscation dimension measurably shifts
-behaviour and behaves as designed.
-
-Five arms (`base` / `rename` / `decoy` / `paraphrase` / `all`) plus a four-condition contamination
-study, read with per-question pairing, McNemar tests, bootstrap CIs, and a 14-database
-identity-rename noise floor. Design and results: [evaluation.md](docs/methodology/evaluation.md)
-§8–§9.
-
-> The measured numbers in `evaluation.md` predate the gold-quality purge and are **superseded**.
-> They are retained as a record of what was run, not rewritten. Recompute by filtering stored
-> per-question grades on `question_id` against `gold_quality_flags.jsonl`.
-
-### B. Semantic-layer evaluation — *downstream, in [governed-bi](https://github.com/Minhao-Zhang/governed-bi)*
-
-This is what the dataset exists for, and it is a **different task from BIRD**.
-
-- The agent gets the **train** split — (question, SQL) pairs over a schema — and must induce a
-  reusable semantic layer from them: what the obfuscated identifiers *mean*, which tables join how,
-  which columns answer which kind of question.
-- At test time it answers **unseen questions over the same schema without being given that
-  mapping**. What it knows is what it built.
-
-Three consequences that shape the dataset:
-
-- **Per-schema question count is close to the independent variable**, not a nuisance parameter —
-  how much layer you can induce depends on how many prior questions you had. Corpus sizes range
-  60–383 across the 58 retained schemas; report them alongside any per-schema result.
-- **Corpus gold quality is load-bearing**, which is why the purge matters more here than for a
-  per-question benchmark. BIRD's errors recur *consistently* within a database, so they are exactly
-  the regularity an inductive learner absorbs as a rule.
-- **The split boundary must not leak.** A corpus question that near-duplicates a test question lets
-  the agent retrieve instead of induce. Not yet quantified — see
-  [gold-quality-audit.md §6](docs/reference/gold-quality-audit.md).
-
-governed-bi runs a real execute-and-observe agent (LangGraph) and reports execution accuracy,
-`routing_recall`, and `decoy_touch_rate` — how often the agent's SQL references a corrupted decoy
-instead of the real column. That last metric is the reason the traps exist.
+Separately, this repo carries a small five-arm obfuscation eval (`base` / `rename` / `decoy` /
+`paraphrase` / `all`) run one-shot with full context given. Its only claim is the modest one: the
+renaming does remove some memorised information from a frontier model. Design and numbers:
+[evaluation.md](docs/methodology/evaluation.md) §8–§9 — measured before the gold-quality purge and
+therefore superseded.
 
 ## The four database variants
 
@@ -157,8 +127,8 @@ against the live instance. Run everything with `uv run python pipeline/<script>.
 ## Scope
 
 This repo **prepares and validates** the dataset. It does not modify real data, does not evaluate
-schema routing (the correct database is supplied upfront in evaluation A), and does not claim to
-close every contamination path — memorised literals and high-level SQL templates remain.
+schema routing (the correct database is supplied upfront in the obfuscation eval here), and does not
+claim to close every contamination path — memorised literals and high-level SQL templates remain.
 
 ## Python
 
