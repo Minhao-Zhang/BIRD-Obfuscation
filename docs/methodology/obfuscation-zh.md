@@ -35,7 +35,7 @@
 
 ### 有意从 schema lake 中省略的
 
-- **外键约束**:`pg_base` 和 `pg_rename` 都不声明外键(FK)约束,尽管 BIRD 的 SQLite 源里是有的(见 §4 和 §5 步骤 1)。这是一个方法论上的选择,而不是疏忽或对某个 bug 的绕行:下游的 agentic Text-to-SQL 任务,意在评测 agent 能否从列名、值以及它在构建记忆过程中看到的问题/SQL 中推断出表关系,而不是从一份显式的 FK 目录里直接读出来——一个探索陌生 schema 的真实分析师同样不会被递上这样一份目录。`pg_rename` 现在是作为 `pg_base` 的一次精确卷克隆(volume clone)构建的(见 §5 步骤 5),因此它自动继承了这一特性,而不是靠第二个加载器独立地选择省略 FK。
+- **外键约束**:`pg_base` 和 `pg_rename` 都不声明外键(FK)约束,尽管 BIRD 的 SQLite 源里是有的(见 §4 和 §5 步骤 1)。这是一个方法论上的选择,而不是疏忽或对某个 bug 的绕行:下游的 agentic Text-to-SQL 任务,意在评测 agent 能否从列名、值以及它在构建记忆过程中看到的问题/SQL 中推断出表关系,而不是从一份显式的 FK 目录里直接读出来;一个探索陌生 schema 的真实分析师同样不会被递上这样一份目录。`pg_rename` 现在是作为 `pg_base` 的一次精确卷克隆(volume clone)构建的(见 §5 步骤 5),因此它自动继承了这一特性,而不是靠第二个加载器独立地选择省略 FK。
 
 ---
 
@@ -57,7 +57,7 @@
 
 早期设计中包含了字面值替换,即在问题和 gold SQL 的 WHERE 子句中把命名实体的值替换掉,例如 `'France'` → `'Brazil'`。它被放弃的原因是:
 
-为了让 R1==R2 成立(见 §4),被替换后的值必须真实存在于数据库中。要在不修改数据库行的前提下保证这一点,就得在每次替换之前先查询数据库找一个有效的替换值:这对横跨 10,541 个问题中每一个由 NER 识别出的实体来说,是一种脆弱的、依赖数据库的变换。另一种做法——修改数据库内容——则与"保留 schema 结构和数据"这一核心约束相冲突。
+为了让 R1==R2 成立(见 §4),被替换后的值必须真实存在于数据库中。要在不修改数据库行的前提下保证这一点,就得在每次替换之前先查询数据库找一个有效的替换值:这对横跨 10,541 个问题中每一个由 NER 识别出的实体来说,是一种脆弱的、依赖数据库的变换。另一种做法,即修改数据库内容,则与"保留 schema 结构和数据"这一核心约束相冲突。
 
 值层面的记忆(模型凭记忆补全 `WHERE pays = 'France'`)是一种被接受的残余风险。本项目主要针对的污染威胁是 schema 层面的记忆(把 `movie_release_year` 认出来是一个 BIRD 列),而这正是 **rename** 维度意在削弱的。值层面的记忆不在本数据准备项目的范围之内。
 
@@ -90,7 +90,7 @@
 - 语言分配映射存储为 `artifacts/db_language_map.json`(`db_id → language`)
 - 翻译由一个 LLM 生成,并在 **单个 prompt 中提供完整的数据库上下文**:数据库名、所有表名,以及所有列名和类型一并给出。模型被要求产出一位母语数据库设计者会自然使用的术语,而不是逐词查字典。在给任何东西命名之前先看到完整的 schema,可以确保领域一致性(例如足球数据库里的 `detailed_date` 列会得到一个契合足球领域的翻译,而不是泛泛的翻译)。
 - 当某个语言槽位里的所有数据库都翻译完成后,会运行一次 **一致性遍(consistency pass)**:第二个 LLM prompt 审查那些跨数据库通用概念(`id`、`name`、`created_at`、`status` 等)的翻译,并按每种语言把它们规整到一个规范形式。这样可以减少同一语言槽位下各数据库之间在通用概念上可以避免的差异。当某个规范形式与某个特定数据库已经选定的、契合领域的术语相冲突时,契合领域的术语优先;DB 内部一致性有更高的优先级。
-- **翻译质量的建议性检查(`03b_check_translation_quality.py`,非阻塞):** BIRD 为每张表附带一个 `database_description/<table>.csv`(`original_column_name, column_name, column_description, data_format, value_description`),这是一份由人工撰写的、独立的说明,描述每个列实际的含义,与本流水线生成的任何东西都无关。步骤 3b 把每个 DB 翻译后的列名连同其 BIRD 撰写的描述一起交给一个 LLM,请它标记出那些相对描述而言语义错误的翻译,而不仅仅是风格上泛泛的翻译(例如,当描述说某列存放的是完整地址时,却把 `StreetAddress` 翻译成一个只表示"街道"的词)。标记会写入 `artifacts/translation_quality_flags.jsonl` 以供人工审查;这一步绝不会修改 `schema_rename_map.json` 本身。曾考虑把它作为 schema *迁移* 的基础(读取每一份描述,为每个 DB 手写一个迁移脚本),但为此目的被否决了:pgloader 的实际 bug(索引/PK 加引号、FK-DDL 崩溃、`CURRENT_TIMESTAMP` 加引号;见 §5 步骤 1)没有一个是因为不了解 schema 而造成的,而且 BIRD 的 `data_format` 字段比 `_pg_helpers.py` 已经在做的数据驱动型类型推断更粗糙。它特别适合专门用于翻译质量审查——在这里,BIRD 的描述是步骤 3 中的翻译 LLM 没有看到过的、真正独立的信号。
+- **翻译质量的建议性检查(`03b_check_translation_quality.py`,非阻塞):** BIRD 为每张表附带一个 `database_description/<table>.csv`(`original_column_name, column_name, column_description, data_format, value_description`),这是一份由人工撰写的、独立的说明,描述每个列实际的含义,与本流水线生成的任何东西都无关。步骤 3b 把每个 DB 翻译后的列名连同其 BIRD 撰写的描述一起交给一个 LLM,请它标记出那些相对描述而言语义错误的翻译,而不仅仅是风格上泛泛的翻译(例如,当描述说某列存放的是完整地址时,却把 `StreetAddress` 翻译成一个只表示"街道"的词)。标记会写入 `artifacts/translation_quality_flags.jsonl` 以供人工审查;这一步绝不会修改 `schema_rename_map.json` 本身。曾考虑把它作为 schema *迁移* 的基础(读取每一份描述,为每个 DB 手写一个迁移脚本),但为此目的被否决了:pgloader 的实际 bug(索引/PK 加引号、FK-DDL 崩溃、`CURRENT_TIMESTAMP` 加引号;见 §5 步骤 1)没有一个是因为不了解 schema 而造成的,而且 BIRD 的 `data_format` 字段比 `_pg_helpers.py` 已经在做的数据驱动型类型推断更粗糙。它特别适合专门用于翻译质量审查:在这里,BIRD 的描述是步骤 3 中的翻译 LLM 没有看到过的、真正独立的信号。
 - 翻译使用 `snake_case` 以匹配 PostgreSQL 的标识符约定(例如 `date_of_birth` → `date_de_naissance`、`fecha_de_nacimiento`、`geburtsdatum`、`chushengriqi`)
 - **已知风险:** PostgreSQL 会在 63 字节处静默截断标识符。较长的拼音转写在实际中不太可能触及这一点,但如果在 DDL 加载期间发生冲突,受影响的标识符会被手动解决,并更新 rename map。
 - rename map 存储为 `artifacts/schema_rename_map.json`,其结构为 `db_id → {bare_name: obfuscated_name}`。键是不带 schema 限定的裸标识符(例如 `"country"`,而不是 `"world.country"`)。在每个 `db_id` 内部,表名和列名共享同一个键空间;流水线依靠 SQL AST 的节点类型以及 R1==R2 验证步骤来捕捉遗漏的或有歧义的标识符替换。
@@ -103,7 +103,7 @@
 
   **给标识符加引号会与 pgloader 自己自动生成的 index/PK/FK DDL 冲突(经实测验证,而不仅仅是从源码推断)。** 当 `quote identifiers` 生效时,pgloader 的 `CREATE UNIQUE INDEX`/`ALTER TABLE ... ADD PRIMARY KEY`/`ADD FOREIGN KEY` 语句会让 *这些语句内部的列名* 不加引号(只有 `CREATE TABLE` 中的表/列定义被正确加引号),于是 PostgreSQL 会把像 `Id` 这样的大小写混合列名折叠成 `id`,找不到它,导致约束/索引创建失败。这一点已针对加载进一个真实 Postgres 的 `works_cycles` 直接复现:51 个硬错误,每张表一个,每一次 index/PK 创建都失败。没有办法在保留索引创建的同时只修复其中的列加引号问题:pgloader 的语法把 PK 创建和索引创建捆绑在同一个 `create indexes`/`create no indexes` 开关下,对所生成 DDL 内部的加引号没有独立的覆盖手段。因此步骤 4 传入 `create no indexes`:`pg_base` 拥有拼写正确的表和列(已逐行与 SQLite 核对),但没有索引或 PK 约束。本流水线只会从 `pg_base` 读取(步骤 5 和 7 的 R0==R1/R1==R2 检查),所以代价是查询速度,而不是正确性。
 
-  **外键约束根本就不创建:这是一个有意的方法论决策,而不是绕行手段。** 见 §2 中的"有意从 schema lake 中省略的"。它恰好也绕开了一个另外的、已确认的 pgloader 崩溃:SQLite 的简写形式 `FOREIGN KEY (col) REFERENCES OtherTable`(省略被引用的列,这是合法的 SQLite,意思是"OtherTable 的主键")会让 `PRAGMA foreign_key_list` 返回一个为空的 `to` 列,而这在某些 pgloader 构建中会导致 FK-DDL 生成崩溃。69 个保留数据库中的 15 个里,共有 176 个 FK 使用了这种简写,所以这并不是一个可以指望 pgloader 悄无声息地处理好的边角情况。在 WITH 子句中传入 `no foreign keys` 同时也让 `pg_base` 与 `pg_rename` 保持一致——后者从一开始就从未创建过 FK 约束(`_pg_helpers.py` 的混淆 schema 加载器只发出 `CREATE TABLE`)。
+  **外键约束根本就不创建:这是一个有意的方法论决策,而不是绕行手段。** 见 §2 中的"有意从 schema lake 中省略的"。它恰好也绕开了一个另外的、已确认的 pgloader 崩溃:SQLite 的简写形式 `FOREIGN KEY (col) REFERENCES OtherTable`(省略被引用的列,这是合法的 SQLite,意思是"OtherTable 的主键")会让 `PRAGMA foreign_key_list` 返回一个为空的 `to` 列,而这在某些 pgloader 构建中会导致 FK-DDL 生成崩溃。69 个保留数据库中的 15 个里,共有 176 个 FK 使用了这种简写,所以这并不是一个可以指望 pgloader 悄无声息地处理好的边角情况。在 WITH 子句中传入 `no foreign keys` 同时也让 `pg_base` 与 `pg_rename` 保持一致:后者从一开始就从未创建过 FK 约束(`_pg_helpers.py` 的混淆 schema 加载器只发出 `CREATE TABLE`)。
 
   **即便遇到硬性的、丢数据的失败,pgloader 也会返回退出码 0(这是直接确认的,不是假设的)。** 用 `--on-error-stop` 运行 pgloader v3 去应对一个 `FATAL` 级的 schema 创建错误,它仍然退出 0。另一个单独的 bug(pgloader 把 SQLite 的 `DEFAULT CURRENT_TIMESTAMP` 加引号成字面字符串 `'current_timestamp'`,而 `timestamptz` 列随后会拒绝它;影响 `works_cycles` 和 `movie_3` 里的 80 张表)通过在 WITH 子句中加入一条显式的 `CAST` 规则得到了修复,但即便 *没有* 这个修复,被中止的加载也是在零张表被创建的情况下退出 0 的。因此,在 pgloader 调用外面包一个 subprocess 的 `check=True` 是必要的,但并不充分。步骤 4 的 `verify_row_counts()`(逐表比较 SQLite 与 `pg_base` 之间的 `SELECT COUNT(*)`)才是真正能捕捉到静默的部分加载的那个检查;BIRD 自己的 `works_cycles.sqlite` 中两处真实的、早已存在的数据质量缺陷正是通过这种方式才被发现的(一处是被烤进 `CountryRegion` 数据里的字面表头行,另一处是以十六进制字符串 `TEXT` 存储的 BLOB 列,被 pgloader 的类型推断误判为 base64 而无法解码)。
 - Evidence 提示中出现的列名/表名会用词边界正则(`\bcol_name\b`)对照 rename map 进行替换。提示是自然语言,不是 SQL,因此字符串字面量的歧义问题在这里不适用。
@@ -204,7 +204,7 @@ eval_dataset/                   # git-tracked FINAL deliverable (snapshot of art
 
 ## 7. 扩展的混淆维度(诱饵 + 改写)
 
-第 1-6 节覆盖经过验证的核心流水线(步骤 0-7),它**只混淆 schema 标识符**(即 **rename** 维度),问题和数据库内容保持原样。本部分定义两个**额外的、可独立开关的**混淆维度,以及分别衡量它们的消融实验。**状态:已实现并已应用**——流水线步骤 08-10 与消融框架 `pipeline/eval_ablation.py` 均已存在并已运行;结果见 [evaluation.md §9.4](evaluation-zh.md)。诱饵维度已从规划期最初勾勒的空表/结构化设计**重做**为**被污染的"邪恶双胞胎"陷阱**(步骤 10);§8 描述的是实际构建的设计,完整细节见 [../reference/corrupted-decoys-design.md](../reference/corrupted-decoys-design-zh.md)。
+第 1-6 节覆盖经过验证的核心流水线(步骤 0-7),它**只混淆 schema 标识符**(即 **rename** 维度),问题和数据库内容保持原样。本部分定义两个**额外的、可独立开关的**混淆维度,以及分别衡量它们的消融实验。**状态:已实现并已应用。**流水线步骤 08-10 与消融框架 `pipeline/eval_ablation.py` 均已存在并已运行;结果见 [evaluation.md §9.4](evaluation-zh.md)。诱饵维度已从规划期最初勾勒的空表/结构化设计**重做**为**被污染的"邪恶双胞胎"陷阱**(步骤 10);§8 描述的是实际构建的设计,完整细节见 [../reference/corrupted-decoys-design.md](../reference/corrupted-decoys-design-zh.md)。
 
 ### 7.1 为什么要扩展
 
@@ -292,7 +292,7 @@ eval_dataset/                   # git-tracked FINAL deliverable (snapshot of art
 - `trap_manifest.json`:**邪恶双胞胎列**的基准事实。每个陷阱:`{db, table, source_column, source_type, operator, is_key, in_correlated_group, salt, names:{base, rename}}`。
 - `trap_table_manifest.json`:**被污染的克隆表**的基准事实。每个克隆:`{db, source_table, columns:[{source_column, source_type, operator, is_key}], names:{base:{table, columns}, rename:{table, columns}}}`。
 - `order_sensitive_qids.json`:被排除在严格跨变体 EX 之外的 qid(153 个顺序敏感 + 21 个执行失败)。
-- ~~`decoy_map.json`~~:**已于 2026-07-29 删除。** 步骤 08 的*结构化*诱饵映射所描述的对象**并不存在于已发布的 dump 中** —— 对 `pg_rename_decoy` 的核验显示,224 个诱饵表中有 223 个、563 个诱饵列中有 547 个均不存在;且该实例的 731 张表恰好等于 569(干净基线)+ 162(步骤 10 的克隆表),没有留给它们的空间。诱饵卷显然在步骤 10 之前被从干净状态重新克隆过,抹掉了步骤 08 的产物。因此这份映射是关于已发布数据集的**错误信息**,而不只是被取代的 ground truth。
+- ~~`decoy_map.json`~~:**已于 2026-07-29 删除。** 步骤 08 的*结构化*诱饵映射所描述的对象**并不存在于已发布的 dump 中**。对 `pg_rename_decoy` 的核验显示,224 个诱饵表中有 223 个、563 个诱饵列中有 547 个均不存在;且该实例的 731 张表恰好等于 569(干净基线)+ 162(步骤 10 的克隆表),没有留给它们的空间。诱饵卷显然在步骤 10 之前被从干净状态重新克隆过,抹掉了步骤 08 的产物。因此这份映射是关于已发布数据集的**错误信息**,而不只是被取代的 ground truth。
 - `gold_star_expanded.jsonl`:针对那约 5 个星号查询、经过 `SELECT *` 展开的 gold。
 
 ### 新增的 PostgreSQL 实例(docker-compose)

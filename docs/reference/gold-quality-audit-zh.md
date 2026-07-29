@@ -13,7 +13,7 @@
 
 ## 1. 发现
 
-本数据集所依赖的 gold SQL —— BIRD 2023 的 `train` + `dev` —— 存在大量标注错误,而且这些错误
+本数据集所依赖的 gold SQL,即 BIRD 2023 的 `train` + `dev`,存在大量标注错误,而且这些错误
 是**系统性**的,而非随机的。三项独立审计的结论一致;另有两个在 BIRD 2023 之后发布的官方
 `birdsql` release,取代或撤回了原始 gold 中相当大的一部分。
 
@@ -32,7 +32,7 @@ Jin 等给出的错误分类(占出错样本的比例,可多标):E2 schema/数�
 
 对榜单的影响很严重:把 BIRD 榜单上 16 个 agent 在 100 个修正后的 `dev` 样本上重新评测,执行准确率
 的相对变化区间为 −7% 到 +31%,排名变动 −9 到 +9 位;原始榜单与修正子集之间的排名相关性为
-rs = 0.32(p = 0.23)—— 在统计上与"无关"无法区分([2])。
+rs = 0.32(p = 0.23),在统计上与"无关"无法区分([2])。
 
 ### 为什么这对本数据集比对逐题基准更重要
 
@@ -54,12 +54,12 @@ rs = 0.32(p = 0.23)—— 在统计上与"无关"无法区分([2])。
 | [`birdsql/bird23-train-filtered`](https://huggingface.co/datasets/birdsql/bird23-train-filtered)([7]) | 9,428 中的 6,601 | **已过滤**的 train。无 `question_id`,需按 `(db_id, 规范化问题文本)` 对齐。 |
 
 这个区别很关键。`dev_20251106` **修正** gold SQL;[`bird23-train-filtered`](https://huggingface.co/datasets/birdsql/bird23-train-filtered) 则是**删除**了 BIRD 不愿
-背书的问题,几乎不做修正 —— 在与本数据集匹配上的 6,292 行中,只有 6 行(0.1%)SQL 不同。对
+背书的问题,几乎不做修正:在与本数据集匹配上的 6,292 行中,只有 6 行(0.1%)SQL 不同。对
 train 来源的问题而言,"不在过滤后的 release 里"就是全部信号;上游不存在修正后的 train gold。
 
 [`birdsql/bird_mini_dev`](https://huggingface.co/datasets/birdsql/bird_mini_dev)([8])也做了检查,
 但**未**采用:它基于*原始* dev 构建,因此带有同样的标注错误,且已被 `dev_20251106` 取代。不过它的
-`mini_dev_pg` 划分起到了一个作用 —— 独立校验本仓库的 SQLite→PostgreSQL 转译(步骤 05):在与本
+`mini_dev_pg` 划分起到了一个作用:独立校验本仓库的 SQLite→PostgreSQL 转译(步骤 05)。在与本
 数据集重叠的 499 个问题上,它的 PostgreSQL gold 与我们的 `sql_base` 语义完全一致,差异仅在标识符
 引号、schema 限定、别名标签,以及 `substr` 与 `substring` 的写法。
 
@@ -87,8 +87,8 @@ train 来源的问题而言,"不在过滤后的 release 里"就是全部信号;�
 
 | 划分 | 之前 | 之后 | 移除 |
 | --- | --- | --- | --- |
-| `train_final.jsonl` | 8,134 | **5,984** | 2,150 —— 1,837 被 train 过滤删除,313 dev gold 变更 |
-| `test_final.jsonl` | 2,030 | **1,441** | 589 —— 504 被 train 过滤删除,85 dev gold 变更 |
+| `train_final.jsonl` | 8,134 | **5,984** | 2,150(1,837 被 train 过滤删除,313 dev gold 变更) |
+| `test_final.jsonl` | 2,030 | **1,441** | 589(504 被 train 过滤删除,85 dev gold 变更) |
 | **合计** | **10,164** | **7,425** | **2,739(27.0%)** |
 
 同样按 `question_id` 过滤的还有:`question_paraphrases.jsonl`(10,164 → 7,425)、
@@ -110,7 +110,7 @@ computer_student         53/72    software_company        56/75
 ```
 
 `financial`(存活 36%)、`california_schools`(52%)和 `bike_share_1`(46%)恰好是文献指出噪声最
-严重的领域 —— `financial` 损失 64% 的问题,正是 Wretblad 等 49% 噪声率的结论在我们数据上的独立复现。
+严重的领域。`financial` 损失 64% 的问题,正是 Wretblad 等 49% 噪声率的结论在我们数据上的独立复现。
 注意 `app_store`(54)和 `retail_world`(43)在本次过滤**之前**就已低于 60,原因是步骤 05/07 的校验损耗。
 
 ---
@@ -119,22 +119,22 @@ computer_student         53/72    software_company        56/75
 
 清理破坏了步骤 01 的两条不变量:11 个数据库跌破 `MIN_QUESTIONS = 60`;而且由于清理对 train 和
 test 的命中并不均匀,各库的 test 占比漂移到 **12–26%**,而非统一的 20%(`bike_share_1` 只剩 6 个
-测试题,`retail_world` 6 个,`menu` 10 个 —— 少到无法对该 schema 做任何估计)。
+测试题,`retail_world` 6 个,`menu` 10 个,少到无法对该 schema 做任何估计)。
 
-`pipeline/resplit_after_purge.py` 恢复了这两条。所采取的决策是**保持步骤 01 的原始判据不变** ——
-一个数据库需要实际存在 ≥60 个问题 —— 而不是放宽下限或改用固定测试集规模。分布对两种做法都有话
+`pipeline/resplit_after_purge.py` 恢复了这两条。所采取的决策是**保持步骤 01 的原始判据不变**,
+即一个数据库需要实际存在 ≥60 个问题,而不是放宽下限或改用固定测试集规模。分布对两种做法都有话
 说:45–129 区间的桶连续有值,不存在自然的间隙,而 `<60` 这一刀为移除 6.7% 的问题付出了 16% 的
 schema 多样性。最终仍保留该下限,理由是与已发布的方法论保持一致,且在 ≥60 时按比例取 20% 仍能为
 每个 schema 留下 ≥12 个测试题。
 
 划分机制沿用步骤 01 的实现(直接复用而非重写):按库 `Random(SEED ^ crc32(db_id))`,`SEED = 42`,
-`n_test = max(1, round(n * 0.20))`。按库取种子很关键 —— 若共用一个 `Random(42)`,会对每个数据库
+`n_test = max(1, round(n * 0.20))`。按库取种子很关键:若共用一个 `Random(42)`,会对每个数据库
 逐下标施加完全相同的置换,从而使划分与 BIRD 源 JSON 中可能存在的位置结构产生相关。
 
 | | 数值 |
 | --- | --- |
 | 清理后的候选池 | 7,425 个问题 / 69 个数据库 |
-| 剔除的数据库(存活 < 60) | 11 个 —— 497 个问题 |
+| 剔除的数据库(存活 < 60) | 11 个(497 个问题) |
 | **保留的数据库** | **58** |
 | **train_final.jsonl** | **5,539(80.0%)** |
 | **test_final.jsonl** | **1,389(20.0%)** |
@@ -149,12 +149,12 @@ schema 多样性。最终仍保留该下限,理由是与已发布的方法论保
 `gold_result_hashes_rename_decoy.jsonl` 7,425 → 6,928,`order_sensitive` 104 → 98,
 `exec_failed` 10(不变),`gold_star_expanded.jsonl` 3(不变)。
 
-行只被**重新分配,从未被修改** —— `sql_sqlite` / `sql_base` / `sql_rename` 原样传递,因此
+行只被**重新分配,从未被修改**。`sql_sqlite` / `sql_base` / `sql_rename` 原样传递,因此
 R0==R1 与 R1==R2 依然成立,没有重跑任何转译。
 
 `artifacts/retained_dbs.json` **有意未**缩减:它描述的是四个已发布 dump 中物理存在的 69 个 schema,
 这些未发生变化。被评测的子集写入新产物 `evaluated_dbs.json`(58 个数据库)。因此被剔除的 11 个
-数据库仍以**未被引用的 schema** 形式留在 dump 中。这是一个有意保留的开放选择,而非疏漏 —— 对一个
+数据库仍以**未被引用的 schema** 形式留在 dump 中。这是有意留着的开放选择,不是漏做:对一个
 靠执行查询探索数据库的 agent 而言,它们既可能是免费的干扰项,也可能是白耗的探索预算。在下一次
 agent 运行之前请先决定并记录。
 
@@ -184,17 +184,17 @@ agent 运行之前请先决定并记录。
 
 1. **用执行而非文本 diff 来判定那 398 行 dev 变更。** `dev1106_gold_sql_changed` 标记依据的是规范化
    后的文本差异;这 398 行中有一部分是语义等价的改写(例如 `question_id` 0 是改成了 `WITH` 结构)。
-   把新旧 gold 都在 SQLite 源库上执行并比较结果哈希 —— 也就是步骤 07 已经在做的比较 —— 可以把等价
+   把新旧 gold 都在 SQLite 源库上执行并比较结果哈希,也就是步骤 07 已经在做的那个比较,就能把等价
    的那些重新归为 clean。`california_schools`(46)和 `debit_card_specializing`(47)距离任何阈值都
    足够近,单靠这项检查就可能决定它们是否存活。**请在重新划分之前完成这一步。**
-2. ~~**重新划分。**~~ **已完成** —— 见 §4b。下限保持为"实际存在 ≥60 题",并用步骤 01 的机制重建了
+2. ~~**重新划分。**~~ **已完成**,见 §4b。下限保持为"实际存在 ≥60 题",并用步骤 01 的机制重建了
    按库 80/20 划分。被考虑但未采用的替代方案是固定测试集规模(`test = min(25, n 的 30%)`)配合更低
    的语料下限,那样能让各 schema 的测试精度趋于一致,并且仅 `works_cycles` 一个库就能把约 50 个
    测试行归还给语料。如果日后以"逐 schema 估计"为主要分析单位,值得重新考虑,因为目前各 schema
    的测试集规模仍在 12–78 之间浮动。
 3. **把每个数据库的语料规模作为协变量报告。** 清理对各库的削减极不均匀(`financial` −64%,
-   `retail_world` −12%),而在下限剔除掉受损最重的那些之后,保留的 58 个库仍横跨 60–383 题 ——
-   6 倍的差距。若不公布语料规模,就无法把跨库准确率差异与语料规模差异区分开。
+   `retail_world` −12%),而在下限剔除掉受损最重的那些之后,保留的 58 个库仍横跨 60 到 383 题,
+   相差 6 倍。若不公布语料规模,就无法把跨库准确率差异与语料规模差异区分开。
 4. **测量跨划分的近重复泄漏。** 划分是按库随机、seed 42,而 BIRD 在同一个库内包含大量模板化的近似
    重复问题。语料中一条与测试题近重复的问题,会让 agent 用检索代替归纳,从而虚高的恰恰是被声称在
    测量的那项能力。在定稿新划分之前值得先量化这一点。
@@ -224,7 +224,7 @@ python eval_dataset/build_eval_dataset.py
 ```
 
 `resplit_after_purge.py` 是幂等的:在已重新划分的目录树上再次运行不会再剔除数据库,并且会复现出
-完全相同的归属 —— 因为按库的种子只取决于 `db_id`,且划分前会先把输入顺序规范化。
+完全相同的归属,因为按库的种子只取决于 `db_id`,且划分前会先把输入顺序规范化。
 
 `apply_gold_quality_filter.py` 对已过滤的目录树再次运行不会产生进一步变化(是个 no-op),但首次
 运行是破坏性的。如需恢复清理前的问题文件,请从 git 历史(§8 中标注的提交)中取回。
@@ -266,20 +266,20 @@ python eval_dataset/build_eval_dataset.py
 
 **数据集**
 
-5. `minhaozhang/BIRD_Obfuscation` —— 本项目已发布的 PostgreSQL dump。
+5. `minhaozhang/BIRD_Obfuscation`:本项目已发布的 PostgreSQL dump。
    [Hugging Face](https://huggingface.co/datasets/minhaozhang/BIRD_Obfuscation)。CC-BY-SA-4.0。
-6. `birdsql/bird_sql_dev_20251106` —— 官方修正后的 BIRD dev 划分,2025-11-06 发布。
+6. `birdsql/bird_sql_dev_20251106`: 官方修正后的 BIRD dev 划分,2025-11-06 发布。
    [Hugging Face](https://huggingface.co/datasets/birdsql/bird_sql_dev_20251106)。CC-BY-SA-4.0。
-7. `birdsql/bird23-train-filtered` —— 官方过滤后的 BIRD 2023 train 划分,6,601 行。
+7. `birdsql/bird23-train-filtered`: 官方过滤后的 BIRD 2023 train 划分,6,601 行。
    [Hugging Face](https://huggingface.co/datasets/birdsql/bird23-train-filtered)。CC-BY-SA-4.0。
-8. `birdsql/bird_mini_dev` —— 500 题 dev 子集,含 SQLite / MySQL / PostgreSQL 三种方言。
+8. `birdsql/bird_mini_dev`: 500 题 dev 子集,含 SQLite / MySQL / PostgreSQL 三种方言。
    [Hugging Face](https://huggingface.co/datasets/birdsql/bird_mini_dev)。CC-BY-SA-4.0。
    已检查,未用于过滤。
-9. `uiuc-kang-lab/ReViSQL` —— BIRD-Platinum(原名 BIRD-Verified),2,462 条专家修正的 BIRD train
+9. `uiuc-kang-lab/ReViSQL`:BIRD-Platinum(原名 BIRD-Verified),2,462 条专家修正的 BIRD train
    实例。[GitHub](https://github.com/uiuc-kang-lab/ReViSQL)。上游未声明许可。本次未使用(见 §6.1),
    但它是目前唯一存在的修正后 train gold。
 
 **上游项目**
 
-10. BIRD-SQL 基准。[bird-bench.github.io](https://bird-bench.github.io/) —— 载有 2025 年 5 月对 dev
+10. BIRD-SQL 基准。[bird-bench.github.io](https://bird-bench.github.io/) 载有 2025 年 5 月对 dev
     集问题的承认,以及 2025 年 11 月 `bird-sql-dev-1106` 的发布公告。

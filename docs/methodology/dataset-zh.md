@@ -133,12 +133,12 @@ BIRD 的 gold SQL 会从 SQLite 转译到 PostgreSQL 方言,并被改写为使�
 | **最终交付物中的问题总数** | **6,928** |
 
 > [!IMPORTANT]
-> 这 2,739 个问题的移除**不是**流水线校验失败。它们都通过了 R0==R1 与 R1==R2 —— 执行校验证明的是
+> 这 2,739 个问题的移除**不是**流水线校验失败。它们都通过了 R0==R1 与 R1==R2。执行校验证明的是
 > 混淆后的 SQL 与原始 SQL 结果一致,而不是原始 SQL 正确回答了问题。移除的原因是上游 BIRD 此后
 > 修正了([`bird_sql_dev_20251106`](https://huggingface.co/datasets/birdsql/bird_sql_dev_20251106))或撤回了([`bird23-train-filtered`](https://huggingface.co/datasets/birdsql/bird23-train-filtered))这些 gold。理由、方法、各库
 > 存活情况与引用:[gold-quality-audit.md](../reference/gold-quality-audit-zh.md)。
 >
 > 对 §5 的 schema 对称划分的影响:跌破 `MIN_QUESTIONS = 60` 下限的 11 个数据库已被剔除,余下 58 个
 > 用步骤 01 的机制重新按 80/20 划分(`pipeline/resplit_after_purge.py`),各库 test 占比恢复为统一的
-> 19.5–20.6%。58 个数据库都同时出现在两个划分中。`retained_dbs.json` 仍列出 69 个 —— 那是已发布
+> 19.5 到 20.6%。58 个数据库都同时出现在两个划分中。`retained_dbs.json` 仍列出 69 个,那是已发布
 > dump 中物理存在的 schema;被评测的子集见 `evaluated_dbs.json`。

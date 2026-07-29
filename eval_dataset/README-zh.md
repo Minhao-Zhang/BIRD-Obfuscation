@@ -45,7 +45,7 @@ python eval_dataset/build_eval_dataset.py
 - **`train_final.jsonl`**(5,539):训练集划分。
 - **`test_final.jsonl`**(1,389):测试集划分;**评测就基于这份数据运行**。
 - **`evaluated_dbs.json`**(58):出现在上述划分中的数据库,即存活问题数 ≥60 的那些。它与
-  `artifacts/retained_dbs.json` 不同 —— 后者列出四个已发布 dump 中物理存在的 69 个 schema;
+  `artifacts/retained_dbs.json` 不同:后者列出四个已发布 dump 中物理存在的 69 个 schema;
   其余 11 个只贡献 schema,不贡献问题,因此它们以未被引用的干扰项形式留在 dump 中
   ([using-the-dataset.md](../docs/reference/using-the-dataset-zh.md))。
 
@@ -54,7 +54,7 @@ python eval_dataset/build_eval_dataset.py
   > 已修正([`bird_sql_dev_20251106`](https://huggingface.co/datasets/birdsql/bird_sql_dev_20251106))或撤回([`bird23-train-filtered`](https://huggingface.co/datasets/birdsql/bird23-train-filtered))了它们的 gold。见
   > [gold-quality-audit.md](../docs/reference/gold-quality-audit-zh.md) 与下文的
   > `gold_quality_flags.jsonl`。随后有 11 个数据库跌破 60 题下限而被剔除,余下 58 个重新按 80/20
-  > 划分 —— 因此数据集现为 **58 个数据库 / 6,928 个问题**。任何基于旧的 2,030 题测试集测得的结果
+  > 划分,因此数据集现为 **58 个数据库 / 6,928 个问题**。任何基于旧的 2,030 题测试集测得的结果
   > 均已过时。
 
   字段(两者相同):`question_id`、`db_id`、`question`、`evidence`、`evidence_rename`、
@@ -86,7 +86,7 @@ python eval_dataset/build_eval_dataset.py
   (`question_id -> question_paraphrase`),覆盖 train 与 test。
 
 ### 评测支持
-- **`gold_quality_flags.jsonl`**(10,164 —— 唯一仍覆盖清理前完整问题集的文件,这是有意为之):
+- **`gold_quality_flags.jsonl`**(10,164 行,是唯一仍覆盖清理前完整问题集的文件,这是有意为之):
   每个问题的 BIRD gold 溯源信息。字段:`question_id`、`db_id`、`split`、`bird_origin`
   (`dev`/`train`)、`clean`、`reason`(`dev1106_gold_sql_changed` /
   `dropped_by_bird23_train_filter`),以及 398 行 dev gold 被上游修正时附带的 `dev1106_gold_sql`。
@@ -99,11 +99,11 @@ python eval_dataset/build_eval_dataset.py
   (清理与重新划分后 98 个:gold 带有 `LIMIT` 但没有全序,或含浮点聚合,因此陷阱 UPDATE 引起的堆重排会在
   诱饵实例上产生不同但仍有效的结果)+ `exec_failed`(10 个:本就存在的退化 BIRD gold,
   >200k 行 / 60s 超时)。真实数据已验证完好无损;这些属于比较层面的假象,而非损坏。
-- **`gold_result_hashes_rename_decoy.jsonl`**：`pg_rename_decoy` 上全部 train/test gold
-  SQL 结果的宽松与严格 SHA-256 哈希。对模型结果算同样哈希再比对即可，不必再跑 gold。
+- **`gold_result_hashes_rename_decoy.jsonl`**:`pg_rename_decoy` 上全部 train/test gold
+  SQL 结果的宽松与严格 SHA-256 哈希。对模型结果算同样哈希再比对即可,不必再跑 gold。
   字段与算法见
   [docs/reference/gold-result-hashes-zh.md](../docs/reference/gold-result-hashes-zh.md)。
-  重建：`uv run python pipeline/precompute_gold_result_hashes.py`。
+  重建:`uv run python pipeline/precompute_gold_result_hashes.py`。
 
 ---
 
