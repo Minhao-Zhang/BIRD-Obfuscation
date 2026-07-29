@@ -3,9 +3,8 @@
 `AGENTS.md` ([agents.md convention](https://agents.md/)) — operational guidance for coding
 agents working in this repo. The human-facing overview is in [README.md](README.md); the
 *why* behind each design decision is in [docs/methodology/](docs/methodology/); project
-history, status, and decisions are in [docs/PROGRESS.md](docs/PROGRESS.md). Keep this file
-instructional and current — how to run and extend the pipeline, and invariants to preserve —
-not a changelog or run history.
+Keep this file instructional and current — how to run and extend the pipeline, and invariants
+to preserve — not a changelog or run history.
 
 ## Project overview
 
@@ -86,7 +85,8 @@ checked in so steps 6-7 and downstream don't depend on re-running LLM translatio
 
 Step 0 is diagnostic (not the critical path). Run it before step 4 when adding a source database
 or changing identifier-handling logic, to catch risky identifiers before they reach the loader.
-See [docs/reference/audit-findings.md](docs/reference/audit-findings.md).
+Operational conclusions from that scan are captured as CAST rules and quoting invariants in
+[docs/reference/pipeline-invariants.md](docs/reference/pipeline-invariants.md) §"Step 4".
 
 Step 3b is advisory, not a gate. It cross-checks `schema_rename_map.json` against BIRD's
 `database_description/*.csv` and writes questionable translations to
@@ -139,12 +139,12 @@ path. Detail: [docs/methodology/evaluation.md §4](docs/methodology/evaluation.m
 
 Optional decoy/paraphrase dimension steps and their ablation: design in
 [docs/methodology/obfuscation.md §7-§11](docs/methodology/obfuscation.md), full build spec in
-[docs/reference/extension-implementation-plan.md](docs/reference/extension-implementation-plan.md).
+[docs/reference/corrupted-decoys-design.md](docs/reference/corrupted-decoys-design.md).
 
 Two extra PostgreSQL instances hold decoy-augmented clones, gated behind the `decoy` compose
 profile (default `docker compose up -d` is unchanged): `pg_decoy` (5434), `pg_rename_decoy`
 (5435). Build them by cloning the clean volumes, then injecting: clone commands in
-[extension-implementation-plan.md §3c](docs/reference/extension-implementation-plan.md).
+the volume-clone recipe under "Step 6 requires..." above (same `:ro` alpine `cp -a` pattern).
 
 **⚠️ Do NOT run all four instances under heavy load at once on a local Docker Desktop / WSL
 setup. It can OOM the WSL VM, and with `fsync=off` an OOM crash can corrupt the volumes.** Bring
@@ -155,7 +155,13 @@ stop`ping the others). Keep eval `--concurrency` low (≤3), and never overlap s
 pass with the ablation eval. Capping the WSL VM's memory in `.wslconfig` is a useful backstop. On
 a well-provisioned server this limit does not apply.
 
-- `08_inject_decoys.py`: generate `artifacts/decoy_map.json` (cheap LLM, seeded), inject decoy
+- `08_inject_decoys.py`: **superseded by step 10 and no longer part of the shipped dataset.**
+  Its structural decoys are *not present* in the published dumps (verified 2026-07-29 against
+  `pg_rename_decoy`: 223 of 224 decoy tables and 547 of 563 decoy columns absent — the decoy
+  volumes were re-cloned from clean before step 10). `decoy_map.json` was deleted for that
+  reason; do not resurrect it as ground truth. The script is retained only because its
+  `SELECT *` gold expansion and R1==R2 revalidation phases are still referenced by history.
+  Originally: generate `artifacts/decoy_map.json` (cheap LLM, seeded), inject decoy
   tables + confusable columns into both `*_decoy` instances, expand the handful of `SELECT *` gold
   queries (`artifacts/gold_star_expanded.jsonl`), and re-validate R1==R2 (acceptance gate →
   `workdir/decoy_failures.jsonl`, expect 0). `--phase {generate,inject,validate,all}`,
@@ -289,5 +295,5 @@ used by step 0.
   (`**English** · [中文](…-zh.md)` and its mirror). Update both sides together.
 - **English-only exceptions:** `AGENTS.md` and `CLAUDE.md` have **no** `-zh` counterpart.
 - **Keep `AGENTS.md` instructional only** — operational guidance and invariants, not progress logs
-  or history (those live in [docs/PROGRESS.md](docs/PROGRESS.md)).
+  or history — this repo does not keep a progress log; `git log` is the history.
 - `CLAUDE.md` is a thin, git-ignored pointer to this file; edit `AGENTS.md`, not `CLAUDE.md`.

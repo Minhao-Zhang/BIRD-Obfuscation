@@ -3,7 +3,7 @@
 Consumes artifacts/gold_quality_flags.jsonl (see build_gold_quality_flags.py) and
 rewrites every question-keyed artifact in place, keeping only `clean: true` rows.
 
-Nothing schema-level is touched: schema_rename_map, decoy_map, trap_manifest,
+Nothing schema-level is touched: schema_rename_map, trap_manifest,
 trap_table_manifest, db_language_map and the four published PostgreSQL dumps are
 question-agnostic and remain byte-identical. The surviving rows keep their existing
 train/test assignment and their already-validated sql_base / sql_rename, so this

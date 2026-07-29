@@ -7,9 +7,11 @@ artifacts/*.jsonl
 artifacts/db_language_map.json
 artifacts/sqlite_identifier_audit.jsonl
 artifacts/translation_quality_flags.jsonl
-# decoy_map.json is LLM-generated but seeded/regeneratable (step 08 --regenerate).
-# Ignored for now like the other artifacts; could be tracked (as schema_rename_map.json
-# is) if we want reproducibility without re-running the cheap model.
+# decoy_map.json (step 08) is NOT tracked and was deleted from eval_dataset/ on 2026-07-29:
+# its structural decoys are absent from the published dumps (the decoy volumes were re-cloned
+# from clean before step 10), so the map was false information. See
+# docs/methodology/obfuscation.md §10.4. Ignored here so a stray step-08 re-run cannot
+# reintroduce it as tracked ground truth.
 artifacts/decoy_map.json
 # Upstream birdsql releases downloaded for the gold-quality audit (CC-BY-SA-4.0).
 # Not tracked, same as raw BIRD under data/ — re-download per

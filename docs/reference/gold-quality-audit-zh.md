@@ -169,7 +169,7 @@ agent 运行之前请先决定并记录。
   上的 `pg_base`、`pg_rename`、`pg_decoy`、`pg_rename_decoy`([5])与问题无关:该仓库只包含 dump、
   `SHA256SUMS.txt` 和一个 README,没有任何问题文件。无需重新上传,并且清理前后的问题清单共用同一
   批未改动的 dump。
-- **所有 schema 级产物:** `schema_rename_map.json`、`decoy_map.json`、`trap_manifest.json`、
+- **所有 schema 级产物:** `schema_rename_map.json`、`trap_manifest.json`、
   `trap_table_manifest.json`、`db_language_map.json`。它们都不依赖于保留了哪些问题。1,486 个
   evil-twin 列和 162 个克隆表均未改动。
 - **没有重新转译、没有重新校验、没有重建数据库。** 存活的行保留原有的 train/test 归属,以及已校验的

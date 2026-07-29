@@ -77,9 +77,6 @@ python eval_dataset/build_eval_dataset.py
   `db, source_table, columns:[{source_column, source_type, operator, is_key}],
   names:{base:{table, columns}, rename:{table, columns}}`。`operator: null` = 精确复制
   (未损坏)。在构造上即保证 R1==R2 安全(gold 从不引用诱饵表)。
-- **`decoy_map.json`**:step-08 的**结构性**(空)诱饵表/列。对于交互式的“执行并观察”
-  智能体,它已被上文的损坏陷阱*取代*(空诱饵会自我暴露);保留它是为了留存出处。
-
   `names.base` 是英文诱饵标识符,`names.rename` 则是目标语言里的对应形式。损坏用的 `salt` 与变体
   无关,因此 `pg_decoy` 和 `pg_rename_decoy` 会以相同方式损坏相同的行。设计与算子:
   [docs/reference/corrupted-decoys-design.md](../docs/reference/corrupted-decoys-design-zh.md)。

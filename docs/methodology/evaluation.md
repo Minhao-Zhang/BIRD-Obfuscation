@@ -301,7 +301,7 @@ uv run python pipeline/eval_contamination.py --summarize \
 
 Metrics and the per-language / collision breakdowns are defined in §7. Bootstrap CIs and
 McNemar p-values on the paired deltas are not yet computed (planned; see
-[../PROGRESS.md](../PROGRESS.md)).
+planned).
 
 ---
 

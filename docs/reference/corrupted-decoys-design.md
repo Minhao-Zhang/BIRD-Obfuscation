@@ -6,8 +6,9 @@
 Captures the design, the known pitfalls, and (§5) the as-built parameters. The
 risk register (§2) and decisions (§3) are retained as the rationale for §5.
 
-**Supersedes (conditionally):** the `Populate decoy tables with rows? → No` default in
-[extension-implementation-plan.md §0](extension-implementation-plan.md). That default is
+**Supersedes (conditionally):** the `Populate decoy tables with rows? → No` default of the
+original step-08 build spec (since deleted; its `decoy_map.json` output is not in the
+published dumps). That default is
 correct for a **single-shot** text-to-SQL eval (the model never probes, so empty decoys are
 invisible and free). It is a **flaw** for an **interactive / execute-and-observe SQL agent**:
 `COUNT(*)=0` on a decoy table or a 100%-NULL decoy column unmasks the decoy instantly, so it
@@ -267,6 +268,5 @@ To compute a **decoy-consistent answer** (trap-rate metric, F2), the eval repo r
 the gold SQL to read `names.<variant>` in place of `source_column` (or the clone table
 in place of `source_table`) and runs it on the decoy instance.
 
-Related: [extension-implementation-plan.md](extension-implementation-plan.md),
-[pipeline-invariants.md](pipeline-invariants.md),
+Related: [pipeline-invariants.md](pipeline-invariants.md),
 [../methodology/obfuscation.md §8](../methodology/obfuscation.md).

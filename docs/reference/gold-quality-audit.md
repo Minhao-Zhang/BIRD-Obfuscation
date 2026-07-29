@@ -197,8 +197,8 @@ any companion file.
   question-agnostic: the published repo contains only the dumps, `SHA256SUMS.txt` and a
   README — no question files. Nothing there needs re-uploading, and the dumps are shared
   unchanged across the pre- and post-purge question manifests.
-- **All schema-level artifacts:** `schema_rename_map.json`, `decoy_map.json`,
-  `trap_manifest.json`, `trap_table_manifest.json`, `db_language_map.json`. None depends on
+- **All schema-level artifacts:** `schema_rename_map.json`, `trap_manifest.json`,
+  `trap_table_manifest.json`, `db_language_map.json`. None depends on
   which questions are retained. The 1,486 evil-twin columns and 162 clone tables are unchanged.
 - **No re-transpilation, no re-validation, no database rebuild.** Surviving rows keep their
   existing train/test assignment and their already-validated `sql_base` / `sql_rename`, so

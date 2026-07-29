@@ -4,7 +4,7 @@ Step 9: Paraphrase each question (Layer 4 of the extended obfuscation).
 Produces exactly ONE natural-language paraphrase per question, conditioned on
 the gold SQL + obfuscated schema DDL so the paraphrase stays anchored to the
 question's intent (SQL2NL-style; see docs/methodology/obfuscation.md
-§9 and docs/reference/extension-implementation-plan.md §6). Layer 4 attacks
+§9). Layer 4 attacks
 question-form recall: the model can no longer lean on a memorised BIRD
 question -> SQL template.
 

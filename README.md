@@ -131,7 +131,7 @@ produce a number:
 - **Paired conditions.** Every arm runs the same test set through the same model in the same run;
   deltas are per-question paired against `base`. The **ablation** deltas are read with **McNemar
   tests and bootstrap CIs** ([§9.4](docs/methodology/evaluation.md)); the contamination deltas are
-  reported as point estimates (paired CIs pending — see [PROGRESS.md](docs/PROGRESS.md)).
+  reported as point estimates (paired CIs pending).
 - **An empirical null, not zero.** 14 databases keep an identity (English→English) rename, so
   their rename delta is guaranteed ≈0 by construction. They are the **noise-floor control**,
   and the rename effect is reported *per-language* rather than as a single pooled number that the
@@ -218,7 +218,7 @@ split and wider model coverage.**
 | Five-arm ablation harness | ✅ implemented; ✅ first results (same run) |
 | Interactive execute-and-observe agent that exercises the traps | ✅ built in [governed-bi](https://github.com/Minhao-Zhang/governed-bi) (downstream repo) |
 
-Full history, decisions, and what's next: [PROGRESS.md](docs/PROGRESS.md).
+Full history: `git log`.
 
 ### Scope boundaries
 
@@ -323,9 +323,7 @@ regeneration; Postgres DSNs are env-configurable (`PG_*_DSN`) to target remote P
 | [docs/reference/limitations.md](docs/reference/limitations.md) | Known limitations and scope caveats; read before citing any number |
 | [docs/reference/using-the-dataset.md](docs/reference/using-the-dataset.md) | Download, restore, and run the eval |
 | [docs/reference/pipeline-invariants.md](docs/reference/pipeline-invariants.md) | Rules to preserve when editing the pipeline, with rationale |
-| [docs/eda-report.md](docs/eda-report.md) | Exploratory analysis of the BIRD corpus |
 | [AGENTS.md](AGENTS.md) | How to run and extend the pipeline (operational) |
-| [PROGRESS.md](docs/PROGRESS.md) | History, status snapshot, and what's next |
 
 ## Corpus facts
 

@@ -3,7 +3,7 @@ Step 8: Inject decoy tables/columns into the two *_decoy PostgreSQL instances
 so schema-linking is harder, WITHOUT changing any gold-query result.
 
 Layer 3 of the extended obfuscation (docs/methodology/obfuscation.md
-§8; build spec in docs/reference/extension-implementation-plan.md §5). Golden
+§8; as-built trap design in docs/reference/corrupted-decoys-design.md). Golden
 rule: never touch pg_base / pg_rename or the existing *_final.jsonl —
 all writes go to the decoy clones and to new artifacts.
 
@@ -34,7 +34,7 @@ Writes:
   workdir/decoy_validated.jsonl (resume log), workdir/decoy_failures.jsonl
 
 Dependency: the two *_decoy instances must already be cloned from their clean
-counterparts (see extension-implementation-plan.md §3c) before phases inject /
+counterparts (volume-clone recipe in AGENTS.md) before phases inject /
 validate can run. Re-cloning a decoy volume resets it -> re-run this step.
 
 Run:

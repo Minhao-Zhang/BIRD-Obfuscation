@@ -122,7 +122,7 @@ flowchart LR
 - **配对条件。** 每个实验臂都在同一次运行中,用同一个模型跑同一套测试集;
   增量是逐题与 `base` 配对计算的。**消融**的增量用 **McNemar 检验和自助法置信区间
   (bootstrap CIs)**解读([§9.4](docs/methodology/evaluation-zh.md));污染部分的增量
-  目前以点估计报告(配对置信区间待补——见 [PROGRESS.md](docs/PROGRESS-zh.md))。
+  目前以点估计报告(配对置信区间待补)。
 - **一个经验性的零假设,而非绝对的零。** 有 14 个数据库保留了恒等(英语→英语)重命名,
   因此按构造,它们的重命名增量必然 ≈0,充当**噪声下限对照**;
   重命名效果*按语言分别*报告,而不是汇总成一个被对照组稀释的数字
@@ -192,7 +192,7 @@ flowchart LR
 | 五臂消融框架 | ✅ 已实现;✅ 首批结果(同一次运行) |
 | 触发这些陷阱的交互式"执行并观察"智能体 | ✅ 已在 [governed-bi](https://github.com/Minhao-Zhang/governed-bi) 中构建(下游仓库) |
 
-完整的历史、决策和后续计划:[PROGRESS.md](docs/PROGRESS-zh.md)。
+完整历史见 `git log`。
 
 ### 范围边界
 
@@ -294,9 +294,7 @@ uv run python pipeline/eval_ablation.py --arms base --prepare-only
 | [docs/reference/limitations.md](docs/reference/limitations-zh.md) | 已知局限性和范围注意事项;引用任何数字前请先阅读 |
 | [docs/reference/using-the-dataset.md](docs/reference/using-the-dataset-zh.md) | 下载、恢复并运行评测 |
 | [docs/reference/pipeline-invariants.md](docs/reference/pipeline-invariants-zh.md) | 编辑流水线时需要保持的规则,附带理由 |
-| [docs/eda-report.md](docs/eda-report-zh.md) | 对 BIRD 语料的探索性分析 |
 | [AGENTS.md](AGENTS.md) | 如何运行和扩展流水线(操作层面) |
-| [PROGRESS.md](docs/PROGRESS-zh.md) | 历史、状态快照和后续计划 |
 
 ## 语料事实
 

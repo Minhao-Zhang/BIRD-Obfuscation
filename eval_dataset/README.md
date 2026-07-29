@@ -86,10 +86,6 @@ identifiers and the presence of decoy columns/tables differ.
   `db, source_table, columns:[{source_column, source_type, operator, is_key}],
   names:{base:{table, columns}, rename:{table, columns}}`. `operator: null` = copied
   exact (uncorrupted). R1==R2-safe by construction (gold never references a decoy table).
-- **`decoy_map.json`**: step-08 **structural** (empty) decoy tables/columns.
-  *Superseded* for interactive execute-and-observe agents by the corrupted traps above
-  (empty decoys unmask themselves); retained for provenance.
-
   `names.base` is the English decoy identifier, `names.rename` the target-language one.
   The corruption `salt` is variant-independent, so `pg_decoy` and `pg_rename_decoy`
   corrupt the same rows the same way. Design + operators:

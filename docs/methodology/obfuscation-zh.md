@@ -97,7 +97,7 @@
 - Gold SQL 通过 **sqlglot** 的 AST 遍来重写:SQLite SQL 先被转译(transpile)向 PostgreSQL,然后在确认其 PostgreSQL 形式能等价执行之后,再单独进行验证和重命名。标识符节点(表名、列引用)会依据 rename map 被替换,而字符串字面量节点保持不动。其结果意在验证之后全程都是 PostgreSQL SQL;残余的方言差异由 R0==R1 检查处理,必要时辅以 LLM 协助的纠正。
 - **标识符加引号不变量:** PostgreSQL 会把未加引号的标识符转为小写,而 BIRD 的 SQLite schema 里可能包含大写名称、空格或标点。`04_load_pg_base.py` 会显式地向 pgloader 传入 `quote identifiers`(已确认对 SQLite 源是合法语法),因此 `pg_base` 的标识符拼写应当与原始 SQLite 的拼写完全一致。转译步骤会给表引用加上 schema 限定,并对输出的标识符一致地加引号(例如 `"app_store"."AppleStore"."Price"`)。给所有标识符加引号是有意为之:它保留了大小写混合的名称,而对全小写名称也无害。步骤 4 还会运行一次基于实测的加载后检查:它针对每个 DB,把 SQLite 的 `PRAGMA table_info` 标识符与 `pg_base` 中的 `information_schema` 做 diff,一旦有任何不匹配就大声报错,而不是把这个检查推迟到很久之后、代价高得多的 R0==R1 SQL 执行失败时。
 
-  这并不是一个小小的边缘情况:对全部 69 个保留下来的 SQLite 数据库的一次完整审计(`pipeline/00_audit_sqlite_identifiers.py`,结论见 [`docs/reference/audit-findings.md`](../reference/audit-findings-zh.md))在 69 个数据库中的 48 个里发现了 2,351 个有风险的标识符(大写、内嵌空格、标点,甚至带连字符、根本不是合法的未加引号 SQL 的表名),而发现零个列存在最初促成重写 pgloader 的那种 numeric/string 类型不匹配。经由 pgloader → sqlglot 转译 → rename-map 的标识符加引号保真度,而非类型推断,才是这一流水线阶段中风险最高的部分。
+  这并不是一个小小的边缘情况:对全部 69 个保留下来的 SQLite 数据库的一次完整审计(`pipeline/00_audit_sqlite_identifiers.py`,其操作性结论已作为 CAST 规则与加引号不变量写入 [`pipeline-invariants.md`](../reference/pipeline-invariants-zh.md))在 69 个数据库中的 48 个里发现了 2,351 个有风险的标识符(大写、内嵌空格、标点,甚至带连字符、根本不是合法的未加引号 SQL 的表名),而发现零个列存在最初促成重写 pgloader 的那种 numeric/string 类型不匹配。经由 pgloader → sqlglot 转译 → rename-map 的标识符加引号保真度,而非类型推断,才是这一流水线阶段中风险最高的部分。
 
   **已解决(此前曾是一个悬而未决的问题):** pgloader 的 SQLite 加载器默认确实会把标识符转为小写,这已对照 pgloader 源码得到确认(`src/params.lisp` 里的 `*identifier-case*` 默认为 `:downcase`,统一应用于包括 SQLite 在内的每一个源加载器),但该默认值只对匹配 `^[A-Za-z_][A-Za-z0-9_$]*$` 的标识符生效;任何带空格/标点的东西无论如何都已经被强制进入了加引号/保留大小写的分支。这意味着像 `works_cycles` 那样纯 PascalCase 的表(65/65 张表受影响)即便不含有风险标点,也在被静默地转为小写:这正是旧的 `WITH create tables, create indexes, reset sequences` 子句(没有大小写指令)会踩中的失败模式。`quote identifiers` 已确认对 SQLite 源是合法的 WITH 子句语法(与 MySQL 源共用同一条规则,而不是像最初怀疑的那样为 MySQL 独有),现在已出现在步骤 4 的 WITH 子句中。
 
@@ -176,12 +176,11 @@ eval_dataset/                   # git-tracked FINAL deliverable (snapshot of art
   train_final.jsonl test_final.jsonl        # validated gold pairs (8,134 / 2,030)
   schema_rename_map.json db_language_map.json
   trap_manifest.json trap_table_manifest.json  # step 10 corrupted-trap ground truth
-  decoy_map.json                            # step 08 structural decoys (superseded)
   question_paraphrases.jsonl                # step 09
   gold_star_expanded.jsonl order_sensitive_qids.json
 ```
 
-`artifacts/` 保存的是跨流水线步骤按名称被消费的持久化产物(或作为诊断交付物由人来阅读);扩展步骤 08-10 也会往这里写(`decoy_map.json`、`question_paraphrases.jsonl`、`trap_manifest.json`、`trap_table_manifest.json`、`gold_star_expanded.jsonl`、`order_sensitive_qids.json`)。`eval_dataset/` 是受 git 跟踪的、冻结的最终交付物快照(由 `eval_dataset/build_eval_dataset.py` 构建);`workdir/` 保存的是步骤 5/7 修复队列的临时草稿文件,在那个修复循环之外没有任何消费者。
+`artifacts/` 保存的是跨流水线步骤按名称被消费的持久化产物(或作为诊断交付物由人来阅读);扩展步骤 09-10 也会往这里写(`question_paraphrases.jsonl`、`trap_manifest.json`、`trap_table_manifest.json`、`gold_star_expanded.jsonl`、`order_sensitive_qids.json`)。`eval_dataset/` 是受 git 跟踪的、冻结的最终交付物快照(由 `eval_dataset/build_eval_dataset.py` 构建);`workdir/` 保存的是步骤 5/7 修复队列的临时草稿文件,在那个修复循环之外没有任何消费者。
 
 `train_final.jsonl` / `test_final.jsonl`(已验证的交付物)中的每一行都是一个带如下字段的 JSON 对象:
 
@@ -293,7 +292,7 @@ eval_dataset/                   # git-tracked FINAL deliverable (snapshot of art
 - `trap_manifest.json`:**邪恶双胞胎列**的基准事实。每个陷阱:`{db, table, source_column, source_type, operator, is_key, in_correlated_group, salt, names:{base, rename}}`。
 - `trap_table_manifest.json`:**被污染的克隆表**的基准事实。每个克隆:`{db, source_table, columns:[{source_column, source_type, operator, is_key}], names:{base:{table, columns}, rename:{table, columns}}}`。
 - `order_sensitive_qids.json`:被排除在严格跨变体 EX 之外的 qid(153 个顺序敏感 + 21 个执行失败)。
-- `decoy_map.json`:较早的步骤 08 的*结构化*诱饵映射(`db_id → {tables, columns}`);为溯源而保留,已被上面的陷阱清单取代。
+- ~~`decoy_map.json`~~:**已于 2026-07-29 删除。** 步骤 08 的*结构化*诱饵映射所描述的对象**并不存在于已发布的 dump 中** —— 对 `pg_rename_decoy` 的核验显示,224 个诱饵表中有 223 个、563 个诱饵列中有 547 个均不存在;且该实例的 731 张表恰好等于 569(干净基线)+ 162(步骤 10 的克隆表),没有留给它们的空间。诱饵卷显然在步骤 10 之前被从干净状态重新克隆过,抹掉了步骤 08 的产物。因此这份映射是关于已发布数据集的**错误信息**,而不只是被取代的 ground truth。
 - `gold_star_expanded.jsonl`:针对那约 5 个星号查询、经过 `SELECT *` 展开的 gold。
 
 ### 新增的 PostgreSQL 实例(docker-compose)
@@ -320,9 +319,9 @@ Gold-SQL 字段采用一致的命名方案:`sql_sqlite`(原始 SQLite)、`sql_ba
 
 | # | 脚本 | 作用 |
 | --- | --- | --- |
-| 08 | `08_inject_decoys.py` | 生成 `decoy_map.json`(廉价 LLM)→ 把卷克隆为 `pg_*_decoy` → 注入*结构化*诱饵 → 在受影响的 gold 中展开 `SELECT *` → 重新运行 R1==R2。**就诱饵负载而言已被步骤 10 取代。** |
+| 08 | `08_inject_decoys.py` | 把卷克隆为 `pg_*_decoy` → 注入*结构化*诱饵 → 在受影响的 gold 中展开 `SELECT *` → 重新运行 R1==R2。**已被步骤 10 取代,且其诱饵产物并不存在于已发布的 dump 中**(见 §10「新增产物」中关于 `decoy_map.json` 的说明)。只有 `SELECT *` 展开作为活跃产物保留下来。 |
 | 09 | `09_paraphrase_questions.py` | 生成 `question_paraphrase`(廉价 LLM),每个测试问题一条 |
 | 10 | `10_inject_traps.py` | **被污染的诱饵陷阱**:邪恶双胞胎列 + 被污染的克隆表(增量),注入到两个 `*_decoy` 实例中;产出 `trap_manifest.json` + `trap_table_manifest.json`。参见 [../reference/corrupted-decoys-design.md](../reference/corrupted-decoys-design-zh.md)。 |
 | n/a | `pipeline/eval_ablation.py` | 独立的 5 臂消融框架(base/rename/decoy/paraphrase/all);默认离线准备/生成/打分;写入 `eval/ablation_results.jsonl` |
 
-消费这些输出的消融实验设计参见 [evaluation.md §9](evaluation-zh.md),最初的逐步构建规范参见 [../reference/extension-implementation-plan.md](../reference/extension-implementation-plan-zh.md)(注意:其中的诱饵章节早于步骤 10 的被污染陷阱重做;参见那里的横幅提示)。
+消费这些输出的消融实验设计参见 [evaluation.md §9](evaluation-zh.md),竣工的陷阱设计参见 [../reference/corrupted-decoys-design.md](../reference/corrupted-decoys-design-zh.md)。

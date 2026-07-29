@@ -40,8 +40,6 @@ FILES = [
     ("trap_table_manifest.json", "Corrupted decoy clone TABLES. Per clone: db, source_table, "
      "columns:[{source_column,source_type,operator,is_key}], names:{base:{table,columns}, "
      "rename:{table,columns}}."),
-    ("decoy_map.json", "Step-08 STRUCTURAL (empty) decoy tables/columns map. Superseded for "
-     "interactive execute-and-observe agents by the corrupted traps above; kept for provenance."),
     # --- obfuscation dimension 3: question paraphrase ---
     ("question_paraphrases.jsonl", "One SQL-preserving paraphrase per test question "
      "(question_id -> question_paraphrase). Covers the 2030 test questions."),

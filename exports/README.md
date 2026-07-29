@@ -2,6 +2,16 @@
 
 # Evaluation exports: questions + gold + generated SQL
 
+> [!WARNING]
+> **Superseded (2026-07-29).** This bundle is the per-question record of a run over the **old
+> 2,030-question test split**. The dataset has since been purged and re-split — it is now 58
+> databases / 6,928 questions (1,389 test), see
+> [../docs/reference/gold-quality-audit.md](../docs/reference/gold-quality-audit.md). The bundle
+> is retained deliberately: it is the backing evidence for the EX numbers that evaluation.md §8-§9
+> keeps as a historical record. Do not read it as current results, and note that ~29% of its rows
+> are graded against gold that upstream BIRD has since corrected or withdrawn. Join on
+> `question_id` against `eval_dataset/gold_quality_flags.jsonl` to filter those out.
+
 Flat, self-contained tables pairing each benchmark question with its gold SQL and the
 model's generated SQL, plus the execution-accuracy verdict. They are meant to be reused
 without the PostgreSQL machine or the eval harness — load the JSONL (or CSV) and go.

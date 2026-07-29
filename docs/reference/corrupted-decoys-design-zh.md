@@ -6,8 +6,8 @@
 本文记录了设计方案、已知的坑,以及(§5)实际落地的参数。风险登记册(§2)
 和决策(§3)作为 §5 的依据保留下来。
 
-**(有条件地)取代:** [extension-implementation-plan.md §0](extension-implementation-plan-zh.md)
-中 `Populate decoy tables with rows? → No` 这一默认设定。该默认设定对于**单轮
+**(有条件地)取代:** 原步骤 08 构建规范(已删除;其 `decoy_map.json` 产物并不存在于已发布的
+dump 中)中 `Populate decoy tables with rows? → No` 这一默认设定。该默认设定对于**单轮
 (single-shot)**的 text-to-SQL 评测是正确的(模型从不探测,因此空诱饵既不可见也不
 产生任何代价)。但换成**交互式 / 执行并观察的 SQL 智能体**,它就成了**缺陷**:
 诱饵表上的 `COUNT(*)=0`,或某个 100%-NULL 的诱饵列,会立刻暴露诱饵,使其贡献的
@@ -243,6 +243,5 @@ gold 的结果。
 读取 `names.<variant>` 来替代 `source_column`(或用克隆表替代 `source_table`),然后
 在诱饵实例上运行它。
 
-相关文档:[extension-implementation-plan.md](extension-implementation-plan-zh.md)、
-[pipeline-invariants.md](pipeline-invariants-zh.md)、
+相关文档:[pipeline-invariants.md](pipeline-invariants-zh.md)、
 [../methodology/obfuscation.md §8](../methodology/obfuscation-zh.md)。

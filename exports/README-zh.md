@@ -2,6 +2,14 @@
 
 # 评测导出:问题 + gold + 生成的 SQL
 
+> [!WARNING]
+> **已过时(2026-07-29)。** 本 bundle 是在**旧的 2,030 题测试集**上那次运行的逐题记录。数据集此后
+> 已被清理并重新划分 —— 现为 58 个数据库 / 6,928 个问题(test 1,389),见
+> [../docs/reference/gold-quality-audit.md](../docs/reference/gold-quality-audit-zh.md)。保留本
+> bundle 是有意的:它是 evaluation.md §8–§9 作为历史记录保留的那些 EX 数字的支撑证据。请勿将其
+> 当作当前结果;并请注意其中约 29% 的行所对照的 gold 已被上游 BIRD 修正或撤回。按 `question_id`
+> 与 `eval_dataset/gold_quality_flags.jsonl` 连接即可过滤掉这些行。
+
 这是一组扁平、自包含的表:把每个基准问题、它的 gold SQL、模型生成的 SQL,以及执行准确率判定放在一起。设计目标是脱离 PostgreSQL 机器和评测框架也能直接复用——加载 JSONL(或 CSV)即可用。
 
 这里的全部数据来自 **test 划分**上的 **`claude opus 4.8 high`** 运行(2,030 个问题)。这些行汇总后的聚合数字见 [../docs/methodology/evaluation.md](../docs/methodology/evaluation-zh.md) §8(污染)与 §9.4(消融)。
