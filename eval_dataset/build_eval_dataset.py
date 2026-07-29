@@ -25,6 +25,9 @@ FILES = [
     ("train_final.jsonl", "Validated train split (R1==R2). Fields: question_id, db_id, "
      "question, evidence, evidence_rename, difficulty, sql_sqlite, sql_base, sql_rename."),
     ("test_final.jsonl", "Validated test split (same fields). The eval runs on this split."),
+    ("evaluated_dbs.json", "The 58 databases with >= MIN_QUESTIONS=60 surviving questions, i.e. "
+     "those present in the splits above. Distinct from artifacts/retained_dbs.json, which lists "
+     "the 69 schemas physically present in the four published PostgreSQL dumps."),
     # --- obfuscation dimension 1: identifier rename ---
     ("schema_rename_map.json", "Per-db english->renamed identifier map (tables + columns). "
      "Ground truth for the rename dimension."),

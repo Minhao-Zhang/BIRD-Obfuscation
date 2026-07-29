@@ -46,16 +46,22 @@ identifiers and the presence of decoy columns/tables differ.
 ## Files
 
 ### Gold question / SQL dataset (the benchmark itself)
-- **`train_final.jsonl`** (5,984): train split.
-- **`test_final.jsonl`** (1,441): test split; **the eval runs on this**.
+- **`train_final.jsonl`** (5,539): train split.
+- **`test_final.jsonl`** (1,389): test split; **the eval runs on this**.
+- **`evaluated_dbs.json`** (58): the databases present in the splits above, i.e. those with
+  ≥60 surviving questions. Distinct from `artifacts/retained_dbs.json`, which lists the 69
+  schemas physically present in the four published dumps — the other 11 contribute schemas
+  but no questions.
 
   > [!IMPORTANT]
   > **Purged 2026-07-29.** 2,739 of the 10,164 execution-validated questions were removed
   > because upstream BIRD corrected (`bird_sql_dev_20251106`) or withdrew
   > (`bird23-train-filtered`) their gold. See
   > [gold-quality-audit.md](../docs/reference/gold-quality-audit.md) and
-  > `gold_quality_flags.jsonl` below. Anything measured on the old 2,030-question test split
-  > is superseded.
+  > `gold_quality_flags.jsonl` below. 11 databases then fell below the 60-question floor and
+  > were dropped, and the remaining 58 were re-split 80/20 — so the dataset is now **58
+  > databases / 6,928 questions**. Anything measured on the old 2,030-question test split is
+  > superseded.
 
   Fields (both): `question_id`, `db_id`, `question`, `evidence`, `evidence_rename`,
   `difficulty`, `sql_sqlite` (original BIRD gold), `sql_base` (gold transpiled for
@@ -89,7 +95,7 @@ identifiers and the presence of decoy columns/tables differ.
   [docs/reference/corrupted-decoys-design.md](../docs/reference/corrupted-decoys-design.md).
 
 ### Dimension 3: question paraphrase
-- **`question_paraphrases.jsonl`** (7,425): one SQL-preserving paraphrase per surviving
+- **`question_paraphrases.jsonl`** (6,928): one SQL-preserving paraphrase per surviving
   question (`question_id -> question_paraphrase`), train and test.
 
 ### Eval support
@@ -105,7 +111,7 @@ identifiers and the presence of decoy columns/tables differ.
   (`sql_base_expanded` / `sql_rename_expanded`) so decoy columns can never leak into a
   gold answer. 3 rows after the purge.
 - **`order_sensitive_qids.json`**: qids to **exclude from strict EX scoring**:
-  `order_sensitive` (104 after the purge: gold has a `LIMIT` without a total order or a
+  `order_sensitive` (98 after the purge and resplit: gold has a `LIMIT` without a total order or a
   float aggregate, so the heap-reorder from trap UPDATEs yields a different-but-valid
   result on the decoy instances) + `exec_failed` (10: pre-existing degenerate BIRD gold,
   >200k rows / 60s timeout). Real data is verified intact; these are comparison artifacts,

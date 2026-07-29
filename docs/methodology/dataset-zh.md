@@ -119,17 +119,18 @@ BIRD 的 gold SQL 会从 SQLite 转译到 PostgreSQL 方言,并被改写为使�
 
 ### 最终验证交付物
 
-数据湖中 69 个数据库无一例外,都同时出现在 `train_final.jsonl` 和 `test_final.jsonl` 中(schema 对称划分,§5)。验证前划分中的问题并非全部保留;少数问题为何被排除(转译失败,以及带有真实缺陷的 gold SQL,比如被 R1==R2 检查抓出的缺失连接条件),见 [step5-transpilation.md](../reference/step5-transpilation-zh.md)。这些文件的权威、纳入 git 跟踪的副本(外加重命名映射、陷阱清单、改写以及其他映射)位于 [`eval_dataset/`](../../eval_dataset/);`artifacts/` 中的副本则是管线的工作版本。
+被评测的 58 个数据库都同时出现在 `train_final.jsonl` 和 `test_final.jsonl` 中(schema 对称划分,§5);数据湖 69 个中的其余 11 个在 gold 质量清理后跌破 `MIN_QUESTIONS` 下限,只贡献 schema 而不贡献问题。验证前划分中的问题并非全部保留;少数问题为何被排除(转译失败,以及带有真实缺陷的 gold SQL,比如被 R1==R2 检查抓出的缺失连接条件),见 [step5-transpilation.md](../reference/step5-transpilation-zh.md)。这些文件的权威、纳入 git 跟踪的副本(外加重命名映射、陷阱清单、改写以及其他映射)位于 [`eval_dataset/`](../../eval_dataset/);`artifacts/` 中的副本则是管线的工作版本。
 
 | | 数量 |
 | --- | --- |
-| 已覆盖的数据库 | 69 / 69 |
+| 已覆盖的数据库(`evaluated_dbs.json`) | 58 / 69 |
 | 通过执行验证(R0==R1、R1==R2) | 10,164 |
 | 被排除(转译失败 + R1==R2 重命名失败) | 377 (10,541 − 10,164) |
 | 被 gold 质量清理移除(2026-07-29) | 2,739 |
-| `artifacts/train_final.jsonl`(train 问题) | **5,984** |
-| `artifacts/test_final.jsonl`(test 问题) | **1,441** |
-| **最终交付物中的问题总数** | **7,425** |
+| 清理后跌破 `MIN_QUESTIONS` 而被剔除的数据库 | 11 个(497 个问题) |
+| `artifacts/train_final.jsonl`(train 问题) | **5,539** |
+| `artifacts/test_final.jsonl`(test 问题) | **1,389** |
+| **最终交付物中的问题总数** | **6,928** |
 
 > [!IMPORTANT]
 > 这 2,739 个问题的移除**不是**流水线校验失败。它们都通过了 R0==R1 与 R1==R2 —— 执行校验证明的是
@@ -137,5 +138,7 @@ BIRD 的 gold SQL 会从 SQLite 转译到 PostgreSQL 方言,并被改写为使�
 > 修正了(`bird_sql_dev_20251106`)或撤回了(`bird23-train-filtered`)这些 gold。理由、方法、各库
 > 存活情况与引用:[gold-quality-audit.md](../reference/gold-quality-audit-zh.md)。
 >
-> 对 §5 的 schema 对称划分的影响:69 个数据库仍然全部出现在两个划分中,但各库的 80/20 比例现已不
-> 均匀,且有 11 个数据库跌破 `MIN_QUESTIONS = 60` 下限。是否重新划分属于待定决策 —— 见该文档 §6。
+> 对 §5 的 schema 对称划分的影响:跌破 `MIN_QUESTIONS = 60` 下限的 11 个数据库已被剔除,余下 58 个
+> 用步骤 01 的机制重新按 80/20 划分(`pipeline/resplit_after_purge.py`),各库 test 占比恢复为统一的
+> 19.5–20.6%。58 个数据库都同时出现在两个划分中。`retained_dbs.json` 仍列出 69 个 —— 那是已发布
+> dump 中物理存在的 schema;被评测的子集见 `evaluated_dbs.json`。

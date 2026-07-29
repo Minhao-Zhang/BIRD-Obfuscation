@@ -2,11 +2,13 @@
 
 # Gold-quality audit: BIRD annotation errors and the 2026-07-29 question purge
 
-**Status:** APPLIED. 2,739 of 10,164 questions (27.0%) were removed from the dataset on
-2026-07-29. The four published PostgreSQL dumps are unaffected and were **not** rebuilt.
+**Status:** APPLIED. 2,739 of 10,164 questions (27.0%) were removed on 2026-07-29, then 11
+databases that fell below the `MIN_QUESTIONS = 60` floor were dropped and the remainder
+re-split. Final dataset: **58 databases, 6,928 questions (5,539 train / 1,389 test).** The four
+published PostgreSQL dumps are unaffected and were **not** rebuilt.
 
-This document records why the dataset shrank, how the affected questions were identified,
-what was deliberately left alone, and which decisions are still open.
+This document records why the dataset shrank, how the affected questions were identified, how the
+splits were rebuilt, what was deliberately left alone, and which decisions are still open.
 
 ---
 
@@ -134,6 +136,60 @@ step 05/07 validation attrition.
 
 ---
 
+## 4b. Restoring the floor and re-splitting
+
+The purge left two step-01 invariants broken: 11 databases had dropped below
+`MIN_QUESTIONS = 60`, and because the purge hit train and test rows unevenly the per-database
+test fraction had drifted to **12–26%** rather than a uniform 20% (`bike_share_1` was down to
+6 test questions, `retail_world` to 6, `menu` to 10 — too few to estimate anything per schema).
+
+`pipeline/resplit_after_purge.py` restores both. The decision taken was to **keep step 01's
+original criterion unchanged** — a database needs ≥60 questions actually present — rather than
+relax the floor or switch to a capped test size. The distribution argued both ways: bins 45–129
+are continuously occupied with no natural gap, and the `<60` cut sheds 16% of schema diversity to
+remove 6.7% of questions. The floor was kept anyway for consistency with the published
+methodology, and because at ≥60 a proportional 20% still yields ≥12 test questions per schema.
+
+The split mechanism is step 01's, reused verbatim rather than reimplemented: per-database
+`Random(SEED ^ crc32(db_id))` with `SEED = 42` and `n_test = max(1, round(n * 0.20))`. The
+per-database seed matters — a single shared `Random(42)` would apply one identical permutation
+index-for-index across every database, correlating the split with any positional structure in
+BIRD's source JSON.
+
+| | Value |
+| --- | --- |
+| Pool after purge | 7,425 questions / 69 databases |
+| Databases dropped (< 60 surviving) | 11 — 497 questions |
+| **Databases retained** | **58** |
+| **train_final.jsonl** | **5,539 (80.0%)** |
+| **test_final.jsonl** | **1,389 (20.0%)** |
+| Per-database test fraction | 0.195 – 0.206 (was 0.12 – 0.26) |
+| Smallest test sets | `sales_in_weather` 12, `social_media` 12, `airline` 13 |
+
+Dropped: `app_store` (34), `financial` (38), `retail_world` (38), `music_platform_2` (40),
+`college_completion` (45), `california_schools` (46), `debit_card_specializing` (47),
+`cookbook` (49), `bike_share_1` (51), `computer_student` (53), `software_company` (56).
+
+Companions were filtered to the surviving qid set: `question_paraphrases.jsonl` and
+`gold_result_hashes_rename_decoy.jsonl` 7,425 → 6,928, `order_sensitive` 104 → 98,
+`exec_failed` 10 (unchanged), `gold_star_expanded.jsonl` 3 (unchanged).
+
+Rows were **reassigned, never edited** — `sql_sqlite` / `sql_base` / `sql_rename` carry through
+untouched, so R0==R1 and R1==R2 still hold and no re-transpilation ran.
+
+`artifacts/retained_dbs.json` was deliberately **not** reduced: it describes the 69 schemas
+physically present in the four published dumps, which are unchanged. The evaluated subset is a
+new artifact, `evaluated_dbs.json` (58 databases). The 11 dropped databases therefore remain in
+the dumps as **unreferenced schemas**. That is a deliberate open choice, not an oversight — to an
+agent that explores the database they are either free distractors or wasted exploration budget.
+Decide and document which before the next agent run.
+
+Verified after the resplit: all 58 databases present in **both** splits, train/test disjoint,
+minimum per-database count exactly 60, every row `clean: true`, and no dropped qid leaking into
+any companion file.
+
+---
+
 ## 5. What was deliberately not touched
 
 - **The four PostgreSQL dumps.** `pg_base`, `pg_rename`, `pg_decoy` and `pg_rename_decoy`
@@ -164,15 +220,16 @@ step 05/07 validation attrition.
    `california_schools` (46) and `debit_card_specializing` (47) are close enough to any
    threshold that this check alone may decide whether they survive. **Do this before
    re-splitting.**
-2. **Re-split, and move the threshold to the corpus side.** The current split assignment was
-   preserved, so the 80/20 balance is now uneven per database. Under the semantic-layer
-   paradigm, per-schema question count is close to the independent variable, so a symmetric
-   percentage threshold over-constrains the test side: `≥60 total` at 80/20 already means
-   "≥48 corpus questions". Threshold directly on the corpus count instead. For reference,
-   `≥50 clean` retains 61 databases / 7,088 questions vs `≥60 clean` retaining 58 / 6,928.
-3. **Report per-database corpus size as a covariate.** The filter shrank databases very
-   unevenly (`financial` −64%, `retail_world` −12%). Without publishing corpus size, a
-   per-database accuracy difference cannot be separated from a corpus-size difference.
+2. ~~**Re-split.**~~ **DONE** — see §4b. The floor was kept at ≥60 present questions and the
+   80/20 per-database split was rebuilt with step 01's mechanism. The alternative considered and
+   rejected was a capped test size (`test = min(25, 30% of n)`) with a lower corpus floor, which
+   would have equalised test precision across schemas and returned ~50 test rows from
+   `works_cycles` alone to the corpus. Worth revisiting if per-schema estimates turn out to be
+   the primary unit of analysis, since test-set size still varies 12–78 across schemas.
+3. **Report per-database corpus size as a covariate.** The purge shrank databases very
+   unevenly (`financial` −64%, `retail_world` −12%) before the floor removed the worst-hit ones,
+   and the retained 58 still span 60–383 questions — a 6× range. Without publishing corpus size,
+   a per-database accuracy difference cannot be separated from a corpus-size difference.
 4. **Measure cross-split near-duplicate leakage.** The split is random per database at seed
    42, and BIRD contains many templated near-identical questions within a database. A corpus
    question that near-duplicates a test question lets an agent retrieve instead of induce,
@@ -199,8 +256,14 @@ Then:
 python pipeline/build_gold_quality_flags.py
 python pipeline/apply_gold_quality_filter.py --dry-run
 python pipeline/apply_gold_quality_filter.py
+python pipeline/resplit_after_purge.py --dry-run
+python pipeline/resplit_after_purge.py
 python eval_dataset/build_eval_dataset.py
 ```
+
+`resplit_after_purge.py` is idempotent: re-running it on the already-resplit tree drops no further
+databases and reproduces the same assignment, because the per-database seed depends only on
+`db_id`.
 
 `apply_gold_quality_filter.py` is **not** idempotent against an already-filtered tree in the
 sense of producing further changes — it is a no-op — but it is destructive on first run.

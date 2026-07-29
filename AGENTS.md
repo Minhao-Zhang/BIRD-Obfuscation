@@ -78,6 +78,7 @@ reads the previous step's output; do not skip or reorder.
 | 9 | `09_paraphrase_questions.py` | step 7, `pg_rename` running (extended obfuscation) |
 | — | `build_gold_quality_flags.py` | step 7; upstream birdsql releases in `artifacts/upstream/` (no DB needed) |
 | — | `apply_gold_quality_filter.py` | `build_gold_quality_flags.py` (no DB needed; **destructive** on first run) |
+| — | `resplit_after_purge.py` | `apply_gold_quality_filter.py` (no DB needed; idempotent) |
 
 `artifacts/schema_rename_map.json` is **git-tracked** (regeneratable via step 3 with Bedrock, but
 checked in so steps 6-7 and downstream don't depend on re-running LLM translation).
@@ -182,8 +183,14 @@ a well-provisioned server this limit does not apply.
   (`bird23-train-filtered`). Purely question-level — no DB, no re-transpilation, no R1==R2 re-run,
   and the published dumps are untouched. Run `apply_*` with `--dry-run` first; it rewrites
   `artifacts/` in place, so refresh the snapshot with `eval_dataset/build_eval_dataset.py`
-  afterwards. Applied 2026-07-29 (10,164 → 7,425 questions); rationale, method, and the open
-  re-split decision: [docs/reference/gold-quality-audit.md](docs/reference/gold-quality-audit.md).
+  afterwards. Applied 2026-07-29 (10,164 → 7,425 questions).
+- `pipeline/resplit_after_purge.py`: re-apply `MIN_QUESTIONS = 60` over the *surviving* questions
+  and rebuild the 80/20 per-database split with step 01's exact mechanism
+  (`Random(SEED ^ crc32(db_id))`). Drops 11 databases and restores a uniform 19.5–20.6% test
+  fraction → 58 databases / 6,928 questions (5,539 train / 1,389 test). Reassigns rows only, never
+  edits SQL, so R0==R1 / R1==R2 survive. Emits `evaluated_dbs.json`; leaves `retained_dbs.json` at
+  69 (the schemas in the published dumps). Idempotent. Rationale, method and citations:
+  [docs/reference/gold-quality-audit.md](docs/reference/gold-quality-audit.md).
 
 ## Testing & validation
 

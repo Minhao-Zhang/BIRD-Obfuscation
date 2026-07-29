@@ -6,8 +6,9 @@
 > **§8 and §9 results are superseded (2026-07-29).** Every measured number in this document was
 > produced on the **2,030-question test set** that existed before the gold-quality purge removed
 > 2,739 questions with superseded or withdrawn upstream BIRD gold
-> ([gold-quality-audit.md](../reference/gold-quality-audit.md)). The test split is now 1,441
-> questions. The numbers are retained deliberately as a record of what was run — they are not
+> ([gold-quality-audit.md](../reference/gold-quality-audit.md)), and 11 databases below the
+> `MIN_QUESTIONS` floor were then dropped and the rest re-split. The test split is now **1,389
+> questions over 58 databases**. The numbers are retained deliberately as a record of what was run — they are not
 > rewritten, because they are facts about those runs. The **methodology** (§1–§7, §9.1–§9.3) is
 > unaffected and remains current.
 >

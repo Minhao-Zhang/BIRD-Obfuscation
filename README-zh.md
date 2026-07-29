@@ -41,7 +41,7 @@ flowchart LR
 | | |
 | --- | --- |
 | **问题** | 前沿模型可能靠记住 BIRD 标识符来虚高 Text-to-SQL 分数,而探测 schema 的智能体又没有任何对抗性障碍需要应对。 |
-| **交付物** | 一个多语言 PostgreSQL Text-to-SQL 语料库,覆盖 69 个数据库(7,425 对经执行验证的题目/SQL),提供四种混淆变体,发布在 Hugging Face 上,专为智能体评测底料而构建。 |
+| **交付物** | 一个多语言 PostgreSQL Text-to-SQL 语料库,覆盖 58 个数据库(6,928 对经执行验证的题目/SQL),提供四种混淆变体,发布在 Hugging Face 上,专为智能体评测底料而构建。 |
 | **下游评测** | 由 [governed-bi](https://github.com/Minhao-Zhang/governed-bi) 消费——一个"执行并观察"型 SQL 智能体,按执行准确率和 `decoy_touch_rate`(躲开陷阱的程度)打分。 |
 | **完整性** | gold 答案在四个数据库版本间保持执行等价(R0==R1、R1==R2);每个陷阱都严格*增量*,真实的行、列、表从不改动。 |
 | **状态** | 数据集已完成并发布;数据集验证运行已出(Claude Opus 4.8,test 划分);下游智能体规模化运行正在 governed-bi 中进行。 |
@@ -93,10 +93,10 @@ flowchart LR
 
 ## 产出成果
 
-- **一个经过验证的多语言 Postgres Text-to-SQL 语料库。** 69 个数据库;**7,425 个题目**
-  (5,984 个训练 / 1,441 个测试,每个数据库在两者中都有出现)。10,541 个候选中有 10,164 个
-  通过了端到端执行验证,其后又移除了 2,739 个 —— 因为上游 BIRD 已取代或撤回了它们的 gold,
-  见 [docs/reference/gold-quality-audit.md](docs/reference/gold-quality-audit-zh.md) 与
+- **一个经过验证的多语言 Postgres Text-to-SQL 语料库。** 58 个数据库;**6,928 个题目**
+  (5,539 个训练 / 1,389 个测试,每个数据库在两者中都有出现,test 占比统一为 20%)。10,541 个
+  候选中有 10,164 个通过了端到端执行验证;其后移除了 2,739 个 —— 因为上游 BIRD 已取代或撤回了
+  它们的 gold —— 并剔除了 11 个跌破 60 题下限的数据库,见 [docs/reference/gold-quality-audit.md](docs/reference/gold-quality-audit-zh.md) 与
   [docs/methodology/dataset.md §7](docs/methodology/dataset-zh.md)。
 - **混淆后的 gold SQL 和证据提示(evidence hints)**,已改写为使用重命名后的标识符。
 - **四个 PostgreSQL 实例**,覆盖各种混淆组合:`pg_base`(原始)、
@@ -136,7 +136,7 @@ flowchart LR
 > [!WARNING]
 > **已过时(2026-07-29)。** 本节数字测量于**旧的 2,030 题测试集**,当时尚未因上游 BIRD 的
 > gold 标注错误移除 2,739 个题目([gold-quality-audit.md](docs/reference/gold-quality-audit-zh.md))。
-> 现在 test 划分为 1,441 题。这些 EX 值作为该次运行的记录保留,而非当前结果;差值(Δ)比绝对 EX
+> 现在 test 划分为 1,389 题、覆盖 58 个数据库。这些 EX 值作为该次运行的记录保留,而非当前结果;差值(Δ)比绝对 EX
 > 更耐受本次清理,因为一条错误的 gold 对所有实验臂的惩罚是相同的。重新计算方式:对已保存的逐题
 > 评分按 `question_id` 过滤。
 
@@ -172,8 +172,8 @@ flowchart LR
 - **全部叠加**下降最大(−5.8%),拼音最低。
 
 在本次运行时存在的全部 10,164 个题目上,流水线完整性(R0==R1、R1==R2)成立;在清理后保留的
-7,425 个题目上同样成立 —— 执行校验不受此次清理影响,因为被移除的题目是在 *gold 标注质量* 上不
-合格,而非在混淆等价性上不合格。本次运行的逐条(问题、gold SQL、生成 SQL、正确性)记录见
+6,928 个题目上同样成立 —— 执行校验不受此次清理与重新划分影响,因为被移除的题目是在
+*gold 标注质量* 上不合格,而非在混淆等价性上不合格。本次运行的逐条(问题、gold SQL、生成 SQL、正确性)记录见
 [`exports/`](exports/)。
 
 ## 项目状态

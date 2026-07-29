@@ -42,14 +42,19 @@ python eval_dataset/build_eval_dataset.py
 ## 文件
 
 ### Gold 问题 / SQL 数据集(基准本身)
-- **`train_final.jsonl`**(5,984):训练集划分。
-- **`test_final.jsonl`**(1,441):测试集划分;**评测就基于这份数据运行**。
+- **`train_final.jsonl`**(5,539):训练集划分。
+- **`test_final.jsonl`**(1,389):测试集划分;**评测就基于这份数据运行**。
+- **`evaluated_dbs.json`**(58):出现在上述划分中的数据库,即存活问题数 ≥60 的那些。它与
+  `artifacts/retained_dbs.json` 不同 —— 后者列出四个已发布 dump 中物理存在的 69 个 schema;
+  其余 11 个只贡献 schema,不贡献问题。
 
   > [!IMPORTANT]
   > **2026-07-29 已清理。** 在 10,164 个通过执行校验的问题中移除了 2,739 个,原因是上游 BIRD
   > 已修正(`bird_sql_dev_20251106`)或撤回(`bird23-train-filtered`)了它们的 gold。见
   > [gold-quality-audit.md](../docs/reference/gold-quality-audit-zh.md) 与下文的
-  > `gold_quality_flags.jsonl`。任何基于旧的 2,030 题测试集测得的结果均已过时。
+  > `gold_quality_flags.jsonl`。随后有 11 个数据库跌破 60 题下限而被剔除,余下 58 个重新按 80/20
+  > 划分 —— 因此数据集现为 **58 个数据库 / 6,928 个问题**。任何基于旧的 2,030 题测试集测得的结果
+  > 均已过时。
 
   字段(两者相同):`question_id`、`db_id`、`question`、`evidence`、`evidence_rename`、
   `difficulty`、`sql_sqlite`(原始 BIRD gold)、`sql_base`(为 `pg_base` 转译的 gold)、
@@ -79,7 +84,7 @@ python eval_dataset/build_eval_dataset.py
   [docs/reference/corrupted-decoys-design.md](../docs/reference/corrupted-decoys-design-zh.md)。
 
 ### 维度 3:问题改写
-- **`question_paraphrases.jsonl`**(7,425):每个保留问题的 SQL 保持不变的改写
+- **`question_paraphrases.jsonl`**(6,928):每个保留问题的 SQL 保持不变的改写
   (`question_id -> question_paraphrase`),覆盖 train 与 test。
 
 ### 评测支持
@@ -93,7 +98,7 @@ python eval_dataset/build_eval_dataset.py
   (`sql_base_expanded` / `sql_rename_expanded`),以确保诱饵列绝不会泄漏进 gold 答案。
   清理后为 3 行。
 - **`order_sensitive_qids.json`**:需要**从严格 EX 评分中排除**的 qid:`order_sensitive`
-  (清理后 104 个:gold 带有 `LIMIT` 但没有全序,或含浮点聚合,因此陷阱 UPDATE 引起的堆重排会在
+  (清理与重新划分后 98 个:gold 带有 `LIMIT` 但没有全序,或含浮点聚合,因此陷阱 UPDATE 引起的堆重排会在
   诱饵实例上产生不同但仍有效的结果)+ `exec_failed`(10 个:本就存在的退化 BIRD gold,
   >200k 行 / 60s 超时)。真实数据已验证完好无损;这些属于比较层面的假象,而非损坏。
 - **`gold_result_hashes_rename_decoy.jsonl`**：`pg_rename_decoy` 上全部 train/test gold

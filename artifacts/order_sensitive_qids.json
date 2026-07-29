@@ -4,14 +4,11 @@
     "1117",
     "1144",
     "1290",
-    "1483",
     "751",
     "766",
     "802",
-    "81",
     "812",
     "906",
-    "train_1014",
     "train_1106",
     "train_1107",
     "train_116",
@@ -32,7 +29,6 @@
     "train_2371",
     "train_2430",
     "train_2458",
-    "train_2520",
     "train_2686",
     "train_2811",
     "train_3128",
@@ -90,8 +86,6 @@
     "train_8072",
     "train_8300",
     "train_851",
-    "train_8538",
-    "train_8544",
     "train_8738",
     "train_8741",
     "train_9114",
@@ -119,7 +113,7 @@
     "train_6845"
   ],
   "counts": {
-    "order_sensitive": 104,
+    "order_sensitive": 98,
     "exec_failed": 10
   }
 }

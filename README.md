@@ -44,7 +44,7 @@ flowchart LR
 | | |
 | --- | --- |
 | **Problem** | Frontier models may inflate Text-to-SQL scores from memorised BIRD identifiers, and a schema-probing agent has nothing adversarial to navigate. |
-| **Deliverable** | A 69-database multilingual PostgreSQL Text-to-SQL corpus (7,425 execution-validated question/SQL pairs, after the [gold-quality purge](docs/reference/gold-quality-audit.md)) in four obfuscation variants, published on Hugging Face and purpose-built as an agent-evaluation substrate. |
+| **Deliverable** | A 58-database multilingual PostgreSQL Text-to-SQL corpus (6,928 execution-validated question/SQL pairs, after the [gold-quality purge](docs/reference/gold-quality-audit.md)) in four obfuscation variants, published on Hugging Face and purpose-built as an agent-evaluation substrate. |
 | **Downstream eval** | Consumed by [governed-bi](https://github.com/Minhao-Zhang/governed-bi), an execute-and-observe SQL agent scored on execution accuracy and `decoy_touch_rate` (trap avoidance). |
 | **Integrity** | Gold answers stay execution-equivalent across all four DB versions (R0==R1, R1==R2); every trap is strictly *additive*, so real rows, columns, and tables are never modified. |
 | **Status** | Dataset complete and published; a dataset-validation run is in (Claude Opus 4.8, test split); the downstream agent scale-run is underway in governed-bi. |
@@ -99,10 +99,11 @@ accuracy drop to a *mechanism* rather than to a single blurred "obfuscation" kno
 
 ## What this produces
 
-- **A validated multilingual Postgres Text-to-SQL corpus.** 69 databases; **7,425 questions**
-  (5,984 train / 1,441 test, every database represented in both). 10,164 of 10,541 candidates
-  pass end-to-end execution validation, and 2,739 of those were then removed because upstream
-  BIRD superseded or withdrew their gold — see
+- **A validated multilingual Postgres Text-to-SQL corpus.** 58 databases; **6,928 questions**
+  (5,539 train / 1,389 test, every database represented in both, uniform 20% test split).
+  10,164 of 10,541 candidates pass end-to-end execution validation; 2,739 were then removed
+  because upstream BIRD superseded or withdrew their gold, and 11 databases that fell below the
+  60-question floor were dropped — see
   [docs/reference/gold-quality-audit.md](docs/reference/gold-quality-audit.md) and
   [docs/methodology/dataset.md §7](docs/methodology/dataset.md).
 - **Obfuscated gold SQL and evidence hints**, rewritten to the renamed identifiers.
@@ -144,7 +145,8 @@ produce a number:
 > **Superseded (2026-07-29).** The numbers in this section were measured on the **old
 > 2,030-question test set**, before 2,739 questions were removed for upstream BIRD gold-annotation
 > errors ([gold-quality-audit.md](docs/reference/gold-quality-audit.md)). The test split is now
-> 1,441 questions. These EX values are retained as a record of the run, not as current results;
+> 1,389 questions over 58 databases. These EX values are retained as a record of the run, not as
+> current results;
 > the deltas are more robust to the purge than the absolute EX, since a wrong gold penalised every
 > arm equally. Recompute by filtering stored per-question grades on `question_id`.
 
@@ -191,7 +193,7 @@ drop. Numbers below are lenient EX; full tables (strict EX, per-language, bootst
 - **All combined** is the largest drop (−5.8%), lowest on Pinyin.
 
 Pipeline integrity (R0==R1, R1==R2) held over all 10,164 questions that existed at the time of this
-run, and still holds over the 7,425 retained after the purge — execution validation is unaffected by
+run, and still holds over the 6,928 retained after the purge and resplit — execution validation is unaffected by
 it, since the removed questions failed on *gold annotation quality*, not on obfuscation equivalence.
 Per-question (question, gold SQL, generated SQL, correctness) records for this run are in
 [`exports/`](exports/).

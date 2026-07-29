@@ -119,17 +119,18 @@ Reported overall and broken down by:
 
 ### Final validated deliverable
 
-Every one of the 69 databases in the lake is represented in both `train_final.jsonl` and `test_final.jsonl` (schema-symmetric split, §5). Not every question from the pre-validation split survives; see [step5-transpilation.md](../reference/step5-transpilation.md) for why a small number are excluded (transpilation failures, and gold SQL with genuine defects like a missing join condition caught by the R1==R2 check). The canonical, git-tracked copies of these files (plus the rename map, trap manifests, paraphrases, and other mappings) live in [`eval_dataset/`](../../eval_dataset/); the `artifacts/` copies are the pipeline's working versions.
+Each of the 58 evaluated databases is represented in both `train_final.jsonl` and `test_final.jsonl` (schema-symmetric split, §5); the other 11 of the lake's 69 fell below the `MIN_QUESTIONS` floor after the gold-quality purge and contribute schemas but no questions. Not every question from the pre-validation split survives; see [step5-transpilation.md](../reference/step5-transpilation.md) for why a small number are excluded (transpilation failures, and gold SQL with genuine defects like a missing join condition caught by the R1==R2 check). The canonical, git-tracked copies of these files (plus the rename map, trap manifests, paraphrases, and other mappings) live in [`eval_dataset/`](../../eval_dataset/); the `artifacts/` copies are the pipeline's working versions.
 
 | | Count |
 | --- | --- |
-| Databases represented | 69 / 69 |
+| Databases represented (`evaluated_dbs.json`) | 58 / 69 |
 | Passed execution validation (R0==R1, R1==R2) | 10,164 |
 | Excluded (transpilation failures + R1==R2 rename failures) | 377 (10,541 − 10,164) |
 | Removed by the gold-quality purge (2026-07-29) | 2,739 |
-| `artifacts/train_final.jsonl` (train questions) | **5,984** |
-| `artifacts/test_final.jsonl` (test questions) | **1,441** |
-| **Total questions in final deliverable** | **7,425** |
+| Databases dropped below `MIN_QUESTIONS` after the purge | 11 (497 questions) |
+| `artifacts/train_final.jsonl` (train questions) | **5,539** |
+| `artifacts/test_final.jsonl` (test questions) | **1,389** |
+| **Total questions in final deliverable** | **6,928** |
 
 > [!IMPORTANT]
 > The 2,739-question removal is **not** a pipeline validation failure. Those questions passed
@@ -138,6 +139,8 @@ Every one of the 69 databases in the lake is represented in both `train_final.js
 > corrected (`bird_sql_dev_20251106`) or withdrawn (`bird23-train-filtered`) their gold. Rationale,
 > method, per-database survival, and citations: [gold-quality-audit.md](../reference/gold-quality-audit.md).
 >
-> Consequence for §5's schema-symmetric split: all 69 databases are still represented in both
-> splits, but the 80/20 balance is now uneven per database and 11 databases have fallen below the
-> `MIN_QUESTIONS = 60` floor. Re-splitting is an open decision — see that document's §6.
+> Consequence for §5's schema-symmetric split: the 11 databases that fell below the
+> `MIN_QUESTIONS = 60` floor were dropped and the remaining 58 were re-split 80/20 with step 01's
+> mechanism (`pipeline/resplit_after_purge.py`), restoring a uniform 19.5–20.6% per-database test
+> fraction. All 58 are represented in both splits. `retained_dbs.json` still lists 69 — the schemas
+> physically present in the published dumps; the evaluated subset is `evaluated_dbs.json`.

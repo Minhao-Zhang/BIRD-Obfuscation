@@ -5,7 +5,8 @@
 > [!WARNING]
 > **§8 与 §9 的结果已过时(2026-07-29)。** 本文中所有测得的数字都产生于 gold 质量清理之前的
 > **2,030 题测试集**;该次清理移除了 2,739 个 gold 已被上游 BIRD 取代或撤回的问题
-> ([gold-quality-audit.md](../reference/gold-quality-audit-zh.md))。现在 test 划分为 1,441 题。
+> ([gold-quality-audit.md](../reference/gold-quality-audit-zh.md));随后又剔除了跌破 `MIN_QUESTIONS`
+> 下限的 11 个数据库并重新划分。现在 test 划分为 **1,389 题、覆盖 58 个数据库**。
 > 这些数字被有意保留,作为"当时跑了什么"的记录 —— 不做改写,因为它们是关于那几次运行的事实。
 > **方法论部分**(§1–§7、§9.1–§9.3)不受影响,仍然有效。
 >
