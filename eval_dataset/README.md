@@ -29,7 +29,7 @@ the human-readable index.
 
 The benchmark is served from four PostgreSQL 18 instances (Docker, `decoy` compose
 profile for the last two). **Never run more than 2 hot at once locally** (OOM, see
-[AGENTS.md](../AGENTS.md)); on a provisioned server that limit is lifted.
+[development guide](../docs/development.md)); on a provisioned server that limit is lifted.
 
 | instance | port | identifiers | decoys/traps | obfuscation dims |
 | --- | --- | --- | --- | --- |

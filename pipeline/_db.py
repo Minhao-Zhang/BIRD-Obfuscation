@@ -9,7 +9,7 @@ NOTE: _transpile_helpers.py has its own exec_pg/normalise_result that are
 intentionally DIFFERENT — those connections run autocommit=False and use
 SET LOCAL. Do not consolidate them here.
 
-Invariants (see AGENTS.md): DSNs default to host=127.0.0.1 (never localhost) and
+Invariants (see docs/development.md): DSNs default to host=127.0.0.1 (never localhost) and
 are overridable per instance via PG_*_DSN env vars (see .env.example) so the eval
 can point at remote Postgres / AWS RDS without code changes; new_connection issues
 a plain SET statement_timeout (NOT SET LOCAL) because these connections run

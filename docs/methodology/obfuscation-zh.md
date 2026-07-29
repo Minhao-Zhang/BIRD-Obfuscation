@@ -235,7 +235,7 @@ eval_dataset/                   # git-tracked FINAL deliverable (snapshot of art
 - **邪恶双胞胎列**:在真实表上新增一个列,其值是某个真实**源**列的*污染副本*,名字取一个近义词(例如真实的 `annee_sortie` → 诱饵 `date_sortie`)。真实列永远不会被修改。(`trap_manifest.json`,1,486 个。)
 - **被污染的克隆表**:整张真实表克隆一份并重命名,其中一部分列被污染,其余列原样复制以保证真实感。gold 永远不会引用诱饵表,所以这些表在构造上就是 R1==R2 安全的。(`trap_table_manifest.json`,162 个。)
 
-两者都不得与真实的表/列名冲突,也不得与 `db_id` 本身冲突(即 AGENTS.md 中关于 `superhero`/`sales_in_weather`/`university` 的 schema 限定符注意事项)。
+两者都不得与真实的表/列名冲突,也不得与 `db_id` 本身冲突(即开发指南中关于 `superhero`/`sales_in_weather`/`university` 的 schema 限定符注意事项)。
 
 ### 污染(确定性、增量)
 复制出来的值由一个哈希播种的算子污染(完整规范:[../reference/corrupted-decoys-design.md](../reference/corrupted-decoys-design-zh.md)):连接键/FK 列被**置换**(每个值仍是一个真实的键 → 引用完整性得以保持,同时仍是一个隐蔽的连接陷阱),数值列加入稀疏的 ±相对噪声,文本列做域内的类别重映射,时间列做有界的日期偏移。污染是一个纯函数,只取决于每行的键 + 一个**与变体无关**的盐值,因此 `pg_decoy` 和 `pg_rename_decoy` 会以相同方式污染相同的行,重建也可复现。一个廉价的 LLM(`gpt-5.4-mini`)为每个数据库的每个变体提供同义的表/列名。清单(§10)才是基准事实,使用时不会再推断任何内容。

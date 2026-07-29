@@ -49,24 +49,6 @@ renaming does remove some memorised information from a frontier model. Design an
 [evaluation.md](docs/methodology/evaluation.md) §8–§9 — measured before the gold-quality purge and
 therefore superseded.
 
-## The four database variants
-
-| Instance | Port | Identifiers | Traps | Dimension |
-| --- | --- | --- | --- | --- |
-| `pg_base` | 5432 | original English | — | control |
-| `pg_rename` | 5433 | renamed (5 languages) | — | rename |
-| `pg_decoy` | 5434 | original English | corrupted | decoy |
-| `pg_rename_decoy` | 5435 | renamed | corrupted | rename + decoy |
-
-Real rows, columns, and tables are **byte-identical across all four** — traps only ever *add*. That
-is what makes the two-oracle integrity guarantee hold: obfuscated gold stays execution-equivalent
-to the validated original (R0==R1 against SQLite, R1==R2 across instances) for every retained
-question.
-
-The dumps carry **69** schemas while the eval covers **58**; the 11 dropped by the purge remain as
-unreferenced distractors. That changes the `routing_recall` denominator, so state which reading you
-use — [using-the-dataset.md](docs/reference/using-the-dataset.md).
-
 ## Get the dataset
 
 Two homes: the **databases** are on Hugging Face (≈12 GB, too large for git), the **gold SQL and
@@ -79,36 +61,11 @@ docker compose cp bird_obf_dumps/pg_base.dump pg_base:/tmp/pg_base.dump
 docker compose exec pg_base pg_restore -U bird -d bird --no-owner -j 4 /tmp/pg_base.dump
 ```
 
-Repeat per instance — **at most two hot at once on a laptop** (OOM). Full restore and eval
+Repeat for `pg_rename`, `pg_decoy` and `pg_rename_decoy` — **at most two hot at once on a laptop**
+(OOM). Full restore and eval
 instructions: [using-the-dataset.md](docs/reference/using-the-dataset.md). Eval scripts read
 `artifacts/` and fall back to `eval_dataset/`, so a fresh clone runs with no regeneration; DSNs are
 env-configurable (`PG_*_DSN`) for remote Postgres.
-
-## How it is built
-
-Ten numbered steps turn raw BIRD SQLite into the four instances; each reads the previous step's
-output. Operational detail and invariants: [AGENTS.md](AGENTS.md).
-
-| # | Step | Output |
-| --- | --- | --- |
-| 1–3 | Split 80/20 per DB · assign a schema language · LLM rename map | `schema_rename_map.json` |
-| 4–5 | Load `pg_base` via pgloader · transpile gold to Postgres, validate R0==R1 | `pg_base` |
-| 6–7 | Clone volume, rename in place · rewrite gold, validate R1==R2 | `pg_rename`, `{train,test}_final.jsonl` |
-| 9–10 | Paraphrase questions · inject corrupted traps | `pg_decoy`, `pg_rename_decoy` |
-| — | Flag and drop questions with superseded BIRD gold · re-split | `gold_quality_flags.jsonl`, `evaluated_dbs.json` |
-
-Step 8 (structural decoys) is superseded: its payload is absent from the published dumps, verified
-against the live instance. Run everything with `uv run python pipeline/<script>.py`.
-
-## Layout
-
-| Path | Contents |
-| --- | --- |
-| [`pipeline/`](pipeline/) | Numbered pipeline, the gold-quality and resplit scripts, eval harnesses, shared helpers |
-| [`eval_dataset/`](eval_dataset/) | Git-tracked deliverable: gold pairs, rename map, trap manifests, paraphrases, quality flags |
-| [`artifacts/`](artifacts/) | Pipeline working outputs (tracked subset: rename map, trap plans/manifests, db lists) |
-| [`exports/`](exports/) | Per-run (question, gold, generated SQL, verdict) bundle — superseded run, retained as evidence |
-| [`docs/`](docs/) | Methodology (why) and reference (how) |
 
 ## Documentation
 
@@ -121,22 +78,8 @@ against the live instance. Run everything with `uv run python pipeline/<script>.
 | [corrupted-decoys-design.md](docs/reference/corrupted-decoys-design.md) | Trap design, risk register, as-built parameters |
 | [limitations.md](docs/reference/limitations.md) | Scope caveats — read before citing any number |
 | [using-the-dataset.md](docs/reference/using-the-dataset.md) | Download, restore, run |
-| [pipeline-invariants.md](docs/reference/pipeline-invariants.md) | Rules to preserve when editing the pipeline |
-| [AGENTS.md](AGENTS.md) | Operational guide for coding agents |
-
-## Scope
-
-This repo **prepares and validates** the dataset. It does not modify real data, does not evaluate
-schema routing (the correct database is supplied upfront in the obfuscation eval here), and does not
-claim to close every contamination path — memorised literals and high-level SQL templates remain.
-
-## Python
-
-Always `uv`; the `.venv` is uv-managed, so never activate it or use bare `python`/`pip`.
-
-```bash
-uv run python pipeline/<script>.py
-```
+| [pipeline-invariants.md](docs/reference/pipeline-invariants.md) | Why each pipeline rule exists, with the evidence |
+| [development.md](docs/development.md) | Run and extend the pipeline; setup, conventions, invariants |
 
 ## License
 

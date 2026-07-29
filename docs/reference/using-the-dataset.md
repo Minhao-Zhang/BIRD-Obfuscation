@@ -131,7 +131,7 @@ docker compose exec pg_rename_decoy  pg_restore -U bird -d bird --no-owner -j 4 
 > **OOM note (local only):** on a laptop/desktop, do **not** run all four instances
 > under load at once. Bring up and restore two at a time (`pg_base`+`pg_decoy`, then
 > `pg_rename`+`pg_rename_decoy`), stopping the others in between. See the warning in
-> [AGENTS.md](../../AGENTS.md). On a well-provisioned server this limit does not apply.
+> [development guide](../development.md). On a well-provisioned server this limit does not apply.
 
 ### Into any PostgreSQL server
 

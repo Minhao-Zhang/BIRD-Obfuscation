@@ -34,7 +34,7 @@ Writes:
   workdir/decoy_validated.jsonl (resume log), workdir/decoy_failures.jsonl
 
 Dependency: the two *_decoy instances must already be cloned from their clean
-counterparts (volume-clone recipe in AGENTS.md) before phases inject /
+counterparts (volume-clone recipe in docs/development.md) before phases inject /
 validate can run. Re-cloning a decoy volume resets it -> re-run this step.
 
 Run:
@@ -235,7 +235,7 @@ def expand_stars_in_sql(sql: str, resolve_columns, default_schema: str | None = 
     """
     tree = sqlglot.parse_one(sql, read="postgres")
     # Collect the selects first: we mutate each select's projection list, and
-    # find_all() yields a live generator — snapshot it to a list (AGENTS.md:
+    # find_all() yields a live generator — snapshot it to a list (docs/development.md:
     # never mutate a sqlglot tree mid-walk).
     for sel in list(tree.find_all(exp.Select)):
         sources = _table_sources(sel)

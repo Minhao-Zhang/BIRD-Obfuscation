@@ -8,8 +8,7 @@ license = { text = "CC-BY-SA-4.0" }
 authors = [{ name = "Minhao Zhang", email = "minhaoz@uchicago.edu" }]
 
 # Version floors are the versions this pipeline was built and validated on
-# (Python 3.13). Run `uv lock` to pin an exact, reproducible set; a pinned
-# pip-compatible fallback also lives in requirements.txt.
+# (Python 3.13). uv.lock holds the exact resolved set.
 dependencies = [
     "anthropic>=0.113",
     "matplotlib>=3.11",

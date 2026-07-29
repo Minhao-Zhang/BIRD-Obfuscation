@@ -1,10 +1,12 @@
-# BIRD Obfuscation
+# Development guide
 
-`AGENTS.md` ([agents.md convention](https://agents.md/)) — operational guidance for coding
-agents working in this repo. The human-facing overview is in [README.md](README.md); the
-*why* behind each design decision is in [docs/methodology/](docs/methodology/); project
-Keep this file instructional and current — how to run and extend the pipeline, and invariants
-to preserve — not a changelog or run history.
+How to run and extend the pipeline, and the invariants to preserve while doing it. The
+human-facing overview is [README.md](../README.md); the *why* behind each design decision is in
+[methodology/](methodology/). Keep this file instructional — not a changelog or run history;
+`git log` is the history.
+
+English only, deliberately: this is a contributor-facing operations doc, not part of the published
+dataset documentation.
 
 ## Project overview
 
@@ -22,12 +24,12 @@ agent evaluation that consumes this dataset — an execute-and-observe SQL agent
 `decoy_touch_rate` and execution accuracy — lives in the sibling repo
 [governed-bi](https://github.com/Minhao-Zhang/governed-bi). Detailed
 empirical rationale for the invariants below lives in
-[docs/reference/pipeline-invariants.md](docs/reference/pipeline-invariants.md).
+[docs/reference/pipeline-invariants.md](reference/pipeline-invariants.md).
 
 ## Data
 
 The `data/` directory holds the BIRD dataset (not in version control). See
-[data/README.md](data/README.md) for download instructions, directory structure, and file formats.
+[data/README.md](../data/README.md) for download instructions, directory structure, and file formats.
 
 - **Dev split**: 11 SQLite databases, 1,534 questions
 - **Train split**: 69 SQLite databases, 9,428 questions
@@ -86,13 +88,13 @@ checked in so steps 6-7 and downstream don't depend on re-running LLM translatio
 Step 0 is diagnostic (not the critical path). Run it before step 4 when adding a source database
 or changing identifier-handling logic, to catch risky identifiers before they reach the loader.
 Operational conclusions from that scan are captured as CAST rules and quoting invariants in
-[docs/reference/pipeline-invariants.md](docs/reference/pipeline-invariants.md) §"Step 4".
+[docs/reference/pipeline-invariants.md](reference/pipeline-invariants.md) §"Step 4".
 
 Step 3b is advisory, not a gate. It cross-checks `schema_rename_map.json` against BIRD's
 `database_description/*.csv` and writes questionable translations to
 `artifacts/translation_quality_flags.jsonl` for manual review; it never modifies the rename map.
 Run it after step 3, before steps 6-7 consume the map. Detail:
-[docs/methodology/obfuscation.md §4](docs/methodology/obfuscation.md).
+[docs/methodology/obfuscation.md §4](methodology/obfuscation.md).
 
 Step 5 pass 1 (`05_transpile_sql.py`) is sqlglot-only (no LLM): it transpiles gold SQL, validates
 R0==R1, writes matches to `workdir/*_transpiled.jsonl`, and queues mismatches in
@@ -101,7 +103,7 @@ R0==R1, writes matches to `workdir/*_transpiled.jsonl`, and queues mismatches in
 `05b_apply_sql_fixes.py`; `05c_export_fix_batch.py` exports batches; `--status` shows progress.
 
 **Artifact semantics, R0==R1 definition, VALUES materialization, and failure buckets:** see
-[docs/reference/step5-transpilation.md](docs/reference/step5-transpilation.md).
+[docs/reference/step5-transpilation.md](reference/step5-transpilation.md).
 
 **Step 6 requires `pg_rename`'s Docker volume to be a clone of `pg_base`'s before running the
 script.** `pg_base` and `pg_rename` are separate containers with separate named volumes
@@ -124,22 +126,22 @@ Step 7 (`07_rename_sql_and_validate.py`) applies the rename map and checks R1==R
 `artifacts/{train,test}_final.jsonl` (the deliverable) and failures to
 `workdir/rename_failures.jsonl`. Resumable via `question_id`; progress with
 `wc -l artifacts/*_final.jsonl workdir/rename_failures.jsonl`. Validated counts:
-[docs/methodology/dataset.md §7](docs/methodology/dataset.md).
+[docs/methodology/dataset.md §7](methodology/dataset.md).
 
 `pipeline/eval_contamination.py` is downstream four-condition obfuscation-effectiveness
 evaluation, not a numbered pipeline step (scope stops at step 7). Its default is the split-machine
 offline workflow: prepare public requests on the PostgreSQL machine, run
 `run_offline_generations.py` on the API machine, then return generations for DB-side grading.
 `--split {test,train}` selects the dataset; `--local` explicitly enables the legacy same-machine
-path. Detail: [docs/methodology/evaluation.md §4](docs/methodology/evaluation.md) (conditions) and
+path. Detail: [docs/methodology/evaluation.md §4](methodology/evaluation.md) (conditions) and
 §8.5 (offline workflow), plus
-[docs/reference/using-the-dataset.md §3](docs/reference/using-the-dataset.md).
+[docs/reference/using-the-dataset.md §3](reference/using-the-dataset.md).
 
 ## Extended obfuscation (decoy + paraphrase)
 
 Optional decoy/paraphrase dimension steps and their ablation: design in
-[docs/methodology/obfuscation.md §7-§11](docs/methodology/obfuscation.md), full build spec in
-[docs/reference/corrupted-decoys-design.md](docs/reference/corrupted-decoys-design.md).
+[docs/methodology/obfuscation.md §7-§11](methodology/obfuscation.md), full build spec in
+[docs/reference/corrupted-decoys-design.md](reference/corrupted-decoys-design.md).
 
 Two extra PostgreSQL instances hold decoy-augmented clones, gated behind the `decoy` compose
 profile (default `docker compose up -d` is unchanged): `pg_decoy` (5434), `pg_rename_decoy`
@@ -178,12 +180,12 @@ a well-provisioned server this limit does not apply.
   perturb/cat-remap/date-offset/null otherwise); LLM-named per variant (`--model`, `--effort`).
   Emits `artifacts/trap_manifest.json` + `artifacts/trap_table_manifest.json`. Inject **one variant
   at a time** with `--variants base|rename` (OOM); `--regenerate` drops+recreates. Design + risk
-  register: [docs/reference/corrupted-decoys-design.md](docs/reference/corrupted-decoys-design.md).
+  register: [docs/reference/corrupted-decoys-design.md](reference/corrupted-decoys-design.md).
 - `pipeline/eval_ablation.py`: 5-arm no-hint ablation (base/rename/decoy/paraphrase/all),
   defaulting to the same offline prepare/generate/grade workflow; needs step 08's outputs + step
   09's paraphrases. Train `paraphrase`/`all` additionally require step 09 with `--include-train`.
   `--summarize` prints EX/deltas/CIs. Design:
-  [docs/methodology/evaluation.md §9](docs/methodology/evaluation.md).
+  [docs/methodology/evaluation.md §9](methodology/evaluation.md).
 - `pipeline/build_gold_quality_flags.py` → `pipeline/apply_gold_quality_filter.py`: drop questions
   whose BIRD gold upstream has since corrected (`bird_sql_dev_20251106`) or withdrawn
   (`bird23-train-filtered`). Purely question-level — no DB, no re-transpilation, no R1==R2 re-run,
@@ -196,9 +198,9 @@ a well-provisioned server this limit does not apply.
   fraction → 58 databases / 6,928 questions (5,539 train / 1,389 test). Reassigns rows only, never
   edits SQL, so R0==R1 / R1==R2 survive. Emits `evaluated_dbs.json`; leaves `retained_dbs.json` at
   69 (the schemas in the published dumps, leaving 11 schemas present but unreferenced by any
-  question — see [using-the-dataset.md](docs/reference/using-the-dataset.md)). Idempotent.
+  question — see [using-the-dataset.md](reference/using-the-dataset.md)). Idempotent.
   Rationale, method and citations:
-  [docs/reference/gold-quality-audit.md](docs/reference/gold-quality-audit.md).
+  [docs/reference/gold-quality-audit.md](reference/gold-quality-audit.md).
 
 ## Testing & validation
 
@@ -207,7 +209,7 @@ the pipeline, plus reproducible eval summaries. Preserve these gates when editin
 
 - **R0==R1** (step 5): transpiled PostgreSQL gold returns the same rows as the original SQLite
   gold (normalized multiset equality). Mismatches queue for agent repair and are re-validated
-  before merge. See [docs/reference/step5-transpilation.md](docs/reference/step5-transpilation.md).
+  before merge. See [docs/reference/step5-transpilation.md](reference/step5-transpilation.md).
 - **R1==R2** (step 7): obfuscated SQL on `pg_rename` returns the same rows as validated SQL on
   `pg_base`. Steps 08/10 re-check R1==R2 as their acceptance gate — decoy traps are strictly
   additive, so real rows/columns/tables are never modified and the gate must stay at 0 failures.
@@ -222,14 +224,14 @@ the pipeline, plus reproducible eval summaries. Preserve these gates when editin
 
   Resumability only reuses rows whose `eval_metadata` (model / effort / prompt version / commit /
   input artifact hashes) matches the current invocation. See
-  [docs/methodology/evaluation.md](docs/methodology/evaluation.md).
+  [docs/methodology/evaluation.md](methodology/evaluation.md).
 
 ## Code style & invariants
 
 Python is always run via `uv` (see Setup); `.venv` is uv-managed and never activated by hand.
 Beyond that, the rules below are **hard invariants** confirmed against a live Postgres and the real
 worst-case DBs, not assumptions. **Read the detailed rationale in
-[docs/reference/pipeline-invariants.md](docs/reference/pipeline-invariants.md) before changing the
+[docs/reference/pipeline-invariants.md](reference/pipeline-invariants.md) before changing the
 code a rule protects.**
 
 **Step 4 (pgloader load):**
@@ -292,8 +294,10 @@ used by step 0.
   `git log` (e.g. `Docs: …`, `Eval: …`, `Repo: …`, `Add …`).
 - **Bilingual docs:** most files under `docs/`, the root `README.md`, and package READMEs ship a
   `<name>-zh.md` Simplified-Chinese counterpart with a nav line at the top linking the two
-  (`**English** · [中文](…-zh.md)` and its mirror). Update both sides together.
-- **English-only exceptions:** `AGENTS.md` and `CLAUDE.md` have **no** `-zh` counterpart.
-- **Keep `AGENTS.md` instructional only** — operational guidance and invariants, not progress logs
+  (`**English** · [中文](…-zh.md)` and its mirror). Update both sides together. This file
+  is the one deliberate exception — see the header. This
+  file is the one exception — see the header.
+- **English-only exceptions:** this file and `CLAUDE.md` have **no** `-zh` counterpart.
+- **Keep this file instructional only** — operational guidance and invariants, not progress logs
   or history — this repo does not keep a progress log; `git log` is the history.
-- `CLAUDE.md` is a thin, git-ignored pointer to this file; edit `AGENTS.md`, not `CLAUDE.md`.
+- `CLAUDE.md` is a thin, git-ignored pointer to this file; edit this file, not `CLAUDE.md`.

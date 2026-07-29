@@ -236,7 +236,7 @@ Added only to **decoy-augmented clones** (`pg_decoy`, `pg_rename_decoy`), **neve
 - **Evil-twin columns**: a NEW column on a real table whose values are a *corrupted copy* of a real **source** column, named as a near-synonym (e.g. real `annee_sortie` → decoy `date_sortie`). The real column is never modified. (`trap_manifest.json`, 1,486.)
 - **Corrupted clone tables**: a whole real table cloned and renamed, with a subset of its columns corrupted and the rest copied exact for realism. Gold never references a decoy table, so these are R1==R2-safe by construction. (`trap_table_manifest.json`, 162.)
 
-Both must not collide with a real table/column name or with the `db_id` itself (the `superhero`/`sales_in_weather`/`university` schema-qualifier caveat in AGENTS.md).
+Both must not collide with a real table/column name or with the `db_id` itself (the `superhero`/`sales_in_weather`/`university` schema-qualifier caveat in the development guide).
 
 ### Corruption (deterministic, additive)
 The copied values are corrupted by hash-seeded operators (full spec: [../reference/corrupted-decoys-design.md](../reference/corrupted-decoys-design.md)): join-key/FK columns are **permuted** (every value stays a real key → referential integrity preserved, still a stealthy join trap), numeric columns get sparse ±relative noise, text columns an in-domain category remap, temporal columns a bounded date offset. Corruption is a pure function of a per-row key + a **variant-independent** salt, so `pg_decoy` and `pg_rename_decoy` corrupt identical rows identically and a rebuild is reproducible. A cheap LLM (`gpt-5.4-mini`) supplies the synonym table/column names per DB per variant. The manifests (§10) are the ground truth; nothing is re-inferred at consumption time.

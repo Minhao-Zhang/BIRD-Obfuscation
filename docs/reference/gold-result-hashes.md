@@ -94,7 +94,7 @@ cached line, with `sql_sha256` equal to the gold SQL string you trust.
 ## Rebuild
 
 Needs a live `pg_rename_decoy`. On a laptop, prefer keeping only that instance hot
-(see [AGENTS.md](../../AGENTS.md)).
+(see [development guide](../development.md)).
 
 ```bash
 docker compose --profile decoy up -d pg_rename_decoy

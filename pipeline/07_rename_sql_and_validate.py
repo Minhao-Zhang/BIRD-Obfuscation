@@ -66,7 +66,7 @@ def rename_sql(pg_sql: str, db_id: str, rename_map: dict) -> str:
     million-row donor table dumped as `VALUES (...), (...), ...`), which
     makes sqlglot.parse() extremely slow/memory-hungry — enough to hang the
     process and exhaust system memory on the largest observed case. Every
-    identifier this pipeline emits is double-quoted (see AGENTS.md
+    identifier this pipeline emits is double-quoted (see docs/development.md
     "All identifiers are quoted when emitting SQL"), so a rename can only
     ever fire on a `"key"` occurrence. Plain substring matching (without
     quotes) is NOT safe here — literal VALUES data routinely contains

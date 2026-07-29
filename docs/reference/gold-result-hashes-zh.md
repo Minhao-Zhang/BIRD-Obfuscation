@@ -80,7 +80,7 @@ def hash_strict(rows) -> str:
 
 ## 重建
 
-需要活着的 `pg_rename_decoy`。笔记本上尽量只热这一个实例（见 [AGENTS.md](../../AGENTS.md)）。
+需要活着的 `pg_rename_decoy`。笔记本上尽量只热这一个实例（见 [development guide](../development.md)）。
 
 ```bash
 docker compose --profile decoy up -d pg_rename_decoy

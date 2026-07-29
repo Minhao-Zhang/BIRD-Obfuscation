@@ -2,7 +2,7 @@
 Step 6: Rename tables/columns in pg_rename per schema_rename_map.
 
 pg_rename's Docker volume must already be a clone of pg_base's
-before running this script (see AGENTS.md "Running the pipeline" for the
+before running this script (see docs/development.md "Running the pipeline" for the
 docker run command) — this script does NOT load any data and does NOT
 connect to pg_base. It only renames identifiers in an already-populated
 pg_rename, table-by-table and column-by-column, via ALTER TABLE ...

@@ -52,7 +52,7 @@ SYSTEM_INSTRUCTIONS = (
 def get_schema_ddl(conn, db_id: str) -> str:
     """Stripped DDL: table/column names + dtypes only (evaluation.md §4.1 —
     no PRIMARY KEY, FOREIGN KEY, CHECK constraints, no column descriptions).
-    This schema lake never creates those constraints anyway (see AGENTS.md),
+    This schema lake never creates those constraints anyway (see docs/development.md),
     so there is nothing to strip beyond reading information_schema."""
     conn.rollback()
     with conn.cursor() as cur:
